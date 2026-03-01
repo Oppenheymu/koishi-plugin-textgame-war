@@ -10,7 +10,7 @@ export function 我的全部资料(ctx: Context) {
                 const { userId, username } = await requirePlayer(ctx, session);
                 const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
                 return `
-===[征战文游]===
+=====[征战文游]=====
 ${username} 同志：
 ■ 生活资料：${用户资料.生活资料}
 ■ 科技/生产技术：${用户资料.科技等级}/${用户资料.生产技术}

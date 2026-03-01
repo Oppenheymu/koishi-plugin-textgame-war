@@ -14,7 +14,7 @@ export function 签到(ctx: Context) {
 
                 if ( !userInfo || userInfo.length === 0 ) {
 
-                    const 初始工人 = TRandom(40000, 16000, 120000);
+                    const 初始工人 = TRandom(4000, 12000, 16000);
                     const 初始生活资料 = TRandom(8000, 15000, 30000);
                     const 初始石油 = TRandom(500, 1500, 8000);
                     const 初始钢铁 = TRandom(10000, 20000, 50000);
