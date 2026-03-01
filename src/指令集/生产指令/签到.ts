@@ -19,17 +19,22 @@ export function 签到(ctx: Context) {
                     const 初始石油 = TRandom(500, 1500, 8000);
                     const 初始钢铁 = TRandom(10000, 20000, 50000);
                     const 战争保护期时长 = TRandom(3, 7, 15);
+                    const 初始防空弹药 = TRandom(3000, 10000, 20000);
+
 
                     const newUser: Player = {
                         userId: userId,
                         今日是否签到: true,
                         战争保护期: ( Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000 ),
                         生活资料: 初始生活资料,
-                        科技等级: 1,
                         生产技术: 10,
                         工人: 初始工人,
                         地下工人: 0,
                         休假工人: 0,
+                        科技等级: 0,
+                        科技蓝图: 0,
+                        科技池投入: 0,
+                        科技池容量: 0,
                         石油: 初始石油,
                         铁矿石: 0,
                         钢铁: 初始钢铁,
@@ -37,6 +42,7 @@ export function 签到(ctx: Context) {
                         重炮: 0,
                         火箭炮: 0,
                         火箭炮弹药: 0,
+                        防空弹药: 初始防空弹药,
                         飞机: 0,
                         隐形飞机: 0,
                         预警机: 0,
@@ -95,7 +101,7 @@ ${username} 同志！
                         });
 
                         return `
-===[新马列文游]===
+===[征战文游]===
 ${username} 同志！
 今日报告，获得物资：
 ■ 工人：+${增加的工人}
@@ -106,7 +112,7 @@ ${username} 同志！
                     }
                 }
             } catch (error) {
-                return '签到失败，请稍后重试';
+                return (error as Error).message;
             }
         });
 }

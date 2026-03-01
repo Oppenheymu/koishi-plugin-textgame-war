@@ -9,11 +9,16 @@ export interface Player {
 
   //全部资料
   生活资料: number;
-  科技等级: number;
   生产技术: number;
   工人: number;
   地下工人: number;
   休假工人: number;
+
+  //科技相关
+  科技等级: number;
+  科技蓝图: number;
+  科技池投入: number;
+  科技池容量: number;
 
   //资源
   石油: number;
@@ -27,6 +32,7 @@ export interface Player {
   火箭炮弹药: number;
 
   //空军
+  防空弹药: number;
   飞机: number;
   隐形飞机: number;
   预警机: number;

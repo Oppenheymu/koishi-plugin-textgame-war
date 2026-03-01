@@ -15,11 +15,16 @@ export function setupPlayerModel(ctx: Context) {
 
     // 全部资料
     生活资料:    { type: 'unsigned', initial: 0 },
-    科技等级:    { type: 'unsigned', initial: 1 },
-    生产技术:    { type: 'unsigned', initial: 1 },
+    生产技术:    { type: 'unsigned', initial: 10 },
     工人:        { type: 'unsigned', initial: 0 },
     地下工人:    { type: 'unsigned', initial: 0 },
     休假工人:    { type: 'unsigned', initial: 0 },
+
+    // 科技相关
+    科技等级:    { type: 'unsigned', initial: 1 },
+    科技蓝图:    { type: 'unsigned', initial: 0 },
+    科技池投入:  { type: 'unsigned', initial: 0 },
+    科技池容量:  { type: 'unsigned', initial: 5000 },
 
     // 资源
     石油:        { type: 'unsigned', initial: 0 },
@@ -33,6 +38,7 @@ export function setupPlayerModel(ctx: Context) {
     火箭炮弹药:  { type: 'unsigned', initial: 0 },
 
     // 空军（地面/正常状态）
+    防空弹药:        { type: 'unsigned', initial: 0 },
     飞机:            { type: 'unsigned', initial: 0 },
     隐形飞机:        { type: 'unsigned', initial: 0 },
     预警机:          { type: 'unsigned', initial: 0 },
