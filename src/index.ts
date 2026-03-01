@@ -2,6 +2,7 @@ import { Context, Schema } from 'koishi'
 import { 数据库服务 } from './Models/index'
 import { 文游指令集 } from './指令集/index'
 import { 文游服务集 } from './Services/index';
+import { 文游管理集 } from './管理集/index';
 
 export const name = 'malie-textgame'
 
@@ -28,5 +29,6 @@ export function apply(ctx: Context, config: Config) {
     数据库服务(ctx);
     文游服务集(ctx);
     文游指令集(ctx);
+    文游管理集(ctx);
 
 }
