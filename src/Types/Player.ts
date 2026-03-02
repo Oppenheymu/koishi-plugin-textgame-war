@@ -10,10 +10,14 @@ export interface Player {
 
   //状态
   稳定度: number;
+  生产次数: number;
+  工人工资: number;
+  最低工资: number;
 
   //全部资料
   生活资料: number;
   生产技术: number;
+  厂房: number;
   工人: number;
   地下工人: number;
   休假工人: number;

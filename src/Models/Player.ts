@@ -16,10 +16,14 @@ export function setupPlayerModel(ctx: Context) {
  
     //状态
     稳定度: { type: 'unsigned', initial: 80 },
-    
+    生产次数: { type: 'unsigned', initial: 0 },
+    工人工资: { type: 'unsigned', initial: 0 },
+    最低工资: { type: 'unsigned', initial: 5 },
+
     // 全部资料
     生活资料:    { type: 'unsigned', initial: 0 },
     生产技术:    { type: 'unsigned', initial: 10 },
+    厂房:        { type: 'unsigned', initial: 0 },
     工人:        { type: 'unsigned', initial: 0 },
     地下工人:    { type: 'unsigned', initial: 0 },
     休假工人:    { type: 'unsigned', initial: 0 },

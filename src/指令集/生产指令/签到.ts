@@ -8,6 +8,9 @@ export function 签到(ctx: Context) {
 
             requireSession(session);
             const { userId, username } = requireUser(session);
+
+            // 格式化数字显示
+            const 格式化 = (n: number) => n.toLocaleString('zh-CN');
         
             try{
                 const userInfo = await ctx.database.get('malieplayer', { userId: userId });
@@ -24,19 +27,28 @@ export function 签到(ctx: Context) {
 
                     const newUser: Player = {
                         userId: userId,
+
                         驻扎地区: null,
                         今日是否签到: true,
                         战争保护期: ( Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000 ),
+
                         稳定度: 80,
+                        生产次数: 1,
+                        工人工资: 5,
+                        最低工资: 5,
+
                         生活资料: 初始生活资料,
                         生产技术: 10,
+                        厂房: 10000,
                         工人: 初始工人,
                         地下工人: 0,
                         休假工人: 0,
+
                         科技等级: 1,
                         科技蓝图: 0,
                         科技池投入: 0,
                         科技池容量: 5000,
+
                         石油: 初始石油,
                         铁矿石: 0,
                         钢铁: 初始钢铁,
@@ -60,15 +72,15 @@ export function 签到(ctx: Context) {
                         地下火箭炮炮弹: 0,
                         地下防空弹药: 0
                     }
-                    await ctx.database.create('malieplayer', newUser);   
+                    await ctx.database.create('malieplayer', newUser );   
                     return `
 ====[征战文游]====
 ${username} 同志 签到成功
 □ 新玩家注册奖励:
-■ 工人：${初始工人}
-■ 钢铁：${初始钢铁}
-■ 石油：${初始石油}
-■ 生活资料：${初始生活资料}
+■ 工人：${格式化(初始工人)}
+■ 钢铁：${格式化(初始钢铁)}
+■ 石油：${格式化(初始石油)}
+■ 生活资料：${格式化(初始生活资料)}
 
 □新手战争保护期：${战争保护期时长}天
 发送[帮助]查看指令表
@@ -102,14 +114,19 @@ ${username} 同志！
                             生活资料: 增加后的生活资料
                         });
 
+                        if ( 当前用户资料.厂房 < 10000) {
+                            await ctx.database.set('malieplayer', { userId: userId }, { 厂房: 10000 } );
+                        }
+
                         return `
 ===[征战文游]===
 ${username} 同志！
 今日报告，获得物资：
-■ 工人：+${增加的工人}
-■ 石油：+${增加的石油}
-■ 钢铁：+${增加的钢铁}
-■ 生活资料：+${增加的生活资料}
+■ 工人：+${格式化(增加的工人)}
+■ 石油：+${格式化(增加的石油)}
+■ 钢铁：+${格式化(增加的钢铁)}
+■ 生活资料：+${格式化(增加的生活资料)}
+□ 厂房已重置 (如未达到)
 `.trim();
                     }
                 }
