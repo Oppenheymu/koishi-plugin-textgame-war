@@ -10,9 +10,13 @@ export function setupPlayerModel(ctx: Context) {
     userId: { type: 'string', length: 255 },
 
     //状态机
+    驻扎地区: { type: 'string', length: 255, initial: null, nullable: true },
     今日是否签到: { type: 'boolean', initial: false },
-    战争保护期: { type: 'integer', initial: null, nullable: true,},
-
+    战争保护期: { type: 'integer', initial: null, nullable: true },
+ 
+    //状态
+    稳定度: { type: 'unsigned', initial: 80 },
+    
     // 全部资料
     生活资料:    { type: 'unsigned', initial: 0 },
     生产技术:    { type: 'unsigned', initial: 10 },

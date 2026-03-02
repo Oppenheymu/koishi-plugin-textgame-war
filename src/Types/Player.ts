@@ -4,8 +4,12 @@ export interface Player {
   userId: string;
 
   //状态机
+  驻扎地区: string | null;
   今日是否签到: boolean;
   战争保护期: number | null;
+
+  //状态
+  稳定度: number;
 
   //全部资料
   生活资料: number;

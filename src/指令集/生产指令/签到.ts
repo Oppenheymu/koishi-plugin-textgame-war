@@ -24,8 +24,10 @@ export function 签到(ctx: Context) {
 
                     const newUser: Player = {
                         userId: userId,
+                        驻扎地区: null,
                         今日是否签到: true,
                         战争保护期: ( Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000 ),
+                        稳定度: 80,
                         生活资料: 初始生活资料,
                         生产技术: 10,
                         工人: 初始工人,
