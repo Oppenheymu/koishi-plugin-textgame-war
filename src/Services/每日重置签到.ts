@@ -1,21 +1,25 @@
 
 import { Context } from 'koishi';
+import { } from "koishi-plugin-cron"; 
+
+
 
 /**
- * 检查是否需要进行每日重置
+ * 执行每日重置
  */
-async function 每日重置签到(ctx: Context): Promise<void> {
+async function 执行每日重置(ctx: Context): Promise<void> {
   const today = new Date().toISOString().split('T')[0]!;
 
-  const record = await ctx.database.get('malieservice', {}, ['上次重置签到日期']);
-  const lastReset = record[0]?.上次重置签到日期;
+  // 使用固定的 id 获取唯一的全局配置记录
+  const serviceRecord = await ctx.database.get('malieservice', { id: 'service' });
+  const lastReset = serviceRecord[0]?.上次重置签到日期;
 
   // 只有当日期发生变化时才重置
   if (!lastReset || today > lastReset) {
-    // 需要重置
-    await ctx.database.upsert('malieservice', [{
+    // 使用正确的主键进行更新
+    await ctx.database.set('malieservice', { id: 'service' }, {
       上次重置签到日期: today
-    }], ['上次重置签到日期']);
+    });
 
     // 重置所有玩家的今日签到状态
     await ctx.database.set('malieplayer', {}, { 今日是否签到: false });
@@ -24,10 +28,10 @@ async function 每日重置签到(ctx: Context): Promise<void> {
 
 /**
  * 启动每日重置检查定时任务
- * 每5分钟检查一次，减少性能开销
+ * 使用 cron 轮询：每5分钟检查一次，比 setInterval 更可靠
  */
 export function 每日重置签到检查(ctx: Context) {
-  ctx.setInterval(() => {
-    每日重置签到(ctx);
-  }, 5 * 60 * 1000);
+  ctx.cron('*/5 * * * *', () => {
+    执行每日重置(ctx);
+  });
 }

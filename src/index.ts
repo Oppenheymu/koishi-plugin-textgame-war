@@ -5,10 +5,9 @@ import { 文游服务集 } from './Services/index';
 import { 文游管理集 } from './管理集/index';
 
 export const name = 'malie-textgame'
-export const inject = {
-  required: ['database']
+export const inject = { 
+  required: [ 'cron', 'database' ] 
 }
-
 
 export interface Config {}
 

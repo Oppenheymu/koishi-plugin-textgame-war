@@ -8,8 +8,9 @@ import { Context } from 'koishi';
 
 export function setupServiceModel(ctx: Context) {
   ctx.model.extend('malieservice', {
+    id: { type: 'string', length: 255 },
     上次重置签到日期: { type: 'string', length: 255 },
   }, {
-    primary: '上次重置签到日期'
+    primary: 'id'
   });
 }
