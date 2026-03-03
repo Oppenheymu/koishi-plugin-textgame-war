@@ -8,12 +8,12 @@ export function 扩建厂房(ctx: Context) {
                 const { userId, username } = await requirePlayer(ctx, session);
                 const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
 
+                // 格式化数字显示
+                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+
                 // 如果使用不带参数的形式，则扩建1000个空间
                 const 扩建数量 = 数量 || 5000;
                 const 扩建成本 = Math.ceil(扩建数量 / 5);  // 每5个空间需要1钢铁
-
-                // 格式化数字显示
-                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 检查钢铁是否足够
                 if (用户资料.钢铁 < 扩建成本) {

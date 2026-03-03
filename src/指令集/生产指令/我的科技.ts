@@ -7,16 +7,22 @@ export function 我的科技(ctx: Context) {
     ctx.command('我的科技')
         .action(async ({ session }) => {
             try {
+
                 const { userId, username } = await requirePlayer(ctx, session);
                 const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+
+                // 格式化数字显示
+                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+
                 const 科技池进度 = Math.floor((用户资料.科技池投入/用户资料.科技池容量) * 100)
+
                 return `
 ===[征战文游]===
 ${username} 同志：
-■ 科技等级：${用户资料.科技等级}
-■ 科技蓝图：${用户资料.科技蓝图}
+■ 科技等级：${格式化(用户资料.科技等级)}
+■ 科技蓝图：${格式化(用户资料.科技蓝图)}
 ■ 科技池进度：${科技池进度}%
-■ 科技池容量：${用户资料.科技池容量}
+■ 科技池容量：${格式化(用户资料.科技池容量)}
 `.trim();
             } catch (error) {
                 return (error as Error).message;

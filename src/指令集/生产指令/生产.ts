@@ -5,8 +5,12 @@ export function 生产(ctx: Context) {
     ctx.command('生产')
         .action(async ({ session }) => {
             try {
+
                 const { userId, username } = await requirePlayer(ctx, session);
                 const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+                
+                // 格式化数字显示
+                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 检查生产次数
                 if (用户资料.生产次数 <= 0) {
@@ -23,7 +27,7 @@ ${username} 同志：
 【工业生产】
 ${username} 同志：
 □ 厂房空间不够
-□ 需求：${用户资料.工人}/${用户资料.厂房}
+□ 需求：${格式化(用户资料.工人)}/${格式化(用户资料.厂房)}
 □ 命令：扩建厂房/领取厂房
 □ 其他命令：工人休假/召回工人
 `.trim();
@@ -55,9 +59,6 @@ ${username} 同志：
                     稳定度: 新稳定度,
                     生产次数: 新生产次数
                 });
-
-                // 格式化数字显示
-                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 return `
 【工业生产】

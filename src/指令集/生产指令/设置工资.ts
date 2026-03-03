@@ -5,8 +5,12 @@ export function 设置工资(ctx: Context) {
     ctx.command('设置工资 <工资:number>')
         .action(async ({ session }, 工资) => {
             try {
+
                 const { userId, username } = await requirePlayer(ctx, session);
                 const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+
+                // 格式化数字显示
+                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 验证工资输入
                 if (工资 === undefined || 工资 === null) {
