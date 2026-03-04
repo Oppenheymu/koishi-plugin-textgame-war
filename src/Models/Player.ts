@@ -11,8 +11,9 @@ export function setupPlayerModel(ctx: Context) {
 
     //状态机
     驻扎地区: { type: 'string', length: 255, initial: null, nullable: true },
-    今日是否签到: { type: 'boolean', initial: false },
     战争保护期: { type: 'integer', initial: null, nullable: true },
+    小时是否生产: { type: 'boolean', initial: false },
+    今日是否签到: { type: 'boolean', initial: false },
  
     //状态
     稳定度: { type: 'unsigned', initial: 80 },

@@ -5,8 +5,9 @@ export interface Player {
 
   //状态机
   驻扎地区: string | null;
-  今日是否签到: boolean;
   战争保护期: number | null;
+  今日是否签到: boolean;
+  小时是否生产: boolean;
 
   //状态
   稳定度: number;

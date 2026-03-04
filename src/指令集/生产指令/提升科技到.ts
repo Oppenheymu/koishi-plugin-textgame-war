@@ -5,8 +5,12 @@ export function 提升科技到(ctx: Context) {
     ctx.command('提升科技到 <目标等级:number>')
         .action(async ({ session }, 目标等级) => {
             try {
+
                 const { userId, username } = await requirePlayer(ctx, session);
                 const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+
+                // 格式化数字显示
+                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 验证输入
                 if (!目标等级 || 目标等级 <= 0) {
@@ -37,7 +41,7 @@ export function 提升科技到(ctx: Context) {
                 // 检查生活资料是否足够
                 if (用户资料.生活资料 < 所需生活资料) {
                     const 还差 = 所需生活资料 - 用户资料.生活资料;
-                    return `生活资料不足！需要：${所需生活资料}，还差：${还差}`;
+                    return `生活资料不足！需要：${格式化(所需生活资料)}，还差：${格式化(还差)}`;
                 }
 
                 // 扣除生活资料
@@ -63,7 +67,7 @@ export function 提升科技到(ctx: Context) {
 ${username} 同志：
 成功投入科技生产
 ■科技级别：${当前等级}→${目标等级} (+${升级等级数}级)
-■生活资料：${减少后的生活资料} (-${所需生活资料})`;
+■生活资料：${格式化(减少后的生活资料)} (-${格式化(所需生活资料)})`;
 
                 return 返回信息.trim();
 

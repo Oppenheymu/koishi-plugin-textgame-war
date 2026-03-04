@@ -12,6 +12,7 @@ import { 扩建厂房 } from './扩建厂房'
 import { 设置工资 } from './设置工资'
 import { 提升科技 } from './提升科技'
 import { 提升科技到 } from './提升科技到'
+import { 召回工人 } from './召回工人'
 
 
 
@@ -28,5 +29,6 @@ export function 生产指令(ctx: Context) {
     设置工资(ctx);
     提升科技(ctx);
     提升科技到(ctx);
+    召回工人(ctx);
 
 }

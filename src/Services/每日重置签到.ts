@@ -8,21 +8,23 @@ import { } from "koishi-plugin-cron";
  * 执行每日重置
  */
 async function 执行每日重置(ctx: Context): Promise<void> {
-  const today = new Date().toISOString().split('T')[0]!;
+  
+  const 现在 = new Date();
+  // 使用本地时间构建日期字符串 YYYY-MM-DD，避免使用 UTC (toISOString) 导致时区偏差
+  const 今天 = `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, '0')}-${String(现在.getDate()).padStart(2, '0')}`;
 
-  // 使用固定的 id 获取唯一的全局配置记录
-  const serviceRecord = await ctx.database.get('malieservice', { id: 'service' });
-  const lastReset = serviceRecord[0]?.上次重置签到日期;
+  const 全局状态机 = await ctx.database.get('malieservice', { id: 'service' });
+  const 上次重置时间 = 全局状态机[0]?.上次重置签到日期;
 
   // 只有当日期发生变化时才重置
-  if (!lastReset || today > lastReset) {
-    // 使用正确的主键进行更新
+  if ( !上次重置时间 || 今天 > 上次重置时间 ) {
+
     await ctx.database.set('malieservice', { id: 'service' }, {
-      上次重置签到日期: today
+      上次重置签到日期: 今天
     });
 
-    // 重置所有玩家的今日签到状态
     await ctx.database.set('malieplayer', {}, { 今日是否签到: false });
+
   }
 }
 

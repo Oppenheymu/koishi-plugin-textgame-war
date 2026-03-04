@@ -4,10 +4,14 @@ import { Player , Service } from '../Types/index';
 
 
 declare module 'koishi' {
+
   interface Tables {
+
     malieplayer: Player
     malieservice: Service
+    
   }
+
 }
 
 

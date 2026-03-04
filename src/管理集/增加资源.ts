@@ -16,4 +16,23 @@ export function 增加资源(ctx: Context) {
             }
             
         });
+
+    // 管理员手动为所有用户增加生产次数（仅当小于8时）
+    ctx.command('增加生产次数', { authority: 3 })
+        .action(async ({ session }) => {
+            try {
+                const players = await ctx.database.get('malieplayer', {});
+                let count = 0;
+                for (const p of players) {
+                    const cur = p.生产次数 ?? 0;
+                    if (cur < 8) {
+                        await ctx.database.set('malieplayer', { userId: p.userId }, { 生产次数: cur + 1 });
+                        count++;
+                    }
+                }
+                return `为 ${count} 位玩家增加了生产次数（上限8）。`;
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
 }
