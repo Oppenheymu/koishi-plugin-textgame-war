@@ -31,7 +31,7 @@ export function 提升科技到(ctx: Context) {
                 // 计算所需的总生活资料
                 let 所需生活资料 = 0;
                 for (let i = 当前等级; i < 目标等级; i++) {
-                    所需生活资料 += 5000 * (i - 4);
+                    所需生活资料 += 5000 * i;
                 }
 
                 // 加上当前科技池中还未投入的容量
@@ -46,7 +46,7 @@ export function 提升科技到(ctx: Context) {
 
                 // 扣除生活资料
                 const 减少后的生活资料 = 用户资料.生活资料 - 所需生活资料;
-                const 新科技池容量 = 目标等级 < 3000 ? 5000 * (目标等级 - 4) : 0;
+                const 新科技池容量 = 目标等级 < 3000 ? 5000 * 目标等级 : 0;
 
                 // 更新数据库
                 await ctx.database.set('malieplayer', { userId }, {
@@ -58,9 +58,6 @@ export function 提升科技到(ctx: Context) {
 
                 // 构建返回信息
                 const 升级等级数 = 目标等级 - 当前等级;
-                const 新科技池百分比 = 新科技池容量 > 0 
-                    ? Math.floor((0 / 新科技池容量) * 100)
-                    : 0;
 
                 let 返回信息 = `
 ===[征战文游]===
