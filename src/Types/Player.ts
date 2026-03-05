@@ -1,7 +1,8 @@
 
 export interface Player {
 
-  userId: string;
+  id: number;
+  uid: string;
 
   //状态机
   驻扎地区: string | null;
@@ -13,7 +14,6 @@ export interface Player {
   稳定度: number;
   生产次数: number;
   工人工资: number;
-  最低工资: number;
 
   //全部资料
   生活资料: number;

@@ -1,5 +1,5 @@
 import { Context } from 'koishi';
-import { requirePlayer } from "../../Utils/index";
+import { 玩家检查 } from "../../Utils/index";
 
 // 定义确认请求的数据结构
 interface UpgradeRequest {
@@ -15,8 +15,8 @@ export function 改进生产技术到(ctx: Context) {
     ctx.command('改进生产技术到 <目标等级:number>')
         .action(async ({ session }, 目标等级) => {
             try {
-                const { userId, username } = await requirePlayer(ctx, session);
-                const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+
+                const { uid, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -65,7 +65,7 @@ ${username} 同志！
 
                 // === 确认逻辑 ===
                 const now = Date.now();
-                const existingRequest = UpgradeTimer[userId];
+                const existingRequest = UpgradeTimer[uid];
 
                 // 检查是否存在未超时的相同请求
                 if (existingRequest &&
@@ -73,19 +73,19 @@ ${username} 同志！
                     existingRequest.targetLevel === 目标等级) {
 
                     // === 执行升级 ===
-                    console.log(`用户 ${username} (${userId}) 确认改进生产技术到 ${目标等级}`);
+                    console.log(`用户 ${username} (${uid}) 确认改进生产技术到 ${目标等级}`);
 
                     // 扣除生活资料
                     const 减少后的生活资料 = 用户资料.生活资料 - 所需生活资料;
 
                     // 更新数据库
-                    await ctx.database.set('malieplayer', { userId }, {
+                    await ctx.database.set('malieplayer', { uid: uid }, {
                         生活资料: 减少后的生活资料,
                         生产技术: 目标等级
                     });
 
                     // 清除确认状态
-                    delete UpgradeTimer[userId];
+                    delete UpgradeTimer[uid];
 
                     // 构建返回信息
                     const 升级等级数 = 目标等级 - 当前等级;
@@ -99,12 +99,12 @@ ${username} 同志：
 
                 } else {
                     // === 发起确认 ===
-                    UpgradeTimer[userId] = { targetLevel: 目标等级, time: now };
+                    UpgradeTimer[uid] = { targetLevel: 目标等级, time: now };
 
                     // 设置超时清除
                     setTimeout(() => {
-                        if (UpgradeTimer[userId]?.time === now) {
-                            delete UpgradeTimer[userId];
+                        if (UpgradeTimer[uid]?.time === now) {
+                            delete UpgradeTimer[uid];
                             session?.send(`=====[生产管理]=====\n${username} 同志！\n改进生产技术到 ${目标等级} 的操作已超时`).catch(console.warn);
                         }
                     }, ConfirmTimeout);

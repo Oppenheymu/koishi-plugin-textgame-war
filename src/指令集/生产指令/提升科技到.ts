@@ -1,13 +1,12 @@
 import { Context } from 'koishi';
-import { requirePlayer } from "../../Utils/index";
+import { 玩家检查 } from "../../Utils/index";
 
 export function 提升科技到(ctx: Context) {
     ctx.command('提升科技到 <目标等级:number>')
         .action(async ({ session }, 目标等级) => {
             try {
 
-                const { userId, username } = await requirePlayer(ctx, session);
-                const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+                const { uid, username, 用户资料} = await 玩家检查(ctx, session);    
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -49,7 +48,7 @@ export function 提升科技到(ctx: Context) {
                 const 新科技池容量 = 目标等级 < 3000 ? 5000 * 目标等级 : 0;
 
                 // 更新数据库
-                await ctx.database.set('malieplayer', { userId }, {
+                await ctx.database.set('malieplayer', { uid: uid }, {
                     生活资料: 减少后的生活资料,
                     科技池投入: 0,
                     科技等级: 目标等级,

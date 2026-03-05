@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { requirePlayer } from "../../Utils/";
+import { 玩家检查 } from "../../Utils/";
 
 
 
@@ -8,8 +8,7 @@ export function 召回工人(ctx: Context) {
         .action( async ( { session } , 数量 ) => {
             try {
 
-                const { userId, username } = await requirePlayer(ctx, session);
-                const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+                const { uid, username, 用户资料} = await 玩家检查(ctx, session);    
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -30,7 +29,7 @@ export function 召回工人(ctx: Context) {
                 const 新工人数 = 用户资料.工人 + 数量;
                 const 新休假工人数 = 用户资料.休假工人 - 数量;
 
-                await ctx.database.set('malieplayer', { userId: userId }, {
+                await ctx.database.set('malieplayer', { uid: uid }, {
                     工人: 新工人数,
                     休假工人: 新休假工人数,
                 });

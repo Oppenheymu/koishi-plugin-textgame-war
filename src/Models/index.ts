@@ -1,28 +1,28 @@
 import { Context } from 'koishi';
-import { Player , Service } from '../Types/index';
+import { Player , PlayerConfig , Service } from '../Types/index';
 
 
 
 declare module 'koishi' {
 
-  interface Tables {
-
-    malieplayer: Player
-    malieservice: Service
-    
-  }
+    interface Tables {
+        malieplayer: Player
+        malieplayerconfig: PlayerConfig
+        malieservice: Service
+    }
 
 }
 
 
-
-import { setupPlayerModel } from './Player';
+import { 加载玩家配置表 } from './PlayerConfig';
+import { 加载玩家表 } from './Player';
 import { setupServiceModel } from './Service';
 
 export function 数据库服务(ctx: Context) {
 
-  // 按依赖顺序初始化模型
-  setupServiceModel(ctx);
-  setupPlayerModel(ctx)
+    加载玩家配置表(ctx);
+    加载玩家表(ctx)
+
+    setupServiceModel(ctx);
 
 }

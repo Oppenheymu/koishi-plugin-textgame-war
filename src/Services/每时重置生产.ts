@@ -1,5 +1,5 @@
 import { Context } from 'koishi';
-import { } from "koishi-plugin-cron"; 
+import { } from "koishi-plugin-cron";
 import { Player } from '../Types/index';
 
 
@@ -17,7 +17,7 @@ async function 执行生产次数增加(ctx: Context): Promise<void> {
             更新.生产次数 = 旧次数 + 1;
         }
 
-        await ctx.database.set('malieplayer', { userId: 更新的玩家.userId }, 更新);
+        await ctx.database.set('malieplayer', { uid: 更新的玩家.uid }, 更新);
 
     }
 }

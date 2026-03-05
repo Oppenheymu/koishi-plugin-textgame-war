@@ -1,12 +1,12 @@
 import { Context } from 'koishi';
-import { requirePlayer } from "../../Utils/index";
+import { 玩家检查 } from "../../Utils/index";
 
 export function 扩建厂房(ctx: Context) {
     ctx.command('扩建厂房 [数量:number]')
         .action(async ({ session }, 数量) => {
             try {
-                const { userId, username } = await requirePlayer(ctx, session);
-                const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+
+                const { uid, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -30,7 +30,7 @@ ${username} 同志：
                 const 新厂房 = 用户资料.厂房 + 扩建数量;
                 const 新钢铁 = 用户资料.钢铁 - 扩建成本;
 
-                await ctx.database.set('malieplayer', { userId: userId }, {
+                await ctx.database.set('malieplayer', { uid: uid }, {
                     厂房: 新厂房,
                     钢铁: 新钢铁
                 });
