@@ -1,5 +1,5 @@
 import { Session, Context } from 'koishi';
-import { Player } from '../Types/index';
+import { Player , PlayerConfig } from '../Types/index';
 
 
 
@@ -29,7 +29,7 @@ export function 用户检查( session: Session | undefined ): { platform: string
     };
 }
 
-export async function 玩家检查( ctx: Context, session: Session | undefined ): Promise<{ uid: string, username: string , 用户资料: Player }> {
+export async function 玩家检查( ctx: Context, session: Session | undefined ): Promise<{ id: number; uid: string; username: string; 用户资料: Player; 用户配置: PlayerConfig }> {
 
     const { platform , userId } = 用户检查(session);
 
@@ -44,9 +44,11 @@ export async function 玩家检查( ctx: Context, session: Session | undefined )
     }
 
     return {
+        id: PlayerConfig.id,
         uid: PlayerConfig.uid,
         username: PlayerConfig.username,
         用户资料: Player,
+        用户配置: PlayerConfig
     };
 }
 

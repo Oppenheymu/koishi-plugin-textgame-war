@@ -6,7 +6,7 @@ import { 文游管理集 } from './管理集/index';
 
 export const name = 'malie-textgame'
 export const inject = {
-  required: [ 'cron', 'database' ]
+  required: [ 'cron', 'database' , 'cache' ]
 }
 
 export interface Config {}

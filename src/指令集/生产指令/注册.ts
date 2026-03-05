@@ -4,7 +4,7 @@ import Hashids from 'hashids'
 import { Player } from '../../Types/index';
 import { 用户检查 , TRandom } from "../../Utils/index";
 
-const hashids = new Hashids("我的的神秘盐值-天机不可泄露", 6, "1234567890");
+const hashids = new Hashids("我的的神秘盐值-天机不可泄露", 6, "1234567890ABCDEF");
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
 export function 注册(ctx: Context) {
