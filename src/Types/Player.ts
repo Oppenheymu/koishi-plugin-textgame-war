@@ -14,6 +14,7 @@ export interface Player {
   稳定度: number;
   生产次数: number;
   工人工资: number;
+  工人招募限额: number;
 
   //全部资料
   生活资料: number;

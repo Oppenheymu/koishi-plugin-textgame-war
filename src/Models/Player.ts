@@ -22,6 +22,7 @@ export function 加载玩家表(ctx: Context) {
         稳定度: { type: 'unsigned', initial: 80 },
         生产次数: { type: 'unsigned', initial: 0 },
         工人工资: { type: 'unsigned', initial: 0 },
+        工人招募限额: { type: 'unsigned', initial: 1000 },
 
         // 全部资料
         生活资料:    { type: 'unsigned', initial: 0 },

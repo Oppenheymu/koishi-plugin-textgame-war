@@ -3,3 +3,4 @@
 export * from './Player';
 export * from './PlayerConfig';
 export * from './Service';
+export * from './GlobalData';

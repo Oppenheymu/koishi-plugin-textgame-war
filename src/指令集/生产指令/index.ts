@@ -15,6 +15,8 @@ import { 提升科技 } from './提升科技'
 import { 提升科技到 } from './提升科技到'
 import { 召回工人 } from './召回工人'
 import { 改进生产技术到 } from './改进生产技术到'
+import { 使用科技蓝图 } from './使用科技蓝图'
+import { 招募工人 } from './招募工人'
 
 
 
@@ -34,5 +36,7 @@ export function 生产指令(ctx: Context) {
     提升科技到(ctx);
     召回工人(ctx);
     改进生产技术到(ctx);
+    使用科技蓝图(ctx);
+    招募工人(ctx);
 
 }
