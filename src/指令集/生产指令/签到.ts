@@ -1,12 +1,13 @@
 import { Context } from "koishi";
 import { 玩家检查, TRandom } from "../../Utils/index";
-import { Player } from "../../Types/Player";
+
+
 
 export function 签到(ctx: Context) {
     ctx.command('签到').alias('阅读报告')
         .action(async ({ session }) => {
 
-            const { uid, username, 用户资料} = await 玩家检查(ctx, session);
+            const { id, username, 用户资料} = await 玩家检查(ctx, session);
 
             // 格式化数字显示
             const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -30,7 +31,7 @@ ${username} 同志！
                     const 增加后的钢铁 = 用户资料.钢铁 + 增加的钢铁;
                     const 增加后的生活资料 = 用户资料.生活资料 + 增加的生活资料;
 
-                    await ctx.database.set('malieplayer', { uid: uid }, {
+                    await ctx.database.set('malieplayer', { id: id }, {
                         今日是否签到: true,
                         工人: 增加后的工人,
                         石油: 增加后的石油,
@@ -39,7 +40,7 @@ ${username} 同志！
                     });
 
                     if ( 用户资料.厂房 < 10000) {
-                        await ctx.database.set('malieplayer', { uid: uid }, { 厂房: 10000 } );
+                        await ctx.database.set('malieplayer', { id: id }, { 厂房: 10000 } );
                     }
 
                     return `

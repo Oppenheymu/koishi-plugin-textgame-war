@@ -1,5 +1,5 @@
 import { Context, Session } from "koishi";
-import { 玩家检查 } from "../../Utils/会话与用户检查";
+import { 玩家检查 } from "../../Utils/用户检查";
 
 
 

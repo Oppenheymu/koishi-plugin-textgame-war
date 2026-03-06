@@ -8,7 +8,7 @@ export function 我的科技(ctx: Context) {
         .action(async ({ session }) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);    
+                const { username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');

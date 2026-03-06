@@ -6,13 +6,13 @@ export function 提升科技(ctx: Context) {
         .action(async ({ session }, 投入生活资料) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);    
+                const { id, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 验证输入
-                if (!投入生活资料 || 投入生活资料 <= 0) {
+                if (!投入生活资料 || 投入生活资料 <= 0 || !Number.isInteger(投入生活资料)) {
                     return '请输入有效的生活资料数量！\n例如：提升科技 10000';
                 }
 
@@ -47,16 +47,16 @@ export function 提升科技(ctx: Context) {
 
                 // 加入新的投入
                 let 增加后的科技池投入 = 科技池投入 + 投入生活资料;
-                
+
                 // 计算新投入后能升多少级：C(n) = 5000 × n，这是从 n 级升到 n+1 级所需容量
                 let 升级次数 = 0;
                 while (新科技等级 < 3000) {
                     const 所需容量 = 5000 * 新科技等级;
-                    
+
                     if (所需容量 <= 0) {
                         break;
                     }
-                    
+
                     if (增加后的科技池投入 >= 所需容量) {
                         增加后的科技池投入 -= 所需容量;
                         新科技等级 += 1;
@@ -65,12 +65,12 @@ export function 提升科技(ctx: Context) {
                         break;
                     }
                 }
-                
+
                 // 计算新的科技池容量（升到下一级所需容量）
                 const 新的科技池容量 = 新科技等级 < 3000 ? 5000 * 新科技等级 : 0;
 
                 // 更新数据库
-                await ctx.database.set('malieplayer', { uid: uid }, {
+                await ctx.database.set('malieplayer', { id: id }, {
                     生活资料: 减少后的生活资料,
                     科技池投入: 增加后的科技池投入,
                     科技等级: 新科技等级,
@@ -78,10 +78,10 @@ export function 提升科技(ctx: Context) {
                 });
 
                 // 构建返回信息
-                const 科技池百分比 = 新的科技池容量 > 0 
+                const 科技池百分比 = 新的科技池容量 > 0
                     ? Math.floor((增加后的科技池投入 / 新的科技池容量) * 100)
                     : 0;
-                const 旧科技池百分比 = 用户资料.科技池容量 > 0 
+                const 旧科技池百分比 = 用户资料.科技池容量 > 0
                     ? Math.floor((用户资料.科技池投入 / 用户资料.科技池容量) * 100)
                     : 0;
                 const 百分比增长 = 科技池百分比 - 旧科技池百分比;

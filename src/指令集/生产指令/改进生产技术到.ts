@@ -16,7 +16,7 @@ export function 改进生产技术到(ctx: Context) {
         .action(async ({ session }, 目标等级) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);
+                const { id , uid, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -79,7 +79,7 @@ ${username} 同志！
                     const 减少后的生活资料 = 用户资料.生活资料 - 所需生活资料;
 
                     // 更新数据库
-                    await ctx.database.set('malieplayer', { uid: uid }, {
+                    await ctx.database.set('malieplayer', { id: id }, {
                         生活资料: 减少后的生活资料,
                         生产技术: 目标等级
                     });

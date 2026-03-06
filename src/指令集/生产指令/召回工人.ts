@@ -8,13 +8,13 @@ export function 召回工人(ctx: Context) {
         .action( async ( { session } , 数量 ) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);    
+                const { id, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 输入验证
-                if ( !数量 || 数量 <= 0 ) {
+                if ( !数量 || 数量 <= 0 || !Number.isInteger(数量) ) {
                     return `请输入要休假的工人数量\n例如：\`工人休假 1000\``;
                 }
 
@@ -24,12 +24,12 @@ export function 召回工人(ctx: Context) {
 
                 if ( 用户资料.小时是否生产 == false ) {
                     return `当前小时内还未生产过，无法召回工人`;
-                } 
+                }
 
                 const 新工人数 = 用户资料.工人 + 数量;
                 const 新休假工人数 = 用户资料.休假工人 - 数量;
 
-                await ctx.database.set('malieplayer', { uid: uid }, {
+                await ctx.database.set('malieplayer', { id: id }, {
                     工人: 新工人数,
                     休假工人: 新休假工人数,
                 });

@@ -1,20 +1,19 @@
 import { Context } from 'koishi';
-import { requirePlayer } from "../../Utils/index";
+import { 玩家检查 } from "../../Utils/index";
 
 export function 工人休假(ctx: Context) {
     ctx.command('工人休假 <数量:number>')
         .action(async ({ session }, 数量) => {
             try {
 
-                const { userId, username } = await requirePlayer(ctx, session);
-                const 用户资料 = (await ctx.database.get('malieplayer', { userId }))[0]!;
+                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
                 // 输入验证
-                if (!数量 || 数量 <= 0) {
-                    return `请输入要休假的工人数量\n例如：\`工人休假 1000\``;
+                if ( !数量 || 数量 <= 0 || !Number.isInteger(数量) ) {
+                    return `请输入要休假的工人数量（正整数）\n例如：\`工人休假 1000\``;
                 }
 
                 if (数量 > 用户资料.工人) {
@@ -23,8 +22,8 @@ export function 工人休假(ctx: Context) {
 
                 if ( 用户资料.小时是否生产 == true ) {
                     return `当前小时内生产过了，无法休假工人`;
-                } 
-                
+                }
+
 
 
                 // 计算休假后的数据
@@ -41,12 +40,12 @@ export function 工人休假(ctx: Context) {
                 const 新稳定度 = Math.min(100, 用户资料.稳定度 + 稳定度提升);
 
                 // 更新数据库
-                await ctx.database.set('malieplayer', { userId: userId }, {
+                await ctx.database.set('malieplayer', { id: id }, {
                     工人: 新工人数,
                     休假工人: 新休假工人数,
                     稳定度: 新稳定度
                 });
-                
+
                 return `
 ====[征战文游]====
 ${username} 同志：

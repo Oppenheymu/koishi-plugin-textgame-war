@@ -6,8 +6,8 @@ export function 生产(ctx: Context) {
         .action(async ({ session }) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);
-                
+                const { id, username, 用户资料} = await 玩家检查(ctx, session);
+
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
@@ -19,7 +19,7 @@ ${username} 同志：
 □ 生产次数不足
 `.trim();
                 }
-                
+
                 // 检查厂房空间
                 if ( 用户资料.厂房 < 用户资料.工人 ) {
                     return `
@@ -38,7 +38,8 @@ ${username} 同志：
                 const 当前工资 = 用户资料.工人工资;
 
                 const 发出的工资 = 当前工资 * 用户资料.工人;
-                
+
+                const 原稳定度 = 用户资料.稳定度;
                 let 新稳定度 = 用户资料.稳定度;
 
                 // 如果当前工资小于最低工资，扣除稳定度
@@ -53,7 +54,7 @@ ${username} 同志：
                 const 新生活资料 = 用户资料.生活资料 + 利润;
                 const 新生产次数 = 用户资料.生产次数 - 1;
 
-                await ctx.database.set('malieplayer', { uid: uid }, {
+                await ctx.database.set('malieplayer', { id: id }, {
                     小时是否生产: true,
                     生活资料: 新生活资料,
                     稳定度: 新稳定度,
@@ -67,7 +68,7 @@ ${username} 同志：
 ■ 工人：${格式化(用户资料.工人)}
 ■ 总产出：${格式化(总产出)}
 ■ 总盈利：${格式化(利润)}
-■ 稳定度：${格式化(新稳定度)}
+■ 稳定度：${格式化(原稳定度)} → ${格式化(新稳定度)}
 `.trim();
             } catch (error) {
                 return (error as Error).message;

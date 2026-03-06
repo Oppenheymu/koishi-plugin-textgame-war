@@ -6,7 +6,7 @@ export function 设置工资(ctx: Context) {
         .action(async ({ session }, 工资) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);
+                const { id, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -33,7 +33,7 @@ ${username} 同志：
                 }
 
                 // 更新工资
-                await ctx.database.set('malieplayer', { uid: uid }, {
+                await ctx.database.set('malieplayer', { id: id }, {
                     工人工资: 工资
                 });
 

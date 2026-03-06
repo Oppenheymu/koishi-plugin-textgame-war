@@ -9,7 +9,7 @@ export function 会话检查(session: Session | undefined): asserts session is S
     }
 }
 
-export function 用户检查( session: Session | undefined ): { platform: string ; userId: string } {
+export function 用户检查( session: Session | undefined): { platform: string ; userId: string } {
 
     会话检查(session);
 
@@ -29,7 +29,14 @@ export function 用户检查( session: Session | undefined ): { platform: string
     };
 }
 
-export async function 玩家检查( ctx: Context, session: Session | undefined ): Promise<{ id: number; uid: string; username: string; 用户资料: Player; 用户配置: PlayerConfig }> {
+export async function 玩家检查(ctx: Context, session: Session | undefined ):
+Promise<{
+    id: number;
+    uid: string;
+    username: string;
+    用户资料: Player;
+    用户配置: PlayerConfig
+}> {
 
     const { platform , userId } = 用户检查(session);
 
@@ -38,7 +45,7 @@ export async function 玩家检查( ctx: Context, session: Session | undefined )
         throw new Error(`同志，你还未注册，请先发送[注册]指令`);
     }
 
-    const [Player] = await ctx.database.get('malieplayer', {uid: PlayerConfig.uid });
+    const [Player] = await ctx.database.get('malieplayer', {id: PlayerConfig.id });
     if ( !Player ) {
         throw new Error(`数据异常：已找到账号但未发现玩家档案，请联系管理员`);
     }

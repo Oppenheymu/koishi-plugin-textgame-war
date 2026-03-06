@@ -17,7 +17,7 @@ export function 绑定账户(ctx: Context) {
     ctx.command('绑定账户' , '获取一个跨平台绑定令牌来绑定账号')
         .action(async ({ session }) => {
             try {
-                const { id } = await 玩家检查(ctx, session);
+                const { id, username } = await 玩家检查(ctx, session);
 
                 // 1. 清理过期任务池
                 for (const [code, task] of 绑定任务池.entries()) {
@@ -34,7 +34,12 @@ export function 绑定账户(ctx: Context) {
                 const timer = setTimeout(() => 绑定任务池.delete(code), 5 * 60 * 1000);
                 绑定任务池.set(code, { ownerId: id, targetPlatform: '', targetUserId: '', timer });
 
-                return `[安全令牌] 您的验证码为：${code}\n请在 5 分钟内前往新平台输入 [/确认绑定 ${code}]`;
+                return `
+====[征战文游]====
+${username} 同志!
+您的验证码为：${code}
+请在5分钟在目标平台输入:
+  确认绑定 ${code}`.trim();
 
             } catch (error) {
                 return (error as Error).message;
@@ -57,7 +62,12 @@ export function 绑定账户(ctx: Context) {
                 task.targetPlatform = platform;
                 task.targetUserId = userId;
 
-                return `[申请成功] 已锁定目标账号。请回到【原平台账号】输入 [/最终同意] 完成绑定。`;
+                return `
+====[征战文游]====
+安全令牌验证成功！
+请用原平台账号输入:
+  最终同意
+`.trim();
             } catch (error) {
                 return (error as Error).message;
             }
@@ -65,7 +75,7 @@ export function 绑定账户(ctx: Context) {
 
     ctx.command('最终同意')
         .action(async ({ session }) => {
-            const { id } = await 玩家检查(ctx, session);
+            const { id, username } = await 玩家检查(ctx, session);
 
             // 在池子里找“属于我”且“对方已填好信息”的任务
             const entry = Array.from(绑定任务池.entries()).find(([_, t]) =>
@@ -83,7 +93,12 @@ export function 绑定账户(ctx: Context) {
                 clearTimeout(task.timer);
                 绑定任务池.delete(code);
 
-                return `[双向握手成功] 账号互通已完成！`;
+                return `
+====[征战文游]====
+${username} 同志!
+双向握手成功]
+账号互通已完成！
+`.trim();
             } catch (error) {
                 return (error as Error).message;
             }

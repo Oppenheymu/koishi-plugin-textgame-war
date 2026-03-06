@@ -6,7 +6,7 @@ export function 扩建厂房(ctx: Context) {
         .action(async ({ session }, 数量) => {
             try {
 
-                const { uid, username, 用户资料} = await 玩家检查(ctx, session);
+                const { id, username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -21,7 +21,7 @@ export function 扩建厂房(ctx: Context) {
 【工业扩建】
 ${username} 同志：
 □ 钢铁不足：（吨）
-需要 ${格式化(扩建成本)} 
+需要 ${格式化(扩建成本)}
 □ 当前钢铁：${格式化(用户资料.钢铁)}
 `.trim();
                 }
@@ -30,7 +30,7 @@ ${username} 同志：
                 const 新厂房 = 用户资料.厂房 + 扩建数量;
                 const 新钢铁 = 用户资料.钢铁 - 扩建成本;
 
-                await ctx.database.set('malieplayer', { uid: uid }, {
+                await ctx.database.set('malieplayer', { id: id }, {
                     厂房: 新厂房,
                     钢铁: 新钢铁
                 });
