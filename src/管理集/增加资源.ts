@@ -10,14 +10,24 @@ export function 设置资源(ctx: Context) {
             try {
 
                 const { 目标用户ID } = await 目标解析(ctx, session, 目标);
-
-                // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
-                await ctx.database.set('malieplayer', { id: 目标用户ID }, { [资源类型]: 数量 });
-                if ( typeof 数量 === "number" ) return `成功将 ${目标} 的 ${资源类型} 设置为 ${格式化(数量)}`;
-                if ( typeof 数量 === "boolean" ) return `成功将 ${目标} 的 ${资源类型} 设置为 ${数量}`;
+                // 类型转换：支持 true/false/1/0/字符串
+                let value: number | boolean;
+                if (数量 === 'true') {
+                    value = true
+                } else if (数量 === 'false') {
+                    value = false;
+                } else if (!isNaN(Number(数量))) {
+                    value = Number(数量);
+                } else {
+                    return '数量参数格式错误，只能为数字或布尔值';
+                }
 
+                await ctx.database.set('malieplayer', { id: 目标用户ID }, { [资源类型]: value });
+                
+                if (typeof value === 'number') return `成功将 ${目标} 的 ${资源类型} 设置为 ${格式化(value)}`;
+                if (typeof value === 'boolean') return `成功将 ${目标} 的 ${资源类型} 设置为 ${value}`;
 
             } catch (error) {
                 return (error as Error).message;

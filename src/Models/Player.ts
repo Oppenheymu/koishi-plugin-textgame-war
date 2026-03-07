@@ -50,14 +50,16 @@ export function 加载玩家表(ctx: Context) {
         火箭炮弹药:  { type: 'unsigned', initial: 0 },
 
         // 空军（地面/正常状态）
-        防空弹药:        { type: 'unsigned', initial: 0 },
-        飞机:            { type: 'unsigned', initial: 0 },
-        隐形飞机:        { type: 'unsigned', initial: 0 },
-        预警机:          { type: 'unsigned', initial: 0 },
-        大型运输机:      { type: 'unsigned', initial: 0 },
-        小型运输机:      { type: 'unsigned', initial: 0 },
-        战斗机:          { type: 'unsigned', initial: 0 },
-        巡航中的战斗机:  { type: 'unsigned', initial: 0 },
+        防空弹药:    { type: 'unsigned', initial: 0 },
+        侦察机:      { type: 'unsigned', initial: 0 },
+        轰炸机:      { type: 'unsigned', initial: 0 },
+        隐形轰炸机:  { type: 'unsigned', initial: 0 },
+        大型运输机:  { type: 'unsigned', initial: 0 },
+        小型运输机:  { type: 'unsigned', initial: 0 },
+        预警机:      { type: 'unsigned', initial: 0 },
+        巡航中的预警机:   { type: 'unsigned', initial: 0 },
+        战斗机:           { type: 'unsigned', initial: 0 },
+        巡航中的战斗机:   { type: 'unsigned', initial: 0 },
 
         // 地下机库相关
         地下飞机:        { type: 'unsigned', initial: 0 },

@@ -4,7 +4,7 @@ import { Context } from 'koishi';
  * 初始化全球数据表
  */
 export function 加载全球数据表(ctx: Context) {
-    ctx.model.extend('maliegobaldata', {
+    ctx.model.extend('malieglobaldata', {
 
         id: { type: 'string', length: 255 },
 

@@ -17,6 +17,10 @@ import { 召回工人 } from './召回工人'
 import { 改进生产技术到 } from './改进生产技术到'
 import { 使用科技蓝图 } from './使用科技蓝图'
 import { 招募工人 } from './招募工人'
+import { 开采石油 } from './开采石油'
+import { 开采铁矿石 } from './开采铁矿石'
+import { 军事生产 } from './军事生产'
+import { 土法炼钢 } from './土法炼钢'
 
 
 
@@ -38,5 +42,10 @@ export function 生产指令(ctx: Context) {
     改进生产技术到(ctx);
     使用科技蓝图(ctx);
     招募工人(ctx);
+    开采石油(ctx);
+    开采铁矿石(ctx);
+    军事生产(ctx);
+    土法炼钢(ctx);
+    军事生产(ctx);
 
 }
