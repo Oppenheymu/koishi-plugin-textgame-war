@@ -38,16 +38,20 @@ Promise<{
     用户配置: PlayerConfig
 }> {
 
+    会话检查(session);
+
     const { platform , userId } = 用户检查(session);
 
     const [PlayerConfig] = await ctx.database.get('malieplayerconfig', { [platform]: userId } );
     if ( !PlayerConfig ) {
-        throw new Error(`同志，你还未注册，请先发送[注册]指令`);
+        session.send(`同志，你还未注册`);
+        throw new Error('玩家未注册');
     }
 
     const [Player] = await ctx.database.get('malieplayer', {id: PlayerConfig.id });
     if ( !Player ) {
-        throw new Error(`数据异常：已找到账号但未发现玩家档案，请联系管理员`);
+        session.send(`数据异常：已找到账号但未发现玩家档案，请联系管理员`);
+        throw new Error('玩家档案不存在');
     }
 
     return {

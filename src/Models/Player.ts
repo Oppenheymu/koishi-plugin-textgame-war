@@ -40,6 +40,8 @@ export function 加载玩家表(ctx: Context) {
 
         // 资源
         石油:        { type: 'unsigned', initial: 0 },
+        铝土矿:      { type: 'unsigned', initial: 0 },
+        金属铝:      { type: 'unsigned', initial: 0 },
         铁矿石:      { type: 'unsigned', initial: 0 },
         钢铁:        { type: 'unsigned', initial: 0 },
 
