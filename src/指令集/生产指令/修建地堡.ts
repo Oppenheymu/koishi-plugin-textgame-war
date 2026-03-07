@@ -20,7 +20,7 @@ const 地堡库: Record<string, 地堡配置> = {
 
 
 export function 修建地堡(ctx: Context) {
-    ctx.command('修建地堡 <地堡类型>')
+    ctx.command('修建地堡 <地堡类型>').alias('建造地堡')
         .action(async ({ session }, 地堡类型) => {
             try {
 
