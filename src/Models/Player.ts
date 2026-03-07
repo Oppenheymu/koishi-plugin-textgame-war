@@ -61,6 +61,13 @@ export function 加载玩家表(ctx: Context) {
         战斗机:           { type: 'unsigned', initial: 0 },
         巡航中的战斗机:   { type: 'unsigned', initial: 0 },
 
+        地下工厂投入:     { type: 'unsigned', initial: 0 },
+        是否有地下工厂:   { type: 'boolean', initial: false },
+        地下机库投入:     { type: 'unsigned', initial: 0 },
+        是否有地下机库:   { type: 'boolean', initial: false },
+        地下弹药库投入:   { type: 'unsigned', initial: 0 },
+        是否有地下弹药库: { type: 'boolean', initial: false },
+
         // 地下机库相关
         地下飞机:        { type: 'unsigned', initial: 0 },
         地下隐形飞机:    { type: 'unsigned', initial: 0 },

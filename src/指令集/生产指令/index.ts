@@ -21,6 +21,14 @@ import { 开采石油 } from './开采石油'
 import { 开采铁矿石 } from './开采铁矿石'
 import { 军事生产 } from './军事生产'
 import { 土法炼钢 } from './土法炼钢'
+import { 查看全球劳动力市场 } from './查看全球劳动力市场'
+import { 我的地堡 } from './我的地堡'
+import { 我的地下工厂 } from './我的地下工厂'
+import { 我的地下机库 } from './我的地下机库'
+import { 我的地下弹药库 } from './我的地下弹药库'
+import { 转入地下 } from './转入地下'
+import { 转入地面 } from './转入地面'
+import { 修建地堡 } from './修建地堡'
 
 
 
@@ -47,5 +55,13 @@ export function 生产指令(ctx: Context) {
     军事生产(ctx);
     土法炼钢(ctx);
     军事生产(ctx);
+    查看全球劳动力市场(ctx);
+    我的地堡(ctx);
+    我的地下工厂(ctx);
+    我的地下机库(ctx);
+    我的地下弹药库(ctx);
+    转入地下(ctx);
+    转入地面(ctx);
+    修建地堡(ctx);
 
 }

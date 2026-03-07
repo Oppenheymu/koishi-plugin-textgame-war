@@ -55,6 +55,14 @@ export interface Player {
     战斗机: number;
     巡航中的战斗机: number;
 
+    // 地堡相关
+    地下工厂投入: number;
+    是否有地下工厂: boolean;
+    地下机库投入: number;
+    是否有地下机库: boolean;
+    地下弹药库投入: number;
+    是否有地下弹药库: boolean;
+
     //地下机库相关
     地下飞机: number;
     地下隐形飞机: number;
