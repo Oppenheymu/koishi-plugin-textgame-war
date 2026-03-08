@@ -4,7 +4,7 @@ import { 玩家检查 } from "../../../Utils/用户检查";
 
 
 export function 我的账户配置(ctx: Context) {
-    ctx.command('我的账户配置', '查看你的账户配置').alias('我的账号').alias('我的账号配置')
+    ctx.command('我的账户配置').alias('我的账号').alias('我的账号配置')
         .action(async ({ session }) => {
             try {
                 const { 用户配置 } = await 玩家检查(ctx, session);

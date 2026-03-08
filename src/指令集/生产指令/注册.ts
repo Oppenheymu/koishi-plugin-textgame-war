@@ -8,7 +8,7 @@ const hashids = new Hashids("我的的神秘盐值-天机不可泄露", 6, "1234
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
 export function 注册(ctx: Context) {
-    ctx.command('注册', '注册账号，开始你的冒险之旅！')
+    ctx.command('注册').alias('首次阅读报告')
         .action(async ({ session }) => {
             try {
 

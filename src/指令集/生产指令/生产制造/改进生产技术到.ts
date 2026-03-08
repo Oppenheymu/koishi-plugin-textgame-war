@@ -1,5 +1,5 @@
 import { Context } from 'koishi';
-import { 玩家检查 } from "../../Utils/index";
+import { 玩家检查 } from "../../../Utils/index";
 
 // 定义确认请求的数据结构
 interface UpgradeRequest {

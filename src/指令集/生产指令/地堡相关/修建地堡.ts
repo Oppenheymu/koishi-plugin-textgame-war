@@ -1,6 +1,6 @@
 import { Context } from 'koishi';
-import { 玩家检查 } from '../../Utils';
-import { Player } from '../../Types';
+import { 玩家检查 } from '../../../Utils';
+import { Player } from '../../../Types';
 
 
 
