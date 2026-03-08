@@ -1,16 +1,13 @@
 import { Context } from 'koishi';
 import { 尝试发送随机图片, 玩家检查 } from "../../../Utils/index";
 
-const 生产成功图片概率 = 0.01;
-const 生产成功图片池 = [
+const 图片概率 = 1;
+const 图片池 = [
     '工厂.jpg',
     '工厂2.jpg',
     '工厂3.jpg',
     '工厂4.jpeg',
     '工厂5.jpg',
-    '建设.jpg',
-    '建设2.jpg',
-    '建设3.jpg',
 ];
 
 export function 生产(ctx: Context) {
@@ -88,7 +85,7 @@ ${username} 同志：
                     });
                 }
 
-                await 尝试发送随机图片(session, 生产成功图片池, 生产成功图片概率);
+                await 尝试发送随机图片(session, 图片池, 图片概率);
 
                 return `
 【工业生产】

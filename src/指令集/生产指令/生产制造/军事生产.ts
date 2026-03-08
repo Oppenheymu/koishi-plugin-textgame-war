@@ -98,8 +98,8 @@ const 物品属性名: Record<string, keyof Player> = {
     小型运输机: '小型运输机',
 };
 
-const 生产成功图片概率 = 0.01;
-const 生产成功图片池 = [
+const 图片概率 = 0.01;
+const 图片池 = [
     '军工厂3.jpg',
 ];
 
@@ -177,7 +177,7 @@ ${Object.keys(物品库).join('、')}
                 // 保存到数据库
                 await ctx.database.set('malieplayer', { id: id }, 更新数据);
 
-                await 尝试发送随机图片(session, 生产成功图片池, 生产成功图片概率);
+                await 尝试发送随机图片(session, 图片池, 图片概率);
 
                 return `
 ====[军事生产]====
