@@ -4,7 +4,7 @@ import { 玩家检查 } from '../../../Utils';
 
 
 export function 使用科技蓝图(ctx: Context) {
-    ctx.command('使用科技蓝图 <数量:number>', '使用科技蓝图')
+    ctx.command('使用科技蓝图 <数量:number>')
         .action(async ({ session }, 数量 ) => {
             try {
 
