@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { h, Logger, Session } from 'koishi';
+import { h, Logger } from 'koishi';
 
 const logger = new Logger('malie-random-image');
 
@@ -16,25 +16,19 @@ function 查找项目根目录(起始目录: string): string {
 }
 
 
-export async function 尝试发送随机图片(
-    session: Session | undefined,
+export function 生成随机图片片段(
     图片池: readonly string[],
-    触发概率: number = 0.01,
+    触发概率: number,
     资源子目录: readonly string[] = ['src', 'assets', 'Image']
-): Promise<void> {
-    if (!session) {
-        logger.warn('session 不存在，跳过发送');
-        return;
-    }
-
+): string {
     if (!图片池.length) {
         logger.warn('图片池为空，跳过发送');
-        return;
+        return '';
     }
 
     if (触发概率 <= 0) {
         logger.warn(`触发概率 <= 0（${触发概率}），跳过发送`);
-        return;
+        return '';
     }
 
     const 最终概率 = Math.min(1, 触发概率);
@@ -43,18 +37,16 @@ export async function 尝试发送随机图片(
 
     if (随机值 >= 最终概率) {
         logger.warn('未触发发送');
-        return;
+        return '';
     }
-
 
     const 随机图片 = 图片池[Math.floor(Math.random() * 图片池.length)];
     if (!随机图片) {
         logger.warn('未选中图片，跳过发送');
-        return;
+        return '';
     }
 
     logger.warn(`命中图片：${随机图片}`);
-
 
     const 当前文件目录 = dirname(fileURLToPath(import.meta.url));
     const 项目根目录 = 查找项目根目录(当前文件目录);
@@ -69,19 +61,13 @@ export async function 尝试发送随机图片(
     if (!可用图片路径) {
         logger.error(`未找到图片文件：${随机图片}`);
         logger.error(`路径候选：${图片路径候选.join(' | ')}`);
-        return;
+        return '';
     }
 
     const src = pathToFileURL(可用图片路径).href;
-    logger.warn(`将发送图片：${可用图片路径}`);
+    logger.warn(`生成图片片段：${可用图片路径}`);
     logger.warn(`图片 src：${src}`);
 
-    try {
-        const result = await session.send(h('img', { src }));
-        logger.warn(`发送调用已完成，返回值：${JSON.stringify(result)}`);
-    } catch (error) {
-        logger.error(`发送失败：${可用图片路径}`);
-        logger.error(String(error));
-    }
+    return h('img', { src }).toString();
 }
 

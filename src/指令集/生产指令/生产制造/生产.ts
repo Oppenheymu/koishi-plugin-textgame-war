@@ -1,12 +1,11 @@
 import { Context } from 'koishi';
-import { 尝试发送随机图片, 玩家检查 } from "../../../Utils/index";
+import { 生成随机图片片段, 玩家检查 } from "../../../Utils/index";
 
-const 图片概率 = 1;
+const 图片概率 = 0.01;
 const 图片池 = [
     '工厂.jpg',
     '工厂2.jpg',
     '工厂3.jpg',
-    '工厂4.jpeg',
     '工厂5.jpg',
 ];
 
@@ -85,17 +84,19 @@ ${username} 同志：
                     });
                 }
 
-                await 尝试发送随机图片(session, 图片池, 图片概率);
+                const 图片片段 = 生成随机图片片段(图片池, 图片概率);
 
-                return `
+                const 文本消息 = `
 【工业生产】
 ${username} 同志：
-===成功进行生产===
+====成功进行生产====
 ■ 工人：${格式化(用户资料.工人)}
 ■ 总产出：${格式化(总产出)}
 ■ 总盈利：${格式化(利润)}
 ■ 稳定度：${格式化(原稳定度)} → ${格式化(新稳定度)}
 `.trim();
+
+                return 图片片段 ? `${文本消息}\n${图片片段}` : 文本消息;
             } catch (error) {
                 return (error as Error).message;
             }

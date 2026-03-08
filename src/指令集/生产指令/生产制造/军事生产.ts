@@ -1,5 +1,5 @@
 import { Context } from 'koishi'
-import { 玩家检查 , 尝试发送随机图片} from '../../../Utils'
+import { 玩家检查 , 生成随机图片片段} from '../../../Utils'
 import { Player } from '../../../Types'
 
 
@@ -177,14 +177,16 @@ ${Object.keys(物品库).join('、')}
                 // 保存到数据库
                 await ctx.database.set('malieplayer', { id: id }, 更新数据);
 
-                await 尝试发送随机图片(session, 图片池, 图片概率);
+                const 图片片段 = 生成随机图片片段(图片池, 图片概率);
 
-                return `
+                const 文本消息 = `
 ====[军事生产]====
 ${username} 同志：
 成功生产 ${数量} 个 ${物品类型.name}
 ${消耗明细.join('\n')}
 `.trim();
+
+                return 图片片段 ? `${文本消息}\n${图片片段}` : 文本消息;
 
             } catch (error) {
                 return (error as Error).message;
