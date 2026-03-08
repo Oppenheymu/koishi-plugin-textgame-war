@@ -5,7 +5,7 @@ import { TRandom, 玩家检查 } from '../../Utils';
 
 
 export  function 开采石油(ctx: Context) {
-    ctx.command('开采石油')
+    ctx.command('开采石油').alias('生产石油')
         .action(async ({ session }) => {
             try {
                 const {  id , username , 用户资料 } = await 玩家检查(ctx, session);
@@ -31,7 +31,8 @@ export  function 开采石油(ctx: Context) {
 
                 await ctx.database.set('malieplayer', { id: id }, {
                     石油: 增加后的石油,
-                    生活资料: 用户资料.生活资料 - 2000
+                    生活资料: 用户资料.生活资料 - 2000,
+                    生产次数: 用户资料.生产次数 - 1,
                 });
                 return `
 ====[征战文游]====

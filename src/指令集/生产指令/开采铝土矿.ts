@@ -32,7 +32,8 @@ export  function 开采铝土矿(ctx: Context) {
 
                 await ctx.database.set('malieplayer', { id: id }, {
                     铝土矿: 增加后的铝土矿,
-                    生活资料: 用户资料.生活资料 - 2000
+                    生活资料: 用户资料.生活资料 - 2000,
+                    生产次数: 用户资料.生产次数 - 1
                 });
                 return `
 ====[征战文游]====

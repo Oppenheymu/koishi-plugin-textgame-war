@@ -61,6 +61,21 @@ ${username} 同志：
                     生产次数: 新生产次数
                 });
 
+                // 更新今日全球生产总值
+                const globalData = await ctx.database.get('malieglobaldata', { id: 'global' });
+                const currentTotal = globalData.length > 0 ? globalData[0]!.今日全球生产总值 : 0;
+                
+                if (globalData.length === 0) {
+                    await ctx.database.create('malieglobaldata', { 
+                        id: 'global', 
+                        今日全球生产总值: 总产出 
+                    });
+                } else {
+                    await ctx.database.set('malieglobaldata', { id: 'global' }, { 
+                        今日全球生产总值: currentTotal + 总产出 
+                    });
+                }
+
                 return `
 【工业生产】
 ${username} 同志：

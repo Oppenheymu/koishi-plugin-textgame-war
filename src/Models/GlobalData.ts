@@ -14,6 +14,7 @@ export function 加载全球数据表(ctx: Context) {
         // 全球主要数据方差
 
         // 全球主要数据总和
+        历史生产记录: { type: 'json', initial: [] },
         近七天全球生产总值: { type: 'float', initial: 0 },
         近三天全球生产总值: { type: 'float', initial: 0 },
         今日全球生产总值: { type: 'float', initial: 0 },

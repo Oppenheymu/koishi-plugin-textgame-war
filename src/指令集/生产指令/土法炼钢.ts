@@ -51,7 +51,8 @@ export  function 土法炼钢(ctx: Context) {
                 await ctx.database.set('malieplayer', { id: id }, {
                     钢铁: 增加后的的钢铁,
                     铁矿石: 减少后的铁矿石,
-                    生活资料: 用户资料.生活资料 - 2000
+                    生活资料: 用户资料.生活资料 - 2000,
+                    生产次数: 用户资料.生产次数 - 1
                 });
                 return `
 ====[征战文游]====

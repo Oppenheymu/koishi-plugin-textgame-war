@@ -96,7 +96,7 @@ ${username} 同志!
                 return `
 ====[征战文游]====
 ${username} 同志!
-双向握手成功]
+双向握手成功
 账号互通已完成！
 `.trim();
             } catch (error) {

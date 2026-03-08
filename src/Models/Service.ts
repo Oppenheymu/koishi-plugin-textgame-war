@@ -12,6 +12,7 @@ export function 加载服务表(ctx: Context) {
     id: { type: 'string', length: 255 },
 
     上次重置签到日期: { type: 'string', length: 255, nullable: true },
+    上次全服统计日期: { type: 'string', length: 255, nullable: true }
 
   }, {
     primary: 'id'

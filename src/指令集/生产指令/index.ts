@@ -29,6 +29,7 @@ import { 我的地下弹药库 } from './我的地下弹药库'
 import { 转入地下 } from './转入地下'
 import { 转入地面 } from './转入地面'
 import { 修建地堡 } from './修建地堡'
+import { 开采铝土矿 } from './开采铝土矿'
 
 
 
@@ -63,5 +64,6 @@ export function 生产指令(ctx: Context) {
     转入地下(ctx);
     转入地面(ctx);
     修建地堡(ctx);
+    开采铝土矿(ctx);
 
 }

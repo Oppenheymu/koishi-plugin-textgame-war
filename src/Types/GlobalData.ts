@@ -9,6 +9,7 @@ export interface GlobalData {
     全球劳动力市场: number;
 
     // 全服主要数据总和
+    历史生产记录: number[];
     近七天全球生产总值: number;
     近三天全球生产总值: number;
     今日全球生产总值: number;

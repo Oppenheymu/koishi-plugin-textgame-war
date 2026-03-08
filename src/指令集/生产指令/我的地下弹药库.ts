@@ -4,7 +4,7 @@ import { 玩家检查 } from "../../Utils/index";
 
 
 export function 我的地下弹药库(ctx: Context) {
-    ctx.command('我的地下弹药库')
+    ctx.command('我的地下弹药库').alias('我的弹药库').alias('弹药库')
         .action(async ({ session }) => {
             try {
 

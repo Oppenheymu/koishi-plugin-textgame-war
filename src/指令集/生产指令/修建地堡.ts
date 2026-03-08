@@ -68,6 +68,7 @@ export function 修建地堡(ctx: Context) {
                 const 更新对象: Partial<Player> = {
                     [配置.投入字段]: 新投入,
                     生活资料: 用户资料.生活资料 - 工资,
+                    生产次数: 用户资料.生产次数 - 1,
                 };
 
                 // 如果完成，设置完成标志

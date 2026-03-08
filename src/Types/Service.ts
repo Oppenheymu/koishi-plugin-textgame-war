@@ -5,5 +5,6 @@ export interface Service {
   id: string;
 
   上次重置签到日期: string;
+  上次全服统计日期: string;
 
 }

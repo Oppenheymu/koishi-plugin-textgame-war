@@ -32,7 +32,8 @@ export  function 开采铁矿石(ctx: Context) {
 
                 await ctx.database.set('malieplayer', { id: id }, {
                     铁矿石: 增加后的铁矿石,
-                    生活资料: 用户资料.生活资料 - 2000
+                    生活资料: 用户资料.生活资料 - 2000,
+                    生产次数: 用户资料.生产次数 - 1,
                 });
                 return `
 ====[征战文游]====
