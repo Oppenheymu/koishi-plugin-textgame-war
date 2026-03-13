@@ -2,7 +2,7 @@
 import { Context } from 'koishi';
 import Hashids from 'hashids'
 import { Player } from '../../Types/index';
-import { 用户检查 , TRandom } from "../../Utils/index";
+import { 会话检查 , 用户检查 , TRandom } from "../../Utils/index";
 
 const hashids = new Hashids("我的的神秘盐值-天机不可泄露", 6, "1234567890ABCDEF");
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -12,9 +12,21 @@ export function 注册(ctx: Context) {
         .action(async ({ session }) => {
             try {
 
-                const { platform, userId } = await 用户检查(session);
-                const [ifExisting] = await ctx.database.get('马列玩家配置表', { [platform]: userId } );
-                if ( ifExisting ) throw new Error(`同志，你已经注册过了`);
+                会话检查(session);
+                
+                const { platform , userId } = 用户检查(session);
+                
+                const [PlayerConfig] = await ctx.database.get('马列玩家配置表', { [platform]: userId } );
+                if ( !PlayerConfig ) {
+                    session.send(`同志，你还未注册`);
+                    throw new Error('玩家未注册');
+                }
+                
+                const [Player] = await ctx.database.get('马列玩家表', {id: PlayerConfig.id });
+                if ( !Player ) {
+                    session.send(`数据异常：已找到账号但未发现玩家档案，请联系管理员`);
+                    throw new Error('玩家档案不存在');
+                }
 
                 const newPlayerConfig = await ctx.database.create('马列玩家配置表', { [platform]: userId , username: '默认名称' } );
                 const newID = newPlayerConfig.id;

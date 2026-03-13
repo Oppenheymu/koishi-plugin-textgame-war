@@ -1,8 +1,30 @@
-
 import { Context } from 'koishi';
-import { } from "koishi-plugin-cron";
+import { } from 'koishi-plugin-cron';
 
 let 正在执行每日重置 = false;
+
+function 获取今天日期(): string {
+  const 现在 = new Date();
+  return `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, '0')}-${String(现在.getDate()).padStart(2, '0')}`;
+}
+
+export async function 初始化服务记录(ctx: Context): Promise<{ created: boolean, 今天: string }> {
+  const 今天 = 获取今天日期();
+  const 全局状态机 = await ctx.database.get('马列服务表', { id: 'service' });
+  const 服务记录 = 全局状态机[0];
+
+  if (服务记录) {
+    return { created: false, 今天 };
+  }
+
+  await ctx.database.create('马列服务表', {
+    id: 'service',
+    上次重置签到日期: 今天,
+    上次全服统计日期: 今天,
+  });
+
+  return { created: true, 今天 };
+}
 
 /**
  * 执行每日重置
@@ -12,32 +34,22 @@ async function 执行每日重置(ctx: Context): Promise<void> {
   正在执行每日重置 = true;
 
   try {
-    const 现在 = new Date();
-    // 使用本地时间构建日期字符串 YYYY-MM-DD，避免使用 UTC (toISOString) 导致时区偏差
-    const 今天 = `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, '0')}-${String(现在.getDate()).padStart(2, '0')}`;
-
-    const 全局状态机 = await ctx.database.get('malieservice', { id: 'service' });
+    const { created, 今天 } = await 初始化服务记录(ctx);
+    const 全局状态机 = await ctx.database.get('马列服务表', { id: 'service' });
     const 服务记录 = 全局状态机[0];
 
-    // 首次启动时若服务记录不存在，先创建再执行一次重置，避免后续每次检查都重复重置
-    if (!服务记录) {
-      await ctx.database.create('malieservice', {
-        id: 'service',
-        上次重置签到日期: 今天,
-      });
-      await ctx.database.set('malieplayer', {}, { 今日是否签到: false, 工人招募限额: 1000 });
-      return;
-    }
+    if (!服务记录) return;
 
     const 上次重置时间 = 服务记录.上次重置签到日期;
 
-    // 只有当日期发生变化时才重置
-    if (!上次重置时间 || 今天 > 上次重置时间) {
-      await ctx.database.set('malieservice', { id: 'service' }, {
-        上次重置签到日期: 今天,
-      });
+    if (created || !上次重置时间 || 今天 > 上次重置时间) {
+      if (!created) {
+        await ctx.database.set('马列服务表', { id: 'service' }, {
+          上次重置签到日期: 今天,
+        });
+      }
 
-      await ctx.database.set('malieplayer', {}, { 今日是否签到: false, 工人招募限额: 1000 });
+      await ctx.database.set('马列玩家表', {}, { 今日是否签到: false, 工人招募限额: 1000 });
     }
   } finally {
     正在执行每日重置 = false;

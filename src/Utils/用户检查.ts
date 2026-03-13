@@ -42,13 +42,13 @@ Promise<{
 
     const { platform , userId } = 用户检查(session);
 
-    const [PlayerConfig] = await ctx.database.get('malieplayerconfig', { [platform]: userId } );
+    const [PlayerConfig] = await ctx.database.get('马列玩家配置表', { [platform]: userId } );
     if ( !PlayerConfig ) {
         session.send(`同志，你还未注册`);
         throw new Error('玩家未注册');
     }
 
-    const [Player] = await ctx.database.get('malieplayer', {id: PlayerConfig.id });
+    const [Player] = await ctx.database.get('马列玩家表', {id: PlayerConfig.id });
     if ( !Player ) {
         session.send(`数据异常：已找到账号但未发现玩家档案，请联系管理员`);
         throw new Error('玩家档案不存在');
