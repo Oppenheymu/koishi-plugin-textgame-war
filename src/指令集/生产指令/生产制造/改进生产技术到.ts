@@ -79,7 +79,7 @@ ${username} 同志！
                     const 减少后的生活资料 = 用户资料.生活资料 - 所需生活资料;
 
                     // 更新数据库
-                    await ctx.database.set('malieplayer', { id: id }, {
+                    await ctx.database.set('马列玩家表', { id: id }, {
                         生活资料: 减少后的生活资料,
                         生产技术: 目标等级
                     });

@@ -3,7 +3,7 @@ import { Context } from 'koishi';
 
 
 export function 加载玩家配置表(ctx: Context) {
-    ctx.model.extend('malieplayerconfig', {
+    ctx.model.extend('马列玩家配置表', {
 
         id: { type: 'unsigned' },
         // 混淆后的ID

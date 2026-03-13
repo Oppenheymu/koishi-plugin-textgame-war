@@ -30,7 +30,7 @@ ${username} 同志：
                 const 新厂房 = 用户资料.厂房 + 扩建数量;
                 const 新钢铁 = 用户资料.钢铁 - 扩建成本;
 
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     厂房: 新厂房,
                     钢铁: 新钢铁
                 });

@@ -3,23 +3,24 @@ import { 玩家检查 } from "../../../Utils/index";
 
 
 
-export function 查看全球劳动力市场(ctx: Context) {
-    ctx.command('查看全球劳动力市场').alias('全球劳动力市场').alias('劳动力市场').alias('人才市场')
+export function 我的资源(ctx: Context) {
+    ctx.command('我的工人')
         .action(async ({ session }) => {
             try {
-
                 const { username, 用户资料} = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
-                const 全球劳动力 = (await ctx.database.get('马列全球数据表', { id: 'service' }))[0]!.全球劳动力市场;
-
                 return `
-=====[全球资源]=====
-□ 全球劳动力市场:
-${格式化(全球劳动力)}
-■ 命令示例：招募工人 10
+【情报查询】
+==公开情报==
+${username}
+■ 石油：${格式化(用户资料.石油)}
+■ 钢铁：${格式化(用户资料.钢铁)}
+■ 金属铝：${格式化(用户资料.金属铝)}
+■ 铁矿石：${格式化(用户资料.铁矿石)}
+■ 铝土矿：${格式化(用户资料.铝土矿)}
 `.trim();
             } catch (error) {
                 return (error as Error).message;

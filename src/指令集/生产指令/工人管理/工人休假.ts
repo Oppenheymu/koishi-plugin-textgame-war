@@ -40,7 +40,7 @@ export function 工人休假(ctx: Context) {
                 const 新稳定度 = Math.min(100, 用户资料.稳定度 + 稳定度提升);
 
                 // 更新数据库
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     工人: 新工人数,
                     休假工人: 新休假工人数,
                     稳定度: 新稳定度

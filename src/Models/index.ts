@@ -1,37 +1,53 @@
 import { Context } from 'koishi';
-import { Player , PlayerConfig , Service , GlobalData , RegionTerra , Region } from '../Types/index';
 
+import {
+    CoalitionArmy,
+    GlobalData,
+    Player,
+    PlayerConfig,
+    Region,
+    RegionConfig,
+    RegionTerra,
+    Service,
+} from '../Types/index';
 
+import { 加载全球数据表 } from './全球数据表';
+import { 加载玩家配置表 } from './玩家配置表';
+import { 加载玩家表 } from './玩家数据表';
+import { 加载地形相关表 } from './地区相关';
+import { 加载服务表 } from './服务表';
 
+// 扩展 Koishi 数据表类型定义
 declare module 'koishi' {
-
     interface Tables {
-        malieplayer: Player
-        malieplayerconfig: PlayerConfig
-        malieservice: Service
-        malieglobaldata: GlobalData
-        malieregionterra: RegionTerra
-        malieregion: Region
+        
+        马列联军表: CoalitionArmy;
+
+        马列全球数据表: GlobalData;
+
+        马列玩家表: Player;
+        马列玩家配置表: PlayerConfig;
+
+        马列地区表: Region;
+        马列地区配置表: RegionConfig;
+        马列地区地形表: RegionTerra;
+
+        马列服务表: Service;
     }
 }
 
+// 按顺序注册数据库模型插件
+const 数据库插件列表 = [
+    加载全球数据表,
+    加载玩家配置表,
+    加载玩家表,
+    加载服务表,
+    ...加载地形相关表,
+];
 
-import { 加载玩家配置表 } from './PlayerConfig';
-import { 加载玩家表 } from './Player';
-import { 加载服务表 } from './Service';
-import { 加载全球数据表 } from './GlobalData';
-import { 加载地区地形表 } from './RegionTerra';
-import { 加载地区表 } from './Region';
-
+// 统一挂载所有数据库相关服务
 export function 数据库服务(ctx: Context) {
-
-    加载全球数据表(ctx);
-    加载玩家配置表(ctx);
-    加载玩家表(ctx)
-
-    加载服务表(ctx);
-
-    加载地区表(ctx);
-    加载地区地形表(ctx);
-
+    for (const 插件 of 数据库插件列表) {
+        ctx.plugin(插件);
+    }
 }

@@ -76,7 +76,7 @@ export function 修建地堡(ctx: Context) {
                     (更新对象 as any)[配置.完成字段] = true;
                 }
 
-                await ctx.database.set('malieplayer', { id }, 更新对象);
+                await ctx.database.set('马列玩家表', { id }, 更新对象);
 
                 const 完成提示 = 新投入 >= 配置.需求生产力 ? '✓已完成' : `${进度百分比.toFixed(2)}%`;
 

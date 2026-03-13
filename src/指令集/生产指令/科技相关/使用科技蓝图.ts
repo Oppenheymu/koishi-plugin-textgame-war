@@ -28,7 +28,7 @@ export function 使用科技蓝图(ctx: Context) {
                     return `你最多可以使用${3000 - 用户资料.科技等级}张科技蓝图（达到等级上限）`;
                 }
 
-                await ctx.database.set('malieplayer', { id: id }, { 科技蓝图: 新科技蓝图, 科技等级: 新科技等级 });
+                await ctx.database.set('马列玩家表', { id: id }, { 科技蓝图: 新科技蓝图, 科技等级: 新科技等级 });
 
                 return `
 ===[征战文游]===

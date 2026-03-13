@@ -9,7 +9,7 @@ export function 招募工人(ctx: Context) {
             try {
 
                 const { id, username, 用户资料} = await 玩家检查(ctx, session);
-                const 全球数据 = (await ctx.database.get('malieglobaldata', { id: 'service' }))[0]!;
+                const 全球数据 = (await ctx.database.get('马列全球数据表', { id: 'service' }))[0]!;
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -45,8 +45,8 @@ ${username} 同志：
                 const 新招募限额 = 用户资料.工人招募限额 - 数量;
                 const 新全球劳动力市场 = 全球数据.全球劳动力市场 - 数量;
 
-                await ctx.database.set('malieplayer', { id: id }, { 生活资料: 新生活资料, 工人: 新工人数量, 工人招募限额: 新招募限额 });
-                await ctx.database.set('malieglobaldata', { id: 'service' }, { 全球劳动力市场: 新全球劳动力市场 });
+                await ctx.database.set('马列玩家表', { id: id }, { 生活资料: 新生活资料, 工人: 新工人数量, 工人招募限额: 新招募限额 });
+                await ctx.database.set('马列全球数据表', { id: 'service' }, { 全球劳动力市场: 新全球劳动力市场 });
 
 
                 return `

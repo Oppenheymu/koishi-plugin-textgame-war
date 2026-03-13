@@ -33,7 +33,7 @@ ${username} 同志：
                 }
 
                 // 更新工资
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     工人工资: 工资
                 });
 

@@ -178,7 +178,7 @@ ${Object.keys(物品库).join('、')}
                 (更新数据 as any)[属性名] = (用户资料[属性名] as number || 0) + 数量;
 
                 // 保存到数据库
-                await ctx.database.set('malieplayer', { id: id }, 更新数据);
+                await ctx.database.set('马列玩家表', { id: id }, 更新数据);
 
                 const 图片片段 = 生成随机图片片段(图片池, 图片概率);
 

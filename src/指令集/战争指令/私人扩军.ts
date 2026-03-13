@@ -27,7 +27,7 @@ ${username}同志：
                 const 新工人 = 用户资料.工人 - 数量;
                 const 新私人军队 = 用户资料.私人军队 + 数量;
 
-                await ctx.database.set('malieplayer', { id }, {
+                await ctx.database.set('马列玩家表', { id }, {
                     工人: 新工人,
                     私人军队: 新私人军队,
                 });

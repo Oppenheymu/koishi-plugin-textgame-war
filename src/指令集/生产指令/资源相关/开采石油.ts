@@ -29,7 +29,7 @@ export  function 开采石油(ctx: Context) {
                 const 原本的石油 = 用户资料.石油;
                 const 增加后的石油 = 用户资料.石油 + 增加的石油;
 
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     石油: 增加后的石油,
                     生活资料: 用户资料.生活资料 - 2000,
                     生产次数: 用户资料.生产次数 - 1,

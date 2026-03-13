@@ -61,7 +61,7 @@ export function 转入地下(ctx: Context) {
                 // 转入地下
                 const 目标数值 = 用户资料[配置.地下字段] as number;
 
-                await ctx.database.set('malieplayer', { id }, {
+                await ctx.database.set('马列玩家表', { id }, {
                     [配置.字段]: 源数值 - 数量,
                     [配置.地下字段]: 目标数值 + 数量,
                 });

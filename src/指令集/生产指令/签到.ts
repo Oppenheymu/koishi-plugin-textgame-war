@@ -31,7 +31,7 @@ ${username} 同志！
                     const 增加后的钢铁 = 用户资料.钢铁 + 增加的钢铁;
                     const 增加后的生活资料 = 用户资料.生活资料 + 增加的生活资料;
 
-                    await ctx.database.set('malieplayer', { id: id }, {
+                    await ctx.database.set('马列玩家表', { id: id }, {
                         今日是否签到: true,
                         工人: 增加后的工人,
                         石油: 增加后的石油,
@@ -40,7 +40,7 @@ ${username} 同志！
                     });
 
                     if ( 用户资料.厂房 < 10000) {
-                        await ctx.database.set('malieplayer', { id: id }, { 厂房: 10000 } );
+                        await ctx.database.set('马列玩家表', { id: id }, { 厂房: 10000 } );
                     }
 
                     return `

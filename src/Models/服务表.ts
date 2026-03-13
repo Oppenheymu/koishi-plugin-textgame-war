@@ -7,7 +7,7 @@ import { Context } from 'koishi';
  */
 
 export function 加载服务表(ctx: Context) {
-  ctx.model.extend('malieservice', {
+  ctx.model.extend('马列服务表', {
     
     id: { type: 'string', length: 255 },
 

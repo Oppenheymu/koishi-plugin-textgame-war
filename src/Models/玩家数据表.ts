@@ -5,7 +5,7 @@ import { Context } from 'koishi';
  * 初始化玩家数据表
  */
 export function 加载玩家表(ctx: Context) {
-    ctx.model.extend('malieplayer', {
+    ctx.model.extend('马列玩家表', {
 
 
         id: { type: 'unsigned' },

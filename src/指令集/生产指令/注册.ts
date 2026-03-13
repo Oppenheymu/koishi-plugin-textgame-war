@@ -13,15 +13,15 @@ export function 注册(ctx: Context) {
             try {
 
                 const { platform, userId } = await 用户检查(session);
-                const [ifExisting] = await ctx.database.get('malieplayerconfig', { [platform]: userId } );
+                const [ifExisting] = await ctx.database.get('马列玩家配置表', { [platform]: userId } );
                 if ( ifExisting ) throw new Error(`同志，你已经注册过了`);
 
-                const newPlayerConfig = await ctx.database.create('malieplayerconfig', { [platform]: userId , username: '默认名称' } );
+                const newPlayerConfig = await ctx.database.create('马列玩家配置表', { [platform]: userId , username: '默认名称' } );
                 const newID = newPlayerConfig.id;
                 const newUID = hashids.encode(newID);
                 const username = newPlayerConfig.username;
 
-                await ctx.database.set('malieplayerconfig', newID , { uid: newUID });
+                await ctx.database.set('马列玩家配置表', newID , { uid: newUID });
 
                 const 初始工人 = TRandom(4000, 12000, 16000);
                 const 初始生活资料 = TRandom(8000, 50000, 90000);
@@ -86,7 +86,7 @@ export function 注册(ctx: Context) {
                     地下防空弹药: 0,
                 }
 
-                await ctx.database.create('malieplayer', newPlayerData);
+                await ctx.database.create('马列玩家表', newPlayerData);
 
                 return `
 ====[征战文游]====

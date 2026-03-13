@@ -48,7 +48,7 @@ export function 提升科技到(ctx: Context) {
                 const 新科技池容量 = 目标等级 < 3000 ? 5000 * 目标等级 : 0;
 
                 // 更新数据库
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     生活资料: 减少后的生活资料,
                     科技池投入: 0,
                     科技等级: 目标等级,

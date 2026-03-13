@@ -4,7 +4,7 @@ import { Context } from 'koishi';
  * 初始化地区地形数据表
  */
 export function 加载地区地形表(ctx: Context) {
-    ctx.model.extend('malieregionterra', {
+    ctx.model.extend('马列地区地形表', {
 
         地区编号: { type: 'string', length: 255 },
         地区横轴坐标: { type: 'integer' },

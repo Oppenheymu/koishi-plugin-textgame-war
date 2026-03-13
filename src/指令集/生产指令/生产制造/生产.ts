@@ -62,7 +62,7 @@ ${username} 同志：
                 const 新生活资料 = 用户资料.生活资料 + 利润;
                 const 新生产次数 = 用户资料.生产次数 - 1;
 
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     小时是否生产: true,
                     生活资料: 新生活资料,
                     稳定度: 新稳定度,
@@ -70,16 +70,16 @@ ${username} 同志：
                 });
 
                 // 更新今日全球生产总值
-                const globalData = await ctx.database.get('malieglobaldata', { id: 'global' });
+                const globalData = await ctx.database.get('马列全球数据表', { id: 'global' });
                 const currentTotal = globalData.length > 0 ? globalData[0]!.今日全球生产总值 : 0;
                 
                 if (globalData.length === 0) {
-                    await ctx.database.create('malieglobaldata', { 
+                    await ctx.database.create('马列全球数据表', { 
                         id: 'global', 
                         今日全球生产总值: 总产出 
                     });
                 } else {
-                    await ctx.database.set('malieglobaldata', { id: 'global' }, { 
+                    await ctx.database.set('马列全球数据表', { id: 'global' }, { 
                         今日全球生产总值: currentTotal + 总产出 
                     });
                 }

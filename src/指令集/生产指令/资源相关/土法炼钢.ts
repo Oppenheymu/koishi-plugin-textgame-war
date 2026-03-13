@@ -48,7 +48,7 @@ export  function 土法炼钢(ctx: Context) {
                 const 增加后的的钢铁 = 用户资料.钢铁 + 增加的钢铁;
                 const 减少后的铁矿石 = 用户资料.铁矿石 - 数量;
 
-                await ctx.database.set('malieplayer', { id: id }, {
+                await ctx.database.set('马列玩家表', { id: id }, {
                     钢铁: 增加后的的钢铁,
                     铁矿石: 减少后的铁矿石,
                     生活资料: 用户资料.生活资料 - 2000,
