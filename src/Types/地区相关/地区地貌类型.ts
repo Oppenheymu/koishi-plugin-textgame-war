@@ -13,8 +13,6 @@ export enum PhysiognomyType {
 export interface RegionTerra {
 
     地区编号:string;
-    地区横轴坐标: number;
-    地区纵轴坐标: number;
 
     是否为海洋: boolean;                // 是否为海洋
 

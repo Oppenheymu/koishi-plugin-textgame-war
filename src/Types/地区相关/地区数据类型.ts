@@ -19,11 +19,8 @@ export enum TerrainType {
 export interface Region {
 
     地区编号:string;
-    地区横轴坐标: number;
-    地区纵轴坐标: number;
 
-    地区边长: number;
-    地区地貌: TerrainType;
+    地区地形: TerrainType;
 
     地区名称: string;
     控制国家: string;

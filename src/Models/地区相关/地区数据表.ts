@@ -6,11 +6,8 @@ export function 加载地区表(ctx: Context) {
     ctx.model.extend('马列地区表', {
 
         地区编号: { type: 'string', length: 255 },
-        地区横轴坐标: { type: 'integer', initial: 0 },
-        地区纵轴坐标: { type: 'integer', initial: 0 },
 
-        地区边长: { type: 'integer', initial: 0 },
-        地区地貌: { type: 'string', length: 255 },
+        地区地形: { type: 'string', length: 255 },
 
         地区名称: { type: 'string', length: 255, initial: '' },
         控制国家: { type: 'string', length: 255, initial: '' },

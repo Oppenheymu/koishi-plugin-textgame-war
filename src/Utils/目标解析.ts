@@ -21,7 +21,7 @@ Promise<{
 
     // 共用：通过 PlayerConfig 查 Player
     async function 获取目标配置(config: PlayerConfig) {
-        const [player] = await ctx.database.get('malieplayer', { id: config.id });
+        const [player] = await ctx.database.get('马列玩家表', { id: config.id });
         if (!player) throw new Error(`数据异常：目标用户配置存在但玩家档案丢失，请联系管理员`);
         return {
             目标用户ID: config.id,
@@ -34,7 +34,7 @@ Promise<{
     const atElement = session.elements?.find(el => el.type === 'at' && el.attrs?.['id']);
     if (atElement?.attrs?.['id']) {
         const 目标用户ID = atElement.attrs['id'];
-        const [config] = await ctx.database.get('malieplayerconfig', { [session.platform]: 目标用户ID });
+        const [config] = await ctx.database.get('马列玩家配置表', { [session.platform]: 目标用户ID });
         if (!config) throw new Error(`目标用户尚未注册（${session.platform}:${目标用户ID}），请让对方先发送[注册]指令`);
         return 获取目标配置 (config);
     }
@@ -46,11 +46,11 @@ Promise<{
     }
 
     // 先查 UID
-    let [config] = await ctx.database.get('malieplayerconfig', { uid: 输入 });
+    let [config] = await ctx.database.get('马列玩家配置表', { uid: 输入 });
     if (config) return 获取目标配置(config);
 
     // 再查平台ID
-    [config] = await ctx.database.get('malieplayerconfig', { [session.platform]: 输入 });
+    [config] = await ctx.database.get('马列玩家配置表', { [session.platform]: 输入 });
     if (config) return 获取目标配置(config);
 
     throw new Error('目标用户尚未注册');

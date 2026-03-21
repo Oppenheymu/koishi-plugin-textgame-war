@@ -24,8 +24,8 @@ export function 设置资源(ctx: Context) {
                     return '数量参数格式错误，只能为数字或布尔值';
                 }
 
-                await ctx.database.set('malieplayer', { id: 目标用户ID }, { [资源类型]: value });
-                
+                await ctx.database.set('马列玩家表', { id: 目标用户ID }, { [资源类型]: value });
+
                 if (typeof value === 'number') return `成功将 ${目标} 的 ${资源类型} 设置为 ${格式化(value)}`;
                 if (typeof value === 'boolean') return `成功将 ${目标} 的 ${资源类型} 设置为 ${value}`;
 
