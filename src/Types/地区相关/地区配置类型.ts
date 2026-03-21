@@ -1,14 +1,11 @@
 
 export interface RegionConfig {
 
-    id: number;
-    uid: string;
+    地区编号: number;
+    地区名称: string;
 
     onebot: string,
     discord: string,
     telegram: string,
-    username: string,
-
-    Username: string;
 
 }

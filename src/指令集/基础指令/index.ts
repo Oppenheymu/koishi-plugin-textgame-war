@@ -3,13 +3,11 @@ import { Context } from "koishi";
 
 import { 加载跨平台} from "./跨平台/";
 import { 查看版本日志 } from "./查看版本日志";
-import { 我是小号吗 } from "./我是小号吗";
 
 
 
 const 基础指令列表 = [
     查看版本日志,
-    我是小号吗,
     ...加载跨平台,
 ];
 

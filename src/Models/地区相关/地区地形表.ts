@@ -23,7 +23,7 @@ export function 加载地区地形表(ctx: Context) {
         城镇: { type: 'integer' },
 
     }, {
-        // 表配置
         primary: '地区编号',
+        unique: ['地区编号'],
     });
 }

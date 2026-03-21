@@ -13,27 +13,25 @@ export function 注册(ctx: Context) {
             try {
 
                 会话检查(session);
-                
+
                 const { platform , userId } = 用户检查(session);
-                
-                const [PlayerConfig] = await ctx.database.get('马列玩家配置表', { [platform]: userId } );
-                if ( !PlayerConfig ) {
-                    session.send(`同志，你还未注册`);
-                    throw new Error('玩家未注册');
-                }
-                
-                const [Player] = await ctx.database.get('马列玩家表', {id: PlayerConfig.id });
-                if ( !Player ) {
-                    session.send(`数据异常：已找到账号但未发现玩家档案，请联系管理员`);
-                    throw new Error('玩家档案不存在');
+
+                const [PlayerConfig] = await ctx.database.get('马列玩家配置表', { [platform]: userId });
+
+                if (PlayerConfig) {
+                    const [Player] = await ctx.database.get('马列玩家表', { id: PlayerConfig.id });
+                    if (Player) {
+                        return `同志，你已经注册过了（UID: ${PlayerConfig.uid}）`;
+                    }
+                    return '数据异常：已找到账号但未发现玩家档案，请联系管理员';
                 }
 
-                const newPlayerConfig = await ctx.database.create('马列玩家配置表', { [platform]: userId , username: '默认名称' } );
+                const newPlayerConfig = await ctx.database.create('马列玩家配置表', { [platform]: userId, username: '默认名称' });
                 const newID = newPlayerConfig.id;
                 const newUID = hashids.encode(newID);
                 const username = newPlayerConfig.username;
 
-                await ctx.database.set('马列玩家配置表', newID , { uid: newUID });
+                await ctx.database.set('马列玩家配置表', newID, { uid: newUID });
 
                 const 初始工人 = TRandom(4000, 12000, 16000);
                 const 初始生活资料 = TRandom(8000, 50000, 90000);
