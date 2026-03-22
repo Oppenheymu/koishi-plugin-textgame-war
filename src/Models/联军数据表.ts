@@ -30,10 +30,15 @@ export function 加载联军表(ctx: Context) {
     联军宣称人口: { type: 'unsigned', initial: 0 },
     联军宣称兵力: { type: 'unsigned', initial: 0 },
 
+    联军名称: { type: 'string', length: 255, initial: '' },
+    名称是否审核: { type: 'boolean', initial: false },
+
     建立日期: { type: 'string', length: 255, initial: '' },
     上次改名日期: { type: 'string', length: 255, nullable: true },
+
   }, {
     primary: 'id',
     unique: ['uid'],
+    autoInc: true,
   });
 }

@@ -115,7 +115,7 @@ export function 军事生产(ctx: Context) {
                     return `
 ====[军事生产]====
 □ 格式：
-军事生产 <物品> <数量>
+'军事生产 物品 数量'
 □ 可生产物品：
 ${Object.keys(物品库).join('、')}
 `.trim();

@@ -13,7 +13,7 @@ export function 我的账户配置(ctx: Context) {
 ${用户配置.username} 同志！
 以下是你的账号配置：
 UID: ${用户配置.uid}
-QQ: ${用户配置.onebot}
+QQ: ${用户配置.onebot ?? '未绑定' }
 TG: ${用户配置.telegram ?? '未绑定'}
 Discord: ${用户配置.discord ?? '未绑定'}
 `.trim()

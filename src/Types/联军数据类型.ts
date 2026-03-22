@@ -8,7 +8,7 @@ export enum 联军政体 {
 }
 
 export interface CoalitionArmy {
-  
+
     id: string;
     uid: string;
 
@@ -39,7 +39,9 @@ export interface CoalitionArmy {
     联军宣称人口: number;
     联军宣称兵力: number;
 
-    // 联军状态
+    // 联军状态机
+    联军名称: string;
+    名称是否审核: boolean;
     建立日期: string;
     上次改名日期?: string;
 
