@@ -1,5 +1,5 @@
-import { Context } from 'koishi';
-import { } from "koishi-plugin-cron";
+import { Context } from "koishi";
+import {} from "koishi-plugin-cron";
 
 let 正在执行全服统计 = false;
 
@@ -14,14 +14,16 @@ async function 执行每日统计(ctx: Context): Promise<void> {
 
     try {
         const 现在 = new Date();
-        const 今天 = `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, '0')}-${String(现在.getDate()).padStart(2, '0')}`;
+        const 今天 = `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, "0")}-${String(现在.getDate()).padStart(2, "0")}`;
 
-        const 全局状态机 = await ctx.database.get('马列服务表', { id: 'service' });
+        const 全局状态机 = await ctx.database.get("马列服务表", {
+            id: "service",
+        });
         const 服务记录 = 全局状态机[0];
 
         if (!服务记录) {
-            await ctx.database.create('马列服务表', {
-                id: 'service',
+            await ctx.database.create("马列服务表", {
+                id: "service",
                 上次全服统计日期: 今天,
             });
         } else {
@@ -30,12 +32,16 @@ async function 执行每日统计(ctx: Context): Promise<void> {
         }
 
         // 1. 获取所有玩家数据
-        const players = await ctx.database.get('马列玩家表', {});
+        const players = await ctx.database.get("马列玩家表", {});
 
         if (players.length === 0) {
-            await ctx.database.set('马列服务表', { id: 'service' }, {
-                上次全服统计日期: 今天,
-            });
+            await ctx.database.set(
+                "马列服务表",
+                { id: "service" },
+                {
+                    上次全服统计日期: 今天,
+                },
+            );
             return;
         }
 
@@ -52,12 +58,14 @@ async function 执行每日统计(ctx: Context): Promise<void> {
         const avgTech = totalTech / players.length;
 
         // 3. 处理全服数据
-        const globalData = await ctx.database.get('马列全球数据表', { id: 'global' });
+        const globalData = await ctx.database.get("马列全球数据表", {
+            id: "global",
+        });
 
         // 如果没有全服数据，初始化
         if (globalData.length === 0) {
-            await ctx.database.create('马列全球数据表', {
-                id: 'global',
+            await ctx.database.create("马列全球数据表", {
+                id: "global",
                 全球平均工资: avgWage,
                 全球平均科技等级: avgTech,
                 历史生产记录: [],
@@ -66,9 +74,13 @@ async function 执行每日统计(ctx: Context): Promise<void> {
                 近七天全球生产总值: 0,
             });
 
-            await ctx.database.set('马列服务表', { id: 'service' }, {
-                上次全服统计日期: 今天,
-            });
+            await ctx.database.set(
+                "马列服务表",
+                { id: "service" },
+                {
+                    上次全服统计日期: 今天,
+                },
+            );
             return;
         }
 
@@ -92,20 +104,30 @@ async function 执行每日统计(ctx: Context): Promise<void> {
         const sum7Days = last7Days.reduce((a, b) => a + b, 0);
 
         // 更新数据库
-        await ctx.database.set('马列全球数据表', { id: 'global' }, {
-            全球平均工资: avgWage,
-            全球平均科技等级: avgTech,
-            历史生产记录: history,
-            近三天全球生产总值: sum3Days,
-            近七天全球生产总值: sum7Days,
-            今日全球生产总值: 0,
-        });
+        await ctx.database.set(
+            "马列全球数据表",
+            { id: "global" },
+            {
+                全球平均工资: avgWage,
+                全球平均科技等级: avgTech,
+                历史生产记录: history,
+                近三天全球生产总值: sum3Days,
+                近七天全球生产总值: sum7Days,
+                今日全球生产总值: 0,
+            },
+        );
 
-        await ctx.database.set('马列服务表', { id: 'service' }, {
-            上次全服统计日期: 今天,
-        });
+        await ctx.database.set(
+            "马列服务表",
+            { id: "service" },
+            {
+                上次全服统计日期: 今天,
+            },
+        );
 
-        console.log(`[全服数据统计] 完成。平均工资: ${avgWage}, 平均科技: ${avgTech}, 昨日产值: ${todayProduction}`);
+        console.log(
+            `[全服数据统计] 完成。平均工资: ${avgWage}, 平均科技: ${avgTech}, 昨日产值: ${todayProduction}`,
+        );
     } finally {
         正在执行全服统计 = false;
     }
@@ -116,7 +138,7 @@ async function 执行每日统计(ctx: Context): Promise<void> {
  * 每5分钟检查一次，跨天仅执行一次
  */
 export function 每日全服数据统计(ctx: Context) {
-    ctx.cron('*/5 * * * *', () => {
+    ctx.cron("*/5 * * * *", () => {
         执行每日统计(ctx);
     });
 }

@@ -1,23 +1,40 @@
 {
-  "name": "koishi-plugin-malie-textgame",
-  "description": "基于koishi框架，使用Typescript对马列文游进行的重构",
-  "version": "0.0.1",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "files": [
-    "lib",
-    "dist"
-  ],
-  "license": "MIT",
-  "keywords": [
-    "chatbot",
-    "koishi",
-    "plugin"
-  ],
-  "peerDependencies": {
-    "koishi": "^4.18.7"
-  },
-  "dependencies": {
-    "hashids": "^2.3.0"
-  }
+    "name": "koishi-plugin-malie-textgame",
+    "version": "0.9.8",
+    "contributors": [
+        "Xiao-xiaochen <200345727+Xiao-xiaochen@users.noreply.github.com>",
+        "Oppenheimu <266071743+Oppenheimu@users.noreply.github.com>"
+    ],
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "files": [
+        "lib",
+        "dist"
+    ],
+    "homepage": "https://github.com/Oppenheimu/malie-textgame",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Oppenheimu/malie-textgame.git"
+    },
+    "keywords": [
+        "chatbot",
+        "koishi",
+        "plugin"
+    ],
+    "peerDependencies": {
+        "koishi": "4.18.11"
+    },
+    "dependencies": {
+        "hashids": "^2.3.0"
+    },
+    "koishi": {
+        "description": {
+            "zh": "Koishi史上最强文游。 基于koishi框架，使用Typescript对马列文游进行的重构"
+        },
+        "service": {
+            "required": [
+                "database"
+            ]
+        }
+    }
 }

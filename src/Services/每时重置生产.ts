@@ -1,31 +1,24 @@
-import { Context } from 'koishi';
-import { } from "koishi-plugin-cron";
-import { Player } from '../Types/index';
-
-
+import { Context } from "koishi";
+import {} from "koishi-plugin-cron";
+import { Player } from "../Types/index";
 
 async function 执行生产次数增加(ctx: Context): Promise<void> {
+    const 玩家 = await ctx.database.get("马列玩家表", {});
 
-    const 玩家 = await ctx.database.get('马列玩家表', {});
-
-    for (const 更新的玩家 of 玩家 ) {
-
+    for (const 更新的玩家 of 玩家) {
         const 更新: Partial<Player> = { 小时是否生产: false };
-        const 旧次数 = 更新的玩家.生产次数 ?? 0
+        const 旧次数 = 更新的玩家.生产次数 ?? 0;
 
-        if ( 旧次数 < 8 ) {
+        if (旧次数 < 8) {
             更新.生产次数 = 旧次数 + 1;
         }
 
-        await ctx.database.set('马列玩家表', { uid: 更新的玩家.uid }, 更新);
-
+        await ctx.database.set("马列玩家表", { uid: 更新的玩家.uid }, 更新);
     }
 }
 
-
-
 export function 每小时重置生产(ctx: Context) {
-  ctx.cron('0 * * * *', () => {
-    执行生产次数增加(ctx);
-  });
+    ctx.cron("0 * * * *", () => {
+        执行生产次数增加(ctx);
+    });
 }

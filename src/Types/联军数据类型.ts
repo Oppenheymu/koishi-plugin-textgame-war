@@ -1,14 +1,10 @@
-
-
-
 export enum 联军政体 {
-  民主制 = '民主制',
-  威权制 = '威权制',
-  极权制 = '极权制',
+    民主制 = "民主制",
+    威权制 = "威权制",
+    极权制 = "极权制",
 }
 
 export interface CoalitionArmy {
-
     id: string;
     uid: string;
 
@@ -19,7 +15,6 @@ export interface CoalitionArmy {
     联军一级权限成员列表: string[];
     联军二级权限成员列表: string[];
     联军三级权限成员列表: string[];
-
 
     联军政治体制: 联军政体;
 
@@ -44,5 +39,4 @@ export interface CoalitionArmy {
     名称是否审核: boolean;
     建立日期: string;
     上次改名日期?: string;
-
 }

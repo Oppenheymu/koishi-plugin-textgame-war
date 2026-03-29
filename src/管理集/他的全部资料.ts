@@ -1,16 +1,16 @@
-
 import { Context } from "koishi";
 import { 目标解析 } from "../Utils";
 
-
-
 export function 他的全部资料(ctx: Context) {
-    ctx.command( '他的全部资料 <目标>', { authority: 3 } )
-        .action( async ( { session }, 目标 ) => {
+    ctx.command("他的全部资料 <目标>", { authority: 3 }).action(
+        async ({ session }, 目标) => {
             try {
-
-                const { 目标用户名 , 目标用户资料 } = await 目标解析(ctx, session, 目标);
-                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+                const { 目标用户名, 目标用户资料 } = await 目标解析(
+                    ctx,
+                    session,
+                    目标,
+                );
+                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 return `
 ${目标用户名} 的全部资料:
@@ -25,11 +25,9 @@ ${目标用户名} 的全部资料:
 ■ 防空弹药/地下：${格式化(目标用户资料.防空弹药)}/${格式化(目标用户资料.地下防空弹药)}
 □ 战斗机/巡航: ${格式化(目标用户资料.战斗机)}/${格式化(目标用户资料.巡航中的战斗机)}
 `.trim();
-
-
-
             } catch (error) {
                 return (error as Error).message;
             }
-        });
+        },
+    );
 }

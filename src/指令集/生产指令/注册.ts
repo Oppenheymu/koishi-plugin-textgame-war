@@ -1,37 +1,50 @@
+import { Context } from "koishi";
+import Hashids from "hashids";
+import { Player } from "../../Types/index";
+import { 会话检查, 用户检查, TRandom } from "../../Utils/index";
 
-import { Context } from 'koishi';
-import Hashids from 'hashids'
-import { Player } from '../../Types/index';
-import { 会话检查 , 用户检查 , TRandom } from "../../Utils/index";
-
-const hashids = new Hashids("我的的神秘盐值-天机不可泄露", 6, "1234567890ABCDEF");
-const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+const hashids = new Hashids(
+    "我的的神秘盐值-天机不可泄露",
+    6,
+    "1234567890ABCDEF",
+);
+const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 注册(ctx: Context) {
-    ctx.command('注册').alias('首次阅读报告')
+    ctx.command("注册")
+        .alias("首次阅读报告")
         .action(async ({ session }) => {
             try {
-
                 会话检查(session);
 
-                const { platform , userId } = 用户检查(session);
+                const { platform, userId } = 用户检查(session);
 
-                const [PlayerConfig] = await ctx.database.get('马列玩家配置表', { [platform]: userId });
+                const [PlayerConfig] = await ctx.database.get(
+                    "马列玩家配置表",
+                    { [platform]: userId },
+                );
 
                 if (PlayerConfig) {
-                    const [Player] = await ctx.database.get('马列玩家表', { id: PlayerConfig.id });
+                    const [Player] = await ctx.database.get("马列玩家表", {
+                        id: PlayerConfig.id,
+                    });
                     if (Player) {
                         return `同志，你已经注册过了（UID: ${PlayerConfig.uid}）`;
                     }
-                    return '数据异常：已找到账号但未发现玩家档案，请联系管理员';
+                    return "数据异常：已找到账号但未发现玩家档案，请联系管理员";
                 }
 
-                const newPlayerConfig = await ctx.database.create('马列玩家配置表', { [platform]: userId, username: '默认名称' });
+                const newPlayerConfig = await ctx.database.create(
+                    "马列玩家配置表",
+                    { [platform]: userId, username: "默认名称" },
+                );
                 const newID = newPlayerConfig.id;
                 const newUID = hashids.encode(newID);
                 const username = newPlayerConfig.username;
 
-                await ctx.database.set('马列玩家配置表', newID, { uid: newUID });
+                await ctx.database.set("马列玩家配置表", newID, {
+                    uid: newUID,
+                });
 
                 const 初始工人 = TRandom(4000, 12000, 16000);
                 const 初始生活资料 = TRandom(8000, 50000, 90000);
@@ -44,7 +57,8 @@ export function 注册(ctx: Context) {
                     id: newID,
                     uid: newUID,
                     驻扎地区: null,
-                    战争保护期: ( Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000 ),
+                    战争保护期:
+                        Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,
                     今日是否签到: true,
                     小时是否生产: false,
                     稳定度: 80,
@@ -94,9 +108,9 @@ export function 注册(ctx: Context) {
                     地下小型运输机: 0,
                     地下火箭炮炮弹: 0,
                     地下防空弹药: 0,
-                }
+                };
 
-                await ctx.database.create('马列玩家表', newPlayerData);
+                await ctx.database.create("马列玩家表", newPlayerData);
 
                 return `
 ====[征战文游]====

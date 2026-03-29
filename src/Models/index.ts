@@ -1,4 +1,4 @@
-import { Context } from 'koishi';
+import { Context } from "koishi";
 
 import {
     CoalitionArmy,
@@ -8,19 +8,20 @@ import {
     Region,
     RegionConfig,
     RegionTerra,
+    RegionState,
+    RegionShufflePool,
     Service,
-} from '../Types/index';
+} from "../Types/index";
 
-import { 加载全球数据表 } from './全球数据表';
-import { 加载玩家配置表 } from './玩家配置表';
-import { 加载玩家表 } from './玩家数据表';
-import { 加载地形相关表 } from './地区相关';
-import { 加载服务表 } from './服务表';
+import { 加载全球数据表 } from "./全球数据表";
+import { 加载玩家配置表 } from "./玩家配置表";
+import { 加载玩家表 } from "./玩家数据表";
+import { 加载地形相关表 } from "./地区相关";
+import { 加载服务表 } from "./服务表";
 
 // 扩展 Koishi 数据表类型定义
-declare module 'koishi' {
+declare module "koishi" {
     interface Tables {
-        
         马列联军表: CoalitionArmy;
 
         马列全球数据表: GlobalData;
@@ -31,6 +32,8 @@ declare module 'koishi' {
         马列地区表: Region;
         马列地区配置表: RegionConfig;
         马列地区地形表: RegionTerra;
+        马列地区状态机: RegionState;
+        马列地区洗牌池: RegionShufflePool;
 
         马列服务表: Service;
     }

@@ -1,12 +1,13 @@
-import { Context } from 'koishi';
-import { 玩家检查 } from '../../Utils';
+import { Context } from "koishi";
+import { 玩家检查 } from "../../Utils";
 
 export function 私人扩军(ctx: Context) {
-    ctx.command('私人扩军 <数量:number>').alias('扩军')
+    ctx.command("私人扩军 <数量:number>")
+        .alias("扩军")
         .action(async ({ session }, 数量) => {
             try {
                 const { id, username, 用户资料 } = await 玩家检查(ctx, session);
-                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!数量) {
                     return `
@@ -17,20 +18,24 @@ ${username}同志：
                 }
 
                 if (!Number.isInteger(数量) || 数量 <= 0) {
-                    return '请输入正确的扩军数量';
+                    return "请输入正确的扩军数量";
                 }
 
                 if (用户资料.工人 < 数量) {
-                    return '工人不足，无法扩军';
+                    return "工人不足，无法扩军";
                 }
 
                 const 新工人 = 用户资料.工人 - 数量;
                 const 新私人军队 = 用户资料.私人军队 + 数量;
 
-                await ctx.database.set('马列玩家表', { id }, {
-                    工人: 新工人,
-                    私人军队: 新私人军队,
-                });
+                await ctx.database.set(
+                    "马列玩家表",
+                    { id },
+                    {
+                        工人: 新工人,
+                        私人军队: 新私人军队,
+                    },
+                );
 
                 return `
 【红色战争】

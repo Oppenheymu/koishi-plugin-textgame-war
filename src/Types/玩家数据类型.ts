@@ -1,6 +1,4 @@
-
 export interface Player {
-
     id: number;
     uid: string;
 
@@ -73,5 +71,4 @@ export interface Player {
     //地下弹药库相关
     地下火箭炮炮弹: number;
     地下防空弹药: number;
-
 }

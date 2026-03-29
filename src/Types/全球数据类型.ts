@@ -1,8 +1,4 @@
-
-
-
 export interface GlobalData {
-
     id: string;
 
     // 其实就是全服资源
@@ -21,5 +17,4 @@ export interface GlobalData {
     全球平均科技等级: number;
 
     // 全球主要数据中间值
-
 }

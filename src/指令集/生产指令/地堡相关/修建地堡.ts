@@ -1,8 +1,6 @@
-import { Context } from 'koishi';
-import { 玩家检查 } from '../../../Utils';
-import { Player } from '../../../Types';
-
-
+import { Context } from "koishi";
+import { 玩家检查 } from "../../../Utils";
+import { Player } from "../../../Types";
 
 interface 地堡配置 {
     name: string;
@@ -12,33 +10,47 @@ interface 地堡配置 {
 }
 
 const 地堡库: Record<string, 地堡配置> = {
-    地下工厂: { name: '地下工厂', 投入字段: '地下工厂投入', 完成字段: '是否有地下工厂', 需求生产力: 20000000 },
-    地下机库: { name: '地下机库', 投入字段: '地下机库投入', 完成字段: '是否有地下机库', 需求生产力: 10000000 },
-    地下弹药库: { name: '地下弹药库', 投入字段: '地下弹药库投入', 完成字段: '是否有地下弹药库', 需求生产力: 2000000 },
+    地下工厂: {
+        name: "地下工厂",
+        投入字段: "地下工厂投入",
+        完成字段: "是否有地下工厂",
+        需求生产力: 20000000,
+    },
+    地下机库: {
+        name: "地下机库",
+        投入字段: "地下机库投入",
+        完成字段: "是否有地下机库",
+        需求生产力: 10000000,
+    },
+    地下弹药库: {
+        name: "地下弹药库",
+        投入字段: "地下弹药库投入",
+        完成字段: "是否有地下弹药库",
+        需求生产力: 2000000,
+    },
 };
 
-
-
 export function 修建地堡(ctx: Context) {
-    ctx.command('修建地堡 <地堡类型>').alias('建造地堡')
+    ctx.command("修建地堡 <地堡类型>")
+        .alias("建造地堡")
         .action(async ({ session }, 地堡类型) => {
             try {
-
-                const { id, username, 用户资料} = await 玩家检查(ctx, session);
-                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!地堡类型) {
                     return `
 ====[地堡建设]====
 □格式：修建地堡 <类型>
-□支持：${Object.keys(地堡库).join('/')}
+□支持：${Object.keys(地堡库).join("/")}
 □地下工厂：2000万生产力
 □地下机库：1000万生产力
 □地下弹药库：200万生产力`.trim();
                 }
 
                 const 配置 = 地堡库[地堡类型];
-                if (!配置) return `地堡类型不存在。支持：${Object.keys(地堡库).join('/')}`;
+                if (!配置)
+                    return `地堡类型不存在。支持：${Object.keys(地堡库).join("/")}`;
 
                 // 检查是否已完成
                 if (用户资料[配置.完成字段] as boolean) {
@@ -76,9 +88,12 @@ export function 修建地堡(ctx: Context) {
                     (更新对象 as any)[配置.完成字段] = true;
                 }
 
-                await ctx.database.set('马列玩家表', { id }, 更新对象);
+                await ctx.database.set("马列玩家表", { id }, 更新对象);
 
-                const 完成提示 = 新投入 >= 配置.需求生产力 ? '✓已完成' : `${进度百分比.toFixed(2)}%`;
+                const 完成提示 =
+                    新投入 >= 配置.需求生产力
+                        ? "✓已完成"
+                        : `${进度百分比.toFixed(2)}%`;
 
                 return `
 ====[地堡建设]====
@@ -88,7 +103,6 @@ ${username} 同志：
 □ 消耗工资：${格式化(工资)}
 □ 累计投入：${格式化(已投入)} → ${格式化(新投入)}
 □ 状态：${完成提示}`.trim();
-
             } catch (error) {
                 return (error as Error).message;
             }
