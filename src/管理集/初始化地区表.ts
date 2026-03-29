@@ -9,7 +9,7 @@ import {
     RegionBasicDataItem,
 } from "../Types/地区相关";
 
-const logger = new Logger("malie-初始化地区表");
+const logger = new Logger("初始化地区表");
 
 function clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));
@@ -190,6 +190,7 @@ async function 写入批次(ctx: Context, 地形批次: any[], 地区批次: any
         await Promise.all([
             ctx.database.upsert("马列地区地形表", 地形批次, ["地区编号"]),
             ctx.database.upsert("马列地区表", 地区批次, ["地区编号"]),
+            ctx.database.upsert("马列地区状态机", [{ 是否已分配: false }] , ["地区编号"])
         ]);
         return;
     } catch (error) {

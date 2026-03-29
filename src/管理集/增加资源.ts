@@ -21,7 +21,7 @@ export function 设置资源(ctx: Context) {
                 }
 
                 await ctx.database.set(
-                    "马列玩家表",
+                    '马列玩家表',
                     { id: 目标用户ID },
                     { [资源类型]: value },
                 );

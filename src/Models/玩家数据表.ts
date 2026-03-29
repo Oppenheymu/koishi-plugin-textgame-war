@@ -12,6 +12,12 @@ export function 加载玩家表(ctx: Context) {
             uid: { type: "string", length: 255 },
 
             //状态机
+            所在联军: {
+                type: "string",
+                length: 255,
+                initial: null,
+                nullable: true,
+            },
             驻扎地区: {
                 type: "string",
                 length: 255,

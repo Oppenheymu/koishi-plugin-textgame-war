@@ -24,9 +24,6 @@
     "peerDependencies": {
         "koishi": "4.18.11"
     },
-    "dependencies": {
-        "hashids": "^2.3.0"
-    },
     "koishi": {
         "description": {
             "zh": "Koishi史上最强文游。 基于koishi框架，使用Typescript对马列文游进行的重构"
@@ -36,5 +33,8 @@
                 "database"
             ]
         }
+    },
+    "dependencies": {
+        "sqids": "^0.3.0"
     }
 }

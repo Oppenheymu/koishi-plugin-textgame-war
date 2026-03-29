@@ -1,13 +1,14 @@
 import { Context } from "koishi";
-import Hashids from "hashids";
+import Sqids from 'sqids';
 import { Player } from "../../Types/index";
 import { 会话检查, 用户检查, TRandom } from "../../Utils/index";
 
-const hashids = new Hashids(
-    "我的的神秘盐值-天机不可泄露",
-    6,
-    "1234567890ABCDEF",
-);
+const sqids = new Sqids({
+  alphabet: '4027159386',
+  minLength: 5,
+  blocklist: new Set([])
+});
+
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 注册(ctx: Context) {
@@ -39,7 +40,7 @@ export function 注册(ctx: Context) {
                     { [platform]: userId, username: "默认名称" },
                 );
                 const newID = newPlayerConfig.id;
-                const newUID = hashids.encode(newID);
+                const newUID = sqids.encode([newID]);
                 const username = newPlayerConfig.username;
 
                 await ctx.database.set("马列玩家配置表", newID, {
@@ -56,6 +57,7 @@ export function 注册(ctx: Context) {
                 const newPlayerData: Player = {
                     id: newID,
                     uid: newUID,
+                    所在联军: null,
                     驻扎地区: null,
                     战争保护期:
                         Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,

@@ -1,11 +1,11 @@
 import { Context } from "koishi";
 import {} from "koishi-plugin-cron";
+import dayjs from 'dayjs';
 
 let 正在执行每日重置 = false;
 
 function 获取今天日期(): string {
-    const 现在 = new Date();
-    return `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, "0")}-${String(现在.getDate()).padStart(2, "0")}`;
+    return dayjs().format('YYYY-MM-DD');
 }
 
 export async function 初始化服务记录(

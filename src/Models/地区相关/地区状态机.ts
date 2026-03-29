@@ -6,11 +6,12 @@ export function 加载地区状态表(ctx: Context) {
         {
             地区编号: { type: "string" },
 
+            地区归属国: { type: "unsigned" , nullable: true },
             是否已分配: { type: "boolean" },
         },
         {
             primary: "地区编号",
-            unique: ["地区编号"],
+            unique: ["地区编号"]
         },
     );
 
@@ -23,7 +24,6 @@ export function 加载地区状态表(ctx: Context) {
         {
             primary: "id",
             unique: ["id"],
-            autoInc: true,
         },
     );
 }

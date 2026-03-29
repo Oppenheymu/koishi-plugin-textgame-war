@@ -3,6 +3,7 @@ export interface Player {
     uid: string;
 
     //状态机
+    所在联军: string | null;
     驻扎地区: string | null;
     战争保护期: number | null;
     今日是否签到: boolean;

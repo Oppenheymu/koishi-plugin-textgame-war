@@ -5,8 +5,8 @@ export function 加载联军表(ctx: Context) {
     ctx.model.extend(
         "马列联军表",
         {
-            id: { type: "string", length: 255 },
-            uid: { type: "string", length: 255 },
+            id: { type: "unsigned", length: 255 },
+            联军编号: { type: "string", length: 255 },
 
             联军元首: { type: "string", length: 255 },
             联军总理: { type: "string", length: 255 },
@@ -41,7 +41,7 @@ export function 加载联军表(ctx: Context) {
         },
         {
             primary: "id",
-            unique: ["uid"],
+            unique: ["联军编号"],
             autoInc: true,
         },
     );
