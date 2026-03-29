@@ -55,7 +55,7 @@ async function 执行每日统计(ctx: Context): Promise<void> {
         }
 
         const avgWage = Math.floor(totalWage / players.length);
-        const avgTech = Math.floor(totalTech / players.length) ;
+        const avgTech = Math.floor(totalTech / players.length);
 
         // 3. 处理全服数据
         const globalData = await ctx.database.get("马列全球数据表", {

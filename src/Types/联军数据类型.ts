@@ -5,7 +5,6 @@ export enum 联军政体 {
 }
 
 export interface CoalitionArmy {
-    
     id: number;
     联军编号: string;
 

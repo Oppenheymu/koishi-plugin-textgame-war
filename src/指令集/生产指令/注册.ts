@@ -1,12 +1,12 @@
 import { Context } from "koishi";
-import Sqids from 'sqids';
+import Sqids from "sqids";
 import { Player } from "../../Types/index";
 import { 会话检查, 用户检查, TRandom } from "../../Utils/index";
 
 const sqids = new Sqids({
-  alphabet: '4027159386',
-  minLength: 5,
-  blocklist: new Set([])
+    alphabet: "4027159386",
+    minLength: 5,
+    blocklist: new Set([]),
 });
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
