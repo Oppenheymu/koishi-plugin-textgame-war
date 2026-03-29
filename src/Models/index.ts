@@ -13,6 +13,7 @@ import {
     Service,
 } from "../Types/index";
 
+import { 加载联军表 } from "./联军数据表";
 import { 加载全球数据表 } from "./全球数据表";
 import { 加载玩家配置表 } from "./玩家配置表";
 import { 加载玩家表 } from "./玩家数据表";
@@ -41,6 +42,7 @@ declare module "koishi" {
 
 // 按顺序注册数据库模型插件
 const 数据库插件列表 = [
+    加载联军表,
     加载全球数据表,
     加载玩家配置表,
     加载玩家表,

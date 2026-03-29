@@ -113,8 +113,7 @@ ${username} 同志！
 
                 const now = dayjs().format("YYYY-M-D-H");
 
-                const 新联军数据: CoalitionArmy & { id: number } = {
-                    id: 新联军ID,
+                const 新联军数据: Omit<CoalitionArmy, "id"> = {
                     联军编号: 新联军编号,
                     联军元首: uid,
                     联军总理: uid,
@@ -150,8 +149,8 @@ ${username} 同志！
                 return `
 ====[征战文游]====
 联军组建成功！
+□ 联军名称: ***
 □ 联军编号: ${新联军编号}
-□ 联军元首: ${uid}
 
 分配的地区: ${新地区}
 `.trim();

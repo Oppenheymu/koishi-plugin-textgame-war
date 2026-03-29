@@ -3,10 +3,12 @@ import { 数据库服务 } from "./Models/index";
 import { 文游指令集 } from "./指令集/index";
 import { 文游服务集 } from "./Services/index";
 import { 文游管理集 } from "./管理集/index";
+import {} from "koishi-plugin-am-i-alt";
 
 export const name = "malie-textgame";
 export const inject = {
-    required: ["cron", "database"],
+    required: [ "database" ],
+    optional: ["cron", "amIAlt"]
 };
 
 export interface Config {}
