@@ -184,17 +184,19 @@ async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
     return JSON.parse(原始内容) as RegionBasicDataItem[];
 }
 
-async function 写入批次(ctx: Context, 地形批次: any[], 地区批次: any[]) {
+async function 写入批次(
+    ctx: Context,
+    地形批次: any[],
+    地区批次: any[],
+    状态机批次: any[],
+    配置批次: any[],
+) {
     try {
-        // 优化：并行执行两个表的 upsert，大幅提升成功时的写入速度
         await Promise.all([
             ctx.database.upsert("马列地区地形表", 地形批次, ["地区编号"]),
             ctx.database.upsert("马列地区表", 地区批次, ["地区编号"]),
-            ctx.database.upsert(
-                "马列地区状态机",
-                [{ 是否已分配: false }],
-                ["地区编号"],
-            ),
+            ctx.database.upsert("马列地区状态机", 状态机批次, ["地区编号"]),
+            ctx.database.upsert("马列地区配置表", 配置批次, ["地区编号"]),
         ]);
         return;
     } catch (error) {
@@ -207,12 +209,13 @@ async function 写入批次(ctx: Context, 地形批次: any[], 地区批次: any
     for (let i = 0; i < 地区批次.length; i += 1) {
         const 地形记录 = 地形批次[i];
         const 地区记录 = 地区批次[i];
+        const 状态机记录 = 状态机批次[i];
+        const 配置记录 = 配置批次[i];
         const 地区编号 = String(地区记录.地区编号);
 
         try {
             await ctx.database.create("马列地区地形表", 地形记录);
         } catch {
-            // 优化：更新时剥离主键字段，防止某些数据库驱动报错
             const { 地区编号: _, ...updateData } = 地形记录;
             await ctx.database.set("马列地区地形表", { 地区编号 }, updateData);
         }
@@ -222,6 +225,20 @@ async function 写入批次(ctx: Context, 地形批次: any[], 地区批次: any
         } catch {
             const { 地区编号: _, ...updateData } = 地区记录;
             await ctx.database.set("马列地区表", { 地区编号 }, updateData);
+        }
+
+        try {
+            await ctx.database.create("马列地区状态机", 状态机记录);
+        } catch {
+            const { 地区编号: _, ...updateData } = 状态机记录;
+            await ctx.database.set("马列地区状态机", { 地区编号 }, updateData);
+        }
+
+        try {
+            await ctx.database.create("马列地区配置表", 配置记录);
+        } catch {
+            const { 地区编号: _, ...updateData } = 配置记录;
+            await ctx.database.set("马列地区配置表", { 地区编号 }, updateData);
         }
     }
 }
@@ -295,7 +312,27 @@ export function 初始化地区表(ctx: Context) {
                         };
                     });
 
-                    await 写入批次(ctx, 地形批次, 地区批次);
+                    const 状态机批次 = 基础数据批次.map((地区) => ({
+                        地区编号: 地区.RegionId,
+                        地区归属国: null,
+                        是否已分配: false,
+                    }));
+
+                    const 配置批次 = 基础数据批次.map((地区) => ({
+                        地区编号: 地区.RegionId,
+                        地区名称: "",
+                        onebot: null,
+                        discord: null,
+                        telegram: null,
+                    }));
+
+                    await 写入批次(
+                        ctx,
+                        地形批次,
+                        地区批次,
+                        状态机批次,
+                        配置批次,
+                    );
 
                     已处理 += 地区批次.length;
 

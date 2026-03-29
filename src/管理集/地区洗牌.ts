@@ -40,26 +40,36 @@ export function 地区洗牌(ctx: Context) {
             // 3. 重置数据库状态
             await ctx.database.remove("马列地区洗牌池", {});
             await ctx.database.upsert("马列服务表", [
-                { id: "service", 当前地区洗牌指针: 0 },
+                { id: "GLOBAL", 当前地区洗牌指针: 0 },
             ]);
 
-            // 4. 分块写入数据库
+            // 4. 分块写入数据库并同步重置地区状态机
             const 分块大小 = 1000;
             for (
                 let 当前进度 = 0;
                 当前进度 < 陆地编号列表.length;
                 当前进度 += 分块大小
             ) {
-                // 切割数据块并映射格式
-                const 数据块 = 陆地编号列表
-                    .slice(当前进度, 当前进度 + 分块大小)
-                    .map((编号, 块内索引) => ({
-                        id: 当前进度 + 块内索引,
-                        地区编号: 编号,
-                    }));
+                const 当前块编号列表 = 陆地编号列表.slice(
+                    当前进度,
+                    当前进度 + 分块大小,
+                );
 
-                // 写入这一块的数据
-                await ctx.database.upsert("马列地区洗牌池", 数据块);
+                const 洗牌池数据块 = 当前块编号列表.map((编号, 块内索引) => ({
+                    id: 当前进度 + 块内索引,
+                    地区编号: 编号,
+                }));
+
+                const 状态机数据块 = 当前块编号列表.map((编号) => ({
+                    地区编号: 编号,
+                    地区归属国: null,
+                    是否已分配: false,
+                }));
+
+                await Promise.all([
+                    ctx.database.upsert("马列地区洗牌池", 洗牌池数据块),
+                    ctx.database.upsert("马列地区状态机", 状态机数据块, ["地区编号"]),
+                ]);
 
                 // 计算并发送进度
                 const 已处理数量 = Math.min(当前进度 + 分块大小, 陆地总数);
