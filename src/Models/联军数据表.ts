@@ -23,7 +23,7 @@ export function 加载联军表(ctx: Context) {
 
             联军税率: { type: "float", initial: 0 },
             联军成员数量: { type: "unsigned", initial: 0 },
-            联军成员列表: { type: "json"},
+            联军成员列表: { type: "json" },
 
             联军首都: { type: "string", length: 255, initial: "" },
             联军地区列表: { type: "json", initial: [] },

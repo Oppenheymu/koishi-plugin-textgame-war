@@ -72,7 +72,10 @@ export async function 玩家检查(
 
 export type 联军权限等级 = 0 | 1 | 2 | 3;
 
-export function 获取联军权限等级(联军资料: CoalitionArmy, uid: string): 联军权限等级 {
+export function 获取联军权限等级(
+    联军资料: CoalitionArmy,
+    uid: string,
+): 联军权限等级 {
     if (联军资料.联军元首 === uid || 联军资料.联军总理 === uid) {
         return 1;
     }

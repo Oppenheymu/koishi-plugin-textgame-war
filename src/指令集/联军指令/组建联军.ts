@@ -1,10 +1,9 @@
-
 import { Context } from "koishi";
 import dayjs from "dayjs";
 import Sqids from "sqids";
 import {} from "koishi-plugin-am-i-alt";
 import { CoalitionArmy, MemberData, 联军政体 } from "../../Types";
-import { 分配坐标逻辑, 玩家检查 } from "../../Utils/";
+import { 分配坐标逻辑, 检查违禁词, 玩家检查 } from "../../Utils/";
 
 const sqids = new Sqids({
     alphabet: "9087564312",
@@ -29,7 +28,9 @@ export function 组建联军(ctx: Context) {
 
                 const amIAlt服务 = (
                     ctx as Context & {
-                        amIAlt?: { isAlt: (session: unknown) => Promise<boolean> };
+                        amIAlt?: {
+                            isAlt: (session: unknown) => Promise<boolean>;
+                        };
                     }
                 ).amIAlt;
 
@@ -85,6 +86,11 @@ ${username} 同志！
 `.trim();
                 }
 
+                const 命中违禁词 = 检查违禁词(规范联军名称);
+                if (命中违禁词) {
+                    return `国家名称包含不允许的词语`;
+                }
+
                 const [重名联军] = await ctx.database.get(
                     "马列联军表",
                     { 联军名称: 规范联军名称 },
@@ -116,7 +122,7 @@ ${username} 同志！
                 const 用户: MemberData = {
                     联军贡献: 0,
                     加入时间: now,
-                }
+                };
 
                 const 新联军数据: Omit<CoalitionArmy, "id"> = {
                     联军编号: 新联军编号,
@@ -138,11 +144,15 @@ ${username} 同志！
                     联军名称: 规范联军名称,
                     名称是否审核: false,
                     建立日期: now,
-                    上次改名日期: now
+                    上次改名日期: now,
                 };
 
                 await Promise.all([
-                    ctx.database.set("马列联军表", { id: 新联军ID }, 新联军数据),
+                    ctx.database.set(
+                        "马列联军表",
+                        { id: 新联军ID },
+                        新联军数据,
+                    ),
                     ctx.database.set(
                         "马列玩家表",
                         { id },
@@ -164,7 +174,9 @@ ${username} 同志！
             } catch (error) {
                 if (新联军ID !== null) {
                     try {
-                        await ctx.database.remove("马列联军表", { id: 新联军ID });
+                        await ctx.database.remove("马列联军表", {
+                            id: 新联军ID,
+                        });
                     } catch {}
                 }
 

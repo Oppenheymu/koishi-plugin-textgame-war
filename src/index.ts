@@ -7,8 +7,8 @@ import {} from "koishi-plugin-am-i-alt";
 
 export const name = "malie-textgame";
 export const inject = {
-    required: [ "database" ],
-    optional: ["cron", "amIAlt"]
+    required: ["database"],
+    optional: ["cron", "amIAlt"],
 };
 
 export interface Config {}

@@ -68,7 +68,9 @@ export function 地区洗牌(ctx: Context) {
 
                 await Promise.all([
                     ctx.database.upsert("马列地区洗牌池", 洗牌池数据块),
-                    ctx.database.upsert("马列地区状态机", 状态机数据块, ["地区编号"]),
+                    ctx.database.upsert("马列地区状态机", 状态机数据块, [
+                        "地区编号",
+                    ]),
                 ]);
 
                 // 计算并发送进度

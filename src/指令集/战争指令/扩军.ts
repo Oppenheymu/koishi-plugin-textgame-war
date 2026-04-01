@@ -1,8 +1,5 @@
-
 import { Context } from "koishi";
 import { 玩家联军检查, 生成随机图片片段 } from "../../Utils";
-
-
 
 const 图片概率 = 0.01;
 const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];
@@ -12,8 +9,8 @@ export function 扩军(ctx: Context) {
         .alias("扩军")
         .action(async ({ session }, 数量) => {
             try {
-
-                const { id, username, 用户资料, 联军资料, 联军编号 } = await 玩家联军检查(ctx, session);
+                const { id, username, 用户资料, 联军资料, 联军编号 } =
+                    await 玩家联军检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!数量) {
@@ -37,7 +34,11 @@ ${username}同志：
 
                 await Promise.all([
                     ctx.database.set("马列玩家表", { id }, { 工人: 新工人 }),
-                    ctx.database.set("马列联军表", { 联军编号 }, { 联军军队: 新联军军队 }),
+                    ctx.database.set(
+                        "马列联军表",
+                        { 联军编号 },
+                        { 联军军队: 新联军军队 },
+                    ),
                 ]);
 
                 const 图片片段 = 生成随机图片片段(图片池, 图片概率);
@@ -50,7 +51,6 @@ ${username}同志：
 ■工人：${格式化(新工人)}(-${格式化(数量)})`.trim();
 
                 return 图片片段 ? `${文本消息}\n${图片片段}` : 文本消息;
-
             } catch (error) {
                 return (error as Error).message;
             }

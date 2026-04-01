@@ -27,7 +27,6 @@ export interface CoalitionArmy {
     联军成员数量: number;
     联军成员列表: Record<string, MemberData>;
 
-
     联军首都: string;
     联军地区列表: string[];
 
@@ -48,5 +47,4 @@ export interface CoalitionArmy {
 
     建立日期: string;
     上次改名日期: string;
-
 }
