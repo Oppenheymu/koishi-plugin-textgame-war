@@ -3,7 +3,7 @@ import { Context } from "koishi";
 import dayjs from "dayjs";
 import Sqids from "sqids";
 import {} from "koishi-plugin-am-i-alt";
-import { CoalitionArmy, 联军政体 } from "../../Types";
+import { CoalitionArmy, MemberData, 联军政体 } from "../../Types";
 import { 分配坐标逻辑, 玩家检查 } from "../../Utils/";
 
 const sqids = new Sqids({
@@ -113,6 +113,11 @@ ${username} 同志！
 
                 const now = dayjs().format("YYYY-M-D-H");
 
+                const 用户: MemberData = {
+                    联军贡献: 0,
+                    加入时间: now,
+                }
+
                 const 新联军数据: Omit<CoalitionArmy, "id"> = {
                     联军编号: 新联军编号,
                     联军元首: uid,
@@ -123,15 +128,17 @@ ${username} 同志！
                     联军政治体制: 联军政体.极权制,
                     联军税率: 0,
                     联军成员数量: 1,
-                    联军成员列表: [uid],
+                    联军成员列表: { [uid]: 用户 },
                     联军首都: 新地区,
                     联军地区列表: [新地区],
+                    联军军队: 0,
                     联军生活资料: 0,
                     联军宣称人口: 0,
                     联军宣称兵力: 0,
                     联军名称: 规范联军名称,
                     名称是否审核: false,
                     建立日期: now,
+                    上次改名日期: now
                 };
 
                 await Promise.all([

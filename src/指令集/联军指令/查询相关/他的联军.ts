@@ -1,24 +1,26 @@
 
 import { Context } from "koishi";
-import { 玩家联军检查, 获取联军展示名称 } from "../../../Utils";
+import { 目标联军解析 } from "../../../Utils";
 
 
 
-export function 我的联军(ctx: Context) {
-    ctx.command("我的联军")
-        .alias("查看我的联军")
-        .action(async ({ session }) => {
+export function 他的联军(ctx: Context) {
+    ctx.command("他的联军 <目标:string>")
+        .alias("查看他的联军")
+        .action(async ({ session }, 目标) => {
             try {
-                const { username, 联军资料, 权限等级 } = await 玩家联军检查(ctx, session);
+                const { 目标用户名, 联军资料, 展示联军名称 } = await 目标联军解析(
+                    ctx,
+                    session,
+                    目标,
+                );
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
-                const 展示联军名称 = 获取联军展示名称(联军资料);
 
                 return `
 ====[征战文游]====
-${username} 同志的联军信息：
+${目标用户名} 同志的联军信息：
 ■ 联军名称：${展示联军名称}
 ■ 联军编号：${联军资料.联军编号}
-■ 联军职级：${权限等级}
 ■ 联军成员：${格式化(联军资料.联军成员数量)}
 ■ 联军军队：${格式化(联军资料.联军军队)}
 ■ 联军首都：${联军资料.联军首都}
