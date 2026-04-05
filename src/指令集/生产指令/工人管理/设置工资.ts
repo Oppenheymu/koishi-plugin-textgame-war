@@ -1,5 +1,8 @@
+
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils/index";
+
+
 
 export function 设置工资(ctx: Context) {
     ctx.command("设置工资 <工资:number>").action(async ({ session }, 工资) => {

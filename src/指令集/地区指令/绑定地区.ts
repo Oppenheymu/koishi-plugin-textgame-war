@@ -14,7 +14,12 @@ export function 绑定地区(ctx: Context) {
                 return "请提供地区编号";
             }
 
-            const { platform, userId } = 用户检查(session);
+            const { platform } = 用户检查(session);
+            const 群聊ID = session?.guildId?.trim();
+            if (!群聊ID) {
+                return "请在群聊中使用该指令";
+            }
+
             const { 地区编号: 目标地区编号, 地区配置资料 } = await 地区解析(
                 ctx,
                 规范地区编号,
@@ -24,15 +29,27 @@ export function 绑定地区(ctx: Context) {
                 return "只能绑定本联军控制地区";
             }
 
-            const 已绑定用户 = 地区配置资料[platform as "onebot" | "discord" | "telegram"];
-            if (已绑定用户 && 已绑定用户 !== userId) {
-                return "该地区在当前平台已绑定其他账号";
+            const 当前群绑定列表 = await ctx.database.get("马列地区配置表", {
+                [platform]: 群聊ID,
+            });
+            const 当前群其他绑定 = 当前群绑定列表.find(
+                (记录) => 记录.地区编号 !== 目标地区编号,
+            );
+            if (当前群其他绑定) {
+                return `当前群已绑定地区：${当前群其他绑定.地区编号}`;
+            }
+
+            const 已绑定群聊 = 地区配置资料[
+                platform as "onebot" | "discord" | "telegram"
+            ];
+            if (已绑定群聊 && 已绑定群聊 !== 群聊ID) {
+                return "该地区在当前平台已绑定其他群聊";
             }
 
             await ctx.database.set(
                 "马列地区配置表",
                 { 地区编号: 目标地区编号 },
-                { [platform]: userId },
+                { [platform]: 群聊ID },
             );
 
             return `

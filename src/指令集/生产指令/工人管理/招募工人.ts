@@ -1,5 +1,8 @@
+
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils";
+
+
 
 export function 招募工人(ctx: Context) {
     ctx.command("招募工人 <数量:number>").action(async ({ session }, 数量) => {

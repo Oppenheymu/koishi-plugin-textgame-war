@@ -65,14 +65,19 @@ export async function 当前地区解析(
     session: Session | undefined,
 ): Promise<地区解析结果> {
     会话检查(session);
-    const { platform, userId } = 用户检查(session);
+    const { platform } = 用户检查(session);
+    const 群聊ID = session?.guildId?.trim();
+
+    if (!群聊ID) {
+        throw new Error("请在群聊中使用该指令");
+    }
 
     const [地区配置] = await ctx.database.get("马列地区配置表", {
-        [platform]: userId,
+        [platform]: 群聊ID,
     });
 
     if (!地区配置?.地区编号) {
-        throw new Error("你尚未绑定地区，请先发送：绑定地区 地区编号");
+        throw new Error("本群尚未绑定地区，请先发送：绑定地区 地区编号");
     }
 
     return 地区解析(ctx, 地区配置.地区编号);

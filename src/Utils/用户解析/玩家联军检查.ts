@@ -50,7 +50,7 @@ export async function 玩家联军检查(
     const 权限等级 = 获取联军权限等级(联军资料, 玩家结果.uid);
     const 最低权限等级 = options?.最低权限等级;
 
-    if (typeof 最低权限等级 === "number" && 权限等级 < 最低权限等级) {
+    if (typeof 最低权限等级 === "number" && 权限等级 > 最低权限等级) {
         session.send(`权限不足，需要联军${最低权限等级}级及以上权限`);
         throw new Error("联军权限不足");
     }

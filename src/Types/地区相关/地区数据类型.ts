@@ -57,4 +57,6 @@ export interface Region {
     仓库容量上限: number;
 
     炼钢厂数量: number;
+    空闲的炼钢厂: number;
+    
 }

@@ -1,5 +1,8 @@
+
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils";
+
+
 
 export function 召回工人(ctx: Context) {
     ctx.command("召回工人 <数量:number> ")
@@ -28,7 +31,7 @@ export function 召回工人(ctx: Context) {
                 const 新休假工人数 = 用户资料.休假工人 - 数量;
 
                 await ctx.database.set(
-                    "malieplayer",
+                    "马列玩家表",
                     { id: id },
                     {
                         工人: 新工人数,

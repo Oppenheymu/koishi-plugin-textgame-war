@@ -1,5 +1,8 @@
+
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils/index";
+
+
 
 export function 工人休假(ctx: Context) {
     ctx.command("工人休假 <数量:number>").action(async ({ session }, 数量) => {
