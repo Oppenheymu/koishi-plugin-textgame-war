@@ -6,9 +6,6 @@ import { 地区解析, 当前地区解析 } from "../../../utils";
 
 export function 地区配置(ctx: Context) {
     ctx.command("地区配置 [地区编号:string]")
-        .alias("我的账号")
-        .alias("我的账号配置")
-        .alias("我的配置")
         .action( async ( { session }, 地区编号参数 ) => {
             try {
 
