@@ -5,13 +5,13 @@ import {
     检查改名冷却,
     校验名称文本,
     玩家联军检查,
-} from "../../Utils";
+} from "../../../Utils";
 
 export function 修改地区名称(ctx: Context) {
     ctx.command("修改地区名称 <地区编号:string> <新名称:string>").action(
         async ({ session }, 地区编号, 新名称) => {
             try {
-                
+
                 const { id, uid, username, 联军资料 } = await 玩家联军检查(ctx, session, {
                     最低权限等级: 1,
                     是否必须在成员列表: true,

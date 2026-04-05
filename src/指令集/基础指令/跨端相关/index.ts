@@ -4,4 +4,4 @@ import { 我的UID } from "./我的UID";
 
 export { 绑定账户, 我的账户配置, 我的UID };
 
-export const 加载跨平台 = [绑定账户, 我的账户配置, 我的UID];
+export const 跨端相关指令 = [绑定账户, 我的账户配置, 我的UID];
