@@ -10,19 +10,20 @@ export function 查看地区地形(ctx: Context) {
     ctx.command("查看地区地形 [地区编号:string]").alias("查看城市地形").alias('城市地形').alias('城市地貌').alias('地区地形').alias('地区地貌')
         .action( async ( { session }, 地区编号参数 ) => {
             try {
-                const { id, uid, username, 联军资料 } = await 玩家联军检查(ctx, session, {
+                const { username } = await 玩家联军检查(ctx, session, {
                     最低权限等级: 3,
                     是否必须在成员列表: true,
                 });
 
                 const 规范地区编号 = 地区编号参数?.trim();
-                const { 地区地形资料 } = 规范地区编号
+                const { 地区编号, 地区地形资料 } = 规范地区编号
                     ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
                 return `
 【地区地形情报】
-■ 地区编号: string;
+${username} 同志！
+■ 地区编号: ${地区编号}
 ■ 海洋: ${ 地区地形资料.是否为海洋 ? "是" : "否"}
 地区地形概况:
 ■ 平均海拔: ${格式化(地区地形资料.平均海拔)}
