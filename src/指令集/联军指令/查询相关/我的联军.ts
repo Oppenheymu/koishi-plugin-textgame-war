@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家联军检查, 获取联军展示名称 } from "../../../Utils";
+import { 玩家联军检查, 获取联军展示名称 } from "../../../utils";
 
 export function 我的联军(ctx: Context) {
     ctx.command("我的联军")

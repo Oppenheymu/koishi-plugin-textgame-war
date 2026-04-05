@@ -7,7 +7,7 @@ import {
     CapacityBase,
     CapacityLimit,
     RegionBasicDataItem,
-    Region
+    Region,
 } from "../../Types/地区相关";
 
 const logger = new Logger("初始化地区表");

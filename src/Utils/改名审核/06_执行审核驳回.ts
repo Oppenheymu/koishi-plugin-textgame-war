@@ -1,4 +1,4 @@
-import { 获取待审核工单 } from "./获取待审核工单";
+import { 获取待审核工单 } from "./05_拉取待审工单";
 
 export function 审核驳回改名工单(工单编号: number, 原因?: string): string {
     const 工单 = 获取待审核工单(工单编号);

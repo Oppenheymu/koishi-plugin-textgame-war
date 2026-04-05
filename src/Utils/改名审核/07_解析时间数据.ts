@@ -1,4 +1,6 @@
-export function 解析改名时间戳(上次改名日期: string | null | undefined): number | null {
+export function 解析改名时间戳(
+    上次改名日期: string | null | undefined,
+): number | null {
     const 文本 = 上次改名日期?.trim();
     if (!文本) return null;
 

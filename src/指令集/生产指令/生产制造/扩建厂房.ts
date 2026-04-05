@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家检查 } from "../../../Utils/index";
+import { 玩家检查 } from "../../../utils/index";
 
 export function 扩建厂房(ctx: Context) {
     ctx.command("扩建厂房 [数量:number]").action(async ({ session }, 数量) => {

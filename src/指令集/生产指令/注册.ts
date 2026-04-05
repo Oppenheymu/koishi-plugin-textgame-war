@@ -1,7 +1,12 @@
 import { Context } from "koishi";
 import Sqids from "sqids";
 import { Player, PlayerConfig } from "../../Types/index";
-import { 会话检查, 用户检查, TRandom, 检查名称是否重复 } from "../../Utils/index";
+import {
+    会话检查,
+    用户检查,
+    TRandom,
+    检查名称是否重复,
+} from "../../utils/index";
 
 const sqids = new Sqids({
     alphabet: "4027159386",

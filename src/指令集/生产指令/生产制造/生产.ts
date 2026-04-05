@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 生成随机图片片段, 玩家检查 } from "../../../Utils/index";
+import { 生成随机图片片段, 玩家检查 } from "../../../utils/index";
 
 const 图片概率 = 0.01;
 const 图片池 = ["工厂.jpg", "工厂2.jpg", "工厂3.jpg", "工厂5.jpg"];

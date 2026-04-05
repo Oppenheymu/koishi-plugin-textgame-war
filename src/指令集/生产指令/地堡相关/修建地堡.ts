@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家检查 } from "../../../Utils";
+import { 玩家检查 } from "../../../utils";
 import { Player } from "../../../Types";
 
 interface 地堡配置 {

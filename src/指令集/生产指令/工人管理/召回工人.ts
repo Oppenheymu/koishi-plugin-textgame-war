@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家检查 } from "../../../Utils";
+import { 玩家检查 } from "../../../utils";
 
 export function 召回工人(ctx: Context) {
     ctx.command("召回工人 <数量:number> ")

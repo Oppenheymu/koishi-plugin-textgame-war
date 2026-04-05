@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Context } from "koishi";
-import { 获取待审核工单 } from "./获取待审核工单";
-import { 检查名称是否重复 } from "./检查名称是否重复";
+import { 获取待审核工单 } from "./05_拉取待审工单";
+import { 检查名称是否重复 } from "./03_校验名称重复";
 
 export async function 审核通过改名工单(
     ctx: Context,

@@ -1,5 +1,10 @@
 import { Context } from "koishi";
-import { Region, RegionConfig, RegionState, RegionTerra } from "../../Types/index";
+import {
+    Region,
+    RegionConfig,
+    RegionState,
+    RegionTerra,
+} from "../../Types/index";
 import { 获取地区展示名称 } from "./获取地区展示名称";
 
 export async function 地区解析(
@@ -18,12 +23,19 @@ export async function 地区解析(
         throw new Error("请指定地区编号");
     }
 
-    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料] = await Promise.all([
-        ctx.database.get("马列地区表", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区地形表", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区状态机", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区配置表", { 地区编号 }).then(([data]) => data),
-    ]);
+    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料] =
+        await Promise.all([
+            ctx.database.get("马列地区表", { 地区编号 }).then(([data]) => data),
+            ctx.database
+                .get("马列地区地形表", { 地区编号 })
+                .then(([data]) => data),
+            ctx.database
+                .get("马列地区状态机", { 地区编号 })
+                .then(([data]) => data),
+            ctx.database
+                .get("马列地区配置表", { 地区编号 })
+                .then(([data]) => data),
+        ]);
 
     if (!地区资料) {
         throw new Error(`未找到地区：${地区编号}`);

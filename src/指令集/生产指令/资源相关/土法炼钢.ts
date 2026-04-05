@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { TRandom, 玩家检查 } from "../../../Utils";
+import { TRandom, 玩家检查 } from "../../../utils";
 
 export function 土法炼钢(ctx: Context) {
     ctx.command("土法炼钢 <数量:number>").action(async ({ session }, 数量) => {

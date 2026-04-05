@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家联军检查, 生成随机图片片段 } from "../../Utils";
+import { 玩家联军检查, 生成随机图片片段 } from "../../utils";
 
 const 图片概率 = 0.01;
 const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];
@@ -31,7 +31,8 @@ ${username}同志：
 
                 const 新工人 = 用户资料.工人 - 数量;
                 const 新联军军队 = 联军资料.联军军队 + 数量;
-                const 新联军贡献 = 联军资料.联军成员列表[uid].联军贡献 + 数量 * 10;
+                const 新联军贡献 =
+                    联军资料.联军成员列表[uid].联军贡献 + 数量 * 10;
                 const 新联军成员列表 = {
                     ...联军资料.联军成员列表,
                     [uid]: {

@@ -8,7 +8,7 @@ import {
     检查名称是否重复,
     检查违禁词,
     玩家检查,
-} from "../../Utils/";
+} from "../../utils";
 
 const sqids = new Sqids({
     alphabet: "9087564312",

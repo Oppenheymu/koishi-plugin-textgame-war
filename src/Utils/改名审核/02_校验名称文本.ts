@@ -1,7 +1,10 @@
 import { 检查违禁词 } from "../违禁检查";
 import { 改名类型 } from "./types";
 
-export function 校验名称文本(新名称: string, 名称类型: 改名类型): string | null {
+export function 校验名称文本(
+    新名称: string,
+    名称类型: 改名类型,
+): string | null {
     const 规范名称 = 新名称.trim();
 
     if (!规范名称) return `请提供${名称类型}名称`;

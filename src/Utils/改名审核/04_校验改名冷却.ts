@@ -1,5 +1,5 @@
 import { 改名类型 } from "./types";
-import { 解析改名时间戳 } from "./解析改名时间戳";
+import { 解析改名时间戳 } from "./07_解析时间数据";
 
 export function 检查改名冷却(
     上次改名日期: string | null | undefined,

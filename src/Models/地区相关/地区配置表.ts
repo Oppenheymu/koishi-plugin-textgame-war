@@ -11,7 +11,7 @@ export function 加载地区配置表(ctx: Context) {
             discord: { type: "string", length: 255, nullable: true },
             telegram: { type: "string", length: 255, nullable: true },
 
-            地区名称: { type: "string", length: 255, initial: '' },
+            地区名称: { type: "string", length: 255, initial: "" },
             名称是否审核: { type: "boolean", initial: false },
             上次改名日期: { type: "string", length: 255, nullable: true },
         },

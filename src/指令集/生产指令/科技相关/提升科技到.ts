@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家检查 } from "../../../Utils/index";
+import { 玩家检查 } from "../../../utils/index";
 
 export function 提升科技到(ctx: Context) {
     ctx.command("提升科技到 <目标等级:number>").action(

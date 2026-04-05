@@ -5,17 +5,20 @@ import {
     检查改名冷却,
     校验名称文本,
     玩家联军检查,
-} from "../../../Utils";
+} from "../../../utils";
 
 export function 修改地区名称(ctx: Context) {
     ctx.command("修改地区名称 <地区编号:string> <新名称:string>").action(
         async ({ session }, 地区编号, 新名称) => {
             try {
-
-                const { id, uid, username, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 1,
-                    是否必须在成员列表: true,
-                });
+                const { id, uid, username, 联军资料 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 1,
+                        是否必须在成员列表: true,
+                    },
+                );
 
                 const 规范地区编号 = 地区编号?.trim();
                 if (!规范地区编号) {
@@ -28,7 +31,10 @@ export function 修改地区名称(ctx: Context) {
                     return "只能修改本联军控制地区的名称";
                 }
 
-                const 改名冷却提示 = 检查改名冷却(地区配置资料.上次改名日期, "地区");
+                const 改名冷却提示 = 检查改名冷却(
+                    地区配置资料.上次改名日期,
+                    "地区",
+                );
                 if (改名冷却提示) {
                     return 改名冷却提示;
                 }

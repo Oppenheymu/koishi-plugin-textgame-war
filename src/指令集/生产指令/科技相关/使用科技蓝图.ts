@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家检查 } from "../../../Utils";
+import { 玩家检查 } from "../../../utils";
 
 export function 使用科技蓝图(ctx: Context) {
     ctx.command("使用科技蓝图 <数量:number>").action(

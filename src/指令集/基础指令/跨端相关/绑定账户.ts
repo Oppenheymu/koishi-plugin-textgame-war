@@ -1,6 +1,6 @@
 import { Context } from "koishi";
 import {} from "koishi-plugin-cache-memory";
-import { 用户检查, 玩家检查 } from "../../../Utils";
+import { 用户检查, 玩家检查 } from "../../../utils";
 
 interface BindTask {
     ownerId: number;

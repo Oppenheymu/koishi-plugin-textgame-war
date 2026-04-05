@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 目标解析 } from "../Utils";
+import { 目标解析 } from "../utils";
 
 export function 设置资源(ctx: Context) {
     ctx.command("设置资源 <目标> <资源类型> <数量>", { authority: 3 }).action(
