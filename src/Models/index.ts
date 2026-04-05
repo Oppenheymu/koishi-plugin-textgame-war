@@ -1,5 +1,7 @@
 import { Context } from "koishi";
 
+import { 批量加载插件 } from "../utils/插件加载器";
+
 import {
     CoalitionArmy,
     GlobalData,
@@ -19,6 +21,7 @@ import { 加载玩家配置表 } from "./玩家配置表";
 import { 加载玩家表 } from "./玩家数据表";
 import { 加载地形相关表 } from "./地区相关";
 import { 加载服务表 } from "./服务表";
+
 
 // 扩展 Koishi 数据表类型定义
 declare module "koishi" {
@@ -52,7 +55,5 @@ const 数据库插件列表 = [
 
 // 统一挂载所有数据库相关服务
 export function 数据库服务(ctx: Context) {
-    for (const 插件 of 数据库插件列表) {
-        ctx.plugin(插件);
-    }
+    批量加载插件(ctx, 数据库插件列表, "数据库服务模块");
 }
