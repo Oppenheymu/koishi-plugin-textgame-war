@@ -7,6 +7,7 @@ import { 玩家检查, 目标解析 } from "../../../Utils";
 export function 联军编号(ctx: Context) {
     ctx.command("联军编号 [目标:string]")
         .alias("联军ID")
+        .alias("国家编号")
         .action(async ({ session }, 目标) => {
             try {
                 const 输入目标 = 目标?.trim();

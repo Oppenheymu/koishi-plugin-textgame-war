@@ -107,7 +107,7 @@ ${username} 同志！
                 const 新联军配置 = await ctx.database.create("马列联军表", {});
                 新联军ID = 新联军配置.id;
 
-                const 新联军编号 = sqids.encode([新联军ID]);
+                const 新联军编号 = `A${sqids.encode([新联军ID])}`;
                 const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军ID);
 
                 if (地区分配结果 === "所有地区已领完！") {

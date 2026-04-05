@@ -9,7 +9,7 @@ export function 扩军(ctx: Context) {
         .alias("扩军")
         .action(async ({ session }, 数量) => {
             try {
-                const { id, username, 用户资料, 联军资料, 联军编号 } =
+                const { uid, id, username, 用户资料, 联军资料, 联军编号 } =
                     await 玩家联军检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
@@ -31,13 +31,24 @@ ${username}同志：
 
                 const 新工人 = 用户资料.工人 - 数量;
                 const 新联军军队 = 联军资料.联军军队 + 数量;
+                const 新联军贡献 = 联军资料.联军成员列表[uid].联军贡献 + 数量 * 10;
+                const 新联军成员列表 = {
+                    ...联军资料.联军成员列表,
+                    [uid]: {
+                        ...联军资料.联军成员列表[uid],
+                        联军贡献: 新联军贡献,
+                    },
+                };
 
                 await Promise.all([
                     ctx.database.set("马列玩家表", { id }, { 工人: 新工人 }),
                     ctx.database.set(
                         "马列联军表",
                         { 联军编号 },
-                        { 联军军队: 新联军军队 },
+                        {
+                            联军军队: 新联军军队,
+                            联军成员列表: 新联军成员列表,
+                        },
                     ),
                 ]);
 

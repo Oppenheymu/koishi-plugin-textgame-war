@@ -5,8 +5,8 @@ import { 目标联军解析 } from "../../Utils";
 
 
 export function 查看联军名称(ctx: Context) {
-    ctx.command("查看联军名称 <目标>", { authority: 2 }).action(
-        async ({ session }, 目标) => {
+    ctx.command("查看联军名称 <目标>", { authority: 2 })
+        .action(async ({ session }, 目标) => {
             try {
                 const { 联军资料 } = await 目标联军解析(ctx,session,目标);
 
