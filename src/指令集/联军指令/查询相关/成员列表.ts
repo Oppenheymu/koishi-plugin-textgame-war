@@ -6,7 +6,7 @@ import { 玩家联军检查 } from "../../../utils";
 
 export function 成员列表(ctx: Context) {
     ctx.command("成员列表").alias("联军成员列表").alias("国家成员列表").alias("联军成员").alias("国家成员")
-        .action(async ({ session }, 目标) => {
+        .action(async ({ session }) => {
             try {
 
                 const { username, 联军资料 } = await 玩家联军检查(ctx, session, {

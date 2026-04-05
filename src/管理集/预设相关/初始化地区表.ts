@@ -319,10 +319,12 @@ export function 初始化地区表(ctx: Context) {
 
                     const 配置批次 = 基础数据批次.map((地区) => ({
                         地区编号: 地区.RegionId,
-                        地区名称: "",
                         onebot: null,
                         discord: null,
                         telegram: null,
+                        地区名称: '默认名称',
+                        名称是否审核: true,
+                        上次改名日期: null
                     }));
 
                     await 写入批次(

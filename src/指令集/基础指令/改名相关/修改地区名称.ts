@@ -9,7 +9,9 @@ import {
 } from "../../../utils";
 
 export function 修改地区名称(ctx: Context) {
-    ctx.command("修改地区名称 <新名称:string> [地区编号:string]").alias('地区命名').alias('城市改名').alias('城市改名').alias("地区命名")
+    ctx.command("修改地区名称 <新名称:string> [地区编号:string]")
+    .alias('地区命名').alias('地区改名')
+    .alias('城市改名').alias("城市命名").alias('修改城市名称')
         .action(async ({ session }, 新名称, 地区编号参数) => {
 
             try {
