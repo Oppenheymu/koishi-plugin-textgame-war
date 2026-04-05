@@ -4,6 +4,7 @@ import Sqids from "sqids";
 import {} from "koishi-plugin-am-i-alt";
 import { CoalitionArmy, MemberData, 联军政体 } from "../../types";
 import {
+    创建改名审核工单,
     分配坐标逻辑,
     检查名称是否重复,
     检查违禁词,
@@ -145,7 +146,7 @@ ${username} 同志！
                     联军名称: 规范联军名称,
                     名称是否审核: false,
                     建立日期: now,
-                    上次改名日期: now,
+                    上次改名日期: ""
                 };
 
                 await Promise.all([
@@ -164,11 +165,21 @@ ${username} 同志！
                     ),
                 ]);
 
+                const { 工单编号 } = await 创建改名审核工单(ctx, {
+                    类型: "联军",
+                    新名称: 规范联军名称,
+                    申请人ID: id,
+                    申请人UID: uid,
+                    申请人名称: username,
+                    联军编号: 新联军编号,
+                });
+
                 return `
 ====[征战文游]====
 联军组建成功！
 □ 联军名称: ***
 □ 联军编号: ${新联军编号}
+□ 审核工单: #${工单编号}（待审核）
 
 分配的地区: ${新地区}
 `.trim();
