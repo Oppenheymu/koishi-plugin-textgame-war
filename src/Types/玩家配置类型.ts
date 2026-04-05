@@ -5,5 +5,9 @@ export interface PlayerConfig {
     onebot: string;
     discord: string;
     telegram: string;
+
     username: string;
+    名称是否审核: boolean;
+    上次改名日期: string;
+    
 }

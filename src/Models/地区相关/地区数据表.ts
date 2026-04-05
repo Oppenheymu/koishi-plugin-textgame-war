@@ -8,7 +8,6 @@ export function 加载地区表(ctx: Context) {
 
             地区地形: { type: "string", length: 255 },
 
-            地区名称: { type: "string", length: 255, initial: "" },
             控制国家: { type: "string", length: 255, initial: "" },
             地区总督: { type: "string", length: 255, initial: "" },
             地区司令: { type: "string", length: 255, initial: "" },

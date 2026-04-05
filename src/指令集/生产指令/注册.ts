@@ -1,7 +1,7 @@
 import { Context } from "koishi";
 import Sqids from "sqids";
-import { Player } from "../../Types/index";
-import { 会话检查, 用户检查, TRandom } from "../../Utils/index";
+import { Player, PlayerConfig } from "../../Types/index";
+import { 会话检查, 用户检查, TRandom, 检查名称是否重复 } from "../../Utils/index";
 
 const sqids = new Sqids({
     alphabet: "4027159386",
@@ -35,16 +35,35 @@ export function 注册(ctx: Context) {
                     return "数据异常：已找到账号但未发现玩家档案，请联系管理员";
                 }
 
-                const newPlayerConfig = await ctx.database.create(
+                const newPlayerConfig: PlayerConfig = await ctx.database.create(
                     "马列玩家配置表",
-                    { [platform]: userId, username: "默认名称" },
+                    {
+                        [platform]: userId,
+                        username: "",
+                        名称是否审核: true,
+                    },
                 );
+
                 const newID = newPlayerConfig.id;
                 const newUID = sqids.encode([newID]);
-                const username = newPlayerConfig.username;
+
+                const 初始名称 =
+                    platform === "onebot"
+                        ? (session.username?.trim() ?? "")
+                        : `默认名称${newUID}`;
+
+                let username = 初始名称 || `默认名称${newUID}`;
+
+                const 重名类型 = await 检查名称是否重复(ctx, username, {
+                    排除玩家ID: newID,
+                });
+                if (重名类型) {
+                    username = `默认名称${newUID}`;
+                }
 
                 await ctx.database.set("马列玩家配置表", newID, {
                     uid: newUID,
+                    username,
                 });
 
                 const 初始工人 = TRandom(4000, 12000, 16000);

@@ -1,6 +1,12 @@
 import { Session, Context } from "koishi";
 import { CoalitionArmy, Player, PlayerConfig } from "../Types/index";
 
+export function 获取玩家展示名称(
+    玩家配置: Pick<PlayerConfig, "username" | "名称是否审核">,
+): string {
+    return 玩家配置.名称是否审核 ? 玩家配置.username : "默认名称";
+}
+
 export function 会话检查(
     session: Session | undefined,
 ): asserts session is Session {
@@ -64,7 +70,7 @@ export async function 玩家检查(
     return {
         id: PlayerConfig.id,
         uid: PlayerConfig.uid,
-        username: PlayerConfig.username,
+        username: 获取玩家展示名称(PlayerConfig),
         用户资料: Player,
         用户配置: PlayerConfig,
     };

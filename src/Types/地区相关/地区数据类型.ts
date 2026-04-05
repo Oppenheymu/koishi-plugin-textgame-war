@@ -17,8 +17,7 @@ export interface Region {
     地区编号: string;
 
     地区地形: TerrainType;
-
-    地区名称: string;
+    
     控制国家: string;
 
     // 地区权力

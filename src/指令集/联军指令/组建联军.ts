@@ -3,7 +3,12 @@ import dayjs from "dayjs";
 import Sqids from "sqids";
 import {} from "koishi-plugin-am-i-alt";
 import { CoalitionArmy, MemberData, 联军政体 } from "../../Types";
-import { 分配坐标逻辑, 检查违禁词, 玩家检查 } from "../../Utils/";
+import {
+    分配坐标逻辑,
+    检查名称是否重复,
+    检查违禁词,
+    玩家检查,
+} from "../../Utils/";
 
 const sqids = new Sqids({
     alphabet: "9087564312",
@@ -91,16 +96,12 @@ ${username} 同志！
                     return `国家名称包含不允许的词语`;
                 }
 
-                const [重名联军] = await ctx.database.get(
-                    "马列联军表",
-                    { 联军名称: 规范联军名称 },
-                    ["联军编号"],
-                );
-                if (重名联军) {
+                const 重名类型 = await 检查名称是否重复(ctx, 规范联军名称);
+                if (重名类型) {
                     return `
 =====[国家]=====
 ${username} 同志！
-该国家名称已被使用，请更换名称。
+该国家名称已被${重名类型}使用，请更换名称。
 `.trim();
                 }
 

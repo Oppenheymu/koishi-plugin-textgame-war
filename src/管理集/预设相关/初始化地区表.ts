@@ -7,6 +7,7 @@ import {
     CapacityBase,
     CapacityLimit,
     RegionBasicDataItem,
+    Region
 } from "../../Types/地区相关";
 
 const logger = new Logger("初始化地区表");
@@ -290,7 +291,6 @@ export function 初始化地区表(ctx: Context) {
                             地区编号: 地区.RegionId,
                             地区地形,
                             ...容量上限,
-                            地区名称: "",
                             控制国家: "",
                             地区总督: "",
                             地区司令: "",

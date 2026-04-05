@@ -15,6 +15,8 @@ export function 加载玩家配置表(ctx: Context) {
 
             // 昵称
             username: { type: "string", length: 255 },
+            名称是否审核: { type: "boolean", initial: false },
+            上次改名日期: { type: "string", nullable: true}
         },
         {
             // 表配置
