@@ -5,7 +5,7 @@ import { 会话检查, 用户检查, TRandom } from "../../Utils/index";
 
 const sqids = new Sqids({
     alphabet: "4027159386",
-    minLength: 5,
+    minLength: 6,
     blocklist: new Set([]),
 });
 

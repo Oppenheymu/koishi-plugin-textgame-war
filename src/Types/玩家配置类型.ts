@@ -6,6 +6,4 @@ export interface PlayerConfig {
     discord: string;
     telegram: string;
     username: string;
-
-    Username: string;
 }

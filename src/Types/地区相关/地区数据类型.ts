@@ -29,6 +29,9 @@ export interface Region {
     地区驻军: number;
     地区堡垒: number;
 
+    已部署列车炮: number;
+    空闲的列车炮: number;
+
     // 基础设施
     当前总基础设施: number;
     使用的基础设施: number;
