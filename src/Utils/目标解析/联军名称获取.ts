@@ -1,4 +1,4 @@
-import { CoalitionArmy } from "../../Types/index";
+import { CoalitionArmy } from "../../types/index";
 
 export function 获取联军展示名称(
     联军资料: Pick<CoalitionArmy, "联军名称" | "名称是否审核">,

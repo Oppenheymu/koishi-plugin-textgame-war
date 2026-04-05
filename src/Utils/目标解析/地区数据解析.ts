@@ -4,8 +4,8 @@ import {
     RegionConfig,
     RegionState,
     RegionTerra,
-} from "../../Types/index";
-import { 获取地区展示名称 } from "./获取地区展示名称";
+} from "../../types/index";
+import { 获取地区展示名称 } from "./地区名称获取";
 
 export async function 地区解析(
     ctx: Context,

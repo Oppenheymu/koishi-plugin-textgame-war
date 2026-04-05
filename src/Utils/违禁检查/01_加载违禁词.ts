@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { norm } from "./归一化";
+import { norm } from "./02_词库归一化";
 
 export const loadWords = (): string[] => {
     const dir = resolve(dirname(fileURLToPath(import.meta.url)), "..");

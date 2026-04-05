@@ -11,7 +11,7 @@ import {
     RegionState,
     RegionShufflePool,
     Service,
-} from "../Types/index";
+} from "../types/index";
 
 import { 加载联军表 } from "./联军数据表";
 import { 加载全球数据表 } from "./全球数据表";

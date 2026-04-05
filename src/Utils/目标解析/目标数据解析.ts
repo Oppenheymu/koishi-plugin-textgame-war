@@ -1,6 +1,6 @@
 import { Context, Session } from "koishi";
-import { Player, PlayerConfig } from "../../Types/index";
-import { 会话检查 } from "../用户检查";
+import { Player, PlayerConfig } from "../../types/index";
+import { 会话检查 } from "../用户解析";
 
 export async function 目标解析(
     ctx: Context,

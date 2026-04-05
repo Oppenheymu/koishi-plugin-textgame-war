@@ -1,4 +1,4 @@
-import { CoalitionArmy } from "../../Types/index";
+import { CoalitionArmy } from "../../types/index";
 import { 联军权限等级 } from "./types";
 
 export function 获取联军权限等级(

@@ -1,6 +1,6 @@
 import { Context } from "koishi";
 import Sqids from "sqids";
-import { Player, PlayerConfig } from "../../Types/index";
+import { Player, PlayerConfig } from "../../types/index";
 import {
     会话检查,
     用户检查,

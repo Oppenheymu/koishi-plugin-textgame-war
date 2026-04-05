@@ -1,7 +1,7 @@
 import { Context, Schema } from "koishi";
-import { 数据库服务 } from "./Models/index";
+import { 数据库服务 } from "./models/index";
 import { 文游指令集 } from "./指令集/index";
-import { 文游服务集 } from "./Services/index";
+import { 文游服务集 } from "./services/index";
 import { 文游管理集 } from "./管理集/index";
 import {} from "koishi-plugin-am-i-alt";
 

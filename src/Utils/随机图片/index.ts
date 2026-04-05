@@ -1,2 +1,2 @@
-export * from "./查找项目根目录";
-export * from "./生成随机图片片段";
+export * from "./图片目录查找";
+export * from "./图片随机生成";

@@ -1,4 +1,4 @@
-import { norm } from "./归一化";
+import { norm } from "./02_词库归一化";
 import { root } from "./state";
 
 export function 检查违禁词(text: string): string | null {

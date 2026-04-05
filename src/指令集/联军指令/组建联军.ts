@@ -2,7 +2,7 @@ import { Context } from "koishi";
 import dayjs from "dayjs";
 import Sqids from "sqids";
 import {} from "koishi-plugin-am-i-alt";
-import { CoalitionArmy, MemberData, 联军政体 } from "../../Types";
+import { CoalitionArmy, MemberData, 联军政体 } from "../../types";
 import {
     分配坐标逻辑,
     检查名称是否重复,

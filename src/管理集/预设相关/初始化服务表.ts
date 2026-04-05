@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 初始化服务记录 } from "../../Services/每日重置签到";
+import { 初始化服务记录 } from "../../services/每日重置签到";
 
 export function 初始化服务表(ctx: Context) {
     ctx.command("初始化服务表", { authority: 3 }).action(async () => {

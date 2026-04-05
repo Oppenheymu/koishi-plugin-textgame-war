@@ -1,8 +1,8 @@
 import { Context, Session } from "koishi";
-import { Player, PlayerConfig } from "../../Types/index";
-import { 会话检查 } from "./会话检查";
-import { 用户检查 } from "./用户检查";
-import { 获取玩家展示名称 } from "./获取玩家展示名称";
+import { Player, PlayerConfig } from "../../types/index";
+import { 会话检查 } from "./用户会话检查";
+import { 用户检查 } from "./用户平台检查";
+import { 获取玩家展示名称 } from "./获取玩家名称";
 
 export async function 玩家检查(
     ctx: Context,

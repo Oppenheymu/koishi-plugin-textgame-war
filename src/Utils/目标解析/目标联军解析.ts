@@ -1,7 +1,7 @@
 import { Context, Session } from "koishi";
-import { CoalitionArmy, Player } from "../../Types/index";
-import { 目标解析 } from "./目标解析";
-import { 获取联军展示名称 } from "./获取联军展示名称";
+import { CoalitionArmy, Player } from "../../types/index";
+import { 目标解析 } from "./目标数据解析";
+import { 获取联军展示名称 } from "./联军名称获取";
 
 export async function 目标联军解析(
     ctx: Context,

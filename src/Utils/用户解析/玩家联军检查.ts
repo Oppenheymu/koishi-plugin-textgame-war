@@ -1,8 +1,8 @@
 import { Context, Session } from "koishi";
-import { CoalitionArmy, Player, PlayerConfig } from "../../Types/index";
-import { 会话检查 } from "./会话检查";
-import { 玩家检查 } from "./玩家检查";
-import { 获取联军权限等级 } from "./获取联军权限等级";
+import { CoalitionArmy, Player, PlayerConfig } from "../../types/index";
+import { 会话检查 } from "./用户会话检查";
+import { 玩家检查 } from "./玩家数据检查";
+import { 获取联军权限等级 } from "./获取玩家权限";
 import { 联军权限等级 } from "./types";
 
 export async function 玩家联军检查(

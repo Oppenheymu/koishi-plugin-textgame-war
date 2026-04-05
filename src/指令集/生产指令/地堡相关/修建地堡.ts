@@ -1,6 +1,6 @@
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils";
-import { Player } from "../../../Types";
+import { Player } from "../../../types";
 
 interface 地堡配置 {
     name: string;

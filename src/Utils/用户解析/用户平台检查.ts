@@ -1,5 +1,5 @@
 import { Session } from "koishi";
-import { 会话检查 } from "./会话检查";
+import { 会话检查 } from "./用户会话检查";
 
 export function 用户检查(session: Session | undefined): {
     platform: string;

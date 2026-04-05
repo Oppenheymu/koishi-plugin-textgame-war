@@ -1,6 +1,6 @@
 import { Context } from "koishi";
 import { 玩家检查, 生成随机图片片段 } from "../../../utils";
-import { Player } from "../../../Types";
+import { Player } from "../../../types";
 
 interface 物品属性 {
     name: string;

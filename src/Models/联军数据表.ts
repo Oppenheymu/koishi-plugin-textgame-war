@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 联军政体 } from "../Types";
+import { 联军政体 } from "../types";
 
 export function 加载联军表(ctx: Context) {
     ctx.model.extend(
