@@ -8,8 +8,8 @@ import {
 } from "../../../utils";
 
 export function 修改联军名称(ctx: Context) {
-    ctx.command("修改联军名称 <新名称:string>").action(
-        async ({ session }, 新名称) => {
+    ctx.command("修改联军名称 <新名称:string>").alias('联军改名 ')
+        .action( async ({ session }, 新名称) => {
             try {
                 const { id, uid, username, 联军编号, 联军资料 } =
                     await 玩家联军检查(ctx, session, {

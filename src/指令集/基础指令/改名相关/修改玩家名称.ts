@@ -8,8 +8,8 @@ import {
 } from "../../../utils";
 
 export function 修改玩家名称(ctx: Context) {
-    ctx.command("修改玩家名称 <新名称:string>").action(
-        async ({ session }, 新名称) => {
+    ctx.command("修改玩家名称 <新名称:string>").alias('改名')
+        .action( async ({ session }, 新名称) => {
             try {
                 const { id, uid, username, 用户配置 } = await 玩家检查(
                     ctx,

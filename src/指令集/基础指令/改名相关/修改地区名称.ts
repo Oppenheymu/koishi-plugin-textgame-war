@@ -1,6 +1,7 @@
 import { Context } from "koishi";
 import {
     创建改名审核工单,
+    当前地区解析,
     地区解析,
     检查改名冷却,
     校验名称文本,
@@ -8,63 +9,52 @@ import {
 } from "../../../utils";
 
 export function 修改地区名称(ctx: Context) {
-    ctx.command("修改地区名称 <地区编号:string> <新名称:string>").action(
-        async ({ session }, 地区编号, 新名称) => {
-            try {
-                const { id, uid, username, 联军资料 } = await 玩家联军检查(
-                    ctx,
-                    session,
-                    {
-                        最低权限等级: 1,
-                        是否必须在成员列表: true,
-                    },
-                );
+    ctx.command("修改地区名称 <新名称:string> [地区编号:string]").action(async ({ session }, 新名称, 地区编号参数) => {
+        try {
+            const { id, uid, username, 联军资料 } = await 玩家联军检查(ctx, session, {
+                最低权限等级: 1,
+                是否必须在成员列表: true,
+            });
 
-                const 规范地区编号 = 地区编号?.trim();
-                if (!规范地区编号) {
-                    return "请提供地区编号";
-                }
+            const 规范地区编号 = 地区编号参数?.trim();
+            const { 地区编号, 地区配置资料 } = 规范地区编号
+                ? await 地区解析(ctx, 规范地区编号)
+                : await 当前地区解析(ctx, session);
 
-                const { 地区配置资料 } = await 地区解析(ctx, 规范地区编号);
+            if (!联军资料.联军地区列表.includes(地区编号)) {
+                return "只能修改本联军控制地区的名称";
+            }
 
-                if (!联军资料.联军地区列表.includes(规范地区编号)) {
-                    return "只能修改本联军控制地区的名称";
-                }
+            const 改名冷却提示 = 检查改名冷却(地区配置资料.上次改名日期, "地区");
+            if (改名冷却提示) {
+                return 改名冷却提示;
+            }
 
-                const 改名冷却提示 = 检查改名冷却(
-                    地区配置资料.上次改名日期,
-                    "地区",
-                );
-                if (改名冷却提示) {
-                    return 改名冷却提示;
-                }
+            const 规范名称 = 新名称?.trim() ?? "";
+            const 校验结果 = 校验名称文本(规范名称, "地区");
+            if (校验结果) {
+                return 校验结果;
+            }
 
-                const 规范名称 = 新名称?.trim() ?? "";
-                const 校验结果 = 校验名称文本(规范名称, "地区");
-                if (校验结果) {
-                    return 校验结果;
-                }
+            const { 工单编号 } = await 创建改名审核工单(ctx, {
+                类型: "地区",
+                新名称: 规范名称,
+                申请人ID: id,
+                申请人UID: uid,
+                申请人名称: username,
+                地区编号,
+            });
 
-                const { 工单编号 } = await 创建改名审核工单(ctx, {
-                    类型: "地区",
-                    新名称: 规范名称,
-                    申请人ID: id,
-                    申请人UID: uid,
-                    申请人名称: username,
-                    地区编号: 规范地区编号,
-                });
-
-                return `
+            return `
 ====[征战文游]====
 ${username} 同志！
 地区改名申请已提交审核。
-地区编号：${规范地区编号}
+地区编号：${地区编号}
 当前名称：${地区配置资料.地区名称 || "***"}
 工单编号：#${工单编号}
 `.trim();
-            } catch (error) {
-                return (error as Error).message;
-            }
-        },
-    );
+        } catch (error) {
+            return (error as Error).message;
+        }
+    });
 }

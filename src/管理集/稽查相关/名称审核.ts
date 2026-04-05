@@ -13,14 +13,19 @@ function 获取引用文本(session: Session | undefined): string | undefined {
 
 function 解析工单编号(
     session: Session | undefined,
-    工单编号?: number,
+    工单编号?: number | string,
 ): number | null {
-    if (
-        typeof 工单编号 === "number" &&
-        Number.isInteger(工单编号) &&
-        工单编号 > 0
-    ) {
-        return 工单编号;
+    if (typeof 工单编号 === "number") {
+        if (Number.isInteger(工单编号) && 工单编号 > 0) {
+            return 工单编号;
+        }
+    }
+
+    if (typeof 工单编号 === "string") {
+        const 文本编号 = Number(工单编号.trim());
+        if (Number.isInteger(文本编号) && 文本编号 > 0) {
+            return 文本编号;
+        }
     }
 
     const 引用文本 = 获取引用文本(session);
@@ -28,7 +33,7 @@ function 解析工单编号(
 }
 
 export function 名称审核(ctx: Context) {
-    ctx.command("审核通过 [工单编号:number]", { authority: 3 }).action(
+    ctx.command("审核通过 [工单编号:text]", { authority: 3 }).action(
         async ({ session }, 工单编号) => {
             try {
                 const 目标工单编号 = 解析工单编号(session, 工单编号);
@@ -42,7 +47,7 @@ export function 名称审核(ctx: Context) {
             }
         },
     );
-    ctx.command("审核驳回 [工单编号:number] [原因:text]", {
+    ctx.command("审核驳回 [工单编号:text] [原因:text]", {
         authority: 3,
     }).action(async ({ session }, 工单编号, 原因) => {
         try {

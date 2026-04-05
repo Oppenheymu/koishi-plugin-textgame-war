@@ -1,23 +1,26 @@
-import { Context } from "koishi";
+import { Context, Session } from "koishi";
 import {
     Region,
     RegionConfig,
     RegionState,
     RegionTerra,
 } from "../../types/index";
+import { 会话检查, 用户检查 } from "../用户解析";
 import { 获取地区展示名称 } from "./地区名称获取";
 
-export async function 地区解析(
-    ctx: Context,
-    目标地区编号: string,
-): Promise<{
+export type 地区解析结果 = {
     地区编号: string;
     地区资料: Region;
     地区地形资料: RegionTerra;
     地区状态资料: RegionState;
     地区配置资料: RegionConfig;
     展示地区名称: string;
-}> {
+};
+
+export async function 地区解析(
+    ctx: Context,
+    目标地区编号: string,
+): Promise<地区解析结果> {
     const 地区编号 = 目标地区编号?.trim();
     if (!地区编号) {
         throw new Error("请指定地区编号");
@@ -55,4 +58,22 @@ export async function 地区解析(
         地区配置资料,
         展示地区名称: 获取地区展示名称(地区配置资料),
     };
+}
+
+export async function 当前地区解析(
+    ctx: Context,
+    session: Session | undefined,
+): Promise<地区解析结果> {
+    会话检查(session);
+    const { platform, userId } = 用户检查(session);
+
+    const [地区配置] = await ctx.database.get("马列地区配置表", {
+        [platform]: userId,
+    });
+
+    if (!地区配置?.地区编号) {
+        throw new Error("你尚未绑定地区，请先发送：绑定地区 地区编号");
+    }
+
+    return 地区解析(ctx, 地区配置.地区编号);
 }
