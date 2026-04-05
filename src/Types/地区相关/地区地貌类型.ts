@@ -1,10 +1,11 @@
+
 export enum PhysiognomyType {
-    Water = "水域", // 总水域
-    Snow = "雪地", // 雪原
-    Grassland = "草地", // 草原
-    Bareland = "荒地", // 荒地/裸地
-    Forest = "森林", // 森林
-    Urban = "城镇", // 城镇
+    Water = "水域",
+    Snow = "雪地",
+    Grassland = "草地",
+    Bareland = "荒地",
+    Forest = "森林",
+    Urban = "城镇",
 }
 
 export interface RegionTerra {

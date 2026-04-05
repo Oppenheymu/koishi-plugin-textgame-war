@@ -1,4 +1,6 @@
+
 // 地区地貌
+
 export enum TerrainType {
     浅海 = "浅海",
     中海 = "中海",
@@ -11,6 +13,13 @@ export enum TerrainType {
     低山 = "低山",
     中山 = "中山",
     高山 = "高山",
+}
+
+export interface WarRecord {
+    发动者: string;
+    发动国?: string;
+    记录: string;
+    时间: string;
 }
 
 export interface Region {
@@ -27,6 +36,7 @@ export interface Region {
     // 地区军事
     地区驻军: number;
     地区堡垒: number;
+    历史战争: Record<string, WarRecord>
 
     已部署列车炮: number;
     空闲的列车炮: number;
@@ -58,5 +68,5 @@ export interface Region {
 
     炼钢厂数量: number;
     空闲的炼钢厂: number;
-    
+
 }

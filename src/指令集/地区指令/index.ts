@@ -2,11 +2,9 @@ import { Context } from "koishi";
 import { 批量加载插件 } from "../../utils/插件加载器";
 
 import { 查询相关指令 } from './查询相关'
-import { 绑定地区 } from "./绑定地区";
 
 const 地区指令列表 = [
-    绑定地区
-
+    ...查询相关指令
 ];
 
 export function 地区指令(ctx: Context) {
