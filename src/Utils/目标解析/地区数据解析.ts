@@ -20,10 +20,24 @@ export type 地区解析结果 = {
 export async function 地区解析(
     ctx: Context,
     目标地区编号: string,
+    session?: Session,
 ): Promise<地区解析结果> {
-    const 地区编号 = 目标地区编号?.trim();
-    if (!地区编号) {
+    const 输入值 = 目标地区编号?.trim();
+    if (!输入值) {
         throw new Error("请指定地区编号");
+    }
+
+    let 地区编号 = 输入值;
+    const [按编号地区资料] = await ctx.database.get("马列地区表", { 地区编号: 输入值 });
+
+    if (!按编号地区资料 && session) {
+        const { platform } = 用户检查(session);
+        const [绑定配置] = await ctx.database.get("马列地区配置表", {
+            [platform]: 输入值,
+        });
+        if (绑定配置?.地区编号) {
+            地区编号 = 绑定配置.地区编号;
+        }
     }
 
     const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料] =
@@ -41,7 +55,7 @@ export async function 地区解析(
         ]);
 
     if (!地区资料) {
-        throw new Error(`未找到地区：${地区编号}`);
+        throw new Error(`未找到地区：${输入值}`);
     }
 
     if (!地区地形资料 || !地区状态资料 || !地区配置资料) {
@@ -72,13 +86,23 @@ export async function 当前地区解析(
         throw new Error("请在群聊中使用该指令");
     }
 
-    const [地区配置] = await ctx.database.get("马列地区配置表", {
+    const 地区配置列表 = await ctx.database.get("马列地区配置表", {
         [platform]: 群聊ID,
     });
 
-    if (!地区配置?.地区编号) {
+    const 绑定地区编号列表 = Array.from(
+        new Set(地区配置列表.map((配置) => 配置.地区编号).filter(Boolean)),
+    );
+
+    if (!绑定地区编号列表.length) {
         throw new Error("本群尚未绑定地区，请先发送：绑定地区 地区编号");
     }
 
-    return 地区解析(ctx, 地区配置.地区编号);
+    if (绑定地区编号列表.length > 1) {
+        throw new Error(
+            `本群绑定数据异常：检测到多个地区绑定（${绑定地区编号列表.join("、")}），请联系管理员处理`,
+        );
+    }
+
+    return 地区解析(ctx, 绑定地区编号列表[0]);
 }

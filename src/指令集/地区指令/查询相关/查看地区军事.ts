@@ -18,7 +18,7 @@ export function 查看地区军事(ctx: Context) {
 
                 const 规范地区编号 = 地区编号参数?.trim();
                 const { 地区编号, 地区资料, 展示地区名称 } = 规范地区编号
-                    ? await 地区解析(ctx, 规范地区编号)
+                    ? await 地区解析(ctx, 规范地区编号, session)
                     : await 当前地区解析(ctx, session);
 
                 const 历史战争记录 = Object.values(地区资料.历史战争 ?? {});
