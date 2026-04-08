@@ -10,11 +10,6 @@ export function 加载地区表(ctx: Context) {
 
             控制国家: { type: "string", length: 255, initial: "" },
             地区总督: { type: "string", length: 255, initial: "" },
-            地区司令: { type: "string", length: 255, initial: "" },
-
-            地区驻军: { type: "unsigned", initial: 0 },
-            地区堡垒: { type: "unsigned", initial: 0 },
-            历史战争: { type: "json" },
 
             当前总基础设施: { type: "unsigned", initial: 0 },
             使用的基础设施: { type: "unsigned", initial: 0 },

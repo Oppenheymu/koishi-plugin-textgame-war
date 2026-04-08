@@ -35,7 +35,7 @@ export function 查看地区(ctx: Context) {
             try {
                 const 规范地区编号 = 地区编号参数?.trim();
                 const { 地区编号, 地区资料, 展示地区名称 } = 规范地区编号
-                    ? await 地区解析(ctx, 规范地区编号, session)
+                    ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
                 const 容量行 = 容量配置.map(({ 标签, 当前字段, 已用字段, 上限字段 }) => {

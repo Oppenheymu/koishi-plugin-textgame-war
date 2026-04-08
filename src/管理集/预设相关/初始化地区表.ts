@@ -190,6 +190,7 @@ async function 写入批次(
     地区批次: any[],
     状态机批次: any[],
     配置批次: any[],
+    战略批次: any[],
 ) {
     try {
         await Promise.all([
@@ -197,6 +198,7 @@ async function 写入批次(
             ctx.database.upsert("马列地区表", 地区批次, ["地区编号"]),
             ctx.database.upsert("马列地区状态机", 状态机批次, ["地区编号"]),
             ctx.database.upsert("马列地区配置表", 配置批次, ["地区编号"]),
+            ctx.database.upsert("马列地区战略表", 战略批次, ["地区编号"]),
         ]);
         return;
     } catch (error) {
@@ -211,6 +213,7 @@ async function 写入批次(
         const 地区记录 = 地区批次[i];
         const 状态机记录 = 状态机批次[i];
         const 配置记录 = 配置批次[i];
+        const 战略记录 = 战略批次[i];
         const 地区编号 = String(地区记录.地区编号);
 
         try {
@@ -239,6 +242,13 @@ async function 写入批次(
         } catch {
             const { 地区编号: _, ...updateData } = 配置记录;
             await ctx.database.set("马列地区配置表", { 地区编号 }, updateData);
+        }
+
+        try {
+            await ctx.database.create("马列地区战略表", 战略记录);
+        } catch {
+            const { 地区编号: _, ...updateData } = 战略记录;
+            await ctx.database.set("马列地区战略表", { 地区编号 }, updateData);
         }
     }
 }
@@ -292,9 +302,6 @@ export function 初始化地区表(ctx: Context) {
                             ...容量上限,
                             控制国家: "",
                             地区总督: "",
-                            地区司令: "",
-                            地区驻军: 0,
-                            地区堡垒: 0,
                             当前总基础设施: 0,
                             使用的基础设施: 0,
                             当前总公路容量: 0,
@@ -324,7 +331,18 @@ export function 初始化地区表(ctx: Context) {
                         telegram: null,
                         地区名称: '默认名称',
                         名称是否审核: true,
-                        上次改名日期: null
+                        上次改名日期: null,
+                    }));
+
+                    const 战略批次 = 基础数据批次.map((地区) => ({
+                        地区编号: 地区.RegionId,
+                        地区司令: "",
+                        铁路: {},
+                        地区驻军: 0,
+                        地区堡垒: 0,
+                        已部署列车炮: 0,
+                        空闲的列车炮: 0,
+                        历史战争: [],
                     }));
 
                     await 写入批次(
@@ -333,6 +351,7 @@ export function 初始化地区表(ctx: Context) {
                         地区批次,
                         状态机批次,
                         配置批次,
+                        战略批次,
                     );
 
                     已处理 += 地区批次.length;

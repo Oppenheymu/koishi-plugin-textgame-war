@@ -22,7 +22,7 @@ export function 修改地区名称(ctx: Context) {
 
                 const 规范地区编号 = 地区编号参数?.trim();
                 const { 地区编号, 地区配置资料 } = 规范地区编号
-                    ? await 地区解析(ctx, 规范地区编号, session)
+                    ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
                 if (!联军资料.联军地区列表.includes(地区编号)) {

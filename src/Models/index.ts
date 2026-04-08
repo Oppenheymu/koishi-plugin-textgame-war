@@ -11,6 +11,7 @@ import {
     RegionConfig,
     RegionTerra,
     RegionState,
+    RegionStrategy,
     RegionShufflePool,
     Service,
 } from "../types/index";
@@ -37,6 +38,7 @@ declare module "koishi" {
         马列地区配置表: RegionConfig;
         马列地区地形表: RegionTerra;
         马列地区状态机: RegionState;
+        马列地区战略表: RegionStrategy;
         马列地区洗牌池: RegionShufflePool;
 
         马列服务表: Service;

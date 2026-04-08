@@ -15,31 +15,15 @@ export enum TerrainType {
     高山 = "高山",
 }
 
-export interface WarRecord {
-    发动者: string;
-    发动国?: string;
-    记录: string;
-    时间: string;
-}
-
 export interface Region {
+
     地区编号: string;
 
     地区地形: TerrainType;
 
     控制国家: string;
 
-    // 地区权力
     地区总督: string;
-    地区司令: string;
-
-    // 地区军事
-    地区驻军: number;
-    地区堡垒: number;
-    历史战争: Record<string, WarRecord>
-
-    已部署列车炮: number;
-    空闲的列车炮: number;
 
     // 基础设施
     当前总基础设施: number;

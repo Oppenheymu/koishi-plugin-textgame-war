@@ -1,11 +1,14 @@
+
+
+
 export interface RegionConfig {
     地区编号: string;
 
-    onebot: string | null;
-    discord: string | null;
-    telegram: string | null;
+    onebot: string;
+    discord: string;
+    telegram: string;
 
     地区名称: string;
     名称是否审核: boolean;
-    上次改名日期: string | null;
+    上次改名日期: string;
 }

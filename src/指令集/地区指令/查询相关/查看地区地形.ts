@@ -17,7 +17,7 @@ export function 查看地区地形(ctx: Context) {
 
                 const 规范地区编号 = 地区编号参数?.trim();
                 const { 地区编号, 地区地形资料 } = 规范地区编号
-                    ? await 地区解析(ctx, 规范地区编号, session)
+                    ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
                 return `

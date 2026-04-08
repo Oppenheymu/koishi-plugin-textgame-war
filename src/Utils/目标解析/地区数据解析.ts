@@ -3,6 +3,7 @@ import {
     Region,
     RegionConfig,
     RegionState,
+    RegionStrategy,
     RegionTerra,
 } from "../../types/index";
 import { 会话检查, 用户检查 } from "../用户解析";
@@ -14,6 +15,7 @@ export type 地区解析结果 = {
     地区地形资料: RegionTerra;
     地区状态资料: RegionState;
     地区配置资料: RegionConfig;
+    地区战略资料: RegionStrategy;
     展示地区名称: string;
 };
 
@@ -28,7 +30,9 @@ export async function 地区解析(
     }
 
     let 地区编号 = 输入值;
-    const [按编号地区资料] = await ctx.database.get("马列地区表", { 地区编号: 输入值 });
+    const [按编号地区资料] = await ctx.database.get("马列地区表", {
+        地区编号: 输入值,
+    });
 
     if (!按编号地区资料 && session) {
         const { platform } = 用户检查(session);
@@ -40,7 +44,7 @@ export async function 地区解析(
         }
     }
 
-    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料] =
+    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
         await Promise.all([
             ctx.database.get("马列地区表", { 地区编号 }).then(([data]) => data),
             ctx.database
@@ -52,15 +56,18 @@ export async function 地区解析(
             ctx.database
                 .get("马列地区配置表", { 地区编号 })
                 .then(([data]) => data),
+            ctx.database
+                .get("马列地区战略表", { 地区编号 })
+                .then(([data]) => data),
         ]);
 
     if (!地区资料) {
         throw new Error(`未找到地区：${输入值}`);
     }
 
-    if (!地区地形资料 || !地区状态资料 || !地区配置资料) {
+    if (!地区地形资料 || !地区状态资料 || !地区配置资料 || !地区战略资料) {
         throw new Error(
-            `数据异常：地区 ${地区编号} 的地形/状态/配置数据缺失，请联系管理员`,
+            `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`,
         );
     }
 
@@ -70,6 +77,7 @@ export async function 地区解析(
         地区地形资料,
         地区状态资料,
         地区配置资料,
+        地区战略资料,
         展示地区名称: 获取地区展示名称(地区配置资料),
     };
 }
