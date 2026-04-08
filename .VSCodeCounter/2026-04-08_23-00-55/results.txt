@@ -1,0 +1,233 @@
+Date : 2026-04-08 23:00:55
+Directory : f:\Dev\koishi-app\external\malie-textgame\src
+Total : 162 files,  225583 codes, 237 comments, 1148 blanks, all 226968 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |    220,017 |          0 |          2 |    220,019 |
+| TypeScript |        160 |      5,566 |        237 |      1,146 |      6,949 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                |        162 |    225,583 |        237 |      1,148 |    226,968 |
+| . (Files)                                                                        |          1 |         38 |          0 |          8 |         46 |
+| assets                                                                           |          2 |    220,017 |          0 |          2 |    220,019 |
+| assets (Files)                                                                   |          1 |      2,415 |          0 |          1 |      2,416 |
+| assets\Region                                                                    |          1 |    217,602 |          0 |          1 |    217,603 |
+| models                                                                           |         13 |        383 |         40 |         87 |        510 |
+| models (Files)                                                                   |          7 |        240 |         34 |         53 |        327 |
+| models\地区相关                                                                      |          6 |        143 |          6 |         34 |        183 |
+| services                                                                         |          5 |        192 |         24 |         47 |        263 |
+| types                                                                            |         13 |        288 |         34 |        111 |        433 |
+| types (Files)                                                                    |          7 |        139 |         22 |         48 |        209 |
+| types\地区相关                                                                       |          6 |        149 |         12 |         63 |        224 |
+| utils                                                                            |         42 |      1,008 |         22 |        200 |      1,230 |
+| utils (Files)                                                                    |          3 |         86 |         11 |         21 |        118 |
+| utils\改名审核                                                                       |         12 |        260 |          0 |         52 |        312 |
+| utils\数学工具                                                                       |          1 |         20 |         11 |          5 |         36 |
+| utils\用户解析                                                                       |          9 |        245 |          0 |         46 |        291 |
+| utils\目标解析                                                                       |          7 |        233 |          0 |         38 |        271 |
+| utils\违禁检查                                                                       |          7 |         99 |          0 |         22 |        121 |
+| utils\随机图片                                                                       |          3 |         65 |          0 |         16 |         81 |
+| 指令集                                                                              |         76 |      3,056 |        106 |        601 |      3,763 |
+| 指令集 (Files)                                                                      |          1 |         17 |          0 |          3 |         20 |
+| 指令集\地区战斗                                                                         |          3 |          0 |          0 |          3 |          3 |
+| 指令集\地区指令                                                                         |          5 |        142 |          0 |         39 |        181 |
+| 指令集\地区指令 (Files)                                                                 |          1 |          9 |          0 |          4 |         13 |
+| 指令集\地区指令\查询相关                                                                    |          4 |        133 |          0 |         35 |        168 |
+| 指令集\基础指令                                                                         |         12 |        413 |          8 |         79 |        500 |
+| 指令集\基础指令 (Files)                                                                 |          2 |         24 |          0 |          7 |         31 |
+| 指令集\基础指令\改名相关                                                                    |          4 |        171 |          0 |         26 |        197 |
+| 指令集\基础指令\跨端相关                                                                    |          6 |        218 |          8 |         46 |        272 |
+| 指令集\战争指令                                                                         |          3 |        110 |          0 |         23 |        133 |
+| 指令集\生产指令                                                                         |         38 |      1,755 |         97 |        340 |      2,192 |
+| 指令集\生产指令 (Files)                                                                 |          3 |        221 |          1 |         30 |        252 |
+| 指令集\生产指令\地堡相关                                                                    |          8 |        397 |         13 |         57 |        467 |
+| 指令集\生产指令\工人管理                                                                    |          6 |        229 |         15 |         62 |        306 |
+| 指令集\生产指令\查询相关                                                                    |          7 |        138 |          5 |         34 |        177 |
+| 指令集\生产指令\生产制造                                                                    |          5 |        394 |         38 |         72 |        504 |
+| 指令集\生产指令\科技相关                                                                    |          4 |        194 |         21 |         45 |        260 |
+| 指令集\生产指令\资源相关                                                                    |          5 |        182 |          4 |         40 |        226 |
+| 指令集\联军指令                                                                         |         14 |        619 |          1 |        114 |        734 |
+| 指令集\联军指令 (Files)                                                                 |          3 |        278 |          1 |         44 |        323 |
+| 指令集\联军指令\权限相关                                                                    |          4 |        160 |          0 |         27 |        187 |
+| 指令集\联军指令\查询相关                                                                    |          7 |        181 |          0 |         43 |        224 |
+| 管理集                                                                              |         10 |        601 |         11 |         92 |        704 |
+| 管理集 (Files)                                                                      |          2 |         46 |          2 |          9 |         57 |
+| 管理集\稽查相关                                                                         |          4 |        109 |          0 |         17 |        126 |
+| 管理集\预设相关                                                                         |          4 |        446 |          9 |         66 |        521 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                         | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| f:\Dev\koishi-app\external\malie-textgame\src\assets\Region\RegionBasicData.json | JSON       |    217,602 |          0 |          1 |    217,603 |
+| f:\Dev\koishi-app\external\malie-textgame\src\assets\SensitiveLexicon.json       | JSON       |      2,415 |          0 |          1 |      2,416 |
+| f:\Dev\koishi-app\external\malie-textgame\src\index.ts                           | TypeScript |         38 |          0 |          8 |         46 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\index.ts                    | TypeScript |         51 |          3 |         13 |         67 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\全球数据表.ts                    | TypeScript |         19 |          8 |          7 |         34 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\地区相关\index.ts               | TypeScript |         19 |          0 |          3 |         22 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\地区相关\地区地形表.ts               | TypeScript |         24 |          3 |          5 |         32 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\地区相关\地区战略表.ts               | TypeScript |         20 |          0 |          7 |         27 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\地区相关\地区数据表.ts               | TypeScript |         35 |          1 |         11 |         47 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\地区相关\地区状态机.ts               | TypeScript |         26 |          0 |          4 |         30 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\地区相关\地区配置表.ts               | TypeScript |         19 |          2 |          4 |         25 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\服务表.ts                      | TypeScript |         15 |          5 |          4 |         24 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\玩家数据表.ts                    | TypeScript |         75 |         14 |         12 |        101 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\玩家配置表.ts                    | TypeScript |         21 |          4 |          4 |         29 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\联军数据表.ts                    | TypeScript |         39 |          0 |         11 |         50 |
+| f:\Dev\koishi-app\external\malie-textgame\src\models\联军权限表.ts                    | TypeScript |         20 |          0 |          2 |         22 |
+| f:\Dev\koishi-app\external\malie-textgame\src\services\index.ts                  | TypeScript |          9 |          0 |          3 |         12 |
+| f:\Dev\koishi-app\external\malie-textgame\src\services\全服数据统计.ts                 | TypeScript |        105 |         17 |         23 |        145 |
+| f:\Dev\koishi-app\external\malie-textgame\src\services\刷新地区状态.ts                 | TypeScript |          0 |          0 |          1 |          1 |
+| f:\Dev\koishi-app\external\malie-textgame\src\services\每日重置签到.ts                 | TypeScript |         59 |          7 |         14 |         80 |
+| f:\Dev\koishi-app\external\malie-textgame\src\services\每时重置生产.ts                 | TypeScript |         19 |          0 |          6 |         25 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\index.ts                     | TypeScript |          7 |          1 |          2 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\全球数据类型.ts                    | TypeScript |         10 |          5 |          6 |         21 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\地区相关\index.ts                | TypeScript |          5 |          0 |          1 |          6 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\地区相关\地区地貌类型.ts               | TypeScript |         52 |          3 |          9 |         64 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\地区相关\地区战略类型.ts               | TypeScript |         35 |          6 |         28 |         69 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\地区相关\地区数据类型.ts               | TypeScript |         39 |          2 |         16 |         57 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\地区相关\地区状态类型.ts               | TypeScript |          9 |          1 |          3 |         13 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\地区相关\地区配置类型.ts               | TypeScript |          9 |          0 |          6 |         15 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\服务类型.ts                      | TypeScript |          6 |          1 |          4 |         11 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\玩家数据类型.ts                    | TypeScript |         55 |         10 |         11 |         76 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\玩家配置类型.ts                    | TypeScript |         10 |          0 |          3 |         13 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\联军数据类型.ts                    | TypeScript |         32 |          5 |         14 |         51 |
+| f:\Dev\koishi-app\external\malie-textgame\src\types\联军权限类型.ts                    | TypeScript |         19 |          0 |          8 |         27 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\index.ts                     | TypeScript |          7 |          0 |          2 |          9 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\分配地区.ts                      | TypeScript |         46 |         11 |         11 |         68 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\插件加载器.ts                     | TypeScript |         33 |          0 |          8 |         41 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\01_创建改名申请.ts            | TypeScript |         50 |          0 |          8 |         58 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\02_校验名称文本.ts            | TypeScript |         21 |          0 |          7 |         28 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\03_校验名称重复.ts            | TypeScript |         23 |          0 |          4 |         27 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\04_校验改名冷却.ts            | TypeScript |         18 |          0 |          5 |         23 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\05_拉取待审工单.ts            | TypeScript |         12 |          0 |          2 |         14 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\06_执行审核通过.ts            | TypeScript |         65 |          0 |          9 |         74 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\06_执行审核驳回.ts            | TypeScript |         14 |          0 |          4 |         18 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\07_解析时间数据.ts            | TypeScript |         19 |          0 |          3 |         22 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\08_解析工单编号.ts            | TypeScript |          7 |          0 |          3 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\index.ts                | TypeScript |          8 |          0 |          2 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\state.ts                | TypeScript |          7 |          0 |          3 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\改名审核\types.ts                | TypeScript |         16 |          0 |          2 |         18 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\数学工具\三角随机数.ts                | TypeScript |         20 |         11 |          5 |         36 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\index.ts                | TypeScript |          8 |          0 |          1 |          9 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\types.ts                | TypeScript |          1 |          0 |          1 |          2 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\玩家数据检查.ts               | TypeScript |         39 |          0 |          6 |         45 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\玩家联军检查.ts               | TypeScript |         55 |          0 |         10 |         65 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\用户会话检查.ts               | TypeScript |          8 |          0 |          2 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\用户平台检查.ts               | TypeScript |         19 |          0 |          6 |         25 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\联军权限设置.ts               | TypeScript |         89 |          0 |         12 |        101 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\获取玩家名称.ts               | TypeScript |          6 |          0 |          2 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\用户解析\获取玩家权限.ts               | TypeScript |         20 |          0 |          6 |         26 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\index.ts                | TypeScript |          6 |          0 |          1 |          7 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\地区名称获取.ts               | TypeScript |          6 |          0 |          2 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\地区数据解析.ts               | TypeScript |        101 |          0 |         16 |        117 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\目标数据解析.ts               | TypeScript |         55 |          0 |          8 |         63 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\目标联军解析.ts               | TypeScript |         34 |          0 |          5 |         39 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\联军名称获取.ts               | TypeScript |          6 |          0 |          2 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\目标解析\联军数据解析.ts               | TypeScript |         25 |          0 |          4 |         29 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\01_加载违禁词.ts             | TypeScript |         33 |          0 |          4 |         37 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\02_词库归一化.ts             | TypeScript |          4 |          0 |          2 |          6 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\03_构建匹配树.ts             | TypeScript |         35 |          0 |          7 |         42 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\04_违禁词检查.ts             | TypeScript |         17 |          0 |          4 |         21 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\index.ts                | TypeScript |          1 |          0 |          2 |          3 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\state.ts                | TypeScript |          4 |          0 |          2 |          6 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\违禁检查\types.ts                | TypeScript |          5 |          0 |          1 |          6 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\随机图片\index.ts                | TypeScript |          2 |          0 |          1 |          3 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\随机图片\图片目录查找.ts               | TypeScript |         11 |          0 |          2 |         13 |
+| f:\Dev\koishi-app\external\malie-textgame\src\utils\随机图片\图片随机生成.ts               | TypeScript |         52 |          0 |         13 |         65 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\index.ts                       | TypeScript |         17 |          0 |          3 |         20 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区战斗\index.ts                  | TypeScript |          0 |          0 |          1 |          1 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区战斗\列车炮炮击.ts                  | TypeScript |          0 |          0 |          1 |          1 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区战斗\部署列车炮.ts                  | TypeScript |          0 |          0 |          1 |          1 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区指令\index.ts                  | TypeScript |          9 |          0 |          4 |         13 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区指令\查询相关\index.ts             | TypeScript |          5 |          0 |          6 |         11 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区指令\查询相关\查看地区.ts              | TypeScript |         53 |          0 |         11 |         64 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区指令\查询相关\查看地区军事.ts            | TypeScript |         37 |          0 |         10 |         47 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\地区指令\查询相关\查看地区地形.ts            | TypeScript |         38 |          0 |          8 |         46 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\index.ts                  | TypeScript |         13 |          0 |          5 |         18 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\改名相关\index.ts             | TypeScript |          5 |          0 |          3 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\改名相关\修改地区名称.ts            | TypeScript |         56 |          0 |          9 |         65 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\改名相关\修改玩家名称.ts            | TypeScript |         54 |          0 |          7 |         61 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\改名相关\修改联军名称.ts            | TypeScript |         56 |          0 |          7 |         63 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\查看版本日志.ts                 | TypeScript |         11 |          0 |          2 |         13 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\跨端相关\index.ts             | TypeScript |          7 |          0 |          3 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\跨端相关\地区配置.ts              | TypeScript |         25 |          0 |          7 |         32 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\跨端相关\我的UID.ts             | TypeScript |         16 |          0 |          2 |         18 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\跨端相关\我的配置.ts              | TypeScript |         25 |          0 |          5 |         30 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\跨端相关\绑定地区.ts              | TypeScript |         55 |          0 |         10 |         65 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\基础指令\跨端相关\绑定账户.ts              | TypeScript |         90 |          8 |         19 |        117 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\战争指令\index.ts                  | TypeScript |          7 |          0 |          3 |         10 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\战争指令\扩军.ts                     | TypeScript |         62 |          0 |         12 |         74 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\战争指令\私人扩军.ts                   | TypeScript |         41 |          0 |          8 |         49 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\index.ts                  | TypeScript |         23 |          0 |          4 |         27 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\index.ts             | TypeScript |         25 |          0 |          3 |         28 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\修建地堡.ts              | TypeScript |         90 |          5 |         16 |        111 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\我的地下工厂.ts            | TypeScript |         17 |          1 |          4 |         22 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\我的地下弹药库.ts           | TypeScript |         21 |          1 |          4 |         26 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\我的地下机库.ts            | TypeScript |         21 |          1 |          4 |         26 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\我的地堡.ts              | TypeScript |         18 |          0 |          3 |         21 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\转入地下.ts              | TypeScript |        104 |          3 |         12 |        119 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\地堡相关\转入地面.ts              | TypeScript |        101 |          2 |         11 |        114 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\工人管理\index.ts             | TypeScript |         13 |          0 |          3 |         16 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\工人管理\召回工人.ts              | TypeScript |         38 |          2 |         12 |         52 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\工人管理\工人休假.ts              | TypeScript |         47 |          6 |         13 |         66 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\工人管理\招募工人.ts              | TypeScript |         62 |          1 |         14 |         77 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\工人管理\查看全球劳动力市场.ts         | TypeScript |         25 |          1 |          8 |         34 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\工人管理\设置工资.ts              | TypeScript |         44 |          5 |         12 |         61 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\index.ts             | TypeScript |          7 |          0 |          6 |         13 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\我的全部资料.ts            | TypeScript |         26 |          1 |          4 |         31 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\我的工人.ts              | TypeScript |         23 |          1 |          4 |         28 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\我的生产次数.ts            | TypeScript |         17 |          0 |          7 |         24 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\我的科技.ts              | TypeScript |         23 |          1 |          5 |         29 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\我的资料.ts              | TypeScript |         20 |          1 |          4 |         25 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\查询相关\我的资源.ts              | TypeScript |         22 |          1 |          4 |         27 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\注册.ts                     | TypeScript |        140 |          0 |         19 |        159 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\生产制造\index.ts             | TypeScript |          6 |          0 |          3 |          9 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\生产制造\军事生产.ts              | TypeScript |        167 |         10 |         21 |        198 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\生产制造\扩建厂房.ts              | TypeScript |         40 |          4 |          8 |         52 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\生产制造\改进生产技术到.ts           | TypeScript |         97 |         18 |         22 |        137 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\生产制造\生产.ts                | TypeScript |         84 |          6 |         18 |        108 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\科技相关\index.ts             | TypeScript |          5 |          0 |          3 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\科技相关\使用科技蓝图.ts            | TypeScript |         36 |          1 |          9 |         46 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\科技相关\提升科技.ts              | TypeScript |         98 |         11 |         18 |        127 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\科技相关\提升科技到.ts             | TypeScript |         55 |          9 |         15 |         79 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\签到.ts                     | TypeScript |         58 |          1 |          7 |         66 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\资源相关\index.ts             | TypeScript |          6 |          0 |          3 |          9 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\资源相关\土法炼钢.ts              | TypeScript |         57 |          1 |         13 |         71 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\资源相关\开采石油.ts              | TypeScript |         41 |          1 |          8 |         50 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\资源相关\开采铁矿石.ts             | TypeScript |         39 |          1 |          8 |         48 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\生产指令\资源相关\开采铝土矿.ts             | TypeScript |         39 |          1 |          8 |         48 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\index.ts                  | TypeScript |         15 |          1 |          4 |         20 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\权限相关\index.ts             | TypeScript |          5 |          0 |          3 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\权限相关\我的联军权限.ts            | TypeScript |         30 |          0 |          4 |         34 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\权限相关\移出联军.ts              | TypeScript |         81 |          0 |         13 |         94 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\权限相关\设置联军权限.ts            | TypeScript |         44 |          0 |          7 |         51 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\index.ts             | TypeScript |          8 |          0 |          6 |         14 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\他的联军.ts              | TypeScript |         25 |          0 |          3 |         28 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\地区列表.ts              | TypeScript |         22 |          0 |          8 |         30 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\成员列表.ts              | TypeScript |         23 |          0 |          9 |         32 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\我的联军.ts              | TypeScript |         27 |          0 |          3 |         30 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\联军编号.ts              | TypeScript |         37 |          0 |          6 |         43 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\查询相关\贡献排行.ts              | TypeScript |         39 |          0 |          8 |         47 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\组建联军.ts                   | TypeScript |        186 |          0 |         26 |        212 |
+| f:\Dev\koishi-app\external\malie-textgame\src\指令集\联军指令\邀请加入联军.ts                 | TypeScript |         77 |          0 |         14 |         91 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\index.ts                       | TypeScript |         13 |          1 |          4 |         18 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\增加资源.ts                        | TypeScript |         33 |          1 |          5 |         39 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\稽查相关\index.ts                  | TypeScript |          5 |          0 |          3 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\稽查相关\全部资料.ts                   | TypeScript |         31 |          0 |          3 |         34 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\稽查相关\名称审核.ts                   | TypeScript |         57 |          0 |          8 |         65 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\稽查相关\查看联军名称.ts                 | TypeScript |         16 |          0 |          3 |         19 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\预设相关\index.ts                  | TypeScript |          5 |          0 |          3 |          8 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\预设相关\初始化地区表.ts                 | TypeScript |        334 |          3 |         38 |        375 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\预设相关\初始化服务表.ts                 | TypeScript |         40 |          0 |         10 |         50 |
+| f:\Dev\koishi-app\external\malie-textgame\src\管理集\预设相关\地区洗牌.ts                   | TypeScript |         67 |          6 |         15 |         88 |
+| Total                                                                            |            |    225,583 |        237 |      1,148 |    226,968 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

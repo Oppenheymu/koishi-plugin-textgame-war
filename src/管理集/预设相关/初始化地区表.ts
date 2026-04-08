@@ -178,7 +178,7 @@ function 构建进度条(当前: number, 总数: number): string {
 async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
     const 文件路径 = resolve(
         __dirname,
-        "../../assets/Region/RegionBasicData.json",
+        "../../../assets/Region/RegionBasicData.json",
     );
     const 原始内容 = await readFile(文件路径, "utf-8");
     return JSON.parse(原始内容) as RegionBasicDataItem[];
