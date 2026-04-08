@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Context } from "koishi";
 import { MemberData } from "../../types";
-import { 玩家联军检查, 目标解析 } from "../../utils";
+import { 玩家联军检查, 玩家联军权限设置, 目标解析 } from "../../utils";
 
 export function 邀请加入联军(ctx: Context) {
     ctx.command("邀请加入联军 <目标:string>")
@@ -10,11 +10,12 @@ export function 邀请加入联军(ctx: Context) {
         .action(async ({ session }, 目标) => {
             try {
                 
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, "邀请加入联军");
                 const { username, 联军资料, 联军编号 } = await 玩家联军检查(
                     ctx,
                     session,
                     {
-                        最低权限等级: 2,
+                        最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
                     },
                 );

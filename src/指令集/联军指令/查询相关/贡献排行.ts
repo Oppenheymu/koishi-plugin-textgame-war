@@ -1,6 +1,6 @@
 
 import { Context } from "koishi";
-import { 玩家联军检查 } from "../../../utils";
+import { 玩家联军检查, 玩家联军权限设置 } from "../../../utils";
 
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -11,8 +11,9 @@ export function 贡献排行(ctx: Context) {
         .alias("国家贡献排行")
         .action(async ({ session }) => {
             try {
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, "贡献排行");
                 const { username, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 1,
+                    最低权限等级: 权限等级需求,
                     是否必须在成员列表: true,
                 });
 

@@ -1,0 +1,50 @@
+import { Context } from "koishi";
+import {
+    校验联军权限动作,
+    校验联军权限等级,
+    设置联军操作权限,
+    玩家联军检查,
+    玩家联军权限设置,
+} from "../../../utils";
+
+export function 设置联军权限(ctx: Context) {
+    ctx.command("设置联军权限 <操作:string> <权限等级:number>")
+        .action(async ({ session }, 操作, 权限等级) => {
+            try {
+                const 权限等级需求 = await 玩家联军权限设置(
+                    ctx,
+                    session,
+                    "设置联军权限",
+                );
+                const { username, 联军编号 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 权限等级需求,
+                    是否必须在成员列表: true,
+                });
+
+                const 目标操作 = 操作?.trim();
+                if (!目标操作 || !校验联军权限动作(目标操作)) {
+                    return "无效操作名，请使用：成员列表 / 地区列表 / 贡献排行 / 邀请加入联军 / 设置联军权限 / 移出联军 / 我的联军权限";
+                }
+
+                if (!校验联军权限等级(权限等级)) {
+                    return "权限等级必须是 0 到 3 的整数";
+                }
+
+                if (目标操作 === "设置联军权限" && 权限等级 === 0) {
+                    return "设置联军权限 的最低需求不能设置为 0";
+                }
+
+                await 设置联军操作权限(ctx, 联军编号, 目标操作, 权限等级);
+
+                return `
+====[征战文游]====
+${username} 同志！
+联军权限更新成功
+■ 操作：${目标操作}
+■ 新需求等级：${权限等级}
+`.trim();
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
+}
