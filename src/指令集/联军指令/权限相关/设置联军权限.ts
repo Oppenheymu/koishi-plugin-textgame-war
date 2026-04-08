@@ -8,7 +8,7 @@ import {
 } from "../../../utils";
 
 export function 设置联军权限(ctx: Context) {
-    ctx.command("设置联军权限 <操作:string> <权限等级:number>")
+    ctx.command("设置联军权限 <操作:string> <权限等级:number>").alias('设置权限')
         .action(async ({ session }, 操作, 权限等级) => {
             try {
                 const 权限等级需求 = await 玩家联军权限设置(

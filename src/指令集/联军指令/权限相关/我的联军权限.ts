@@ -6,8 +6,10 @@ import {
 } from "../../../utils";
 
 export function 我的联军权限(ctx: Context) {
-    ctx.command("我的联军权限").action(async ({ session }) => {
+    ctx.command("我的联军权限").alias('我的权限')
+    .action(async ({ session }) => {
         try {
+
             const { username, 联军编号, 权限等级 } = await 玩家联军检查(ctx, session, {
                 最低权限等级: 0,
                 是否必须在成员列表: true,
@@ -21,7 +23,7 @@ export function 我的联军权限(ctx: Context) {
             return `
 ====[征战文游]====
 ${username} 同志：
-■ 你的联军权限等级：${权限等级}级
+■ 你的联军权限：${权限等级}级
 ■ 联军编号：${联军编号}
 联军操作权限需求：
 ${权限详情}
