@@ -11,7 +11,7 @@ export function 我的联军权限(ctx: Context) {
         try {
 
             const { username, 联军编号, 权限等级 } = await 玩家联军检查(ctx, session, {
-                最低权限等级: 0,
+                最低权限等级: 1,
                 是否必须在成员列表: true,
             });
 

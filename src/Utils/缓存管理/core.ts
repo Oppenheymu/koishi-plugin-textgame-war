@@ -1,44 +1,12 @@
-export type 缓存分组 = "region" | "player" | "coalition" | "default";
+import {
+    默认缓存配置,
+    缓存分组,
+    缓存状态,
+    缓存记录,
+    统一缓存配置,
+} from "./types";
 
-export interface 统一缓存配置 {
-    enabled: boolean;
-    defaultTTL: number;
-    maxEntries: number;
-    regionTTL: number;
-    playerTTL: number;
-    coalitionTTL: number;
-    adminAuthority: number;
-    debug: boolean;
-}
-
-type 缓存记录 = {
-    value: unknown;
-    expiresAt: number;
-};
-
-type 缓存状态 = {
-    enabled: boolean;
-    size: number;
-    inflight: number;
-    maxEntries: number;
-    hit: number;
-    miss: number;
-    load: number;
-    evict: number;
-};
-
-const 默认配置: 统一缓存配置 = {
-    enabled: true,
-    defaultTTL: 15,
-    maxEntries: 512,
-    regionTTL: 15,
-    playerTTL: 10,
-    coalitionTTL: 10,
-    adminAuthority: 3,
-    debug: false,
-};
-
-let 当前配置: 统一缓存配置 = { ...默认配置 };
+let 当前配置: 统一缓存配置 = { ...默认缓存配置 };
 
 const 缓存表 = new Map<string, 缓存记录>();
 const 进行中表 = new Map<string, Promise<unknown>>();
@@ -101,7 +69,7 @@ function 读取缓存<T>(key: string): T | undefined {
 
 export function 初始化统一缓存配置(配置: Partial<统一缓存配置>) {
     当前配置 = {
-        ...默认配置,
+        ...默认缓存配置,
         ...配置,
     };
 

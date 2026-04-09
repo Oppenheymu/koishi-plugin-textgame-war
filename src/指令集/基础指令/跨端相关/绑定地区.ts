@@ -5,7 +5,7 @@ export function 绑定地区(ctx: Context) {
     ctx.command("绑定地区 <地区编号:string>").action(async ({ session }, 地区编号) => {
         try {
             const { 联军资料, username } = await 玩家联军检查(ctx, session, {
-                最低权限等级: 1,
+                最低权限等级: 4,
                 是否必须在成员列表: true,
             });
 

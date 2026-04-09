@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 批量加载插件 } from "../../utils/插件加载器";
+import { 批量加载插件 } from "../../utils/插件加载";
 
 import { 查询相关指令 } from './查询相关'
 

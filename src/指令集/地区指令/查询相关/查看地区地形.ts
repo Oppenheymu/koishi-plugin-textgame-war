@@ -11,7 +11,7 @@ export function 查看地区地形(ctx: Context) {
         .action( async ( { session }, 地区编号参数 ) => {
             try {
                 const { username } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 3,
+                    最低权限等级: 2,
                     是否必须在成员列表: true,
                 });
 

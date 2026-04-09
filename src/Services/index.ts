@@ -2,7 +2,7 @@ import { Context } from "koishi";
 import { 每日重置签到检查 } from "./每日重置签到";
 import { 每小时重置生产 } from "./每时重置生产";
 import { 每日全服数据统计 } from "./全服数据统计";
-import { 批量加载插件 } from "../utils/插件加载器";
+import { 批量加载插件 } from "../utils/插件加载";
 
 const 服务插件列表 = [每日重置签到检查, 每小时重置生产, 每日全服数据统计];
 

@@ -1,18 +1,12 @@
 import { Context } from "koishi";
-import Sqids from "sqids";
 import { Player, PlayerConfig } from "../../types/index";
 import {
     会话检查,
     用户检查,
     TRandom,
     检查名称是否重复,
+    获取注册Sqids,
 } from "../../utils/index";
-
-const sqids = new Sqids({
-    alphabet: "4027159386",
-    minLength: 6,
-    blocklist: new Set([]),
-});
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
@@ -50,7 +44,7 @@ export function 注册(ctx: Context) {
                 );
 
                 const newID = newPlayerConfig.id;
-                const newUID = sqids.encode([newID]);
+                const newUID = 获取注册Sqids().encode([newID]);
 
                 const 初始名称 =
                     platform === "onebot"

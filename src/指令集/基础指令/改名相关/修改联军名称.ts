@@ -13,7 +13,7 @@ export function 修改联军名称(ctx: Context) {
             try {
                 const { id, uid, username, 联军编号, 联军资料 } =
                     await 玩家联军检查(ctx, session, {
-                        最低权限等级: 1,
+                        最低权限等级: 4,
                         是否必须在成员列表: true,
                     });
 

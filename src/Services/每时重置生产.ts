@@ -1,5 +1,4 @@
 import { Context } from "koishi";
-import {} from "koishi-plugin-cron";
 import { Player } from "../types/index";
 
 async function 执行生产次数增加(ctx: Context): Promise<void> {

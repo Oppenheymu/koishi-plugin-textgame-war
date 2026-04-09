@@ -12,7 +12,7 @@ export function 查看地区军事(ctx: Context) {
             try {
 
                 await 玩家联军检查(ctx, session, {
-                    最低权限等级: 2,
+                    最低权限等级: 3,
                     是否必须在成员列表: true,
                 });
 

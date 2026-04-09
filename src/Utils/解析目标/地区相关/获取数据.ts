@@ -11,7 +11,7 @@ import {
     构造缓存键,
     缓存获取或加载,
     获取分组缓存TTL毫秒,
-} from "../../缓存管理";
+} from "../../缓存管理/index";
 import { 获取地区展示名称 } from "./获取名称";
 
 export type 地区解析结果 = {

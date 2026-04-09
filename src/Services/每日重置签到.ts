@@ -1,5 +1,4 @@
 import { Context } from "koishi";
-import {} from "koishi-plugin-cron";
 import dayjs from "dayjs";
 
 let 正在执行每日重置 = false;

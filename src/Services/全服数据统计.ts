@@ -1,5 +1,4 @@
 import { Context } from "koishi";
-import {} from "koishi-plugin-cron";
 
 let 正在执行全服统计 = false;
 

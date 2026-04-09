@@ -1,6 +1,5 @@
 import { Context } from "koishi";
 import dayjs from "dayjs";
-import Sqids from "sqids";
 import {} from "koishi-plugin-am-i-alt";
 import { CoalitionArmy, MemberData, 联军政体 } from "../../types";
 import {
@@ -9,13 +8,8 @@ import {
     检查名称是否重复,
     检查违禁词,
     玩家检查,
+    获取联军Sqids,
 } from "../../utils";
-
-const sqids = new Sqids({
-    alphabet: "9087564312",
-    minLength: 5,
-    blocklist: new Set([]),
-});
 
 export function 组建联军(ctx: Context) {
     ctx.command("组建联军 <联军名称:string>")
@@ -109,7 +103,7 @@ ${username} 同志！
                 const 新联军配置 = await ctx.database.create("马列联军表", {});
                 新联军ID = 新联军配置.id;
 
-                const 新联军编号 = `A${sqids.encode([新联军ID])}`;
+                const 新联军编号 = `A${获取联军Sqids().encode([新联军ID])}`;
                 const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军ID);
 
                 if (地区分配结果 === "所有地区已领完！") {

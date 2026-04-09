@@ -8,7 +8,7 @@ import { 生产制造指令 } from "./生产制造";
 import { 科技相关指令 } from "./科技相关";
 import { 资源相关指令 } from "./资源相关";
 import { 地堡相关指令 } from "./地堡相关";
-import { 批量加载插件 } from "../../utils/插件加载器";
+import { 批量加载插件 } from "../../utils/插件加载";
 
 const 生产插件列表 = [
     签到,

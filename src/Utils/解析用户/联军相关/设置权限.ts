@@ -4,6 +4,7 @@ import {
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
 } from "../../../types";
+import { 获取默认联军权限配置 } from "../../../config";
 import { 玩家检查 } from "../玩家相关/获取数据";
 
 export type 联军权限动作 = CoalitionPermissionAction;
@@ -19,21 +20,55 @@ export const 联军权限动作列表: 联军权限动作[] = [
 ];
 
 export const 默认联军权限配置: Omit<CoalitionPermission, "联军编号"> = {
-    成员列表: 1,
-    地区列表: 1,
-    贡献排行: 1,
-    邀请加入联军: 2,
-    设置联军权限: 1,
-    移出联军: 2,
-    我的联军权限: 0,
+    成员列表: 4,
+    地区列表: 4,
+    贡献排行: 4,
+    邀请加入联军: 3,
+    设置联军权限: 4,
+    移出联军: 3,
+    我的联军权限: 1,
 };
 
+function 读取默认联军权限配置(): Omit<CoalitionPermission, "联军编号"> {
+    return {
+        ...默认联军权限配置,
+        ...获取默认联军权限配置(),
+    };
+}
+
 export function 校验联军权限等级(value: number): value is CoalitionPermissionLevel {
-    return Number.isInteger(value) && value >= 0 && value <= 3;
+    return Number.isInteger(value) && value >= 1 && value <= 4;
 }
 
 export function 校验联军权限动作(value: string): value is 联军权限动作 {
     return 联军权限动作列表.includes(value as 联军权限动作);
+}
+
+const 旧权限等级映射: Record<0 | 1 | 2 | 3, CoalitionPermissionLevel> = {
+    0: 1,
+    1: 4,
+    2: 3,
+    3: 2,
+};
+
+function 兼容权限等级(
+    value: unknown,
+    fallback: CoalitionPermissionLevel,
+): CoalitionPermissionLevel {
+    if (!Number.isInteger(value)) {
+        return fallback;
+    }
+
+    const 等级 = value as number;
+    if (等级 >= 1 && 等级 <= 4) {
+        return 等级 as CoalitionPermissionLevel;
+    }
+
+    if (等级 >= 0 && 等级 <= 3) {
+        return 旧权限等级映射[等级 as 0 | 1 | 2 | 3];
+    }
+
+    return fallback;
 }
 
 export async function 获取联军权限配置(
@@ -41,10 +76,17 @@ export async function 获取联军权限配置(
     联军编号: string,
 ): Promise<Omit<CoalitionPermission, "联军编号">> {
     const [数据库配置] = await ctx.database.get("马列联军权限表", { 联军编号 });
-    return {
-        ...默认联军权限配置,
-        ...(数据库配置 ?? {}),
-    };
+    const 权限配置: Omit<CoalitionPermission, "联军编号"> = 读取默认联军权限配置();
+
+    if (!数据库配置) {
+        return 权限配置;
+    }
+
+    for (const 动作 of 联军权限动作列表) {
+        权限配置[动作] = 兼容权限等级(数据库配置[动作], 权限配置[动作]);
+    }
+
+    return 权限配置;
 }
 
 export async function 获取联军操作权限(
@@ -53,7 +95,8 @@ export async function 获取联军操作权限(
     动作: 联军权限动作,
 ): Promise<CoalitionPermissionLevel> {
     const 配置 = await 获取联军权限配置(ctx, 联军编号);
-    return 配置[动作] ?? 默认联军权限配置[动作];
+    const 默认配置 = 读取默认联军权限配置();
+    return 配置[动作] ?? 默认配置[动作];
 }
 
 export async function 设置联军权限配置(
@@ -66,7 +109,7 @@ export async function 设置联军权限配置(
         [
             {
                 联军编号,
-                ...默认联军权限配置,
+                ...读取默认联军权限配置(),
                 ...更新配置,
             },
         ],

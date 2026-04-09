@@ -1,7 +1,7 @@
 
 
 
-export type CoalitionPermissionLevel = 0 | 1 | 2 | 3;
+export type CoalitionPermissionLevel = 1 | 2 | 3 | 4;
 
 export type CoalitionPermissionAction =
     | "成员列表"
