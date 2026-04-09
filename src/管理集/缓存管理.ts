@@ -2,25 +2,21 @@ import { Context } from "koishi";
 import {
     按前缀删除缓存,
     清空缓存,
-    获取缓存状态,
+    获取缓存概览,
     获取统一缓存配置,
-} from "../utils";
+} from "../utils/缓存管理/core";
 
 export function 缓存管理(ctx: Context) {
     const { adminAuthority } = 获取统一缓存配置();
 
     ctx.command("缓存状态", { authority: adminAuthority }).action(async () => {
-        const 状态 = 获取缓存状态();
-        const 总请求 = 状态.hit + 状态.miss;
-        const 命中率 = 总请求 > 0 ? ((状态.hit / 总请求) * 100).toFixed(2) : "0.00";
+        const 概览 = await 获取缓存概览();
+        const 配置 = 获取统一缓存配置();
 
         return `缓存状态
-■ 启用：${状态.enabled ? "是" : "否"}
-■ 条目：${状态.size}/${状态.maxEntries}
-■ 进行中任务：${状态.inflight}
-■ 命中/未命中：${状态.hit}/${状态.miss}（${命中率}%）
-■ 数据加载次数：${状态.load}
-■ 淘汰次数：${状态.evict}`;
+■ 启用：${概览.enabled ? "是" : "否"}
+■ 条目：${概览.size}
+■ TTL（地区/玩家/联军/默认）：${配置.regionTTL}/${配置.playerTTL}/${配置.coalitionTTL}/${配置.defaultTTL} 秒`;
     });
 
     ctx.command("清理缓存 [前缀:text]", { authority: adminAuthority }).action(
@@ -28,11 +24,11 @@ export function 缓存管理(ctx: Context) {
             const 输入前缀 = 前缀?.trim();
 
             if (!输入前缀) {
-                const 已清理 = 清空缓存();
+                const 已清理 = await 清空缓存();
                 return `缓存已全部清空，共清理 ${已清理} 条`;
             }
 
-            const 已清理 = 按前缀删除缓存(输入前缀);
+            const 已清理 = await 按前缀删除缓存(输入前缀);
             return `已按前缀清理缓存：${输入前缀}，共清理 ${已清理} 条`;
         },
     );

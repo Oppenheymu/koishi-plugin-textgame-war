@@ -14,7 +14,7 @@ export function 我的生产次数(ctx: Context) {
             return `
 【情报查询】
 ${username} 同志！
-■ 地面工人：${用户资料.生产次数}
+■ 生产次数：${用户资料.生产次数}
 `.trim();
         } catch (error) {
             return (error as Error).message;

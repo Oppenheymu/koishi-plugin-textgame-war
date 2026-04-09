@@ -1,16 +1,13 @@
-
 import { Schema } from "koishi";
 import type { CoalitionPermissionLevel } from "./types";
 
 export interface CacheConfig {
     enabled: boolean;
     defaultTTL: number;
-    maxEntries: number;
     regionTTL: number;
     playerTTL: number;
     coalitionTTL: number;
     adminAuthority: number;
-    debug: boolean;
 }
 
 export interface 联军默认权限配置 {
@@ -43,12 +40,10 @@ export interface PluginConfig {
 export const 默认缓存配置: CacheConfig = {
     enabled: true,
     defaultTTL: 15,
-    maxEntries: 512,
-    regionTTL: 15,
+    regionTTL: 60,
     playerTTL: 10,
     coalitionTTL: 10,
     adminAuthority: 3,
-    debug: false,
 };
 
 export const 默认联军权限配置: 联军默认权限配置 = {
@@ -153,11 +148,6 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
             .max(3600)
             .default(默认缓存配置.defaultTTL)
             .description("默认缓存 TTL（秒）"),
-        maxEntries: Schema.number()
-            .min(32)
-            .max(10000)
-            .default(默认缓存配置.maxEntries)
-            .description("缓存最大条目数（超出后淘汰最早条目）"),
         regionTTL: Schema.number()
             .min(1)
             .max(3600)
@@ -178,7 +168,6 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
             .max(4)
             .default(默认缓存配置.adminAuthority)
             .description("缓存管理命令所需权限等级"),
-        debug: Schema.boolean().default(默认缓存配置.debug).description("是否输出缓存调试日志"),
     }).description("缓存配置"),
     coalitionPermissionDefault: Schema.object({
         成员列表: 权限等级Schema.default(默认联军权限配置.成员列表),

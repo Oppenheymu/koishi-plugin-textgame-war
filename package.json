@@ -30,11 +30,13 @@
         },
         "service": {
             "required": [
-                "database"
+                "database",
+                "cache"
             ]
         }
     },
     "dependencies": {
+        "@koishijs/cache": "^2.1.0",
         "sqids": "^0.3.0"
     }
 }

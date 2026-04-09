@@ -1,4 +1,5 @@
 
+import {} from "@koishijs/cache";
 import { Context } from "koishi";
 import {} from "koishi-plugin-cron-fix"
 import {} from "koishi-plugin-am-i-alt";
@@ -9,7 +10,7 @@ import {
     默认缓存配置,
     初始化插件运行时配置,
 } from "./config";
-import { 初始化统一缓存配置 } from "./utils/缓存管理/index";
+import { 初始化统一缓存配置 } from "./utils/缓存管理/core";
 
 import { 数据库服务 } from "./models/index";
 import { 文游指令集 } from "./指令集/index";
@@ -20,7 +21,7 @@ import { 批量加载插件 } from "./utils/插件加载";
 export const name = "malie-textgame";
 
 export const inject = {
-    required: ["database", "cron"],
+    required: ["database", "cron", "cache"],
     optional: ["amIAlt"],
 };
 
@@ -40,12 +41,12 @@ export function apply(ctx: Context, config: Config) {
 
     初始化插件运行时配置(config);
 
-    初始化统一缓存配置({
+    初始化统一缓存配置(ctx, {
         ...默认缓存配置,
         ...(config.cache ?? {}),
     });
 
-    ctx.middleware(async (session, next) => {
+    ctx.middleware(async (_, next) => {
         try {
             return await next();
         } catch (error) {
