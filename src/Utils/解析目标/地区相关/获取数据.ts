@@ -7,6 +7,11 @@ import {
     RegionTerra,
 } from "../../../types/index";
 import { 会话检查, 用户检查 } from "../../解析用户";
+import {
+    构造缓存键,
+    缓存获取或加载,
+    获取分组缓存TTL毫秒,
+} from "../../缓存管理";
 import { 获取地区展示名称 } from "./获取名称";
 
 export type 地区解析结果 = {
@@ -18,41 +23,6 @@ export type 地区解析结果 = {
     地区战略资料: RegionStrategy;
     展示地区名称: string;
 };
-
-type 地区缓存项 = {
-    过期时间: number;
-    数据: 地区解析结果;
-};
-
-const 地区解析缓存TTL毫秒 = 15_000;
-const 地区解析缓存最大数量 = 256;
-const 地区解析缓存 = new Map<string, 地区缓存项>();
-const 地区解析进行中 = new Map<string, Promise<地区解析结果>>();
-
-function 读取地区缓存(地区编号: string): 地区解析结果 | undefined {
-    const 缓存项 = 地区解析缓存.get(地区编号);
-    if (!缓存项) return undefined;
-
-    if (缓存项.过期时间 <= Date.now()) {
-        地区解析缓存.delete(地区编号);
-        return undefined;
-    }
-
-    return 缓存项.数据;
-}
-
-function 写入地区缓存(地区编号: string, 数据: 地区解析结果) {
-    地区解析缓存.set(地区编号, {
-        数据,
-        过期时间: Date.now() + 地区解析缓存TTL毫秒,
-    });
-
-    while (地区解析缓存.size > 地区解析缓存最大数量) {
-        const 最早键 = 地区解析缓存.keys().next().value;
-        if (!最早键) break;
-        地区解析缓存.delete(最早键);
-    }
-}
 
 export async function 地区解析(
     ctx: Context,
@@ -79,71 +49,62 @@ export async function 地区解析(
         }
     }
 
-    const 命中缓存 = 读取地区缓存(地区编号);
-    if (命中缓存) {
-        return 命中缓存;
-    }
-
-    const 进行中任务 = 地区解析进行中.get(地区编号);
-    if (进行中任务) {
-        return 进行中任务;
-    }
+    const 缓存键 = 构造缓存键("region", 地区编号);
+    const 缓存TTL毫秒 = 获取分组缓存TTL毫秒("region");
 
     const 已知地区资料 = 地区编号 === 输入值 ? 按编号地区资料 : undefined;
 
-    const 查询任务 = (async () => {
-        const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
-            await Promise.all([
-                已知地区资料
-                    ? Promise.resolve(已知地区资料)
-                    : ctx.database
-                          .get("马列地区表", { 地区编号 })
-                          .then(([data]) => data),
-                ctx.database
-                    .get("马列地区地形表", { 地区编号 })
-                    .then(([data]) => data),
-                ctx.database
-                    .get("马列地区状态机", { 地区编号 })
-                    .then(([data]) => data),
-                ctx.database
-                    .get("马列地区配置表", { 地区编号 })
-                    .then(([data]) => data),
-                ctx.database
-                    .get("马列地区战略表", { 地区编号 })
-                    .then(([data]) => data),
-            ]);
+    return 缓存获取或加载(
+        缓存键,
+        async () => {
+            const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
+                await Promise.all([
+                    已知地区资料
+                        ? Promise.resolve(已知地区资料)
+                        : ctx.database
+                              .get("马列地区表", { 地区编号 })
+                              .then(([data]) => data),
+                    ctx.database
+                        .get("马列地区地形表", { 地区编号 })
+                        .then(([data]) => data),
+                    ctx.database
+                        .get("马列地区状态机", { 地区编号 })
+                        .then(([data]) => data),
+                    ctx.database
+                        .get("马列地区配置表", { 地区编号 })
+                        .then(([data]) => data),
+                    ctx.database
+                        .get("马列地区战略表", { 地区编号 })
+                        .then(([data]) => data),
+                ]);
 
-        if (!地区资料) {
-            throw new Error(`未找到地区：${输入值}`);
-        }
+            if (!地区资料) {
+                throw new Error(`未找到地区：${输入值}`);
+            }
 
-        if (!地区地形资料 || !地区状态资料 || !地区配置资料 || !地区战略资料) {
-            throw new Error(
-                `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`,
-            );
-        }
+            if (
+                !地区地形资料 ||
+                !地区状态资料 ||
+                !地区配置资料 ||
+                !地区战略资料
+            ) {
+                throw new Error(
+                    `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`,
+                );
+            }
 
-        const 结果: 地区解析结果 = {
-            地区编号,
-            地区资料,
-            地区地形资料,
-            地区状态资料,
-            地区配置资料,
-            地区战略资料,
-            展示地区名称: 获取地区展示名称(地区配置资料),
-        };
-
-        写入地区缓存(地区编号, 结果);
-        return 结果;
-    })();
-
-    地区解析进行中.set(地区编号, 查询任务);
-
-    try {
-        return await 查询任务;
-    } finally {
-        地区解析进行中.delete(地区编号);
-    }
+            return {
+                地区编号,
+                地区资料,
+                地区地形资料,
+                地区状态资料,
+                地区配置资料,
+                地区战略资料,
+                展示地区名称: 获取地区展示名称(地区配置资料),
+            };
+        },
+        缓存TTL毫秒,
+    );
 }
 
 export async function 当前地区解析(

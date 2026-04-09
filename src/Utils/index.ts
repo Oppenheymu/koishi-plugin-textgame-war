@@ -6,3 +6,4 @@ export * from "./随机图片";
 export * from "./分配地区";
 export * from "./违禁检查";
 export * from "./改名审核";
+export * from "./缓存管理";

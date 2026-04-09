@@ -1,8 +1,10 @@
-import { Context, Schema } from "koishi";
+import { Context } from "koishi";
 import { 数据库服务 } from "./models/index";
 import { 文游指令集 } from "./指令集/index";
 import { 文游服务集 } from "./services/index";
 import { 文游管理集 } from "./管理集/index";
+import { 插件配置Schema, PluginConfig, 默认缓存配置 } from "./config";
+import { 初始化统一缓存配置 } from "./utils/缓存管理";
 import { 批量加载插件 } from "./utils/插件加载器";
 import {} from "koishi-plugin-am-i-alt";
 
@@ -12,9 +14,9 @@ export const inject = {
     optional: ["cron", "amIAlt"],
 };
 
-export interface Config {}
+export type Config = PluginConfig;
 
-export const Config: Schema<Config> = Schema.object({});
+export const Config = 插件配置Schema;
 
 const 文游模块集 = [
     数据库服务,
@@ -24,6 +26,10 @@ const 文游模块集 = [
 ]
 
 export function apply(ctx: Context, config: Config) {
+    初始化统一缓存配置({
+        ...默认缓存配置,
+        ...(config.cache ?? {}),
+    });
 
     ctx.middleware(async (session, next) => {
         try {
