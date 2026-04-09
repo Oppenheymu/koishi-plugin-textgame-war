@@ -3,8 +3,8 @@ import {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from "../../types";
-import { 玩家检查 } from "./玩家数据检查";
+} from "../../../types";
+import { 玩家检查 } from "../玩家相关/获取数据";
 
 export type 联军权限动作 = CoalitionPermissionAction;
 

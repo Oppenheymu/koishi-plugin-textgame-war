@@ -1,5 +1,5 @@
 import { Context, Session } from "koishi";
-import { 玩家检查 } from "../../../utils/用户解析";
+import { 玩家检查 } from "../../../utils/解析用户";
 
 export function 我的UID(ctx: Context) {
     ctx.command("我的UID")
