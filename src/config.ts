@@ -127,14 +127,23 @@ const 权限等级Schema = Schema.union([
     Schema.const(4),
 ]);
 
-const sqids单项Schema: Schema<Sqids单项配置> = Schema.object({
-    alphabet: Schema.string()
-        .min(3)
-        .max(62)
-        .description("Sqids 字符表（建议不重复字符）"),
-    minLength: Schema.number().min(1).max(16).description("Sqids 最小长度"),
-    blocklist: Schema.array(String).default([]).description("Sqids 屏蔽词列表"),
-});
+function 创建Sqids单项Schema(默认值: Sqids单项配置): Schema<Sqids单项配置> {
+    return Schema.object({
+        alphabet: Schema.string()
+            .min(3)
+            .max(62)
+            .default(默认值.alphabet)
+            .description("Sqids 字符表（建议不重复字符）"),
+        minLength: Schema.number()
+            .min(1)
+            .max(16)
+            .default(默认值.minLength)
+            .description("Sqids 最小长度"),
+        blocklist: Schema.array(Schema.string())
+            .default([...默认值.blocklist])
+            .description("Sqids 屏蔽词列表"),
+    });
+}
 
 export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
     cache: Schema.object({
@@ -181,11 +190,7 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         我的联军权限: 权限等级Schema.default(默认联军权限配置.我的联军权限),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
-        register: sqids单项Schema
-            .default(默认Sqids配置.register)
-            .description("玩家 UID 生成参数"),
-        coalition: sqids单项Schema
-            .default(默认Sqids配置.coalition)
-            .description("联军编号生成参数"),
+        register: 创建Sqids单项Schema(默认Sqids配置.register).description("玩家 UID 生成参数"),
+        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description("联军编号生成参数"),
     }).description("Sqids 配置"),
 });
