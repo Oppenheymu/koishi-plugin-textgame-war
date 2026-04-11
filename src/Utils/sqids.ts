@@ -19,4 +19,3 @@ export function 获取注册Sqids(): Sqids {
 export function 获取联军Sqids(): Sqids {
     return 创建Sqids实例("coalition");
 }
-

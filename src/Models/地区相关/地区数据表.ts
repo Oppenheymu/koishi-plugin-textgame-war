@@ -41,6 +41,6 @@ export function 加载地区表(ctx: Context) {
         {
             primary: "地区编号",
             unique: ["地区编号"],
-        },
+        }
     );
 }

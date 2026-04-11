@@ -10,7 +10,7 @@ export function TRandom(
     min: number,
     mode: number,
     max: number,
-    round: boolean = true,
+    round: boolean = true
 ): number {
     if (min > mode || mode > max) {
         throw new Error("参数错误：必须满足 min ≤ mode ≤ max");

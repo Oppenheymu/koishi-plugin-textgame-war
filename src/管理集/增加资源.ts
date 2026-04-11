@@ -23,16 +23,18 @@ export function 设置资源(ctx: Context) {
                 await ctx.database.set(
                     "马列玩家表",
                     { id: 目标用户ID },
-                    { [资源类型]: value },
+                    { [资源类型]: value }
                 );
 
                 if (typeof value === "number")
-                    return `成功将 ${目标} 的 ${资源类型} 设置为 ${格式化(value)}`;
+                    return `成功将 ${目标} 的 ${资源类型} 设置为 ${格式化(
+                        value
+                    )}`;
                 if (typeof value === "boolean")
                     return `成功将 ${目标} 的 ${资源类型} 设置为 ${value}`;
             } catch (error) {
                 return (error as Error).message;
             }
-        },
+        }
     );
 }

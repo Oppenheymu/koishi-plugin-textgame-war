@@ -19,6 +19,6 @@ export function 加载地区配置表(ctx: Context) {
             // 表配置
             primary: "地区编号",
             unique: ["地区编号"],
-        },
+        }
     );
 }

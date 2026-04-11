@@ -22,13 +22,15 @@ export function 使用科技蓝图(ctx: Context) {
                 const 新科技等级 = 用户资料.科技等级 + 数量;
 
                 if (新科技等级 > 3000) {
-                    return `你最多可以使用${3000 - 用户资料.科技等级}张科技蓝图（达到等级上限）`;
+                    return `你最多可以使用${
+                        3000 - 用户资料.科技等级
+                    }张科技蓝图（达到等级上限）`;
                 }
 
                 await ctx.database.set(
                     "马列玩家表",
                     { id: id },
-                    { 科技蓝图: 新科技蓝图, 科技等级: 新科技等级 },
+                    { 科技蓝图: 新科技蓝图, 科技等级: 新科技等级 }
                 );
 
                 return `
@@ -40,6 +42,6 @@ ${username} 同志：
             } catch (error) {
                 return (error as Error).message;
             }
-        },
+        }
     );
 }

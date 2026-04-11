@@ -3,7 +3,7 @@ import { 改名类型 } from "./types";
 
 export function 校验名称文本(
     新名称: string,
-    名称类型: 改名类型,
+    名称类型: 改名类型
 ): string | null {
     const 规范名称 = 新名称.trim();
 

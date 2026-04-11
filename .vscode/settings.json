@@ -2,7 +2,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+        "source.fixAll.eslint": "explicit"
     },
 
     "editor.tabSize": 4,
@@ -10,12 +10,12 @@
     "editor.detectIndentation": false,
 
     "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.tabSize": 4
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 4
     },
     "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.tabSize": 4
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 4
     },
 
     "prettier.tabWidth": 4,
@@ -29,12 +29,11 @@
     "VSCodeCounter.useGitignore": true,
     "VSCodeCounter.useFilesExclude": true,
     "VSCodeCounter.exclude": [
-    "**/node_modules/**",
-    "**/lib/**",
-    "**/dist/**",
-    "**/external/**",
-    "**/assets/**",
-    "**/*.log"
-  ]
-
-  }
+        "**/node_modules/**",
+        "**/lib/**",
+        "**/dist/**",
+        "**/external/**",
+        "**/assets/**",
+        "**/*.log"
+    ]
+}

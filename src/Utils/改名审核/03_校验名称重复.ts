@@ -6,7 +6,7 @@ export async function 检查名称是否重复(
     options?: {
         排除玩家ID?: number;
         排除联军编号?: string;
-    },
+    }
 ): Promise<"玩家" | "联军" | null> {
     const [重名玩家] = await ctx.database.get("马列玩家配置表", {
         username: 名称,

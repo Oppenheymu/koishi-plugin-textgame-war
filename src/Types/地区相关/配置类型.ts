@@ -1,6 +1,3 @@
-
-
-
 export interface RegionConfig {
     地区编号: string;
 

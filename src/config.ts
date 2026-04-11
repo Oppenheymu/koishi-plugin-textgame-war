@@ -1,15 +1,6 @@
 import { Schema } from "koishi";
 import type { CoalitionPermissionLevel } from "./types";
 
-export interface CacheConfig {
-    enabled: boolean;
-    defaultTTL: number;
-    regionTTL: number;
-    playerTTL: number;
-    coalitionTTL: number;
-    adminAuthority: number;
-}
-
 export interface 联军默认权限配置 {
     成员列表: CoalitionPermissionLevel;
     地区列表: CoalitionPermissionLevel;
@@ -32,19 +23,9 @@ export interface Sqids配置 {
 }
 
 export interface PluginConfig {
-    cache: CacheConfig;
     coalitionPermissionDefault: 联军默认权限配置;
     sqids: Sqids配置;
 }
-
-export const 默认缓存配置: CacheConfig = {
-    enabled: true,
-    defaultTTL: 15,
-    regionTTL: 60,
-    playerTTL: 10,
-    coalitionTTL: 10,
-    adminAuthority: 3,
-};
 
 export const 默认联军权限配置: 联军默认权限配置 = {
     成员列表: 4,
@@ -70,13 +51,11 @@ export const 默认Sqids配置: Sqids配置 = {
 };
 
 export const 默认插件配置: PluginConfig = {
-    cache: 默认缓存配置,
     coalitionPermissionDefault: 默认联军权限配置,
     sqids: 默认Sqids配置,
 };
 
 let 当前运行时配置: PluginConfig = {
-    cache: { ...默认缓存配置 },
     coalitionPermissionDefault: { ...默认联军权限配置 },
     sqids: {
         register: { ...默认Sqids配置.register },
@@ -86,10 +65,6 @@ let 当前运行时配置: PluginConfig = {
 
 export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
     当前运行时配置 = {
-        cache: {
-            ...默认缓存配置,
-            ...(config.cache ?? {}),
-        },
         coalitionPermissionDefault: {
             ...默认联军权限配置,
             ...(config.coalitionPermissionDefault ?? {}),
@@ -141,34 +116,6 @@ function 创建Sqids单项Schema(默认值: Sqids单项配置): Schema<Sqids单�
 }
 
 export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
-    cache: Schema.object({
-        enabled: Schema.boolean().default(默认缓存配置.enabled).description("是否启用统一缓存"),
-        defaultTTL: Schema.number()
-            .min(1)
-            .max(3600)
-            .default(默认缓存配置.defaultTTL)
-            .description("默认缓存 TTL（秒）"),
-        regionTTL: Schema.number()
-            .min(1)
-            .max(3600)
-            .default(默认缓存配置.regionTTL)
-            .description("地区解析缓存 TTL（秒）"),
-        playerTTL: Schema.number()
-            .min(1)
-            .max(3600)
-            .default(默认缓存配置.playerTTL)
-            .description("玩家解析缓存 TTL（秒）"),
-        coalitionTTL: Schema.number()
-            .min(1)
-            .max(3600)
-            .default(默认缓存配置.coalitionTTL)
-            .description("联军解析缓存 TTL（秒）"),
-        adminAuthority: Schema.number()
-            .min(0)
-            .max(4)
-            .default(默认缓存配置.adminAuthority)
-            .description("缓存管理命令所需权限等级"),
-    }).description("缓存配置"),
     coalitionPermissionDefault: Schema.object({
         成员列表: 权限等级Schema.default(默认联军权限配置.成员列表),
         地区列表: 权限等级Schema.default(默认联军权限配置.地区列表),
@@ -179,7 +126,11 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         我的联军权限: 权限等级Schema.default(默认联军权限配置.我的联军权限),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
-        register: 创建Sqids单项Schema(默认Sqids配置.register).description("玩家 UID 生成参数"),
-        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description("联军编号生成参数"),
+        register: 创建Sqids单项Schema(默认Sqids配置.register).description(
+            "玩家 UID 生成参数"
+        ),
+        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description(
+            "联军编号生成参数"
+        ),
     }).description("Sqids 配置"),
 });

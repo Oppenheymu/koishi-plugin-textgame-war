@@ -5,7 +5,10 @@ import { 会话检查 } from "./会话检查";
 const 支持平台列表: 支持平台[] = ["onebot", "discord", "telegram"];
 
 function 是否支持平台(platform: string | undefined): platform is 支持平台 {
-    return typeof platform === "string" && 支持平台列表.some((item) => item === platform);
+    return (
+        typeof platform === "string" &&
+        支持平台列表.some((item) => item === platform)
+    );
 }
 
 export function 用户检查(session: Session | undefined): {

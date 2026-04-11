@@ -1,8 +1,5 @@
-
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils/index";
-
-
 
 export function 工人休假(ctx: Context) {
     ctx.command("工人休假 <数量:number>").action(async ({ session }, 数量) => {
@@ -18,7 +15,9 @@ export function 工人休假(ctx: Context) {
             }
 
             if (数量 > 用户资料.工人) {
-                return `工人不足！当前工人：${格式化(用户资料.工人)}，无法休假${格式化(数量)}个工人`;
+                return `工人不足！当前工人：${格式化(
+                    用户资料.工人
+                )}，无法休假${格式化(数量)}个工人`;
             }
 
             if (用户资料.小时是否生产 == true) {
@@ -47,7 +46,7 @@ export function 工人休假(ctx: Context) {
                     工人: 新工人数,
                     休假工人: 新休假工人数,
                     稳定度: 新稳定度,
-                },
+                }
             );
 
             return `

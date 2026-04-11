@@ -1,8 +1,5 @@
-
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils/index";
-
-
 
 export function 查看全球劳动力市场(ctx: Context) {
     ctx.command("查看全球劳动力市场")

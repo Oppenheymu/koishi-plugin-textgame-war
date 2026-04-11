@@ -26,13 +26,13 @@ export function 绑定账户(ctx: Context) {
 
                 // 2. 生成 6 位随机码
                 const code = Math.floor(
-                    100000 + Math.random() * 900000,
+                    100000 + Math.random() * 900000
                 ).toString();
 
                 // 3. 存入内存，5 分钟后自动删除
                 const timer = setTimeout(
                     () => 绑定任务池.delete(code),
-                    5 * 60 * 1000,
+                    5 * 60 * 1000
                 );
                 绑定任务池.set(code, {
                     ownerId: id,
@@ -50,7 +50,7 @@ ${username} 同志!
             } catch (error) {
                 return (error as Error).message;
             }
-        },
+        }
     );
 
     ctx.command("确认绑定 <code:string>").action(async ({ session }, code) => {
@@ -86,7 +86,7 @@ ${username} 同志!
 
         // 在池子里找“属于我”且“对方已填好信息”的任务
         const entry = Array.from(绑定任务池.entries()).find(
-            ([_, t]) => t.ownerId === id && t.targetUserId !== "",
+            ([_, t]) => t.ownerId === id && t.targetUserId !== ""
         );
 
         if (!entry) return "当前没有待确认的绑定申请。";

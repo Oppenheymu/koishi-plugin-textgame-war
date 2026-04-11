@@ -3,7 +3,7 @@ import { 联军权限等级 } from "../types";
 
 export function 获取联军权限等级(
     联军资料: CoalitionArmy,
-    uid: string,
+    uid: string
 ): 联军权限等级 {
     if (联军资料.联军元首 === uid || 联军资料.联军总理 === uid) {
         return 4;

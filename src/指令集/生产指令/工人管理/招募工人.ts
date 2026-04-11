@@ -1,8 +1,5 @@
-
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils";
-
-
 
 export function 招募工人(ctx: Context) {
     ctx.command("招募工人 <数量:number>").action(async ({ session }, 数量) => {
@@ -53,12 +50,12 @@ ${username} 同志：
                     生活资料: 新生活资料,
                     工人: 新工人数量,
                     工人招募限额: 新招募限额,
-                },
+                }
             );
             await ctx.database.set(
                 "马列全球数据表",
                 { id: "service" },
-                { 全球劳动力市场: 新全球劳动力市场 },
+                { 全球劳动力市场: 新全球劳动力市场 }
             );
 
             return `

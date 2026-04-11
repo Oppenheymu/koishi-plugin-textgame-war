@@ -1,12 +1,18 @@
 import { Context } from "koishi";
-import { Player, PlayerConfig } from "../../types/index";
+import type {
+    PlayerBasicData,
+    PlayerConfig,
+    PlayerWarRecord,
+} from "../../types";
 import {
     会话检查,
     用户检查,
     TRandom,
     检查名称是否重复,
     获取注册Sqids,
-} from "../../utils/index";
+    获取玩家完整资料,
+    创建玩家资料,
+} from "../../utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
@@ -19,49 +25,46 @@ export function 注册(ctx: Context) {
 
                 const { platform, userId } = 用户检查(session);
 
-                const [PlayerConfig] = await ctx.database.get(
-                    "马列玩家配置表",
-                    { [platform]: userId },
-                );
+                const [玩家配置] = await ctx.database.get("马列玩家配置表", {
+                    [platform]: userId,
+                });
 
-                if (PlayerConfig) {
-                    const [Player] = await ctx.database.get("马列玩家表", {
-                        id: PlayerConfig.id,
-                    });
-                    if (Player) {
-                        return `同志，你已经注册过了（UID: ${PlayerConfig.uid}）`;
+                if (玩家配置) {
+                    const 已有玩家 = await 获取玩家完整资料(ctx, 玩家配置.id);
+                    if (已有玩家) {
+                        return `同志，你已经注册过了（UID: ${玩家配置.uid}）`;
                     }
-                    return "数据异常：已找到账号但未发现玩家档案，请联系管理员";
+                    return "数据异常：已找到账号但未发现完整玩家档案，请联系管理员";
                 }
 
-                const newPlayerConfig: PlayerConfig = await ctx.database.create(
+                const 新玩家配置: PlayerConfig = await ctx.database.create(
                     "马列玩家配置表",
                     {
                         [platform]: userId,
                         username: "",
                         名称是否审核: true,
-                    },
+                    }
                 );
 
-                const newID = newPlayerConfig.id;
-                const newUID = 获取注册Sqids().encode([newID]);
+                const 新ID = 新玩家配置.id;
+                const 新UID = 获取注册Sqids().encode([新ID]);
 
                 const 初始名称 =
                     platform === "onebot"
-                        ? (session.username?.trim() ?? "")
-                        : `默认名称${newUID}`;
+                        ? session.username?.trim() ?? ""
+                        : `默认名称${新UID}`;
 
-                let username = 初始名称 || `默认名称${newUID}`;
+                let username = 初始名称 || `默认名称${新UID}`;
 
                 const 重名类型 = await 检查名称是否重复(ctx, username, {
-                    排除玩家ID: newID,
+                    排除玩家ID: 新ID,
                 });
                 if (重名类型) {
-                    username = `默认名称${newUID}`;
+                    username = `默认名称${新UID}`;
                 }
 
-                await ctx.database.set("马列玩家配置表", newID, {
-                    uid: newUID,
+                await ctx.database.set("马列玩家配置表", 新ID, {
+                    uid: 新UID,
                     username,
                 });
 
@@ -72,13 +75,14 @@ export function 注册(ctx: Context) {
                 const 战争保护期时长 = TRandom(3, 7, 15);
                 const 初始防空弹药 = TRandom(3000, 10000, 20000);
 
-                const newPlayerData: Player = {
-                    id: newID,
-                    uid: newUID,
+                const 新玩家基础资料: PlayerBasicData = {
+                    id: 新ID,
+                    uid: 新UID,
                     所在联军: null,
                     驻扎地区: null,
                     战争保护期:
                         Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,
+                    上次驻扎日期: "",
                     今日是否签到: true,
                     小时是否生产: false,
                     稳定度: 80,
@@ -100,6 +104,11 @@ export function 注册(ctx: Context) {
                     金属铝: 0,
                     铁矿石: 0,
                     钢铁: 初始钢铁,
+                };
+
+                const 新玩家战争资料: PlayerWarRecord = {
+                    id: 新ID,
+                    uid: 新UID,
                     私人军队: 0,
                     重炮: 0,
                     火箭炮: 0,
@@ -120,7 +129,6 @@ export function 注册(ctx: Context) {
                     是否有地下机库: false,
                     地下弹药库投入: 0,
                     是否有地下弹药库: false,
-
                     地下飞机: 0,
                     地下隐形飞机: 0,
                     地下预警机: 0,
@@ -130,7 +138,7 @@ export function 注册(ctx: Context) {
                     地下防空弹药: 0,
                 };
 
-                await ctx.database.create("马列玩家表", newPlayerData);
+                await 创建玩家资料(ctx, 新玩家基础资料, 新玩家战争资料);
 
                 return `
 ====[征战文游]====

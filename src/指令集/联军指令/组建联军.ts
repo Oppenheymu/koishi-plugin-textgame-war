@@ -23,7 +23,7 @@ export function 组建联军(ctx: Context) {
             try {
                 const { id, uid, username, 用户资料 } = await 玩家检查(
                     ctx,
-                    session,
+                    session
                 );
 
                 const amIAlt服务 = (
@@ -59,7 +59,7 @@ ${username} 同志！
                 const [已创建联军] = await ctx.database.get(
                     "马列联军表",
                     { 联军元首: uid },
-                    ["联军编号", "联军名称"],
+                    ["联军编号", "联军名称"]
                 );
                 if (已创建联军) {
                     return `
@@ -140,14 +140,14 @@ ${username} 同志！
                     联军名称: 规范联军名称,
                     名称是否审核: false,
                     建立日期: now,
-                    上次改名日期: ""
+                    上次改名日期: "",
                 };
 
                 await Promise.all([
                     ctx.database.set(
                         "马列联军表",
                         { id: 新联军ID },
-                        新联军数据,
+                        新联军数据
                     ),
                     ctx.database.set(
                         "马列玩家表",
@@ -155,7 +155,7 @@ ${username} 同志！
                         {
                             所在联军: 新联军编号,
                             驻扎地区: 新地区,
-                        },
+                        }
                     ),
                 ]);
 
@@ -194,7 +194,7 @@ ${username} 同志！
                             {
                                 地区归属国: null,
                                 是否已分配: false,
-                            } as any,
+                            } as any
                         );
                     } catch {}
                 }

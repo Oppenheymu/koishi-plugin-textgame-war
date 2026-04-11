@@ -4,16 +4,11 @@ import { 玩家检查 } from "../玩家相关/获取数据";
 import { 玩家联军检查选项, 玩家联军解析结果 } from "../types";
 import { 会话检查 } from "../会话相关/会话检查";
 import { 发送并抛出错误 } from "../error";
-import {
-    构造缓存键,
-    缓存获取或加载,
-    获取分组缓存TTL毫秒,
-} from "../../缓存管理/index";
 
 export async function 玩家联军检查(
     ctx: Context,
     session: Session | undefined,
-    options?: 玩家联军检查选项,
+    options?: 玩家联军检查选项
 ): Promise<玩家联军解析结果> {
     会话检查(session);
 
@@ -24,33 +19,23 @@ export async function 玩家联军检查(
         return 发送并抛出错误(session, "你不在任何联军中", "玩家不在联军中");
     }
 
-    const 缓存键 = 构造缓存键("coalition", 联军编号);
-    const 缓存TTL毫秒 = 获取分组缓存TTL毫秒("coalition");
-
-    const 联军资料 = await 缓存获取或加载(
-        缓存键,
-        async () => {
-            const [记录] = await ctx.database.get("马列联军表", {
-                联军编号,
-            });
-            if (!记录) {
-                return 发送并抛出错误(
-                    session,
-                    "数据异常：已记录所在联军但未找到联军档案，请联系管理员",
-                    "联军档案不存在",
-                );
-            }
-            return 记录;
-        },
-        缓存TTL毫秒,
-    );
+    const [联军资料] = await ctx.database.get("马列联军表", {
+        联军编号,
+    });
+    if (!联军资料) {
+        return 发送并抛出错误(
+            session,
+            "数据异常：已记录所在联军但未找到联军档案，请联系管理员",
+            "联军档案不存在"
+        );
+    }
 
     const 是否必须在成员列表 = options?.是否必须在成员列表 ?? true;
     if (是否必须在成员列表 && !联军资料.联军成员列表?.[玩家结果.uid]) {
         return 发送并抛出错误(
             session,
             "数据异常：你不在联军成员列表中，请联系管理员",
-            "联军成员数据异常",
+            "联军成员数据异常"
         );
     }
 
@@ -61,7 +46,7 @@ export async function 玩家联军检查(
         return 发送并抛出错误(
             session,
             `权限不足，需要联军${最低权限等级}级及以上权限`,
-            "联军权限不足",
+            "联军权限不足"
         );
     }
 

@@ -1,7 +1,5 @@
-
 import { Context } from "koishi";
 import { 玩家联军检查, 玩家联军权限设置 } from "../../../utils";
-
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
@@ -11,11 +9,19 @@ export function 贡献排行(ctx: Context) {
         .alias("国家贡献排行")
         .action(async ({ session }) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(ctx, session, "贡献排行");
-                const { username, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 权限等级需求,
-                    是否必须在成员列表: true,
-                });
+                const 权限等级需求 = await 玩家联军权限设置(
+                    ctx,
+                    session,
+                    "贡献排行"
+                );
+                const { username, 联军资料 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 权限等级需求,
+                        是否必须在成员列表: true,
+                    }
+                );
 
                 const 排行列表 = Object.entries(联军资料.联军成员列表 ?? {})
                     .map(([成员ID, 成员数据]) => ({
@@ -26,11 +32,13 @@ export function 贡献排行(ctx: Context) {
 
                 const 排行文本 = 排行列表.length
                     ? 排行列表
-                        .map(
-                            (成员, 索引) =>
-                                `  ${索引 + 1}.  ${成员.成员ID} - ${格式化(成员.联军贡献)}`,
-                        )
-                        .join("\n")
+                          .map(
+                              (成员, 索引) =>
+                                  `  ${索引 + 1}.  ${成员.成员ID} - ${格式化(
+                                      成员.联军贡献
+                                  )}`
+                          )
+                          .join("\n")
                     : "    暂无贡献数据";
 
                 return `

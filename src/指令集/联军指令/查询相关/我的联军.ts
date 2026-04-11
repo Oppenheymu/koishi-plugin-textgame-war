@@ -8,7 +8,7 @@ export function 我的联军(ctx: Context) {
             try {
                 const { username, 联军资料, 权限等级 } = await 玩家联军检查(
                     ctx,
-                    session,
+                    session
                 );
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
                 const 展示联军名称 = 获取联军展示名称(联军资料);

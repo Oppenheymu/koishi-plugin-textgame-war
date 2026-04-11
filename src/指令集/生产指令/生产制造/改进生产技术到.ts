@@ -17,7 +17,7 @@ export function 改进生产技术到(ctx: Context) {
             try {
                 const { id, uid, username, 用户资料 } = await 玩家检查(
                     ctx,
-                    session,
+                    session
                 );
 
                 // 格式化数字显示
@@ -62,7 +62,9 @@ ${username} 同志！
                 // 检查生活资料是否足够
                 if (用户资料.生活资料 < 所需生活资料) {
                     const 还差 = 所需生活资料 - 用户资料.生活资料;
-                    return `生活资料不足！需要：${格式化(所需生活资料)}，还差：${格式化(还差)}`;
+                    return `生活资料不足！需要：${格式化(
+                        所需生活资料
+                    )}，还差：${格式化(还差)}`;
                 }
 
                 // === 确认逻辑 ===
@@ -77,7 +79,7 @@ ${username} 同志！
                 ) {
                     // === 执行升级 ===
                     console.log(
-                        `用户 ${username} (${uid}) 确认改进生产技术到 ${目标等级}`,
+                        `用户 ${username} (${uid}) 确认改进生产技术到 ${目标等级}`
                     );
 
                     // 扣除生活资料
@@ -90,7 +92,7 @@ ${username} 同志！
                         {
                             生活资料: 减少后的生活资料,
                             生产技术: 目标等级,
-                        },
+                        }
                     );
 
                     // 清除确认状态
@@ -115,7 +117,7 @@ ${username} 同志：
                             delete UpgradeTimer[uid];
                             session
                                 ?.send(
-                                    `=====[生产管理]=====\n${username} 同志！\n改进生产技术到 ${目标等级} 的操作已超时`,
+                                    `=====[生产管理]=====\n${username} 同志！\n改进生产技术到 ${目标等级} 的操作已超时`
                                 )
                                 .catch(console.warn);
                         }
@@ -131,6 +133,6 @@ ${username} 同志：
             } catch (error) {
                 return (error as Error).message;
             }
-        },
+        }
     );
 }

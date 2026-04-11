@@ -8,17 +8,18 @@ import {
 } from "../../../utils";
 
 export function 修改玩家名称(ctx: Context) {
-    ctx.command("修改玩家名称 <新名称:string>").alias('改名')
-        .action( async ({ session }, 新名称) => {
+    ctx.command("修改玩家名称 <新名称:string>")
+        .alias("改名")
+        .action(async ({ session }, 新名称) => {
             try {
                 const { id, uid, username, 用户配置 } = await 玩家检查(
                     ctx,
-                    session,
+                    session
                 );
 
                 const 改名冷却提示 = 检查改名冷却(
                     用户配置.上次改名日期,
-                    "玩家",
+                    "玩家"
                 );
                 if (改名冷却提示) {
                     return 改名冷却提示;
@@ -55,6 +56,5 @@ ${username} 同志！
             } catch (error) {
                 return (error as Error).message;
             }
-        },
-    );
+        });
 }

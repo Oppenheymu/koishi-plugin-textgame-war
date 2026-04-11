@@ -1,5 +1,5 @@
 export function 解析改名时间戳(
-    上次改名日期: string | null | undefined,
+    上次改名日期: string | null | undefined
 ): number | null {
     const 文本 = 上次改名日期?.trim();
     if (!文本) return null;
@@ -11,7 +11,7 @@ export function 解析改名时间戳(
             Number(年),
             Number(月) - 1,
             Number(日),
-            Number(时),
+            Number(时)
         ).getTime();
         return Number.isNaN(时间戳) ? null : 时间戳;
     }

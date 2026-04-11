@@ -16,7 +16,7 @@ export function 联军编号(ctx: Context) {
                     const { 目标用户名, 目标用户资料 } = await 目标解析(
                         ctx,
                         session,
-                        输入目标,
+                        输入目标
                     );
                     查询用户名 = 目标用户名;
                     联军编号 = 目标用户资料.所在联军;

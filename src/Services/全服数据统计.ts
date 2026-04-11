@@ -13,7 +13,9 @@ async function 执行每日统计(ctx: Context): Promise<void> {
 
     try {
         const 现在 = new Date();
-        const 今天 = `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, "0")}-${String(现在.getDate()).padStart(2, "0")}`;
+        const 今天 = `${现在.getFullYear()}-${String(
+            现在.getMonth() + 1
+        ).padStart(2, "0")}-${String(现在.getDate()).padStart(2, "0")}`;
 
         const 全局状态机 = await ctx.database.get("马列服务表", {
             id: "service",
@@ -39,7 +41,7 @@ async function 执行每日统计(ctx: Context): Promise<void> {
                 { id: "service" },
                 {
                     上次全服统计日期: 今天,
-                },
+                }
             );
             return;
         }
@@ -78,7 +80,7 @@ async function 执行每日统计(ctx: Context): Promise<void> {
                 { id: "service" },
                 {
                     上次全服统计日期: 今天,
-                },
+                }
             );
             return;
         }
@@ -113,7 +115,7 @@ async function 执行每日统计(ctx: Context): Promise<void> {
                 近三天全球生产总值: sum3Days,
                 近七天全球生产总值: sum7Days,
                 今日全球生产总值: 0,
-            },
+            }
         );
 
         await ctx.database.set(
@@ -121,11 +123,11 @@ async function 执行每日统计(ctx: Context): Promise<void> {
             { id: "service" },
             {
                 上次全服统计日期: 今天,
-            },
+            }
         );
 
         console.log(
-            `[全服数据统计] 完成。平均工资: ${avgWage}, 平均科技: ${avgTech}, 昨日产值: ${todayProduction}`,
+            `[全服数据统计] 完成。平均工资: ${avgWage}, 平均科技: ${avgTech}, 昨日产值: ${todayProduction}`
         );
     } finally {
         正在执行全服统计 = false;

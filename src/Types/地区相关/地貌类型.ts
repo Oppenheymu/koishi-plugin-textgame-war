@@ -1,4 +1,3 @@
-
 export enum PhysiognomyType {
     Water = "水域",
     Snow = "雪地",

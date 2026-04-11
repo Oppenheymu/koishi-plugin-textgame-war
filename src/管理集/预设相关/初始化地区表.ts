@@ -119,7 +119,7 @@ function 获取容量基线(地形: TerrainType): CapacityBase {
 
 function 获取容量上限(
     地区: RegionBasicDataItem,
-    地形: TerrainType,
+    地形: TerrainType
 ): CapacityLimit {
     if (地区.isOcean) {
         return {
@@ -142,15 +142,15 @@ function 获取容量上限(
         地区.MeanElevation >= 2500
             ? 0.78
             : 地区.MeanElevation >= 1500
-              ? 0.88
-              : 地区.MeanElevation >= 800
-                ? 0.95
-                : 1.05;
+            ? 0.88
+            : 地区.MeanElevation >= 800
+            ? 0.95
+            : 1.05;
     const 崎岖系数 = clamp(1 - 地区.STDElevation / 4500, 0.55, 1.08);
     const 地貌系数 = clamp(
         0.9 + 草地占比 * 0.18 + 森林占比 * 0.08 + 城镇占比 * 0.15,
         0.85,
-        1.25,
+        1.25
     );
     const 综合系数 = 海拔系数 * 崎岖系数 * 地貌系数;
 
@@ -178,7 +178,7 @@ function 构建进度条(当前: number, 总数: number): string {
 async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
     const 文件路径 = resolve(
         __dirname,
-        "../../../assets/Region/RegionBasicData.json",
+        "../../../assets/Region/RegionBasicData.json"
     );
     const 原始内容 = await readFile(文件路径, "utf-8");
     return JSON.parse(原始内容) as RegionBasicDataItem[];
@@ -190,7 +190,7 @@ async function 写入批次(
     地区批次: any[],
     状态机批次: any[],
     配置批次: any[],
-    战略批次: any[],
+    战略批次: any[]
 ) {
     try {
         await Promise.all([
@@ -203,7 +203,7 @@ async function 写入批次(
         return;
     } catch (error) {
         logger.warn(
-            `upsert 批量写入失败，切换兼容单条模式：${(error as Error).message}`,
+            `upsert 批量写入失败，切换兼容单条模式：${(error as Error).message}`
         );
     }
 
@@ -268,7 +268,7 @@ export function 初始化地区表(ctx: Context) {
 
                 logger.info(`初始化地区表开始，总记录数 ${总数}`);
                 await 发送进度(
-                    `数据读取完成：共 ${总数} 条，开始写入数据库...`,
+                    `数据读取完成：共 ${总数} 条，开始写入数据库...`
                 );
 
                 const 批次大小 = 500;
@@ -329,7 +329,7 @@ export function 初始化地区表(ctx: Context) {
                         onebot: null,
                         discord: null,
                         telegram: null,
-                        地区名称: '默认名称',
+                        地区名称: "默认名称",
                         名称是否审核: true,
                         上次改名日期: null,
                     }));
@@ -351,7 +351,7 @@ export function 初始化地区表(ctx: Context) {
                         地区批次,
                         状态机批次,
                         配置批次,
-                        战略批次,
+                        战略批次
                     );
 
                     已处理 += 地区批次.length;
@@ -369,6 +369,6 @@ export function 初始化地区表(ctx: Context) {
                 logger.error(`初始化地区表失败：${(error as Error).message}`);
                 return `初始化失败: ${(error as Error).message}`;
             }
-        },
+        }
     );
 }

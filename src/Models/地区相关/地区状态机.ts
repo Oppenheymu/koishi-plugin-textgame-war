@@ -12,7 +12,7 @@ export function 加载地区状态表(ctx: Context) {
         {
             primary: "地区编号",
             unique: ["地区编号"],
-        },
+        }
     );
 
     ctx.model.extend(
@@ -24,6 +24,6 @@ export function 加载地区状态表(ctx: Context) {
         {
             primary: "id",
             unique: ["id"],
-        },
+        }
     );
 }

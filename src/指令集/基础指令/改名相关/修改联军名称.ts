@@ -8,8 +8,9 @@ import {
 } from "../../../utils";
 
 export function 修改联军名称(ctx: Context) {
-    ctx.command("修改联军名称 <新名称:string>").alias('联军改名 ')
-        .action( async ({ session }, 新名称) => {
+    ctx.command("修改联军名称 <新名称:string>")
+        .alias("联军改名 ")
+        .action(async ({ session }, 新名称) => {
             try {
                 const { id, uid, username, 联军编号, 联军资料 } =
                     await 玩家联军检查(ctx, session, {
@@ -19,7 +20,7 @@ export function 修改联军名称(ctx: Context) {
 
                 const 改名冷却提示 = 检查改名冷却(
                     联军资料.上次改名日期,
-                    "联军",
+                    "联军"
                 );
                 if (改名冷却提示) {
                     return 改名冷却提示;
@@ -57,6 +58,5 @@ ${username} 同志！
             } catch (error) {
                 return (error as Error).message;
             }
-        },
-    );
+        });
 }

@@ -5,7 +5,7 @@ import { 检查名称是否重复 } from "./03_校验名称重复";
 
 export async function 审核通过改名工单(
     ctx: Context,
-    工单编号: number,
+    工单编号: number
 ): Promise<string> {
     const 工单 = 获取待审核工单(工单编号);
 
@@ -36,7 +36,7 @@ export async function 审核通过改名工单(
                 username: 工单.新名称,
                 名称是否审核: true,
                 上次改名日期: dayjs().format("YYYY-M-D-H"),
-            },
+            }
         );
     } else if (工单.类型 === "联军") {
         if (!工单.联军编号) {
@@ -50,7 +50,7 @@ export async function 审核通过改名工单(
                 联军名称: 工单.新名称,
                 名称是否审核: true,
                 上次改名日期: dayjs().format("YYYY-M-D-H"),
-            },
+            }
         );
     } else {
         if (!工单.地区编号) {
@@ -64,7 +64,7 @@ export async function 审核通过改名工单(
                 地区名称: 工单.新名称,
                 名称是否审核: true,
                 上次改名日期: dayjs().format("YYYY-M-D-H"),
-            },
+            }
         );
     }
 

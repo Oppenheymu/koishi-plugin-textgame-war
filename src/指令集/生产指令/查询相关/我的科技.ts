@@ -10,7 +10,7 @@ export function 我的科技(ctx: Context) {
             const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             const 科技池进度 = Math.floor(
-                (用户资料.科技池投入 / 用户资料.科技池容量) * 100,
+                (用户资料.科技池投入 / 用户资料.科技池容量) * 100
             );
 
             return `

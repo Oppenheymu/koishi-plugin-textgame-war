@@ -9,7 +9,7 @@ const logger = new Logger("malie-random-image");
 export function 生成随机图片片段(
     图片池: readonly string[],
     触发概率: number,
-    资源子目录: readonly string[] = ["src", "assets", "Image"],
+    资源子目录: readonly string[] = ["src", "assets", "Image"]
 ): string {
     if (!图片池.length) {
         logger.warn("图片池为空，跳过发送");
@@ -24,7 +24,9 @@ export function 生成随机图片片段(
     const 最终概率 = Math.min(1, 触发概率);
     const 随机值 = Math.random();
     logger.warn(
-        `开始判定：随机值=${随机值.toFixed(6)}，概率=${最终概率}，图片池数量=${图片池.length}`,
+        `开始判定：随机值=${随机值.toFixed(6)}，概率=${最终概率}，图片池数量=${
+            图片池.length
+        }`
     );
 
     if (随机值 >= 最终概率) {

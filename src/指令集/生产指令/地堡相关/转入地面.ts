@@ -92,14 +92,10 @@ export function 转入地面(ctx: Context) {
                 // 转出到地面
                 const 地面数值 = 用户资料[配置.字段] as number;
 
-                await ctx.database.set(
-                    "马列玩家表",
-                    { id },
-                    {
-                        [配置.地下字段]: 地下数值 - 数量,
-                        [配置.字段]: 地面数值 + 数量,
-                    },
-                );
+                await 更新玩家资料(ctx, id, {
+                    [配置.地下字段]: 地下数值 - 数量,
+                    [配置.字段]: 地面数值 + 数量,
+                });
 
                 return `
 ====[工业生产]====
@@ -108,6 +104,6 @@ export function 转入地面(ctx: Context) {
             } catch (error) {
                 return (error as Error).message;
             }
-        },
+        }
     );
 }

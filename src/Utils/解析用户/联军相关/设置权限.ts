@@ -36,7 +36,9 @@ function 读取默认联军权限配置(): Omit<CoalitionPermission, "联军编�
     };
 }
 
-export function 校验联军权限等级(value: number): value is CoalitionPermissionLevel {
+export function 校验联军权限等级(
+    value: number
+): value is CoalitionPermissionLevel {
     return Number.isInteger(value) && value >= 1 && value <= 4;
 }
 
@@ -53,7 +55,7 @@ const 旧权限等级映射: Record<0 | 1 | 2 | 3, CoalitionPermissionLevel> = {
 
 function 兼容权限等级(
     value: unknown,
-    fallback: CoalitionPermissionLevel,
+    fallback: CoalitionPermissionLevel
 ): CoalitionPermissionLevel {
     if (!Number.isInteger(value)) {
         return fallback;
@@ -73,10 +75,11 @@ function 兼容权限等级(
 
 export async function 获取联军权限配置(
     ctx: Context,
-    联军编号: string,
+    联军编号: string
 ): Promise<Omit<CoalitionPermission, "联军编号">> {
     const [数据库配置] = await ctx.database.get("马列联军权限表", { 联军编号 });
-    const 权限配置: Omit<CoalitionPermission, "联军编号"> = 读取默认联军权限配置();
+    const 权限配置: Omit<CoalitionPermission, "联军编号"> =
+        读取默认联军权限配置();
 
     if (!数据库配置) {
         return 权限配置;
@@ -92,7 +95,7 @@ export async function 获取联军权限配置(
 export async function 获取联军操作权限(
     ctx: Context,
     联军编号: string,
-    动作: 联军权限动作,
+    动作: 联军权限动作
 ): Promise<CoalitionPermissionLevel> {
     const 配置 = await 获取联军权限配置(ctx, 联军编号);
     const 默认配置 = 读取默认联军权限配置();
@@ -102,7 +105,7 @@ export async function 获取联军操作权限(
 export async function 设置联军权限配置(
     ctx: Context,
     联军编号: string,
-    更新配置: Partial<Omit<CoalitionPermission, "联军编号">>,
+    更新配置: Partial<Omit<CoalitionPermission, "联军编号">>
 ): Promise<void> {
     await ctx.database.upsert(
         "马列联军权限表",
@@ -113,7 +116,7 @@ export async function 设置联军权限配置(
                 ...更新配置,
             },
         ],
-        ["联军编号"],
+        ["联军编号"]
     );
 }
 
@@ -121,18 +124,17 @@ export async function 设置联军操作权限(
     ctx: Context,
     联军编号: string,
     动作: 联军权限动作,
-    权限等级: CoalitionPermissionLevel,
+    权限等级: CoalitionPermissionLevel
 ): Promise<void> {
     await 设置联军权限配置(ctx, 联军编号, {
         [动作]: 权限等级,
     } as Partial<Omit<CoalitionPermission, "联军编号">>);
 }
 
-
 export async function 玩家联军权限设置(
     ctx: Context,
     session: Session | undefined,
-    动作: 联军权限动作,
+    动作: 联军权限动作
 ): Promise<CoalitionPermissionLevel> {
     const { 用户资料 } = await 玩家检查(ctx, session);
     const 联军编号 = 用户资料.所在联军;

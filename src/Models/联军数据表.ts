@@ -44,6 +44,6 @@ export function 加载联军表(ctx: Context) {
             primary: "id",
             unique: ["联军编号"],
             autoInc: true,
-        },
+        }
     );
 }

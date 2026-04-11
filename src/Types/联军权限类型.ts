@@ -1,6 +1,3 @@
-
-
-
 export type CoalitionPermissionLevel = 1 | 2 | 3 | 4;
 
 export type CoalitionPermissionAction =
@@ -13,7 +10,6 @@ export type CoalitionPermissionAction =
     | "我的联军权限";
 
 export interface CoalitionPermission {
-
     联军编号: string;
     成员列表: CoalitionPermissionLevel;
     地区列表: CoalitionPermissionLevel;
@@ -22,5 +18,4 @@ export interface CoalitionPermission {
     设置联军权限: CoalitionPermissionLevel;
     移出联军: CoalitionPermissionLevel;
     我的联军权限: CoalitionPermissionLevel;
-
 }

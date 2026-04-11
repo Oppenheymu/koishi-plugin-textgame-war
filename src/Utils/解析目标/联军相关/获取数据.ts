@@ -4,7 +4,7 @@ import { 获取联军展示名称 } from "./获取名称";
 
 export async function 联军解析(
     ctx: Context,
-    目标联军编号: string,
+    目标联军编号: string
 ): Promise<{
     联军编号: string;
     联军资料: CoalitionArmy;

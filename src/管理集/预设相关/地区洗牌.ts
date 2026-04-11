@@ -12,7 +12,7 @@ export function 地区洗牌(ctx: Context) {
             const 所有陆地 = await ctx.database.get(
                 "马列地区地形表",
                 { 是否为海洋: false },
-                ["地区编号"],
+                ["地区编号"]
             );
 
             if (所有陆地.length === 0)
@@ -52,7 +52,7 @@ export function 地区洗牌(ctx: Context) {
             ) {
                 const 当前块编号列表 = 陆地编号列表.slice(
                     当前进度,
-                    当前进度 + 分块大小,
+                    当前进度 + 分块大小
                 );
 
                 const 洗牌池数据块 = 当前块编号列表.map((编号, 块内索引) => ({

@@ -18,6 +18,6 @@ export function 加载服务表(ctx: Context) {
         },
         {
             primary: "id",
-        },
+        }
     );
 }

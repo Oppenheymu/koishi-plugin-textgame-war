@@ -1,16 +1,16 @@
-
-import { Context } from 'koishi'
+import { Context } from "koishi";
 import { 玩家联军检查, 地区解析, 当前地区解析 } from "../../../utils";
-
-
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 查看地区军事(ctx: Context) {
-    ctx.command("查看地区军事 [地区编号:string]").alias("查看城市军事").alias('军事基地').alias('地区军事').alias('城市军事')
-        .action( async ( { session }, 地区编号参数 ) => {
+    ctx.command("查看地区军事 [地区编号:string]")
+        .alias("查看城市军事")
+        .alias("军事基地")
+        .alias("地区军事")
+        .alias("城市军事")
+        .action(async ({ session }, 地区编号参数) => {
             try {
-
                 await 玩家联军检查(ctx, session, {
                     最低权限等级: 3,
                     是否必须在成员列表: true,
@@ -24,9 +24,12 @@ export function 查看地区军事(ctx: Context) {
                 const 历史战争记录 = 地区战略资料.历史战争 ?? [];
                 const 历史战争展示 = 历史战争记录.length
                     ? 历史战争记录
-                        .slice(0, 3)
-                        .map(({ 时间, 发动者, 记录 }) => `    - ${时间}，玩家${发动者}，进行了${记录}`)
-                        .join("\n")
+                          .slice(0, 3)
+                          .map(
+                              ({ 时间, 发动者, 记录 }) =>
+                                  `    - ${时间}，玩家${发动者}，进行了${记录}`
+                          )
+                          .join("\n")
                     : "    - 暂无记录";
 
                 return [
@@ -38,7 +41,7 @@ export function 查看地区军事(ctx: Context) {
                     `□ 要塞：${格式化(地区战略资料.地区堡垒)}`,
                     "□ 历史战争：",
                     历史战争展示,
-                ].join("\n")
+                ].join("\n");
             } catch (error) {
                 return (error as Error).message;
             }

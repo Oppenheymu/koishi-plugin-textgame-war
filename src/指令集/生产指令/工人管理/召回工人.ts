@@ -1,8 +1,5 @@
-
 import { Context } from "koishi";
 import { 玩家检查 } from "../../../utils";
-
-
 
 export function 召回工人(ctx: Context) {
     ctx.command("召回工人 <数量:number> ")
@@ -20,7 +17,9 @@ export function 召回工人(ctx: Context) {
                 }
 
                 if (数量 > 用户资料.休假工人) {
-                    return `工人不足！当前休假工人：${格式化(用户资料.休假工人)}，无法召回${格式化(数量)}个工人`;
+                    return `工人不足！当前休假工人：${格式化(
+                        用户资料.休假工人
+                    )}，无法召回${格式化(数量)}个工人`;
                 }
 
                 if (用户资料.小时是否生产 == false) {
@@ -36,7 +35,7 @@ export function 召回工人(ctx: Context) {
                     {
                         工人: 新工人数,
                         休假工人: 新休假工人数,
-                    },
+                    }
                 );
 
                 return `

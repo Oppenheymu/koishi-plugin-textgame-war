@@ -7,11 +7,6 @@ import {
     RegionTerra,
 } from "../../../types/index";
 import { 会话检查, 用户检查 } from "../../解析用户";
-import {
-    构造缓存键,
-    缓存获取或加载,
-    获取分组缓存TTL毫秒,
-} from "../../缓存管理/index";
 import { 获取地区展示名称 } from "./获取名称";
 
 export type 地区解析结果 = {
@@ -27,7 +22,7 @@ export type 地区解析结果 = {
 export async function 地区解析(
     ctx: Context,
     目标地区编号: string,
-    session?: Session,
+    session?: Session
 ): Promise<地区解析结果> {
     const 输入值 = 目标地区编号?.trim();
     if (!输入值) {
@@ -49,67 +44,53 @@ export async function 地区解析(
         }
     }
 
-    const 缓存键 = 构造缓存键("region", 地区编号);
-    const 缓存TTL毫秒 = 获取分组缓存TTL毫秒("region");
-
     const 已知地区资料 = 地区编号 === 输入值 ? 按编号地区资料 : undefined;
 
-    return 缓存获取或加载(
-        缓存键,
-        async () => {
-            const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
-                await Promise.all([
-                    已知地区资料
-                        ? Promise.resolve(已知地区资料)
-                        : ctx.database
-                              .get("马列地区表", { 地区编号 })
-                              .then(([data]) => data),
-                    ctx.database
-                        .get("马列地区地形表", { 地区编号 })
-                        .then(([data]) => data),
-                    ctx.database
-                        .get("马列地区状态机", { 地区编号 })
-                        .then(([data]) => data),
-                    ctx.database
-                        .get("马列地区配置表", { 地区编号 })
-                        .then(([data]) => data),
-                    ctx.database
-                        .get("马列地区战略表", { 地区编号 })
-                        .then(([data]) => data),
-                ]);
+    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
+        await Promise.all([
+            已知地区资料
+                ? Promise.resolve(已知地区资料)
+                : ctx.database
+                      .get("马列地区表", { 地区编号 })
+                      .then(([data]) => data),
+            ctx.database
+                .get("马列地区地形表", { 地区编号 })
+                .then(([data]) => data),
+            ctx.database
+                .get("马列地区状态机", { 地区编号 })
+                .then(([data]) => data),
+            ctx.database
+                .get("马列地区配置表", { 地区编号 })
+                .then(([data]) => data),
+            ctx.database
+                .get("马列地区战略表", { 地区编号 })
+                .then(([data]) => data),
+        ]);
 
-            if (!地区资料) {
-                throw new Error(`未找到地区：${输入值}`);
-            }
+    if (!地区资料) {
+        throw new Error(`未找到地区：${输入值}`);
+    }
 
-            if (
-                !地区地形资料 ||
-                !地区状态资料 ||
-                !地区配置资料 ||
-                !地区战略资料
-            ) {
-                throw new Error(
-                    `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`,
-                );
-            }
+    if (!地区地形资料 || !地区状态资料 || !地区配置资料 || !地区战略资料) {
+        throw new Error(
+            `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`
+        );
+    }
 
-            return {
-                地区编号,
-                地区资料,
-                地区地形资料,
-                地区状态资料,
-                地区配置资料,
-                地区战略资料,
-                展示地区名称: 获取地区展示名称(地区配置资料),
-            };
-        },
-        缓存TTL毫秒,
-    );
+    return {
+        地区编号,
+        地区资料,
+        地区地形资料,
+        地区状态资料,
+        地区配置资料,
+        地区战略资料,
+        展示地区名称: 获取地区展示名称(地区配置资料),
+    };
 }
 
 export async function 当前地区解析(
     ctx: Context,
-    session: Session | undefined,
+    session: Session | undefined
 ): Promise<地区解析结果> {
     会话检查(session);
     const { platform } = 用户检查(session);
@@ -124,7 +105,7 @@ export async function 当前地区解析(
     });
 
     const 绑定地区编号列表 = Array.from(
-        new Set(地区配置列表.map((配置) => 配置.地区编号).filter(Boolean)),
+        new Set(地区配置列表.map((配置) => 配置.地区编号).filter(Boolean))
     );
 
     if (!绑定地区编号列表.length) {
@@ -133,7 +114,9 @@ export async function 当前地区解析(
 
     if (绑定地区编号列表.length > 1) {
         throw new Error(
-            `本群绑定数据异常：检测到多个地区绑定（${绑定地区编号列表.join("、")}），请联系管理员处理`,
+            `本群绑定数据异常：检测到多个地区绑定（${绑定地区编号列表.join(
+                "、"
+            )}），请联系管理员处理`
         );
     }
 

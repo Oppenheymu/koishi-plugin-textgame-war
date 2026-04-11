@@ -8,18 +8,23 @@ import {
 } from "../../../utils";
 
 export function 设置联军权限(ctx: Context) {
-    ctx.command("设置联军权限 <操作:string> <权限等级:number>").alias('设置权限')
+    ctx.command("设置联军权限 <操作:string> <权限等级:number>")
+        .alias("设置权限")
         .action(async ({ session }, 操作, 权限等级) => {
             try {
                 const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
-                    "设置联军权限",
+                    "设置联军权限"
                 );
-                const { username, 联军编号 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 权限等级需求,
-                    是否必须在成员列表: true,
-                });
+                const { username, 联军编号 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 权限等级需求,
+                        是否必须在成员列表: true,
+                    }
+                );
 
                 const 目标操作 = 操作?.trim();
                 if (!目标操作 || !校验联军权限动作(目标操作)) {

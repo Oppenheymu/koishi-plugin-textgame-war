@@ -16,6 +16,6 @@ export function 加载联军权限表(ctx: Context) {
         {
             primary: "联军编号",
             unique: ["联军编号"],
-        },
+        }
     );
 }

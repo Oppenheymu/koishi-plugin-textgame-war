@@ -13,6 +13,6 @@ export function 查看联军名称(ctx: Context) {
             } catch (error) {
                 return (error as Error).message;
             }
-        },
+        }
     );
 }

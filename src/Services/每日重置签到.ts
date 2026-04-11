@@ -8,7 +8,7 @@ function 获取今天日期(): string {
 }
 
 export async function 初始化服务记录(
-    ctx: Context,
+    ctx: Context
 ): Promise<{ created: boolean; 今天: string }> {
     const 今天 = 获取今天日期();
     const 全局状态机 = await ctx.database.get("马列服务表", { id: "service" });
@@ -52,14 +52,14 @@ async function 执行每日重置(ctx: Context): Promise<void> {
                     { id: "service" },
                     {
                         上次重置签到日期: 今天,
-                    },
+                    }
                 );
             }
 
             await ctx.database.set(
                 "马列玩家表",
                 {},
-                { 今日是否签到: false, 工人招募限额: 1000 },
+                { 今日是否签到: false, 工人招募限额: 1000 }
             );
         }
     } finally {

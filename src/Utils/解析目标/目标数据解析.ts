@@ -1,19 +1,11 @@
-
 import { Context, Session } from "koishi";
-import { Player, PlayerConfig } from "../../types/index";
-import { 会话检查 } from "../解析用户";
-import {
-    构造缓存键,
-    缓存获取或加载,
-    获取分组缓存TTL毫秒,
-} from "../缓存管理/index";
-
-
+import type { Player, PlayerConfig } from "../../types";
+import { 会话检查, 获取玩家完整资料 } from "../解析用户";
 
 export async function 目标解析(
     ctx: Context,
     session: Session | undefined,
-    目标: string,
+    目标: string
 ): Promise<{
     目标用户ID: number;
     目标用户名: string;
@@ -21,34 +13,27 @@ export async function 目标解析(
 }> {
     会话检查(session);
 
-    const 玩家缓存TTL毫秒 = 获取分组缓存TTL毫秒("player");
-
-    async function 获取目标配置(config: PlayerConfig) {
-        const 缓存键 = 构造缓存键("player", `target:${config.id}`);
-        return 缓存获取或加载(
-            缓存键,
-            async () => {
-                const [player] = await ctx.database.get("马列玩家表", {
-                    id: config.id,
-                });
-                if (!player)
-                    throw new Error(
-                        `数据异常：目标用户配置存在但玩家档案丢失，请联系管理员`,
-                    );
-                return {
-                    目标用户ID: config.id,
-                    目标用户名: config.username,
-                    目标用户资料: player,
-                };
-            },
-            玩家缓存TTL毫秒,
-        );
+    async function 获取目标配置(config: PlayerConfig): Promise<{
+        目标用户ID: number;
+        目标用户名: string;
+        目标用户资料: Player;
+    }> {
+        const 目标用户资料 = await 获取玩家完整资料(ctx, config.id);
+        if (!目标用户资料)
+            throw new Error(
+                "数据异常：目标用户配置存在但完整玩家档案丢失，请联系管理员"
+            );
+        return {
+            目标用户ID: config.id,
+            目标用户名: config.username,
+            目标用户资料,
+        };
     }
 
     const platform = session.platform;
 
     const atElement = session.elements?.find(
-        (el) => el.type === "at" && el.attrs?.["id"],
+        (el) => el.type === "at" && el.attrs?.["id"]
     );
     if (atElement?.attrs?.["id"]) {
         const 目标用户ID = atElement.attrs["id"];
@@ -57,7 +42,7 @@ export async function 目标解析(
         });
         if (!config)
             throw new Error(
-                `目标用户尚未注册（${platform}:${目标用户ID}），请让对方先发送[注册]指令`,
+                `目标用户尚未注册（${platform}:${目标用户ID}），请让对方先发送[注册]指令`
             );
         return 获取目标配置(config);
     }
@@ -65,7 +50,7 @@ export async function 目标解析(
     const 输入 = 目标?.trim();
     if (!输入) {
         throw new Error(
-            "请指定目标用户：可以 @对方 或 直接输入对方 UID / QQ号",
+            "请指定目标用户：可以 @对方 或 直接输入对方 UID / QQ号"
         );
     }
 

@@ -15,7 +15,7 @@ export async function 分配坐标逻辑(ctx: Context, id: number) {
     const 已遍历池 = await ctx.database.get(
         "马列地区洗牌池",
         { id: { $lt: 当前指针 } },
-        ["地区编号"],
+        ["地区编号"]
     );
     const 已遍历编号 = 已遍历池.map((记录) => 记录.地区编号);
 
@@ -27,7 +27,7 @@ export async function 分配坐标逻辑(ctx: Context, id: number) {
                 地区编号: { $in: 已遍历编号 },
                 是否已分配: false,
             },
-            { limit: 1 },
+            { limit: 1 }
         );
 
         if (回收地) 目标编号 = 回收地.地区编号;
@@ -48,7 +48,7 @@ export async function 分配坐标逻辑(ctx: Context, id: number) {
             { id: "GLOBAL" },
             {
                 当前地区洗牌指针: 当前指针 + 1,
-            },
+            }
         );
     }
 
@@ -60,7 +60,7 @@ export async function 分配坐标逻辑(ctx: Context, id: number) {
         {
             地区归属国: id,
             是否已分配: true,
-        },
+        }
     );
 
     return 目标编号;

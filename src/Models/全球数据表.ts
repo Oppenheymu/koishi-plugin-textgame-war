@@ -28,6 +28,6 @@ export function 加载全球数据表(ctx: Context) {
         },
         {
             primary: "id",
-        },
+        }
     );
 }

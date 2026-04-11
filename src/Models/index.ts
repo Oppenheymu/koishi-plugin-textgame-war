@@ -4,9 +4,11 @@ import { 批量加载插件 } from "../utils/插件加载";
 
 import {
     CoalitionArmy,
+    CoalitionPermission,
     GlobalData,
     Player,
     PlayerConfig,
+    PlayerWarData,
     Region,
     RegionConfig,
     RegionTerra,
@@ -14,28 +16,26 @@ import {
     RegionStrategy,
     RegionShufflePool,
     Service,
-    CoalitionPermission
-} from "../types/index";
+} from "../types";
 
 import { 加载联军表 } from "./联军数据表";
 import { 加载联军权限表 } from "./联军权限表";
 import { 加载全球数据表 } from "./全球数据表";
-import { 加载玩家配置表 } from "./玩家配置表";
-import { 加载玩家表 } from "./玩家数据表";
 import { 加载地形相关表 } from "./地区相关";
 import { 加载服务表 } from "./服务表";
-
+import { 加载玩家相关表 } from "./玩家相关";
 
 // 扩展 Koishi 数据表类型定义
+
 declare module "koishi" {
     interface Tables {
-
         马列联军表: CoalitionArmy;
         马列联军权限表: CoalitionPermission;
 
         马列全球数据表: GlobalData;
 
         马列玩家表: Player;
+        马列玩家战争表: PlayerWarData;
         马列玩家配置表: PlayerConfig;
 
         马列地区表: Region;
@@ -54,9 +54,8 @@ const 数据库插件列表 = [
     加载联军表,
     加载联军权限表,
     加载全球数据表,
-    加载玩家配置表,
-    加载玩家表,
     加载服务表,
+    ...加载玩家相关表,
     ...加载地形相关表,
 ];
 

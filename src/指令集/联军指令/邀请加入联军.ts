@@ -37,7 +37,7 @@ export function 邀请加入联军(ctx: Context) {
                 const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
-                    "邀请加入联军",
+                    "邀请加入联军"
                 );
                 const { username, 联军资料, 联军编号 } = await 玩家联军检查(
                     ctx,
@@ -45,7 +45,7 @@ export function 邀请加入联军(ctx: Context) {
                     {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
-                    },
+                    }
                 );
 
                 const 输入目标 = 目标?.trim();
@@ -56,7 +56,7 @@ export function 邀请加入联军(ctx: Context) {
                 const { 目标用户ID, 目标用户名, 目标用户资料 } = await 目标解析(
                     ctx,
                     session,
-                    输入目标,
+                    输入目标
                 );
 
                 const 目标UID = 目标用户资料.uid;
@@ -78,7 +78,7 @@ export function 邀请加入联军(ctx: Context) {
 
                 if (已有邀请 && 当前时间戳 < 已有邀请.过期时间戳) {
                     const 剩余秒数 = Math.ceil(
-                        (已有邀请.过期时间戳 - 当前时间戳) / 1000,
+                        (已有邀请.过期时间戳 - 当前时间戳) / 1000
                     );
                     return `${目标用户名} 同志已有待确认邀请，请等待对方同意（剩余约${剩余秒数}秒）`;
                 }
@@ -114,7 +114,10 @@ ${username} 同志！
             let 新分配地区: string | null = null;
 
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(ctx, session);
+                const { id, uid, username, 用户资料 } = await 玩家检查(
+                    ctx,
+                    session
+                );
 
                 const 联军编号 = 输入联军编号?.trim();
                 if (!联军编号) {
@@ -162,7 +165,7 @@ ${username} 同志！
                 };
 
                 const 新三级权限成员列表 = Array.from(
-                    new Set([...(联军资料.联军三级权限成员列表 ?? []), uid]),
+                    new Set([...(联军资料.联军三级权限成员列表 ?? []), uid])
                 );
 
                 const 新成员数量 = Object.keys(新联军成员列表).length;
@@ -195,7 +198,7 @@ ${username} 同志！
                             联军三级权限成员列表: 新三级权限成员列表,
                             联军成员数量: 新成员数量,
                             联军地区列表: 新联军地区列表,
-                        },
+                        }
                     ),
                     ctx.database.set(
                         "马列玩家表",
@@ -208,7 +211,7 @@ ${username} 同志！
                                 联军资料.联军首都 ||
                                 新联军地区列表[0] ||
                                 null,
-                        },
+                        }
                     ),
                 ]);
 
@@ -229,7 +232,7 @@ ${username} 同志！
                             {
                                 地区归属国: null,
                                 是否已分配: false,
-                            } as any,
+                            } as any
                         );
                     } catch {}
                 }

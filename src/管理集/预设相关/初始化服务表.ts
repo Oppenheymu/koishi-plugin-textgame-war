@@ -36,7 +36,7 @@ export function 初始化服务表(ctx: Context) {
                 await ctx.database.set(
                     "马列服务表",
                     { id: "service" },
-                    修复字段,
+                    修复字段
                 );
                 return `服务表已修复：${Object.keys(修复字段).join("、")}`;
             }

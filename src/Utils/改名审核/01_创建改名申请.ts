@@ -14,7 +14,7 @@ export async function 创建改名审核工单(
         玩家ID?: number;
         联军编号?: string;
         地区编号?: string;
-    },
+    }
 ): Promise<{ 工单编号: number }> {
     const 工单编号 = 获取下一个工单编号();
     const 工单: 改名审核工单 = {
@@ -30,8 +30,8 @@ export async function 创建改名审核工单(
         工单.类型 === "联军"
             ? `联军编号：${工单.联军编号}`
             : 工单.类型 === "地区"
-              ? `地区编号：${工单.地区编号}`
-              : `玩家ID：${工单.玩家ID}`;
+            ? `地区编号：${工单.地区编号}`
+            : `玩家ID：${工单.玩家ID}`;
 
     const 推送文本 = [
         `【改名工单 #${工单编号}】`,
@@ -44,7 +44,7 @@ export async function 创建改名审核工单(
     ].join("\n");
 
     const onebotBot = Object.values(ctx.bots).find(
-        (bot) => bot.platform === "onebot",
+        (bot) => bot.platform === "onebot"
     );
 
     if (onebotBot) {

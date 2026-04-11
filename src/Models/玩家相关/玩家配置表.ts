@@ -23,6 +23,6 @@ export function 加载玩家配置表(ctx: Context) {
             primary: "id",
             unique: ["uid"],
             autoInc: true,
-        },
+        }
     );
 }

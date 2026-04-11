@@ -3,7 +3,7 @@ import { 解析改名时间戳 } from "./07_解析时间数据";
 
 export function 检查改名冷却(
     上次改名日期: string | null | undefined,
-    名称类型: 改名类型,
+    名称类型: 改名类型
 ): string | null {
     const 上次改名时间戳 = 解析改名时间戳(上次改名日期);
     if (!上次改名时间戳) return null;
