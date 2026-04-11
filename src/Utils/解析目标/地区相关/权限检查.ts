@@ -5,11 +5,11 @@ import {
 import type {
     CoalitionPermissionAction,
     CoalitionPermissionLevel
-} from "../../../../types";
+} from "@/types";
 import {
     玩家联军检查,
     玩家联军权限设置
-} from "../../../解析用户";
+} from "@/utils";
 import {
     地区解析,
     当前地区解析,

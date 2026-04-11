@@ -29,6 +29,7 @@ export const 联军权限动作列表: 联军权限动作[] = [
     "查看地区生物实验室",
     "查看地区核反应堆",
     "查看地区离心机组",
+    "设置地区驻扎权限",
 ];
 
 export const 默认联军权限配置: Omit < CoalitionPermission, "联军编号" > = {
@@ -44,6 +45,7 @@ export const 默认联军权限配置: Omit < CoalitionPermission, "联军编号
     查看地区生物实验室: 3,
     查看地区核反应堆: 4,
     查看地区离心机组: 4,
+    设置地区驻扎权限: 3,
 };
 
 function 读取默认联军权限配置(): Omit < CoalitionPermission, "联军编号" > {

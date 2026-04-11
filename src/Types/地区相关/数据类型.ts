@@ -23,6 +23,7 @@ export interface Region {
     控制国家: string;
 
     地区总督: string;
+    允许非联军成员驻扎: boolean;
 
     // 基础设施
     当前总基础设施: number;

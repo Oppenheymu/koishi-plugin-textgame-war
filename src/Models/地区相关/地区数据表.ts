@@ -25,6 +25,10 @@ export function 加载地区表(ctx: Context) {
                 length: 255,
                 initial: ""
             },
+            允许非联军成员驻扎: {
+                type: "boolean",
+                initial: true,
+            },
 
             当前总基础设施: {
                 type: "unsigned",

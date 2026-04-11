@@ -2,6 +2,8 @@ import {
     Context
 } from "koishi";
 
+
+
 export function 加载联军权限表(ctx: Context) {
     ctx.model.extend(
         "马列联军权限表", {
@@ -56,6 +58,10 @@ export function 加载联军权限表(ctx: Context) {
             查看地区离心机组: {
                 type: "unsigned",
                 initial: 4
+            },
+            设置地区驻扎权限: {
+                type: "unsigned",
+                initial: 3
             },
         }, {
             primary: "联军编号",

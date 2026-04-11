@@ -4,7 +4,7 @@ import {
 import {
     地区解析,
     当前地区解析
-} from "../../../utils";
+} from "@/utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 

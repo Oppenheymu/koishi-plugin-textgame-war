@@ -3,16 +3,15 @@ import type {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from "../../types";
+} from "@/types";
 import {
     联军政体
-} from "../../types";
+} from "@/types";
+
 import {
-    获取成员联军贡献
-} from "../../utils/解析用户/联军相关/贡献统计";
-import {
+    获取成员联军贡献,
     获取联军权限等级
-} from "../../utils/解析用户/联军相关/权限获取";
+} from "@/utils";
 
 type 联军权限配置 = Omit < CoalitionPermission, "联军编号" > ;
 
@@ -35,6 +34,7 @@ const 政体默认权限配置映射: Record < 联军政体, 联军权限配置 
         查看地区生物实验室: 2,
         查看地区核反应堆: 3,
         查看地区离心机组: 3,
+        设置地区驻扎权限: 2,
     },
     [联军政体.威权制]: {
         成员列表: 3,
@@ -49,6 +49,7 @@ const 政体默认权限配置映射: Record < 联军政体, 联军权限配置 
         查看地区生物实验室: 3,
         查看地区核反应堆: 4,
         查看地区离心机组: 4,
+        设置地区驻扎权限: 3,
     },
     [联军政体.极权制]: {
         成员列表: 4,
@@ -63,6 +64,7 @@ const 政体默认权限配置映射: Record < 联军政体, 联军权限配置 
         查看地区生物实验室: 4,
         查看地区核反应堆: 4,
         查看地区离心机组: 4,
+        设置地区驻扎权限: 4,
     },
 };
 

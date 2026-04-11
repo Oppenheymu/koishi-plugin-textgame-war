@@ -18,6 +18,7 @@ export interface 联军默认权限配置 {
     查看地区生物实验室: CoalitionPermissionLevel;
     查看地区核反应堆: CoalitionPermissionLevel;
     查看地区离心机组: CoalitionPermissionLevel;
+    设置地区驻扎权限: CoalitionPermissionLevel;
 }
 
 export interface Sqids单项配置 {
@@ -49,6 +50,7 @@ export const 默认联军权限配置: 联军默认权限配置 = {
     查看地区生物实验室: 3,
     查看地区核反应堆: 4,
     查看地区离心机组: 4,
+    设置地区驻扎权限: 3,
 };
 
 export const 默认Sqids配置: Sqids配置 = {
@@ -151,6 +153,7 @@ export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
         查看地区生物实验室: 权限等级Schema.default(默认联军权限配置.查看地区生物实验室),
         查看地区核反应堆: 权限等级Schema.default(默认联军权限配置.查看地区核反应堆),
         查看地区离心机组: 权限等级Schema.default(默认联军权限配置.查看地区离心机组),
+        设置地区驻扎权限: 权限等级Schema.default(默认联军权限配置.设置地区驻扎权限),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
         register: 创建Sqids单项Schema(默认Sqids配置.register).description(

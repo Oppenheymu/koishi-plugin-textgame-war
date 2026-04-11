@@ -3,7 +3,9 @@ import {
 } from "koishi";
 import {
     联军政体
-} from "../types";
+} from "../../types";
+
+
 
 export function 加载联军表(ctx: Context) {
     ctx.model.extend(

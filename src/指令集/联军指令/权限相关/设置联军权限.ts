@@ -9,7 +9,7 @@ import {
     联军权限动作列表,
     玩家联军检查,
     玩家联军权限设置,
-} from "../../../utils";
+} from "@/utils";
 
 export function 设置联军权限(ctx: Context) {
     ctx.command("设置联军权限 <操作:string> <权限等级:number>")

@@ -4,7 +4,7 @@ import {
 
 import {
     批量加载插件
-} from "../utils/插件加载";
+} from "@/utils";
 
 import {
     CoalitionArmy,
@@ -20,26 +20,29 @@ import {
     RegionStrategy,
     RegionShufflePool,
     Service,
-} from "../types";
+} from "@/types";
 
-import {
-    加载联军表
-} from "./联军数据表";
-import {
-    加载联军权限表
-} from "./联军权限表";
-import {
-    加载全球数据表
-} from "./全球数据表";
+
+
 import {
     加载地形相关表
 } from "./地区相关";
 import {
+    加载玩家相关表
+} from "./玩家相关";
+import {
+    加载联军相关表
+} from "./联军相关";
+
+
+
+import {
     加载服务表
 } from "./服务表";
 import {
-    加载玩家相关表
-} from "./玩家相关";
+    加载全球数据表
+} from "./全球数据表";
+
 
 // 扩展 Koishi 数据表类型定义
 
@@ -67,12 +70,13 @@ declare module "koishi" {
 
 // 按顺序注册数据库模型插件
 const 数据库插件列表 = [
-    加载联军表,
-    加载联军权限表,
+
     加载全球数据表,
     加载服务表,
     ...加载玩家相关表,
+    ...加载联军相关表,
     ...加载地形相关表,
+
 ];
 
 // 统一挂载所有数据库相关服务
