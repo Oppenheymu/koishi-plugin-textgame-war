@@ -1,11 +1,11 @@
 import { Context } from "koishi";
 import { 玩家检查, 更新玩家资料 } from "../../../utils";
-import { Player } from "../../../types";
+import { Player, PlayerWarData } from "../../../types";
 
 interface 地堡配置 {
     name: string;
-    投入字段: keyof Player;
-    完成字段: keyof Player;
+    投入字段: keyof PlayerWarData;
+    完成字段: keyof PlayerWarData;
     需求生产力: number;
 }
 
@@ -79,7 +79,7 @@ export function 修建地堡(ctx: Context) {
                 const 进度百分比 = (新投入 / 配置.需求生产力) * 100;
 
                 // 更新对象
-                const 更新对象: Partial<Player> = {
+                const 更新对象: Partial<Player & PlayerWarData> = {
                     [配置.投入字段]: 新投入,
                     生活资料: 用户资料.生活资料 - 工资,
                     生产次数: 用户资料.生产次数 - 1,

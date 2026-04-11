@@ -1,6 +1,6 @@
 import { Context } from "koishi";
-import { 玩家检查, 生成随机图片片段 } from "../../../utils";
-import { Player } from "../../../types";
+import { 玩家检查, 更新玩家资料, 生成随机图片片段 } from "../../../utils";
+import { Player, PlayerWarData } from "../../../types";
 
 interface 物品属性 {
     name: string;
@@ -82,7 +82,7 @@ const 物品库: Record<string, 物品属性> = {
 };
 
 // 物品名称到 Player 属性的映射
-const 物品属性名: Record<string, keyof Player> = {
+const 物品属性名: Record<string, keyof PlayerWarData> = {
     重炮: "重炮",
     火箭炮: "火箭炮",
     火箭炮弹药: "火箭炮弹药",
@@ -176,7 +176,7 @@ ${Object.keys(物品库).join("、")}
                 if (!属性名) return "物品属性映射错误";
 
                 // 计算更新数据
-                const 更新数据: Partial<Player> = {
+                const 更新数据: Partial<Player & PlayerWarData> = {
                     钢铁: 用户资料.钢铁 - 所需钢铁,
                     金属铝: 用户资料.金属铝 - 所需金属铝,
                     生活资料: 用户资料.生活资料 - 工资,

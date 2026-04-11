@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils";
+import { 玩家检查 } from "../../../../utils";
 
 export function 我的地下弹药库(ctx: Context) {
     ctx.command("我的地下弹药库")

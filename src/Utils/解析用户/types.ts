@@ -3,6 +3,7 @@ import type {
     CoalitionPermissionLevel,
     Player,
     PlayerConfig,
+    PlayerWarData,
 } from "../../types";
 
 export type 联军权限等级 = CoalitionPermissionLevel;
@@ -16,7 +17,7 @@ export interface 玩家解析结果 {
     id: number;
     uid: string;
     username: string;
-    用户资料: Player;
+    用户资料: Player & PlayerWarData;
     用户配置: PlayerConfig;
 }
 

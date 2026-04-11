@@ -4,9 +4,12 @@ export function 加载玩家战争表(ctx: Context) {
     ctx.model.extend(
         "马列玩家战争表",
         {
+
             id: { type: "unsigned" },
+
             // 混淆后的ID
             uid: { type: "string", length: 255 },
+
             // 陆军
             私人军队: { type: "unsigned", initial: 0 },
             重炮: { type: "unsigned", initial: 0 },
@@ -43,6 +46,7 @@ export function 加载玩家战争表(ctx: Context) {
             // 地下弹药库相关
             地下火箭炮炮弹: { type: "unsigned", initial: 0 },
             地下防空弹药: { type: "unsigned", initial: 0 },
+            
         },
         {
             // 表配置
