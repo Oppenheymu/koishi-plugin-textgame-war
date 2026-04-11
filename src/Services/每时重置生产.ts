@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     Player
-} from "../types/index";
+} from "@/types";
 
 async function 执行生产次数增加(ctx: Context): Promise < void > {
     const logger = ctx.logger("文游服务");

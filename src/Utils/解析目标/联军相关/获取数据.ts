@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     CoalitionArmy
-} from "../../../types/index";
+} from "@/types";
 import {
     获取联军展示名称
 } from "./获取名称";

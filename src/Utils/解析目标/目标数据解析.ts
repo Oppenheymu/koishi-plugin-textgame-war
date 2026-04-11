@@ -6,7 +6,7 @@ import type {
     Player,
     PlayerConfig,
     PlayerWarData
-} from "../../types";
+} from "@/types";
 import {
     会话检查
 } from "../解析用户";

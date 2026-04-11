@@ -8,11 +8,11 @@ import {
     RegionState,
     RegionStrategy,
     RegionTerra,
-} from "../../../types/index";
+} from "@/types";
 import {
     会话检查,
     用户检查
-} from "../../解析用户";
+} from "@/utils";
 import {
     获取地区展示名称
 } from "./获取名称";

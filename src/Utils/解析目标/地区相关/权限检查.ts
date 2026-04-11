@@ -9,13 +9,14 @@ import type {
 import {
     玩家检查,
     玩家联军检查,
-    玩家联军权限设置
-} from "@/utils";
-import {
     地区解析,
     当前地区解析,
     type 地区解析结果
-} from "./获取数据";
+} from "@/utils";
+import {
+    玩家联军权限设置
+} from "@/logic"
+
 
 export type 地区权限检查动作 = Extract<
     CoalitionPermissionAction,

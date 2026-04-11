@@ -1,6 +1,6 @@
 import {
     CoalitionArmy
-} from "../../../types/index";
+} from "@/types";
 import {
     联军权限等级
 } from "../types";

@@ -3,6 +3,18 @@ import {
 } from "koishi";
 import {} from "koishi-plugin-cron-fix";
 import {} from "koishi-plugin-infra-am-i-alt";
+import {
+    register as 注册路径别名
+} from "tsconfig-paths";
+
+注册路径别名({
+    baseUrl: __dirname,
+    paths: {
+        "@/*": ["*"],
+        "@utils/*": ["utils/*"],
+        "@logic/*": ["logic/*"],
+    },
+});
 
 import type {
     PluginConfig

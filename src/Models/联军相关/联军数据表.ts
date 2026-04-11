@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     联军政体
-} from "../../types";
+} from "@/types";
 
 
 
