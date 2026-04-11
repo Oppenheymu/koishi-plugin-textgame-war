@@ -63,6 +63,14 @@ export function 加载联军权限表(ctx: Context) {
                 type: "unsigned",
                 initial: 3
             },
+            分配生活资料: {
+                type: "unsigned",
+                initial: 3
+            },
+            分配历史记录: {
+                type: "unsigned",
+                initial: 1
+            },
         }, {
             primary: "联军编号",
             unique: ["联军编号"],

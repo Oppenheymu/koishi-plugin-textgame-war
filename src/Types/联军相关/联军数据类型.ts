@@ -4,9 +4,16 @@ export enum 联军政体 {
         极权制 = "极权制",
 }
 
-export interface MemberData {
+interface MemberData {
     联军贡献: number;
     加入时间: string;
+}
+
+interface AssignRecord {
+    分配者: string;
+    接收方: string;
+    数量: number;
+    时间: string;
 }
 
 export interface CoalitionArmy {
@@ -25,8 +32,7 @@ export interface CoalitionArmy {
 
     // 联军基础数据
     联军成员数量: number;
-    联军成员列表: Record < string,
-    MemberData > ;
+    联军成员列表: Record < string, MemberData > ;
 
     联军首都: string;
     联军地区列表: string[];
@@ -35,6 +41,7 @@ export interface CoalitionArmy {
 
     联军军队: number;
     联军生活资料: number;
+    生活资料分配记录: AssignRecord[]
 
     // 联军宣称数据
     联军宣称人口: number;

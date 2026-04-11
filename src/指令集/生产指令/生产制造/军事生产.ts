@@ -5,11 +5,11 @@ import {
     玩家检查,
     更新玩家资料,
     生成随机图片片段
-} from "../../../utils";
+} from "@/utils";
 import {
     Player,
     PlayerWarData
-} from "../../../types";
+} from "@/types";
 
 interface 物品属性 {
     name: string;

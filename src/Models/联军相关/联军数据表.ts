@@ -94,6 +94,10 @@ export function 加载联军表(ctx: Context) {
                 type: "unsigned",
                 initial: 0
             },
+            生活资料分配记录: {
+                type: "json",
+                initial: []
+            },
 
             联军宣称人口: {
                 type: "unsigned",

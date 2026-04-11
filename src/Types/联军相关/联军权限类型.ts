@@ -13,7 +13,9 @@ export type CoalitionPermissionAction = |
     "查看地区生物实验室" |
     "查看地区核反应堆" |
     "查看地区离心机组" |
-    "设置地区驻扎权限";
+    "设置地区驻扎权限" |
+    "分配生活资料" |
+    "分配历史记录";
 
 export interface CoalitionPermission {
     联军编号: string;
@@ -30,4 +32,6 @@ export interface CoalitionPermission {
     查看地区核反应堆: CoalitionPermissionLevel;
     查看地区离心机组: CoalitionPermissionLevel;
     设置地区驻扎权限: CoalitionPermissionLevel;
+    分配生活资料: CoalitionPermissionLevel;
+    分配历史记录: CoalitionPermissionLevel;
 }
