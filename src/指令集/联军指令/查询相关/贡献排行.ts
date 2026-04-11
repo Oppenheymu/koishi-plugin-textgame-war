@@ -1,5 +1,9 @@
 import { Context } from "koishi";
-import { 玩家联军检查, 玩家联军权限设置 } from "../../../utils";
+import {
+    获取联军贡献排行数据,
+    玩家联军检查,
+    玩家联军权限设置,
+} from "../../../utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
@@ -23,12 +27,10 @@ export function 贡献排行(ctx: Context) {
                     }
                 );
 
-                const 排行列表 = Object.entries(联军资料.联军成员列表 ?? {})
-                    .map(([成员ID, 成员数据]) => ({
-                        成员ID,
-                        联军贡献: 成员数据?.联军贡献 ?? 0,
-                    }))
-                    .sort((a, b) => b.联军贡献 - a.联军贡献);
+                const 排行列表 = 获取联军贡献排行数据(联军资料).map((成员) => ({
+                    成员ID: 成员.成员UID,
+                    联军贡献: 成员.联军贡献,
+                }));
 
                 const 排行文本 = 排行列表.length
                     ? 排行列表

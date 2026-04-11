@@ -15,6 +15,7 @@ eslintcache
 tsconfig.tsbuildinfo
 
 # 编辑器和系统文件
+.codebuddy/
 .VSCodeCounter/
 .vscode/*
 !.vscode/settings.json
