@@ -5,7 +5,7 @@ import {
 import {
     CoalitionArmy,
     Player
-} from "../../../types/index";
+} from "@/types";
 import {
     目标解析
 } from "../目标数据解析";

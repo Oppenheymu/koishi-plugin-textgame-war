@@ -6,6 +6,8 @@ import {
     目标解析
 } from "@/utils";
 
+
+
 export function 联军编号(ctx: Context) {
     ctx.command("联军编号 [目标:string]")
         .alias("联军ID")

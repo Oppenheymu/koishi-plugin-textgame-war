@@ -3,10 +3,10 @@ import {
 } from "koishi";
 import {
     联军政体
-} from "../../types";
+} from "@/types";
 import {
     按政体动态分配权限
-} from "../../utils";
+} from "@/logic";
 
 async function 执行联军权力动态检测(ctx: Context): Promise < void > {
     const 联军列表 = await ctx.database.get("马列联军表", {});

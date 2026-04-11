@@ -42,6 +42,9 @@ export interface CoalitionArmy {
 
     // 联军状态机
     联军税率: number;
+    当天内生产总值: number;
+    三天内生产总值: number;
+    七天内生产总值: number;
 
     联军名称: string;
     名称是否审核: boolean;

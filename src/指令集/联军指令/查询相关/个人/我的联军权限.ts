@@ -2,10 +2,12 @@ import {
     Context
 } from "koishi";
 import {
+    玩家联军检查
+} from "@/utils";
+import {
     获取联军权限配置,
     联军权限动作列表,
-    玩家联军检查,
-} from "@/utils";
+}from "@/logic"
 
 export function 我的联军权限(ctx: Context) {
     ctx.command("我的联军权限")

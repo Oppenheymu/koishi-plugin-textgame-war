@@ -51,6 +51,19 @@ export function 加载联军表(ctx: Context) {
                 type: "float",
                 initial: 0
             },
+            当天内生产总值: {
+                type: "float",
+                initial: 0
+            },
+            三天内生产总值: {
+                type: "float",
+                initial: 0
+            },
+            七天内生产总值: {
+                type: "float",
+                initial: 0
+            },
+
             联军成员数量: {
                 type: "unsigned",
                 initial: 0

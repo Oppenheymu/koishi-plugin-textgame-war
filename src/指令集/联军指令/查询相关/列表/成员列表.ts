@@ -2,9 +2,11 @@ import {
     Context
 } from "koishi";
 import {
-    玩家联军检查,
-    玩家联军权限设置
+    玩家联军检查
 } from "@/utils";
+import {
+    玩家联军权限设置
+} from "@/logic"
 
 export function 成员列表(ctx: Context) {
     ctx.command("成员列表")

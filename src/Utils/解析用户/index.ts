@@ -5,8 +5,5 @@ export * from "./玩家相关/获取名称";
 export * from "./玩家相关/获取数据";
 export * from "./联军相关/权限获取";
 export * from "./联军相关/玩家检查";
-export * from "../../logic/联军相关/设置权限";
-export * from "../../logic/联军相关/移除成员";
 export * from "./联军相关/贡献统计";
-export * from "../../logic/联军相关/成员权限";
-export * from "../../logic/联军相关/政体策略";
+

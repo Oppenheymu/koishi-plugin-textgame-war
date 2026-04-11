@@ -2,10 +2,14 @@ import {
     Context
 } from "koishi";
 import {
-    获取指定等级成员UID列表,
     玩家联军检查,
-    玩家联军权限设置,
 } from "@/utils";
+import {
+    获取指定等级成员UID列表,
+    玩家联军权限设置
+} from "@/logic"
+
+
 
 const 等级映射: Record < string, 1 | 2 | 3 | 4 > = {
     "1": 1,

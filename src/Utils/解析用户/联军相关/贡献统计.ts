@@ -1,6 +1,6 @@
 import type {
     CoalitionArmy
-} from "../../../types";
+} from "@/types";
 
 export interface 联军贡献条目 {
     成员UID: string;
