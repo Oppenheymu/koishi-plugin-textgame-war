@@ -1,11 +1,22 @@
-import { Context } from "koishi";
-import { 目标解析 } from "../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    目标解析
+} from "../../utils";
 
 export function 他的全部资料(ctx: Context) {
-    ctx.command("他的全部资料 <目标>", { authority: 3 }).action(
-        async ({ session }, 目标) => {
+    ctx.command("他的全部资料 <目标>", {
+        authority: 3
+    }).action(
+        async ({
+            session
+        }, 目标) => {
             try {
-                const { 目标用户名, 目标用户资料 } = await 目标解析(
+                const {
+                    目标用户名,
+                    目标用户资料
+                } = await 目标解析(
                     ctx,
                     session,
                     目标

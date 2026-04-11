@@ -1,22 +1,34 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
+import {
+    玩家联军检查
+} from "@/utils";
 import {
     创建改名审核工单,
     检查名称是否重复,
     检查改名冷却,
     校验名称文本,
-    玩家联军检查,
-} from "../../../utils";
+} from "@/logic";
 
 export function 修改联军名称(ctx: Context) {
     ctx.command("修改联军名称 <新名称:string>")
-        .alias("联军改名 ")
-        .action(async ({ session }, 新名称) => {
+        .alias("联军改名")
+        .action(async ({
+            session
+        }, 新名称) => {
             try {
-                const { id, uid, username, 联军编号, 联军资料 } =
-                    await 玩家联军检查(ctx, session, {
-                        最低权限等级: 4,
-                        是否必须在成员列表: true,
-                    });
+                const {
+                    id,
+                    uid,
+                    username,
+                    联军编号,
+                    联军资料
+                } =
+                await 玩家联军检查(ctx, session, {
+                    最低权限等级: 4,
+                    是否必须在成员列表: true,
+                });
 
                 const 改名冷却提示 = 检查改名冷却(
                     联军资料.上次改名日期,
@@ -39,7 +51,9 @@ export function 修改联军名称(ctx: Context) {
                     return `该名称已被${重名类型}使用，请更换名称`;
                 }
 
-                const { 工单编号 } = await 创建改名审核工单(ctx, {
+                const {
+                    工单编号
+                } = await 创建改名审核工单(ctx, {
                     类型: "联军",
                     新名称: 规范名称,
                     申请人ID: id,

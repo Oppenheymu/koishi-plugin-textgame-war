@@ -1,5 +1,11 @@
-import { Context } from "koishi";
-import { Player, PlayerConfig, PlayerWarData } from "../../types/index";
+import {
+    Context
+} from "koishi";
+import {
+    Player,
+    PlayerConfig,
+    PlayerWarData
+} from "../../types/index";
 import {
     会话检查,
     用户检查,
@@ -13,15 +19,21 @@ const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 export function 注册(ctx: Context) {
     ctx.command("注册")
         .alias("首次阅读报告")
-        .action(async ({ session }) => {
+        .action(async ({
+            session
+        }) => {
             try {
                 会话检查(session);
 
-                const { platform, userId } = 用户检查(session);
+                const {
+                    platform,
+                    userId
+                } = 用户检查(session);
 
                 const [PlayerConfig] = await ctx.database.get(
-                    "马列玩家配置表",
-                    { [platform]: userId },
+                    "马列玩家配置表", {
+                        [platform]: userId
+                    }
                 );
 
                 if (PlayerConfig) {
@@ -35,21 +47,20 @@ export function 注册(ctx: Context) {
                 }
 
                 const newPlayerConfig: PlayerConfig = await ctx.database.create(
-                    "马列玩家配置表",
-                    {
+                    "马列玩家配置表", {
                         [platform]: userId,
                         username: "",
                         名称是否审核: true,
-                    },
+                    }
                 );
 
                 const newID = newPlayerConfig.id;
                 const newUID = 获取注册Sqids().encode([newID]);
 
                 const 初始名称 =
-                    platform === "onebot"
-                        ? (session.username?.trim() ?? "")
-                        : `默认名称${newUID}`;
+                    platform === "onebot" ?
+                    session.username?.trim() ?? "" :
+                    `默认名称${newUID}`;
 
                 let username = 初始名称 || `默认名称${newUID}`;
 
@@ -78,8 +89,7 @@ export function 注册(ctx: Context) {
                     所在联军: null,
                     驻扎地区: null,
                     上次驻扎日期: "",
-                    战争保护期:
-                        Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,
+                    战争保护期: Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,
                     今日是否签到: true,
                     小时是否生产: false,
                     稳定度: 80,

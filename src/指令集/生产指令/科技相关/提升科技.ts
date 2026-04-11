@@ -1,11 +1,21 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils/index";
 
 export function 提升科技(ctx: Context) {
     ctx.command("提升科技 <生活资料:number>").action(
-        async ({ session }, 投入生活资料) => {
+        async ({
+            session
+        }, 投入生活资料) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -77,9 +87,9 @@ export function 提升科技(ctx: Context) {
 
                 // 更新数据库
                 await ctx.database.set(
-                    "马列玩家表",
-                    { id: id },
-                    {
+                    "马列玩家表", {
+                        id: id
+                    }, {
                         生活资料: 减少后的生活资料,
                         科技池投入: 增加后的科技池投入,
                         科技等级: 新科技等级,
@@ -89,17 +99,17 @@ export function 提升科技(ctx: Context) {
 
                 // 构建返回信息
                 const 科技池百分比 =
-                    新的科技池容量 > 0
-                        ? Math.floor(
-                              (增加后的科技池投入 / 新的科技池容量) * 100
-                          )
-                        : 0;
+                    新的科技池容量 > 0 ?
+                    Math.floor(
+                        (增加后的科技池投入 / 新的科技池容量) * 100
+                    ) :
+                    0;
                 const 旧科技池百分比 =
-                    用户资料.科技池容量 > 0
-                        ? Math.floor(
-                              (用户资料.科技池投入 / 用户资料.科技池容量) * 100
-                          )
-                        : 0;
+                    用户资料.科技池容量 > 0 ?
+                    Math.floor(
+                        (用户资料.科技池投入 / 用户资料.科技池容量) * 100
+                    ) :
+                    0;
                 const 百分比增长 = 科技池百分比 - 旧科技池百分比;
 
                 let 返回信息 = `

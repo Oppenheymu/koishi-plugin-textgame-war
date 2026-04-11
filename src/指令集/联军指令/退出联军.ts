@@ -1,19 +1,29 @@
-
-import { Context } from "koishi";
-import { 玩家联军检查, 移除联军成员 } from "../../utils";
-
-
+import {
+    Context
+} from "koishi";
+import {
+    玩家联军检查,
+    移除联军成员
+} from "../../utils";
 
 export function 退出联军(ctx: Context) {
     ctx.command("退出联军")
         .alias("退出国家")
         .alias("退军")
-        .action(async ({ session }) => {
+        .action(async ({
+            session
+        }) => {
             try {
-                const { id, uid, username, 联军资料, 联军编号 } =
-                    await 玩家联军检查(ctx, session, {
-                        是否必须在成员列表: true,
-                    });
+                const {
+                    id,
+                    uid,
+                    username,
+                    联军资料,
+                    联军编号
+                } =
+                await 玩家联军检查(ctx, session, {
+                    是否必须在成员列表: true,
+                });
 
                 if (联军资料.联军元首 === uid) {
                     return "你是联军元首，无法直接退出联军，请先移交元首身份";

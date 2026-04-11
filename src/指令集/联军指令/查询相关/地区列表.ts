@@ -1,5 +1,10 @@
-import { Context } from "koishi";
-import { 玩家联军检查, 玩家联军权限设置 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家联军检查,
+    玩家联军权限设置
+} from "../../../utils";
 
 export function 地区列表(ctx: Context) {
     ctx.command("地区列表")
@@ -7,17 +12,21 @@ export function 地区列表(ctx: Context) {
         .alias("国家地区列表")
         .alias("联军地区")
         .alias("国家地区")
-        .action(async ({ session }, 目标) => {
+        .action(async ({
+            session
+        }, 目标) => {
             try {
                 const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
                     "地区列表"
                 );
-                const { username, 联军资料 } = await 玩家联军检查(
+                const {
+                    username,
+                    联军资料
+                } = await 玩家联军检查(
                     ctx,
-                    session,
-                    {
+                    session, {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
                     }

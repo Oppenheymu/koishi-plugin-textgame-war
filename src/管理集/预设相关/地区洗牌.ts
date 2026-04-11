@@ -1,8 +1,16 @@
-import { Context } from "koishi";
-import { 会话检查 } from "../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    会话检查
+} from "../../utils";
 
 export function 地区洗牌(ctx: Context) {
-    ctx.command("地区洗牌", { authority: 4 }).action(async ({ session }) => {
+    ctx.command("地区洗牌", {
+        authority: 4
+    }).action(async ({
+        session
+    }) => {
         会话检查(session);
 
         await session.send("准备为地区洗牌，请稍候...");
@@ -10,8 +18,9 @@ export function 地区洗牌(ctx: Context) {
         try {
             // 1. 获取数据
             const 所有陆地 = await ctx.database.get(
-                "马列地区地形表",
-                { 是否为海洋: false },
+                "马列地区地形表", {
+                    是否为海洋: false
+                },
                 ["地区编号"]
             );
 
@@ -25,9 +34,7 @@ export function 地区洗牌(ctx: Context) {
 
             // 2. 核心洗牌算法 (Fisher-Yates)
             for (
-                let 倒序索引 = 陆地编号列表.length - 1;
-                倒序索引 > 0;
-                倒序索引--
+                let 倒序索引 = 陆地编号列表.length - 1; 倒序索引 > 0; 倒序索引--
             ) {
                 const 随机索引 = Math.floor(Math.random() * (倒序索引 + 1));
                 // 交换元素
@@ -39,16 +46,15 @@ export function 地区洗牌(ctx: Context) {
 
             // 3. 重置数据库状态
             await ctx.database.remove("马列地区洗牌池", {});
-            await ctx.database.upsert("马列服务表", [
-                { id: "GLOBAL", 当前地区洗牌指针: 0 },
-            ]);
+            await ctx.database.upsert("马列服务表", [{
+                id: "GLOBAL",
+                当前地区洗牌指针: 0
+            }, ]);
 
             // 4. 分块写入数据库并同步重置地区状态机
             const 分块大小 = 1000;
             for (
-                let 当前进度 = 0;
-                当前进度 < 陆地编号列表.length;
-                当前进度 += 分块大小
+                let 当前进度 = 0; 当前进度 < 陆地编号列表.length; 当前进度 += 分块大小
             ) {
                 const 当前块编号列表 = 陆地编号列表.slice(
                     当前进度,

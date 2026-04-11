@@ -1,13 +1,24 @@
-import { Context } from "koishi";
-import { 生成随机图片片段, 玩家检查 } from "../../../utils/index";
+import {
+    Context
+} from "koishi";
+import {
+    生成随机图片片段,
+    玩家检查
+} from "../../../utils/index";
 
 const 图片概率 = 0.01;
 const 图片池 = ["工厂.jpg", "工厂2.jpg", "工厂3.jpg", "工厂5.jpg"];
 
 export function 生产(ctx: Context) {
-    ctx.command("生产").action(async ({ session }) => {
+    ctx.command("生产").action(async ({
+        session
+    }) => {
         try {
-            const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+            const {
+                id,
+                username,
+                用户资料
+            } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
             const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -55,9 +66,9 @@ ${username} 同志：
             const 新生产次数 = 用户资料.生产次数 - 1;
 
             await ctx.database.set(
-                "马列玩家表",
-                { id: id },
-                {
+                "马列玩家表", {
+                    id: id
+                }, {
                     小时是否生产: true,
                     生活资料: 新生活资料,
                     稳定度: 新稳定度,
@@ -70,7 +81,7 @@ ${username} 同志：
                 id: "global",
             });
             const currentTotal =
-                globalData.length > 0 ? globalData[0]!.今日全球生产总值 : 0;
+                globalData.length > 0 ? globalData[0] !.今日全球生产总值 : 0;
 
             if (globalData.length === 0) {
                 await ctx.database.create("马列全球数据表", {
@@ -79,9 +90,9 @@ ${username} 同志：
                 });
             } else {
                 await ctx.database.set(
-                    "马列全球数据表",
-                    { id: "global" },
-                    {
+                    "马列全球数据表", {
+                        id: "global"
+                    }, {
                         今日全球生产总值: currentTotal + 总产出,
                     }
                 );

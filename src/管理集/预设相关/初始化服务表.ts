@@ -1,10 +1,19 @@
-import { Context } from "koishi";
-import { 初始化服务记录 } from "../../services/每日重置签到";
+import {
+    Context
+} from "koishi";
+import {
+    初始化服务记录
+} from "../../services/每日重置签到";
 
 export function 初始化服务表(ctx: Context) {
-    ctx.command("初始化服务表", { authority: 3 }).action(async () => {
+    ctx.command("初始化服务表", {
+        authority: 3
+    }).action(async () => {
         try {
-            const { created, 今天 } = await 初始化服务记录(ctx);
+            const {
+                created,
+                今天
+            } = await 初始化服务记录(ctx);
 
             if (created) {
                 return `服务表初始化成功：已创建 service 记录，日期 ${今天}`;
@@ -20,8 +29,8 @@ export function 初始化服务表(ctx: Context) {
             }
 
             const 修复字段: {
-                上次重置签到日期?: string;
-                上次全服统计日期?: string;
+                上次重置签到日期 ? : string;
+                上次全服统计日期 ? : string;
             } = {};
 
             if (!服务记录.上次重置签到日期) {
@@ -34,8 +43,9 @@ export function 初始化服务表(ctx: Context) {
 
             if (Object.keys(修复字段).length > 0) {
                 await ctx.database.set(
-                    "马列服务表",
-                    { id: "service" },
+                    "马列服务表", {
+                        id: "service"
+                    },
                     修复字段
                 );
                 return `服务表已修复：${Object.keys(修复字段).join("、")}`;

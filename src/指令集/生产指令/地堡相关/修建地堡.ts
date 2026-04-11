@@ -1,6 +1,14 @@
-import { Context } from "koishi";
-import { 玩家检查, 更新玩家资料 } from "../../../utils";
-import { Player, PlayerWarData } from "../../../types";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查,
+    更新玩家资料
+} from "../../../utils";
+import {
+    Player,
+    PlayerWarData
+} from "../../../types";
 
 interface 地堡配置 {
     name: string;
@@ -9,7 +17,7 @@ interface 地堡配置 {
     需求生产力: number;
 }
 
-const 地堡库: Record<string, 地堡配置> = {
+const 地堡库: Record < string, 地堡配置 > = {
     地下工厂: {
         name: "地下工厂",
         投入字段: "地下工厂投入",
@@ -33,9 +41,15 @@ const 地堡库: Record<string, 地堡配置> = {
 export function 修建地堡(ctx: Context) {
     ctx.command("修建地堡 <地堡类型>")
         .alias("建造地堡")
-        .action(async ({ session }, 地堡类型) => {
+        .action(async ({
+            session
+        }, 地堡类型) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!地堡类型) {
@@ -79,7 +93,7 @@ export function 修建地堡(ctx: Context) {
                 const 进度百分比 = (新投入 / 配置.需求生产力) * 100;
 
                 // 更新对象
-                const 更新对象: Partial<Player & PlayerWarData> = {
+                const 更新对象: Partial < Player & PlayerWarData > = {
                     [配置.投入字段]: 新投入,
                     生活资料: 用户资料.生活资料 - 工资,
                     生产次数: 用户资料.生产次数 - 1,
@@ -93,9 +107,9 @@ export function 修建地堡(ctx: Context) {
                 await 更新玩家资料(ctx, id, 更新对象);
 
                 const 完成提示 =
-                    新投入 >= 配置.需求生产力
-                        ? "✓已完成"
-                        : `${进度百分比.toFixed(2)}%`;
+                    新投入 >= 配置.需求生产力 ?
+                    "✓已完成" :
+                    `${进度百分比.toFixed(2)}%`;
 
                 return `
 ====[地堡建设]====

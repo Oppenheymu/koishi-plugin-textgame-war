@@ -1,5 +1,9 @@
-import { Schema } from "koishi";
-import type { CoalitionPermissionLevel } from "./types";
+import {
+    Schema
+} from "koishi";
+import type {
+    CoalitionPermissionLevel
+} from "./types";
 
 export interface 联军默认权限配置 {
     成员列表: CoalitionPermissionLevel;
@@ -56,14 +60,20 @@ export const 默认插件配置: PluginConfig = {
 };
 
 let 当前运行时配置: PluginConfig = {
-    coalitionPermissionDefault: { ...默认联军权限配置 },
+    coalitionPermissionDefault: {
+        ...默认联军权限配置
+    },
     sqids: {
-        register: { ...默认Sqids配置.register },
-        coalition: { ...默认Sqids配置.coalition },
+        register: {
+            ...默认Sqids配置.register
+        },
+        coalition: {
+            ...默认Sqids配置.coalition
+        },
     },
 };
 
-export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
+export function 初始化插件运行时配置(config: Partial < PluginConfig > ) {
     当前运行时配置 = {
         coalitionPermissionDefault: {
             ...默认联军权限配置,
@@ -82,12 +92,14 @@ export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
     };
 }
 
-export function 获取运行时配置(): Readonly<PluginConfig> {
+export function 获取运行时配置(): Readonly < PluginConfig > {
     return 当前运行时配置;
 }
 
 export function 获取默认联军权限配置(): 联军默认权限配置 {
-    return { ...当前运行时配置.coalitionPermissionDefault };
+    return {
+        ...当前运行时配置.coalitionPermissionDefault
+    };
 }
 
 const 权限等级Schema = Schema.union([
@@ -97,7 +109,7 @@ const 权限等级Schema = Schema.union([
     Schema.const(4),
 ]);
 
-function 创建Sqids单项Schema(默认值: Sqids单项配置): Schema<Sqids单项配置> {
+function 创建Sqids单项Schema(默认值: Sqids单项配置): Schema < Sqids单项配置 > {
     return Schema.object({
         alphabet: Schema.string()
             .min(3)
@@ -115,7 +127,7 @@ function 创建Sqids单项Schema(默认值: Sqids单项配置): Schema<Sqids单�
     });
 }
 
-export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
+export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
     coalitionPermissionDefault: Schema.object({
         成员列表: 权限等级Schema.default(默认联军权限配置.成员列表),
         地区列表: 权限等级Schema.default(默认联军权限配置.地区列表),

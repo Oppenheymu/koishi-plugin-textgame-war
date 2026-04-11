@@ -1,18 +1,29 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "@/utils";
 import {
     创建改名审核工单,
     检查名称是否重复,
     检查改名冷却,
     校验名称文本,
-    玩家检查,
-} from "../../../utils";
+} from "@/logic";
 
 export function 修改玩家名称(ctx: Context) {
     ctx.command("修改玩家名称 <新名称:string>")
         .alias("改名")
-        .action(async ({ session }, 新名称) => {
+        .action(async ({
+            session
+        }, 新名称) => {
             try {
-                const { id, uid, username, 用户配置 } = await 玩家检查(
+                const {
+                    id,
+                    uid,
+                    username,
+                    用户配置
+                } = await 玩家检查(
                     ctx,
                     session
                 );
@@ -38,7 +49,9 @@ export function 修改玩家名称(ctx: Context) {
                     return `该名称已被${重名类型}使用，请更换名称`;
                 }
 
-                const { 工单编号 } = await 创建改名审核工单(ctx, {
+                const {
+                    工单编号
+                } = await 创建改名审核工单(ctx, {
                     类型: "玩家",
                     新名称: 规范名称,
                     申请人ID: id,

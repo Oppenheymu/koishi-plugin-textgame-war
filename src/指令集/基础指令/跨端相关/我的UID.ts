@@ -1,14 +1,23 @@
-import { Context, Session } from "koishi";
-import { 玩家检查 } from "../../../utils/解析用户";
+import {
+    Context,
+    Session
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils/解析用户";
 
 export function 我的UID(ctx: Context) {
     ctx.command("我的UID")
         .alias("我的唯一标识符")
         .alias("UID")
         .alias("我的编号")
-        .action(async ({ session }) => {
+        .action(async ({
+            session
+        }) => {
             try {
-                const { uid } = await 玩家检查(ctx, session);
+                const {
+                    uid
+                } = await 玩家检查(ctx, session);
                 return `你的UID是：${uid}`;
             } catch (error) {
                 return (error as Error).message;

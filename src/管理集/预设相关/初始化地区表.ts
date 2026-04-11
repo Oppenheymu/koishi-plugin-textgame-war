@@ -1,6 +1,13 @@
-import { Context, Logger } from "koishi";
-import { resolve } from "node:path";
-import { readFile } from "node:fs/promises";
+import {
+    Context,
+    Logger
+} from "koishi";
+import {
+    resolve
+} from "node:path";
+import {
+    readFile
+} from "node:fs/promises";
 
 import {
     TerrainType,
@@ -46,7 +53,7 @@ function 判定地区地形(地区: RegionBasicDataItem): TerrainType {
 }
 
 // 优化：使用映射表替代冗长的 switch-case
-const CAPACITY_BASELINE: Partial<Record<TerrainType, CapacityBase>> = {
+const CAPACITY_BASELINE: Partial < Record < TerrainType, CapacityBase >> = {
     [TerrainType.平原]: {
         基础设施: 12_000_000,
         公路: 18_000_000,
@@ -139,13 +146,13 @@ function 获取容量上限(
     const 城镇占比 = 归一化占比(地区.Urban);
 
     const 海拔系数 =
-        地区.MeanElevation >= 2500
-            ? 0.78
-            : 地区.MeanElevation >= 1500
-            ? 0.88
-            : 地区.MeanElevation >= 800
-            ? 0.95
-            : 1.05;
+        地区.MeanElevation >= 2500 ?
+        0.78 :
+        地区.MeanElevation >= 1500 ?
+        0.88 :
+        地区.MeanElevation >= 800 ?
+        0.95 :
+        1.05;
     const 崎岖系数 = clamp(1 - 地区.STDElevation / 4500, 0.55, 1.08);
     const 地貌系数 = clamp(
         0.9 + 草地占比 * 0.18 + 森林占比 * 0.08 + 城镇占比 * 0.15,
@@ -160,8 +167,7 @@ function 获取容量上限(
         基础设施上限: Math.round(基线.基础设施 * 综合系数),
         公路容量上限: Math.round(基线.公路 * 综合系数),
         机场容量上限: Math.round(基线.机场 * 综合系数),
-        港口容量上限:
-            水域占比 <= 0 ? 0 : Math.round(基线.港口 * 综合系数 * 港口系数),
+        港口容量上限: 水域占比 <= 0 ? 0 : Math.round(基线.港口 * 综合系数 * 港口系数),
         居民区容量上限: Math.round(基线.居民区 * 综合系数),
         仓库容量上限: Math.round(基线.仓库 * 综合系数),
     };
@@ -175,7 +181,7 @@ function 构建进度条(当前: number, 总数: number): string {
     return `[${条}] ${(比例 * 100).toFixed(1)}% (${当前}/${总数})`;
 }
 
-async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
+async function 读取地区基础数据(): Promise < RegionBasicDataItem[] > {
     const 文件路径 = resolve(
         __dirname,
         "../../../assets/Region/RegionBasicData.json"
@@ -219,43 +225,72 @@ async function 写入批次(
         try {
             await ctx.database.create("马列地区地形表", 地形记录);
         } catch {
-            const { 地区编号: _, ...updateData } = 地形记录;
-            await ctx.database.set("马列地区地形表", { 地区编号 }, updateData);
+            const {
+                地区编号: _,
+                ...updateData
+            } = 地形记录;
+            await ctx.database.set("马列地区地形表", {
+                地区编号
+            }, updateData);
         }
 
         try {
             await ctx.database.create("马列地区表", 地区记录);
         } catch {
-            const { 地区编号: _, ...updateData } = 地区记录;
-            await ctx.database.set("马列地区表", { 地区编号 }, updateData);
+            const {
+                地区编号: _,
+                ...updateData
+            } = 地区记录;
+            await ctx.database.set("马列地区表", {
+                地区编号
+            }, updateData);
         }
 
         try {
             await ctx.database.create("马列地区状态机", 状态机记录);
         } catch {
-            const { 地区编号: _, ...updateData } = 状态机记录;
-            await ctx.database.set("马列地区状态机", { 地区编号 }, updateData);
+            const {
+                地区编号: _,
+                ...updateData
+            } = 状态机记录;
+            await ctx.database.set("马列地区状态机", {
+                地区编号
+            }, updateData);
         }
 
         try {
             await ctx.database.create("马列地区配置表", 配置记录);
         } catch {
-            const { 地区编号: _, ...updateData } = 配置记录;
-            await ctx.database.set("马列地区配置表", { 地区编号 }, updateData);
+            const {
+                地区编号: _,
+                ...updateData
+            } = 配置记录;
+            await ctx.database.set("马列地区配置表", {
+                地区编号
+            }, updateData);
         }
 
         try {
             await ctx.database.create("马列地区战略表", 战略记录);
         } catch {
-            const { 地区编号: _, ...updateData } = 战略记录;
-            await ctx.database.set("马列地区战略表", { 地区编号 }, updateData);
+            const {
+                地区编号: _,
+                ...updateData
+            } = 战略记录;
+            await ctx.database.set("马列地区战略表", {
+                地区编号
+            }, updateData);
         }
     }
 }
 
 export function 初始化地区表(ctx: Context) {
-    ctx.command("初始化地区表", { authority: 3 }).action(
-        async ({ session }) => {
+    ctx.command("初始化地区表", {
+        authority: 3
+    }).action(
+        async ({
+            session
+        }) => {
             const 发送进度 = async (内容: string) => {
                 if (!session) return;
                 await session.send(内容);

@@ -1,6 +1,6 @@
 {
     "name": "koishi-plugin-malie-textgame",
-    "version": "0.9.8",
+    "version": "0.19.8",
     "contributors": [
         "Xiao-xiaochen <200345727+Xiao-xiaochen@users.noreply.github.com>",
         "Oppenheimu <266071743+Oppenheimu@users.noreply.github.com>"
@@ -21,18 +21,20 @@
         "koishi",
         "plugin"
     ],
-    "peerDependencies": {
-        "koishi": "^4.17.4"
-    },
     "koishi": {
         "description": {
             "zh": "Koishi史上最强文游。 基于koishi框架，使用Typescript对马列文游进行的重构"
         },
         "service": {
             "required": [
-                "database"
+                "database",
+                "cron",
+                "amIAlt"
             ]
         }
+    },
+    "peerDependencies": {
+        "koishi": "^4.17.4"
     },
     "dependencies": {
         "sqids": "^0.3.0"

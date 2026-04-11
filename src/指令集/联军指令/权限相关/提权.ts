@@ -1,5 +1,9 @@
-import { Context } from "koishi";
-import { 联军政体 } from "../../../types";
+import {
+    Context
+} from "koishi";
+import {
+    联军政体
+} from "../../../types";
 import {
     获取联军成员权限等级,
     设置成员权限等级,
@@ -24,16 +28,20 @@ export function 提权(ctx: Context) {
         .alias("提权")
         .alias("降权")
         .alias("设置成员权限")
-        .action(async ({ session }, 目标, 权限等级) => {
+        .action(async ({
+            session
+        }, 目标, 权限等级) => {
             try {
-                const { uid, username, 联军资料, 联军编号 } = await 玩家联军检查(
-                    ctx,
-                    session,
-                    {
-                        最低权限等级: 4,
-                        是否必须在成员列表: true,
-                    }
-                );
+                const {
+                    uid,
+                    username,
+                    联军资料,
+                    联军编号
+                } =
+                await 玩家联军检查(ctx, session, {
+                    最低权限等级: 4,
+                    是否必须在成员列表: true,
+                });
 
                 const 输入目标 = 目标?.trim();
                 if (!输入目标) {
@@ -49,7 +57,10 @@ export function 提权(ctx: Context) {
                     return "4级权限属于元首/总理职务，请使用设置元首或设置总理";
                 }
 
-                const { 目标用户名, 目标用户资料 } = await 目标解析(
+                const {
+                    目标用户名,
+                    目标用户资料
+                } = await 目标解析(
                     ctx,
                     session,
                     输入目标
@@ -64,7 +75,10 @@ export function 提权(ctx: Context) {
                     return `${目标用户名} 同志不在你的联军中`;
                 }
 
-                const 目标当前权限等级 = 获取联军成员权限等级(联军资料, 目标UID);
+                const 目标当前权限等级 = 获取联军成员权限等级(
+                    联军资料,
+                    目标UID
+                );
 
                 if (联军资料.联军政治体制 === 联军政体.民主制) {
                     return "民主制下禁止手动设置成员权限等级";
@@ -83,8 +97,9 @@ export function 提权(ctx: Context) {
                 );
 
                 await ctx.database.set(
-                    "马列联军表",
-                    { 联军编号 },
+                    "马列联军表", {
+                        联军编号
+                    },
                     权限列表更新
                 );
 

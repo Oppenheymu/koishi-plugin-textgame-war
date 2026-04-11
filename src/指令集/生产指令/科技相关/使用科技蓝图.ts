@@ -1,11 +1,21 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils";
 
 export function 使用科技蓝图(ctx: Context) {
     ctx.command("使用科技蓝图 <数量:number>").action(
-        async ({ session }, 数量) => {
+        async ({
+            session
+        }, 数量) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -28,9 +38,12 @@ export function 使用科技蓝图(ctx: Context) {
                 }
 
                 await ctx.database.set(
-                    "马列玩家表",
-                    { id: id },
-                    { 科技蓝图: 新科技蓝图, 科技等级: 新科技等级 }
+                    "马列玩家表", {
+                        id: id
+                    }, {
+                        科技蓝图: 新科技蓝图,
+                        科技等级: 新科技等级
+                    }
                 );
 
                 return `

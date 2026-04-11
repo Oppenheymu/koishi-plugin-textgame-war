@@ -1,11 +1,21 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils/index";
 
 export function 提升科技到(ctx: Context) {
     ctx.command("提升科技到 <目标等级:number>").action(
-        async ({ session }, 目标等级) => {
+        async ({
+            session
+        }, 目标等级) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -51,9 +61,9 @@ export function 提升科技到(ctx: Context) {
 
                 // 更新数据库
                 await ctx.database.set(
-                    "马列玩家表",
-                    { id: id },
-                    {
+                    "马列玩家表", {
+                        id: id
+                    }, {
                         生活资料: 减少后的生活资料,
                         科技池投入: 0,
                         科技等级: 目标等级,

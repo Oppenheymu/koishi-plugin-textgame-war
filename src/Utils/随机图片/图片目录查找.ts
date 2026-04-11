@@ -1,5 +1,10 @@
-import { existsSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import {
+    existsSync
+} from "node:fs";
+import {
+    dirname,
+    resolve
+} from "node:path";
 
 export function 查找项目根目录(起始目录: string): string {
     let 当前目录 = 起始目录;

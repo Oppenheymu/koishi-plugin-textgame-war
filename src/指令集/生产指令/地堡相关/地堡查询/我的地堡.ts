@@ -1,10 +1,19 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../../utils";
 
 export function 我的地堡(ctx: Context) {
-    ctx.command("我的地堡").action(async ({ session }) => {
+    ctx.command("我的地堡").action(async ({
+        session
+    }) => {
         try {
-            const { username, 用户资料 } = await 玩家检查(ctx, session);
+            const {
+                username,
+                用户资料
+            } = await 玩家检查(ctx, session);
 
             return `
 =====[我的地堡]=====

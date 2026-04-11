@@ -1,5 +1,10 @@
-import { Context } from "koishi";
-import { 地区解析, 当前地区解析 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    地区解析,
+    当前地区解析
+} from "../../../utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
@@ -18,8 +23,7 @@ const 百分比 = (已用: number, 上限: number) =>
 const 格式化容量 = (当前值: number, 已用值: number, 上限值: number) =>
     `${紧凑数值(当前值)} / ${紧凑数值(上限值)} (${百分比(已用值, 上限值)})`;
 
-const 容量配置 = [
-    {
+const 容量配置 = [{
         标签: "基建",
         当前字段: "当前总基础设施",
         已用字段: "使用的基础设施",
@@ -55,20 +59,33 @@ const 容量配置 = [
         已用字段: "使用的港口容量",
         上限字段: "港口容量上限",
     },
-] as const;
+] as
+const;
 
 export function 查看地区(ctx: Context) {
     ctx.command("查看地区 [地区编号:string]")
         .alias("查看城市")
-        .action(async ({ session }, 地区编号参数) => {
+        .action(async ({
+            session
+        }, 地区编号参数) => {
             try {
                 const 规范地区编号 = 地区编号参数?.trim();
-                const { 地区编号, 地区资料, 展示地区名称 } = 规范地区编号
-                    ? await 地区解析(ctx, 规范地区编号)
-                    : await 当前地区解析(ctx, session);
+                const {
+                    地区编号,
+                    地区资料,
+                    展示地区名称
+                } = 规范地区编号
+                    ?
+                    await 地区解析(ctx, 规范地区编号) :
+                    await 当前地区解析(ctx, session);
 
                 const 容量行 = 容量配置.map(
-                    ({ 标签, 当前字段, 已用字段, 上限字段 }) => {
+                    ({
+                        标签,
+                        当前字段,
+                        已用字段,
+                        上限字段
+                    }) => {
                         const 当前 = 地区资料[
                             当前字段 as keyof typeof 地区资料
                         ] as number;

@@ -1,12 +1,23 @@
-import { Context } from "koishi";
-import { TRandom, 玩家检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    TRandom,
+    玩家检查
+} from "../../../utils";
 
 export function 开采石油(ctx: Context) {
     ctx.command("开采石油")
         .alias("生产石油")
-        .action(async ({ session }) => {
+        .action(async ({
+            session
+        }) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -28,9 +39,9 @@ export function 开采石油(ctx: Context) {
                 const 增加后的石油 = 用户资料.石油 + 增加的石油;
 
                 await ctx.database.set(
-                    "马列玩家表",
-                    { id: id },
-                    {
+                    "马列玩家表", {
+                        id: id
+                    }, {
                         石油: 增加后的石油,
                         生活资料: 用户资料.生活资料 - 2000,
                         生产次数: 用户资料.生产次数 - 1,

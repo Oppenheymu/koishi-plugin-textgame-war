@@ -1,6 +1,14 @@
-import { Context } from "koishi";
-import { 玩家检查, 更新玩家资料 } from "../../../utils";
-import { Player, PlayerWarData } from "../../../types";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查,
+    更新玩家资料
+} from "../../../utils";
+import {
+    Player,
+    PlayerWarData
+} from "../../../types";
 
 interface 物资配置 {
     name: string;
@@ -9,7 +17,7 @@ interface 物资配置 {
     地下字段: keyof Player | keyof PlayerWarData;
 }
 
-const 物资库: Record<string, 物资配置> = {
+const 物资库: Record < string, 物资配置 > = {
     工人: {
         name: "工人",
         字段: "工人",
@@ -62,9 +70,14 @@ const 物资库: Record<string, 物资配置> = {
 
 export function 转移地堡物资(ctx: Context) {
     ctx.command("转入地面 <物资> <数量:number>").action(
-        async ({ session }, 物资, 数量) => {
+        async ({
+            session
+        }, 物资, 数量) => {
             try {
-                const { id, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    用户资料
+                } = await 玩家检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!物资 || !数量) {
@@ -108,9 +121,14 @@ export function 转移地堡物资(ctx: Context) {
     );
 
     ctx.command("转入地下 <物资> <数量:number>").action(
-        async ({ session }, 物资, 数量) => {
+        async ({
+            session
+        }, 物资, 数量) => {
             try {
-                const { id, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    用户资料
+                } = await 玩家检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!物资 || !数量) {

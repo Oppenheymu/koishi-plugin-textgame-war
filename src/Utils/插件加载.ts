@@ -1,6 +1,8 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 
-type 可加载插件 = Parameters<Context["plugin"]>[0];
+type 可加载插件 = Parameters < Context["plugin"] > [0];
 
 export function 批量加载插件(
     ctx: Context,
@@ -17,7 +19,9 @@ export function 批量加载插件(
 
     for (let i = 0; i < 插件总数; i++) {
         const 插件 = 插件列表[i];
-        const 插件名 = (插件 as { name?: string }).name || `未命名插件-${i}`;
+        const 插件名 = (插件 as {
+            name ? : string
+        }).name || `未命名插件-${i}`;
         const startTime = Date.now();
 
         try {

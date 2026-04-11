@@ -1,11 +1,25 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 
-import { 组建联军 } from "./组建联军";
-import { 邀请加入联军 } from "./邀请加入联军";
-import { 退出联军 } from "./退出联军";
-import { 查询相关指令 } from "./查询相关";
-import { 权限相关指令 } from "./权限相关";
-import { 批量加载插件 } from "../../utils/插件加载";
+import {
+    组建联军
+} from "./组建联军";
+import {
+    邀请加入联军
+} from "./邀请加入联军";
+import {
+    退出联军
+} from "./退出联军";
+import {
+    查询相关指令
+} from "./查询相关";
+import {
+    权限相关指令
+} from "./权限相关";
+import {
+    批量加载插件
+} from "../../utils/插件加载";
 
 const 联军插件列表 = [
     组建联军,

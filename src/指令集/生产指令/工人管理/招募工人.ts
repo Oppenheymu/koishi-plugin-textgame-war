@@ -1,13 +1,25 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils";
 
 export function 招募工人(ctx: Context) {
-    ctx.command("招募工人 <数量:number>").action(async ({ session }, 数量) => {
+    ctx.command("招募工人 <数量:number>").action(async ({
+        session
+    }, 数量) => {
         try {
-            const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+            const {
+                id,
+                username,
+                用户资料
+            } = await 玩家检查(ctx, session);
             const 全球数据 = (
-                await ctx.database.get("马列全球数据表", { id: "service" })
-            )[0]!;
+                await ctx.database.get("马列全球数据表", {
+                    id: "service"
+                })
+            )[0] !;
 
             // 格式化数字显示
             const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -44,18 +56,20 @@ ${username} 同志：
             const 新全球劳动力市场 = 全球数据.全球劳动力市场 - 数量;
 
             await ctx.database.set(
-                "马列玩家表",
-                { id: id },
-                {
+                "马列玩家表", {
+                    id: id
+                }, {
                     生活资料: 新生活资料,
                     工人: 新工人数量,
                     工人招募限额: 新招募限额,
                 }
             );
             await ctx.database.set(
-                "马列全球数据表",
-                { id: "service" },
-                { 全球劳动力市场: 新全球劳动力市场 }
+                "马列全球数据表", {
+                    id: "service"
+                }, {
+                    全球劳动力市场: 新全球劳动力市场
+                }
             );
 
             return `

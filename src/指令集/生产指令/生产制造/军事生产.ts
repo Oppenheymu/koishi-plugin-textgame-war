@@ -1,28 +1,41 @@
-import { Context } from "koishi";
-import { 玩家检查, 更新玩家资料, 生成随机图片片段 } from "../../../utils";
-import { Player, PlayerWarData } from "../../../types";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查,
+    更新玩家资料,
+    生成随机图片片段
+} from "../../../utils";
+import {
+    Player,
+    PlayerWarData
+} from "../../../types";
 
 interface 物品属性 {
     name: string;
     科技需求: number;
     资源需求: {
-        钢铁?: number;
-        金属铝?: number;
+        钢铁 ? : number;
+        金属铝 ? : number;
     };
     生产力需求: number;
 }
 
-const 物品库: Record<string, 物品属性> = {
+const 物品库: Record < string, 物品属性 > = {
     重炮: {
         name: "重炮",
         科技需求: 20,
-        资源需求: { 钢铁: 2 },
+        资源需求: {
+            钢铁: 2
+        },
         生产力需求: 60000,
     },
     火箭炮: {
         name: "火箭炮",
         科技需求: 40,
-        资源需求: { 钢铁: 1 },
+        资源需求: {
+            钢铁: 1
+        },
         生产力需求: 200000,
     },
     火箭炮弹药: {
@@ -41,48 +54,62 @@ const 物品库: Record<string, 物品属性> = {
         name: "侦察机",
         科技需求: 25,
         生产力需求: 70000,
-        资源需求: { 钢铁: 1 },
+        资源需求: {
+            钢铁: 1
+        },
     },
     预警机: {
         name: "预警机",
         科技需求: 300,
         生产力需求: 2400000,
-        资源需求: { 金属铝: 3 },
+        资源需求: {
+            金属铝: 3
+        },
     },
     战斗机: {
         name: "战斗机",
         科技需求: 200,
         生产力需求: 90000,
-        资源需求: { 金属铝: 2 },
+        资源需求: {
+            金属铝: 2
+        },
     },
     轰炸机: {
         name: "轰炸机",
         科技需求: 50,
         生产力需求: 110000,
-        资源需求: { 金属铝: 3 },
+        资源需求: {
+            金属铝: 3
+        },
     },
     隐形轰炸机: {
         name: "隐形轰炸机",
         科技需求: 350,
         生产力需求: 150000,
-        资源需求: { 金属铝: 4 },
+        资源需求: {
+            金属铝: 4
+        },
     },
     大型运输机: {
         name: "大型运输机",
         科技需求: 40,
         生产力需求: 80000,
-        资源需求: { 金属铝: 2 },
+        资源需求: {
+            金属铝: 2
+        },
     },
     小型运输机: {
         name: "小型运输机",
         科技需求: 30,
         生产力需求: 50000,
-        资源需求: { 钢铁: 1 },
+        资源需求: {
+            钢铁: 1
+        },
     },
 };
 
 // 物品名称到 Player 属性的映射
-const 物品属性名: Record<string, keyof PlayerWarData> = {
+const 物品属性名: Record < string, keyof PlayerWarData > = {
     重炮: "重炮",
     火箭炮: "火箭炮",
     火箭炮弹药: "火箭炮弹药",
@@ -102,9 +129,15 @@ const 图片池 = ["军工厂3.jpg"];
 export function 军事生产(ctx: Context) {
     ctx.command("军事生产 <物品> <数量:number>")
         .alias("军产")
-        .action(async ({ session }, 物品, 数量) => {
+        .action(async ({
+            session
+        }, 物品, 数量) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!物品) {
@@ -176,7 +209,7 @@ ${Object.keys(物品库).join("、")}
                 if (!属性名) return "物品属性映射错误";
 
                 // 计算更新数据
-                const 更新数据: Partial<Player & PlayerWarData> = {
+                const 更新数据: Partial < Player & PlayerWarData > = {
                     钢铁: 用户资料.钢铁 - 所需钢铁,
                     金属铝: 用户资料.金属铝 - 所需金属铝,
                     生活资料: 用户资料.生活资料 - 工资,
@@ -185,7 +218,7 @@ ${Object.keys(物品库).join("、")}
 
                 // 添加生产的物品
                 (更新数据 as any)[属性名] =
-                    ((用户资料[属性名] as number) || 0) + 数量;
+                ((用户资料[属性名] as number) || 0) + 数量;
 
                 // 保存到数据库
                 await 更新玩家资料(ctx, id, 更新数据);

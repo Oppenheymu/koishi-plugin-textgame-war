@@ -1,14 +1,27 @@
-import { Node } from "./types";
+type Node = {
+    next: Map < string,
+    Node > ;
+    fail: Node | null;
+    match: string | null;
+};
 
 export const build = (words: readonly string[]): Node => {
-    const root: Node = { next: new Map(), fail: null, match: null };
+    const root: Node = {
+        next: new Map(),
+        fail: null,
+        match: null
+    };
 
     for (const w of words) {
         let p = root;
         for (const ch of w) {
             let nextNode = p.next.get(ch);
             if (!nextNode) {
-                nextNode = { next: new Map(), fail: null, match: null };
+                nextNode = {
+                    next: new Map(),
+                    fail: null,
+                    match: null
+                };
                 p.next.set(ch, nextNode);
             }
             p = nextNode;
@@ -31,7 +44,7 @@ export const build = (words: readonly string[]): Node => {
             while (f && !f.next.has(ch)) {
                 f = f.fail;
             }
-            nx.fail = f ? f.next.get(ch)! : root;
+            nx.fail = f ? f.next.get(ch) ! : root;
             nx.match = nx.match ?? nx.fail.match;
             q.push(nx);
         }

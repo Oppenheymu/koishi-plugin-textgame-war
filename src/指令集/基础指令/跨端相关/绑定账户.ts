@@ -1,5 +1,10 @@
-import { Context } from "koishi";
-import { 用户检查, 玩家检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    用户检查,
+    玩家检查
+} from "../../../utils";
 
 interface BindTask {
     ownerId: number;
@@ -8,13 +13,19 @@ interface BindTask {
     timer: NodeJS.Timeout;
 }
 
-const 绑定任务池 = new Map<string, BindTask>();
+const 绑定任务池 = new Map < string,
+    BindTask > ();
 
 export function 绑定账户(ctx: Context) {
     ctx.command("绑定账户", "获取一个跨平台绑定令牌来绑定账号").action(
-        async ({ session }) => {
+        async ({
+            session
+        }) => {
             try {
-                const { id, username } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username
+                } = await 玩家检查(ctx, session);
 
                 // 1. 清理过期任务池
                 for (const [code, task] of 绑定任务池.entries()) {
@@ -53,12 +64,17 @@ ${username} 同志!
         }
     );
 
-    ctx.command("确认绑定 <code:string>").action(async ({ session }, code) => {
+    ctx.command("确认绑定 <code:string>").action(async ({
+        session
+    }, code) => {
         try {
             const task = 绑定任务池.get(code);
             if (!task) return "验证码无效或已过期";
 
-            const { platform, userId } = 用户检查(session);
+            const {
+                platform,
+                userId
+            } = 用户检查(session);
 
             // 检查这个 Discord 号是不是已经绑了别人
             const [existing] = await ctx.database.get("马列玩家表", {
@@ -81,8 +97,13 @@ ${username} 同志!
         }
     });
 
-    ctx.command("最终同意").action(async ({ session }) => {
-        const { id, username } = await 玩家检查(ctx, session);
+    ctx.command("最终同意").action(async ({
+        session
+    }) => {
+        const {
+            id,
+            username
+        } = await 玩家检查(ctx, session);
 
         // 在池子里找“属于我”且“对方已填好信息”的任务
         const entry = Array.from(绑定任务池.entries()).find(

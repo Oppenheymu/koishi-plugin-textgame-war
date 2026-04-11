@@ -1,14 +1,24 @@
-import { Context } from "koishi";
-import { 地区解析, 用户检查, 玩家联军检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    地区解析,
+    用户检查,
+    玩家联军检查
+} from "../../../utils";
 
 export function 绑定地区(ctx: Context) {
     ctx.command("绑定地区 <地区编号:string>").action(
-        async ({ session }, 地区编号) => {
+        async ({
+            session
+        }, 地区编号) => {
             try {
-                const { 联军资料, username } = await 玩家联军检查(
+                const {
+                    联军资料,
+                    username
+                } = await 玩家联军检查(
                     ctx,
-                    session,
-                    {
+                    session, {
                         最低权限等级: 4,
                         是否必须在成员列表: true,
                     }
@@ -19,13 +29,18 @@ export function 绑定地区(ctx: Context) {
                     return "请提供地区编号";
                 }
 
-                const { platform } = 用户检查(session);
+                const {
+                    platform
+                } = 用户检查(session);
                 const 群聊ID = session?.guildId?.trim();
                 if (!群聊ID) {
                     return "请在群聊中使用该指令";
                 }
 
-                const { 地区编号: 目标地区编号, 地区配置资料 } = await 地区解析(
+                const {
+                    地区编号: 目标地区编号,
+                    地区配置资料
+                } = await 地区解析(
                     ctx,
                     规范地区编号
                 );
@@ -35,8 +50,7 @@ export function 绑定地区(ctx: Context) {
                 }
 
                 const 当前群绑定列表 = await ctx.database.get(
-                    "马列地区配置表",
-                    {
+                    "马列地区配置表", {
                         [platform]: 群聊ID,
                     }
                 );
@@ -54,9 +68,11 @@ export function 绑定地区(ctx: Context) {
                 }
 
                 await ctx.database.set(
-                    "马列地区配置表",
-                    { 地区编号: 目标地区编号 },
-                    { [platform]: 群聊ID }
+                    "马列地区配置表", {
+                        地区编号: 目标地区编号
+                    }, {
+                        [platform]: 群聊ID
+                    }
                 );
 
                 return `

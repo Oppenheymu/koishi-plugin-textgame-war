@@ -3,19 +3,25 @@ import type {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from "../../../types";
-import { 联军政体 } from "../../../types";
-import { 获取成员联军贡献 } from "./贡献统计";
-import { 获取联军权限等级 } from "./检查权限";
+} from "../../types";
+import {
+    联军政体
+} from "../../types";
+import {
+    获取成员联军贡献
+} from "../../utils/解析用户/联军相关/贡献统计";
+import {
+    获取联军权限等级
+} from "../../utils/解析用户/联军相关/权限获取";
 
-type 联军权限配置 = Omit<CoalitionPermission, "联军编号">;
+type 联军权限配置 = Omit < CoalitionPermission, "联军编号" > ;
 
-type 权限列表字段 = Pick<
+type 权限列表字段 = Pick <
     CoalitionArmy,
-    "联军一级权限成员列表" | "联军二级权限成员列表" | "联军三级权限成员列表"
->;
+    "联军一级权限成员列表" | "联军二级权限成员列表" | "联军三级权限成员列表" >
+;
 
-const 政体默认权限配置映射: Record<联军政体, 联军权限配置> = {
+const 政体默认权限配置映射: Record < 联军政体, 联军权限配置 > = {
     [联军政体.民主制]: {
         成员列表: 2,
         地区列表: 2,
@@ -63,7 +69,7 @@ function 构建权限列表(
     联军资料: CoalitionArmy,
     元首UID: string,
     总理UID: string,
-    等级映射: Record<string, CoalitionPermissionLevel>,
+    等级映射: Record < string, CoalitionPermissionLevel > ,
     默认等级: CoalitionPermissionLevel
 ): 权限列表字段 {
     const 一级: string[] = [];
@@ -97,8 +103,10 @@ function 构建权限列表(
 
 export function 获取政体默认权限配置(
     政体: 联军政体
-): Omit<CoalitionPermission, "联军编号"> {
-    return { ...政体默认权限配置映射[政体] };
+): Omit < CoalitionPermission, "联军编号" > {
+    return {
+        ...政体默认权限配置映射[政体]
+    };
 }
 
 export function 获取政体可设置最小权限等级(
@@ -112,7 +120,7 @@ export function 极权制降权到一级(
     联军资料: CoalitionArmy,
     设置者UID: string
 ): 权限列表字段 {
-    const 等级映射: Record<string, CoalitionPermissionLevel> = {};
+    const 等级映射: Record < string, CoalitionPermissionLevel > = {};
     const 候选成员列表 = 获取非最高权力成员UID列表(
         联军资料,
         联军资料.联军元首,
@@ -145,9 +153,7 @@ export function 政变后权限重置(
     return 构建权限列表(联军资料, 新元首UID, 新元首UID, {}, 1);
 }
 
-export function 按政体动态分配权限(
-    联军资料: CoalitionArmy
-): 权限列表字段 {
+export function 按政体动态分配权限(联军资料: CoalitionArmy): 权限列表字段 {
     const 候选成员列表 = 获取非最高权力成员UID列表(
         联军资料,
         联军资料.联军元首,
@@ -159,7 +165,7 @@ export function 按政体动态分配权限(
         0
     );
 
-    const 等级映射: Record<string, CoalitionPermissionLevel> = {};
+    const 等级映射: Record < string, CoalitionPermissionLevel > = {};
 
     for (const uid of 候选成员列表) {
         const 贡献 = 获取成员联军贡献(联军资料, uid);

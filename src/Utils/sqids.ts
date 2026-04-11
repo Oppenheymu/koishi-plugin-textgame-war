@@ -1,5 +1,7 @@
 import Sqids from "sqids";
-import { 获取运行时配置 } from "../config";
+import {
+    获取运行时配置
+} from "../config";
 
 type Sqids类别 = "register" | "coalition";
 

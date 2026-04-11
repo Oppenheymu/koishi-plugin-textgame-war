@@ -4,7 +4,7 @@
 
 export interface WarRecord {
     发动者: string;
-    发动国?: string;
+    发动国 ? : string;
     记录: string;
     时间: string;
 }
@@ -38,7 +38,8 @@ export interface RegionStrategy {
 
     // 战略运输
 
-    铁路: Record<number, Railroad>;
+    铁路: Record < number,
+    Railroad > ;
 
     // 地区军事
     地区驻军: number;

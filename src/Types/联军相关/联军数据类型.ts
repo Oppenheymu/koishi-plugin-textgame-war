@@ -1,7 +1,7 @@
 export enum 联军政体 {
     民主制 = "民主制",
-    威权制 = "威权制",
-    极权制 = "极权制",
+        威权制 = "威权制",
+        极权制 = "极权制",
 }
 
 export interface MemberData {
@@ -25,7 +25,8 @@ export interface CoalitionArmy {
 
     // 联军基础数据
     联军成员数量: number;
-    联军成员列表: Record<string, MemberData>;
+    联军成员列表: Record < string,
+    MemberData > ;
 
     联军首都: string;
     联军地区列表: string[];

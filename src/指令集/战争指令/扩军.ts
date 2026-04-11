@@ -1,5 +1,10 @@
-import { Context } from "koishi";
-import { 玩家联军检查, 生成随机图片片段 } from "../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家联军检查,
+    生成随机图片片段
+} from "../../utils";
 
 const 图片概率 = 0.01;
 const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];
@@ -7,10 +12,19 @@ const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];
 export function 扩军(ctx: Context) {
     ctx.command("扩军 <数量:number>")
         .alias("扩军")
-        .action(async ({ session }, 数量) => {
+        .action(async ({
+            session
+        }, 数量) => {
             try {
-                const { uid, id, username, 用户资料, 联军资料, 联军编号 } =
-                    await 玩家联军检查(ctx, session);
+                const {
+                    uid,
+                    id,
+                    username,
+                    用户资料,
+                    联军资料,
+                    联军编号
+                } =
+                await 玩家联军检查(ctx, session);
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!数量) {
@@ -43,11 +57,15 @@ ${username}同志：
                 };
 
                 await Promise.all([
-                    ctx.database.set("马列玩家表", { id }, { 工人: 新工人 }),
+                    ctx.database.set("马列玩家表", {
+                        id
+                    }, {
+                        工人: 新工人
+                    }),
                     ctx.database.set(
-                        "马列联军表",
-                        { 联军编号 },
-                        {
+                        "马列联军表", {
+                            联军编号
+                        }, {
                             联军军队: 新联军军队,
                             联军成员列表: 新联军成员列表,
                         }

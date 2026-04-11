@@ -8,10 +8,10 @@ import type {
 
 export type 联军权限等级 = CoalitionPermissionLevel;
 
-export type 支持平台 = keyof Pick<
+export type 支持平台 = keyof Pick <
     PlayerConfig,
-    "onebot" | "discord" | "telegram"
->;
+    "onebot" | "discord" | "telegram" >
+;
 
 export interface 玩家解析结果 {
     id: number;
@@ -22,8 +22,8 @@ export interface 玩家解析结果 {
 }
 
 export interface 玩家联军检查选项 {
-    最低权限等级?: 联军权限等级;
-    是否必须在成员列表?: boolean;
+    最低权限等级 ? : 联军权限等级;
+    是否必须在成员列表 ? : boolean;
 }
 
 export type 玩家联军解析结果 = 玩家解析结果 & {

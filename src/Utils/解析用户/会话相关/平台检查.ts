@@ -1,6 +1,12 @@
-import { Session } from "koishi";
-import { 支持平台 } from "../types";
-import { 会话检查 } from "./会话检查";
+import {
+    Session
+} from "koishi";
+import {
+    支持平台
+} from "../types";
+import {
+    会话检查
+} from "./会话检查";
 
 const 支持平台列表: 支持平台[] = ["onebot", "discord", "telegram"];
 

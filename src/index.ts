@@ -1,15 +1,32 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 import {} from "koishi-plugin-cron-fix";
 import {} from "koishi-plugin-infra-am-i-alt";
 
-import type { PluginConfig } from "./config";
-import { 插件配置Schema, 初始化插件运行时配置 } from "./config";
+import type {
+    PluginConfig
+} from "./config";
+import {
+    插件配置Schema,
+    初始化插件运行时配置
+} from "./config";
 
-import { 数据库服务 } from "./models/index";
-import { 文游指令集 } from "./指令集/index";
-import { 文游服务集 } from "./services/index";
-import { 文游管理集 } from "./管理集/index";
-import { 批量加载插件 } from "./utils/插件加载";
+import {
+    数据库服务
+} from "./models/index";
+import {
+    文游指令集
+} from "./指令集/index";
+import {
+    文游服务集
+} from "./services/index";
+import {
+    文游管理集
+} from "./管理集/index";
+import {
+    批量加载插件
+} from "./utils/插件加载";
 
 export const name = "malie-textgame";
 

@@ -1,4 +1,7 @@
-import { Context, Session } from "koishi";
+import {
+    Context,
+    Session
+} from "koishi";
 import {
     Region,
     RegionConfig,
@@ -6,8 +9,13 @@ import {
     RegionStrategy,
     RegionTerra,
 } from "../../../types/index";
-import { 会话检查, 用户检查 } from "../../解析用户";
-import { 获取地区展示名称 } from "./获取名称";
+import {
+    会话检查,
+    用户检查
+} from "../../解析用户";
+import {
+    获取地区展示名称
+} from "./获取名称";
 
 export type 地区解析结果 = {
     地区编号: string;
@@ -22,8 +30,8 @@ export type 地区解析结果 = {
 export async function 地区解析(
     ctx: Context,
     目标地区编号: string,
-    session?: Session
-): Promise<地区解析结果> {
+    session ? : Session
+): Promise < 地区解析结果 > {
     const 输入值 = 目标地区编号?.trim();
     if (!输入值) {
         throw new Error("请指定地区编号");
@@ -35,7 +43,9 @@ export async function 地区解析(
     });
 
     if (!按编号地区资料 && session) {
-        const { platform } = 用户检查(session);
+        const {
+            platform
+        } = 用户检查(session);
         const [绑定配置] = await ctx.database.get("马列地区配置表", {
             [platform]: 输入值,
         });
@@ -47,25 +57,35 @@ export async function 地区解析(
     const 已知地区资料 = 地区编号 === 输入值 ? 按编号地区资料 : undefined;
 
     const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
-        await Promise.all([
-            已知地区资料
-                ? Promise.resolve(已知地区资料)
-                : ctx.database
-                      .get("马列地区表", { 地区编号 })
-                      .then(([data]) => data),
-            ctx.database
-                .get("马列地区地形表", { 地区编号 })
-                .then(([data]) => data),
-            ctx.database
-                .get("马列地区状态机", { 地区编号 })
-                .then(([data]) => data),
-            ctx.database
-                .get("马列地区配置表", { 地区编号 })
-                .then(([data]) => data),
-            ctx.database
-                .get("马列地区战略表", { 地区编号 })
-                .then(([data]) => data),
-        ]);
+    await Promise.all([
+        已知地区资料 ?
+        Promise.resolve(已知地区资料) :
+        ctx.database
+        .get("马列地区表", {
+            地区编号
+        })
+        .then(([data]) => data),
+        ctx.database
+        .get("马列地区地形表", {
+            地区编号
+        })
+        .then(([data]) => data),
+        ctx.database
+        .get("马列地区状态机", {
+            地区编号
+        })
+        .then(([data]) => data),
+        ctx.database
+        .get("马列地区配置表", {
+            地区编号
+        })
+        .then(([data]) => data),
+        ctx.database
+        .get("马列地区战略表", {
+            地区编号
+        })
+        .then(([data]) => data),
+    ]);
 
     if (!地区资料) {
         throw new Error(`未找到地区：${输入值}`);
@@ -91,9 +111,11 @@ export async function 地区解析(
 export async function 当前地区解析(
     ctx: Context,
     session: Session | undefined
-): Promise<地区解析结果> {
+): Promise < 地区解析结果 > {
     会话检查(session);
-    const { platform } = 用户检查(session);
+    const {
+        platform
+    } = 用户检查(session);
     const 群聊ID = session?.guildId?.trim();
 
     if (!群聊ID) {

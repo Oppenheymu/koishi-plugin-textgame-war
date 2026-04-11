@@ -1,4 +1,6 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 
 let 正在执行全服统计 = false;
 
@@ -7,7 +9,7 @@ let 正在执行全服统计 = false;
  * 计算全服平均工资、平均科技等级
  * 统计并重置每日生产总值
  */
-async function 执行每日统计(ctx: Context): Promise<void> {
+async function 执行每日统计(ctx: Context): Promise < void > {
     if (正在执行全服统计) return;
     正在执行全服统计 = true;
 
@@ -37,9 +39,9 @@ async function 执行每日统计(ctx: Context): Promise<void> {
 
         if (players.length === 0) {
             await ctx.database.set(
-                "马列服务表",
-                { id: "service" },
-                {
+                "马列服务表", {
+                    id: "service"
+                }, {
                     上次全服统计日期: 今天,
                 }
             );
@@ -76,9 +78,9 @@ async function 执行每日统计(ctx: Context): Promise<void> {
             });
 
             await ctx.database.set(
-                "马列服务表",
-                { id: "service" },
-                {
+                "马列服务表", {
+                    id: "service"
+                }, {
                     上次全服统计日期: 今天,
                 }
             );
@@ -106,9 +108,9 @@ async function 执行每日统计(ctx: Context): Promise<void> {
 
         // 更新数据库
         await ctx.database.set(
-            "马列全球数据表",
-            { id: "global" },
-            {
+            "马列全球数据表", {
+                id: "global"
+            }, {
                 全球平均工资: avgWage,
                 全球平均科技等级: avgTech,
                 历史生产记录: history,
@@ -119,9 +121,9 @@ async function 执行每日统计(ctx: Context): Promise<void> {
         );
 
         await ctx.database.set(
-            "马列服务表",
-            { id: "service" },
-            {
+            "马列服务表", {
+                id: "service"
+            }, {
                 上次全服统计日期: 今天,
             }
         );

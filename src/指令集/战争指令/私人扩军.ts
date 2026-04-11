@@ -1,10 +1,21 @@
-import { Context } from "koishi";
-import { 玩家检查, 更新玩家资料 } from "../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查,
+    更新玩家资料
+} from "../../utils";
 
 export function 私人扩军(ctx: Context) {
-    ctx.command("私人扩军 <数量:number>").action(async ({ session }, 数量) => {
+    ctx.command("私人扩军 <数量:number>").action(async ({
+        session
+    }, 数量) => {
         try {
-            const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+            const {
+                id,
+                username,
+                用户资料
+            } = await 玩家检查(ctx, session);
             const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (!数量) {

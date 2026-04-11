@@ -1,12 +1,22 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils";
 
 export function 召回工人(ctx: Context) {
     ctx.command("召回工人 <数量:number> ")
         .alias("召回")
-        .action(async ({ session }, 数量) => {
+        .action(async ({
+            session
+        }, 数量) => {
             try {
-                const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -30,9 +40,9 @@ export function 召回工人(ctx: Context) {
                 const 新休假工人数 = 用户资料.休假工人 - 数量;
 
                 await ctx.database.set(
-                    "马列玩家表",
-                    { id: id },
-                    {
+                    "马列玩家表", {
+                        id: id
+                    }, {
                         工人: 新工人数,
                         休假工人: 新休假工人数,
                     }

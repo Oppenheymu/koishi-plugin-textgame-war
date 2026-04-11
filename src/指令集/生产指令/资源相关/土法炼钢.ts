@@ -1,10 +1,21 @@
-import { Context } from "koishi";
-import { TRandom, 玩家检查 } from "../../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    TRandom,
+    玩家检查
+} from "../../../utils";
 
 export function 土法炼钢(ctx: Context) {
-    ctx.command("土法炼钢 <数量:number>").action(async ({ session }, 数量) => {
+    ctx.command("土法炼钢 <数量:number>").action(async ({
+        session
+    }, 数量) => {
         try {
-            const { id, username, 用户资料 } = await 玩家检查(ctx, session);
+            const {
+                id,
+                username,
+                用户资料
+            } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
             const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -47,9 +58,9 @@ export function 土法炼钢(ctx: Context) {
             const 减少后的铁矿石 = 用户资料.铁矿石 - 数量;
 
             await ctx.database.set(
-                "马列玩家表",
-                { id: id },
-                {
+                "马列玩家表", {
+                    id: id
+                }, {
                     钢铁: 增加后的的钢铁,
                     铁矿石: 减少后的铁矿石,
                     生活资料: 用户资料.生活资料 - 2000,

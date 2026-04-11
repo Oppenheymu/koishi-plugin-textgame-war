@@ -1,8 +1,21 @@
-import { existsSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import { h, Logger } from "koishi";
-import { 查找项目根目录 } from "./图片目录查找";
+import {
+    existsSync
+} from "node:fs";
+import {
+    dirname,
+    resolve
+} from "node:path";
+import {
+    fileURLToPath,
+    pathToFileURL
+} from "node:url";
+import {
+    h,
+    Logger
+} from "koishi";
+import {
+    查找项目根目录
+} from "./图片目录查找";
 
 const logger = new Logger("malie-random-image");
 
@@ -62,5 +75,7 @@ export function 生成随机图片片段(
     logger.warn(`生成图片片段：${可用图片路径}`);
     logger.warn(`图片 src：${src}`);
 
-    return h("img", { src }).toString();
+    return h("img", {
+        src
+    }).toString();
 }

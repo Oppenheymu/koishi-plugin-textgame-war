@@ -1,21 +1,32 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils/index";
 
 export function 查看全球劳动力市场(ctx: Context) {
     ctx.command("查看全球劳动力市场")
         .alias("全球劳动力市场")
         .alias("劳动力市场")
         .alias("人才市场")
-        .action(async ({ session }) => {
+        .action(async ({
+            session
+        }) => {
             try {
-                const { username, 用户资料 } = await 玩家检查(ctx, session);
+                const {
+                    username,
+                    用户资料
+                } = await 玩家检查(ctx, session);
 
                 // 格式化数字显示
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 const 全球劳动力 = (
-                    await ctx.database.get("马列全球数据表", { id: "service" })
-                )[0]!.全球劳动力市场;
+                    await ctx.database.get("马列全球数据表", {
+                        id: "service"
+                    })
+                )[0] !.全球劳动力市场;
 
                 return `
 =====[全球资源]=====

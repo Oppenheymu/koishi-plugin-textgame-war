@@ -1,4 +1,6 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 import {
     校验联军权限动作,
     校验联军权限等级,
@@ -11,17 +13,22 @@ import {
 export function 设置联军权限(ctx: Context) {
     ctx.command("设置联军权限 <操作:string> <权限等级:number>")
         .alias("设置权限")
-        .action(async ({ session }, 操作, 权限等级) => {
+        .action(async ({
+            session
+        }, 操作, 权限等级) => {
             try {
                 const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
                     "设置联军权限"
                 );
-                const { username, 联军编号, 联军资料 } = await 玩家联军检查(
+                const {
+                    username,
+                    联军编号,
+                    联军资料
+                } = await 玩家联军检查(
                     ctx,
-                    session,
-                    {
+                    session, {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
                     }

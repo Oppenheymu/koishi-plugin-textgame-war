@@ -1,6 +1,10 @@
 import dayjs from "dayjs";
-import { Context } from "koishi";
-import { MemberData } from "../../types";
+import {
+    Context
+} from "koishi";
+import {
+    MemberData
+} from "../../types";
 import {
     分配坐标逻辑,
     玩家检查,
@@ -22,7 +26,8 @@ type 联军邀请记录 = {
     过期时间戳: number;
 };
 
-const 联军邀请缓存 = new Map<string, 联军邀请记录>();
+const 联军邀请缓存 = new Map < string,
+    联军邀请记录 > ();
 
 function 构造邀请键(联军编号: string, 目标UID: string) {
     return `${联军编号}:${目标UID}`;
@@ -32,17 +37,22 @@ export function 邀请加入联军(ctx: Context) {
     ctx.command("邀请加入联军 <目标:string>")
         .alias("邀请入军")
         .alias("邀请加入国家")
-        .action(async ({ session }, 目标) => {
+        .action(async ({
+            session
+        }, 目标) => {
             try {
                 const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
                     "邀请加入联军"
                 );
-                const { username, 联军资料, 联军编号 } = await 玩家联军检查(
+                const {
+                    username,
+                    联军资料,
+                    联军编号
+                } = await 玩家联军检查(
                     ctx,
-                    session,
-                    {
+                    session, {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
                     }
@@ -53,7 +63,11 @@ export function 邀请加入联军(ctx: Context) {
                     return "请指定目标用户：可以 @对方 或输入 UID";
                 }
 
-                const { 目标用户ID, 目标用户名, 目标用户资料 } = await 目标解析(
+                const {
+                    目标用户ID,
+                    目标用户名,
+                    目标用户资料
+                } = await 目标解析(
                     ctx,
                     session,
                     输入目标
@@ -110,11 +124,18 @@ ${username} 同志！
 
     ctx.command("同意加入联军 <联军编号:string>")
         .alias("同意入军")
-        .action(async ({ session }, 输入联军编号) => {
+        .action(async ({
+            session
+        }, 输入联军编号) => {
             let 新分配地区: string | null = null;
 
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(
+                const {
+                    id,
+                    uid,
+                    username,
+                    用户资料
+                } = await 玩家检查(
                     ctx,
                     session
                 );
@@ -191,9 +212,9 @@ ${username} 同志！
 
                 await Promise.all([
                     ctx.database.set(
-                        "马列联军表",
-                        { 联军编号 },
-                        {
+                        "马列联军表", {
+                            联军编号
+                        }, {
                             联军成员列表: 新联军成员列表,
                             联军三级权限成员列表: 新三级权限成员列表,
                             联军成员数量: 新成员数量,
@@ -201,12 +222,11 @@ ${username} 同志！
                         }
                     ),
                     ctx.database.set(
-                        "马列玩家表",
-                        { id },
-                        {
+                        "马列玩家表", {
+                            id
+                        }, {
                             所在联军: 联军编号,
-                            驻扎地区:
-                                用户资料.驻扎地区 ||
+                            驻扎地区: 用户资料.驻扎地区 ||
                                 新分配地区 ||
                                 联军资料.联军首都 ||
                                 新联军地区列表[0] ||
@@ -227,12 +247,13 @@ ${username} 同志！
                 if (新分配地区) {
                     try {
                         await ctx.database.set(
-                            "马列地区状态机",
-                            { 地区编号: 新分配地区 },
-                            {
+                            "马列地区状态机", {
+                                地区编号: 新分配地区
+                            }, {
                                 地区归属国: null,
                                 是否已分配: false,
-                            } as any
+                            }
+                            as any
                         );
                     } catch {}
                 }

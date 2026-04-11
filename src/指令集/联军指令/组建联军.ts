@@ -1,34 +1,49 @@
-import { Context } from "koishi";
-import dayjs from "dayjs";
-import { CoalitionArmy, MemberData, 联军政体 } from "../../types";
 import {
-    创建改名审核工单,
-    分配坐标逻辑,
+    Context
+} from "koishi";
+import dayjs from "dayjs";
+import {
+    CoalitionArmy,
+    MemberData,
+    联军政体
+} from "../../types";
+import {
+    玩家检查,
+    获取联军Sqids
+} from "@/utils";
+import {
     检查名称是否重复,
     检查违禁词,
-    玩家检查,
-    获取联军Sqids,
-} from "../../utils";
+    创建改名审核工单,
+    分配坐标逻辑,
+} from "@/logic";
 
 export function 组建联军(ctx: Context) {
     ctx.command("组建联军 <联军名称:string>")
         .alias("组建国家")
         .alias("创建国家")
         .alias("建国")
-        .action(async ({ session }, 联军名称) => {
+        .action(async ({
+            session
+        }, 联军名称) => {
             let 新联军ID: number | null = null;
             let 新地区: string | null = null;
 
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(
+                const {
+                    id,
+                    uid,
+                    username,
+                    用户资料
+                } = await 玩家检查(
                     ctx,
                     session
                 );
 
                 const amIAlt服务 = (
                     ctx as Context & {
-                        amIAlt?: {
-                            isAlt: (session: unknown) => Promise<boolean>;
+                        amIAlt ? : {
+                            isAlt: (session: unknown) => Promise < boolean > ;
                         };
                     }
                 ).amIAlt;
@@ -56,8 +71,9 @@ ${username} 同志！
                 }
 
                 const [已创建联军] = await ctx.database.get(
-                    "马列联军表",
-                    { 联军元首: uid },
+                    "马列联军表", {
+                        联军元首: uid
+                    },
                     ["联军编号", "联军名称"]
                 );
                 if (已创建联军) {
@@ -106,7 +122,9 @@ ${username} 同志！
                 const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军ID);
 
                 if (地区分配结果 === "所有地区已领完！") {
-                    await ctx.database.remove("马列联军表", { id: 新联军ID });
+                    await ctx.database.remove("马列联军表", {
+                        id: 新联军ID
+                    });
                     return "地区已全部分配完毕，暂时无法组建联军。";
                 }
 
@@ -119,7 +137,7 @@ ${username} 同志！
                     加入时间: now,
                 };
 
-                const 新联军数据: Omit<CoalitionArmy, "id"> = {
+                const 新联军数据: Omit < CoalitionArmy, "id" > = {
                     联军编号: 新联军编号,
                     联军元首: uid,
                     联军总理: uid,
@@ -129,7 +147,9 @@ ${username} 同志！
                     联军政治体制: 联军政体.极权制,
                     联军税率: 0,
                     联军成员数量: 1,
-                    联军成员列表: { [uid]: 用户 },
+                    联军成员列表: {
+                        [uid]: 用户
+                    },
                     联军首都: 新地区,
                     联军地区列表: [新地区],
                     联军军队: 0,
@@ -144,21 +164,24 @@ ${username} 同志！
 
                 await Promise.all([
                     ctx.database.set(
-                        "马列联军表",
-                        { id: 新联军ID },
+                        "马列联军表", {
+                            id: 新联军ID
+                        },
                         新联军数据
                     ),
                     ctx.database.set(
-                        "马列玩家表",
-                        { id },
-                        {
+                        "马列玩家表", {
+                            id
+                        }, {
                             所在联军: 新联军编号,
                             驻扎地区: 新地区,
                         }
                     ),
                 ]);
 
-                const { 工单编号 } = await 创建改名审核工单(ctx, {
+                const {
+                    工单编号
+                } = await 创建改名审核工单(ctx, {
                     类型: "联军",
                     新名称: 规范联军名称,
                     申请人ID: id,
@@ -188,12 +211,13 @@ ${username} 同志！
                 if (新地区) {
                     try {
                         await ctx.database.set(
-                            "马列地区状态机",
-                            { 地区编号: 新地区 },
-                            {
+                            "马列地区状态机", {
+                                地区编号: 新地区
+                            }, {
                                 地区归属国: null,
                                 是否已分配: false,
-                            } as any
+                            }
+                            as any
                         );
                     } catch {}
                 }

@@ -1,5 +1,9 @@
-import { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import {
+    Context
+} from "koishi";
+import {
+    玩家检查
+} from "../../../utils/index";
 
 // 定义确认请求的数据结构
 interface UpgradeRequest {
@@ -8,14 +12,21 @@ interface UpgradeRequest {
 }
 
 // 模块级变量存储确认状态
-const UpgradeTimer: Record<string, UpgradeRequest> = {};
+const UpgradeTimer: Record < string, UpgradeRequest > = {};
 const ConfirmTimeout = 30000; // 30秒超时
 
 export function 改进生产技术到(ctx: Context) {
     ctx.command("改进生产技术到 <目标等级:number>").action(
-        async ({ session }, 目标等级) => {
+        async ({
+            session
+        }, 目标等级) => {
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(
+                const {
+                    id,
+                    uid,
+                    username,
+                    用户资料
+                } = await 玩家检查(
                     ctx,
                     session
                 );
@@ -87,9 +98,9 @@ ${username} 同志！
 
                     // 更新数据库
                     await ctx.database.set(
-                        "马列玩家表",
-                        { id: id },
-                        {
+                        "马列玩家表", {
+                            id: id
+                        }, {
                             生活资料: 减少后的生活资料,
                             生产技术: 目标等级,
                         }
@@ -109,7 +120,10 @@ ${username} 同志：
 ■生活资料：${格式化(减少后的生活资料)} (-${格式化(所需生活资料)})`.trim();
                 } else {
                     // === 发起确认 ===
-                    UpgradeTimer[uid] = { targetLevel: 目标等级, time: now };
+                    UpgradeTimer[uid] = {
+                        targetLevel: 目标等级,
+                        time: now
+                    };
 
                     // 设置超时清除
                     setTimeout(() => {

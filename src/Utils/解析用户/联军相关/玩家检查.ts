@@ -1,15 +1,29 @@
-import { Context, Session } from "koishi";
-import { 获取联军权限等级 } from "./检查权限";
-import { 玩家检查 } from "../玩家相关/获取数据";
-import { 玩家联军检查选项, 玩家联军解析结果 } from "../types";
-import { 会话检查 } from "../会话相关/会话检查";
-import { 发送并抛出错误 } from "../error";
+import {
+    Context,
+    Session
+} from "koishi";
+import {
+    获取联军权限等级
+} from "./权限获取";
+import {
+    玩家检查
+} from "../玩家相关/获取数据";
+import {
+    玩家联军检查选项,
+    玩家联军解析结果
+} from "../types";
+import {
+    会话检查
+} from "../会话相关/会话检查";
+import {
+    发送并抛出错误
+} from "../error";
 
 export async function 玩家联军检查(
     ctx: Context,
     session: Session | undefined,
-    options?: 玩家联军检查选项
-): Promise<玩家联军解析结果> {
+    options ? : 玩家联军检查选项
+): Promise < 玩家联军解析结果 > {
     会话检查(session);
 
     const 玩家结果 = await 玩家检查(ctx, session);

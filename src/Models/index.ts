@@ -1,6 +1,10 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 
-import { 批量加载插件 } from "../utils/插件加载";
+import {
+    批量加载插件
+} from "../utils/插件加载";
 
 import {
     CoalitionArmy,
@@ -18,12 +22,24 @@ import {
     Service,
 } from "../types";
 
-import { 加载联军表 } from "./联军数据表";
-import { 加载联军权限表 } from "./联军权限表";
-import { 加载全球数据表 } from "./全球数据表";
-import { 加载地形相关表 } from "./地区相关";
-import { 加载服务表 } from "./服务表";
-import { 加载玩家相关表 } from "./玩家相关";
+import {
+    加载联军表
+} from "./联军数据表";
+import {
+    加载联军权限表
+} from "./联军权限表";
+import {
+    加载全球数据表
+} from "./全球数据表";
+import {
+    加载地形相关表
+} from "./地区相关";
+import {
+    加载服务表
+} from "./服务表";
+import {
+    加载玩家相关表
+} from "./玩家相关";
 
 // 扩展 Koishi 数据表类型定义
 

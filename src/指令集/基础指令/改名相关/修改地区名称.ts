@@ -1,12 +1,16 @@
-import { Context } from "koishi";
+import {
+    Context
+} from "koishi";
 import {
     创建改名审核工单,
-    当前地区解析,
-    地区解析,
     检查改名冷却,
-    校验名称文本,
+    校验名称文本
+} from "@/logic";
+import {
     玩家联军检查,
-} from "../../../utils";
+    当前地区解析,
+    地区解析
+} from "@/utils";
 
 export function 修改地区名称(ctx: Context) {
     ctx.command("修改地区名称 <新名称:string> [地区编号:string]")
@@ -15,21 +19,31 @@ export function 修改地区名称(ctx: Context) {
         .alias("城市改名")
         .alias("城市命名")
         .alias("修改城市名称")
-        .action(async ({ session }, 新名称, 地区编号参数) => {
+        .action(async ({
+            session
+        }, 新名称, 地区编号参数) => {
             try {
-                const { id, uid, username, 联军资料 } = await 玩家联军检查(
+                const {
+                    id,
+                    uid,
+                    username,
+                    联军资料
+                } = await 玩家联军检查(
                     ctx,
-                    session,
-                    {
+                    session, {
                         最低权限等级: 4,
                         是否必须在成员列表: true,
                     }
                 );
 
                 const 规范地区编号 = 地区编号参数?.trim();
-                const { 地区编号, 地区配置资料 } = 规范地区编号
-                    ? await 地区解析(ctx, 规范地区编号)
-                    : await 当前地区解析(ctx, session);
+                const {
+                    地区编号,
+                    地区配置资料
+                } = 规范地区编号
+                    ?
+                    await 地区解析(ctx, 规范地区编号) :
+                    await 当前地区解析(ctx, session);
 
                 if (!联军资料.联军地区列表.includes(地区编号)) {
                     return "只能修改本联军控制地区的名称";
@@ -49,7 +63,9 @@ export function 修改地区名称(ctx: Context) {
                     return 校验结果;
                 }
 
-                const { 工单编号 } = await 创建改名审核工单(ctx, {
+                const {
+                    工单编号
+                } = await 创建改名审核工单(ctx, {
                     类型: "地区",
                     新名称: 规范名称,
                     申请人ID: id,

@@ -1,4 +1,6 @@
-import { Session } from "koishi";
+import {
+    Session
+} from "koishi";
 
 export function 发送并抛出错误(
     session: Session,

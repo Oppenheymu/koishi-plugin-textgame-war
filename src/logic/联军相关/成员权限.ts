@@ -1,10 +1,15 @@
-import type { CoalitionArmy, CoalitionPermissionLevel } from "../../../types";
-import { 获取联军权限等级 } from "./检查权限";
-
-type 权限列表字段 = Pick<
+import type {
     CoalitionArmy,
-    "联军一级权限成员列表" | "联军二级权限成员列表" | "联军三级权限成员列表"
->;
+    CoalitionPermissionLevel
+} from "../../types";
+import {
+    获取联军权限等级
+} from "../../utils/解析用户/联军相关/权限获取";
+
+type 权限列表字段 = Pick <
+    CoalitionArmy,
+    "联军一级权限成员列表" | "联军二级权限成员列表" | "联军三级权限成员列表" >
+;
 
 function 去重(列表: string[]): string[] {
     return Array.from(new Set(列表));

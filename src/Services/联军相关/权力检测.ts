@@ -1,8 +1,14 @@
-import { Context } from "koishi";
-import { 联军政体 } from "../../types";
-import { 按政体动态分配权限 } from "../../utils";
+import {
+    Context
+} from "koishi";
+import {
+    联军政体
+} from "../../types";
+import {
+    按政体动态分配权限
+} from "../../utils";
 
-async function 执行联军权力动态检测(ctx: Context): Promise<void> {
+async function 执行联军权力动态检测(ctx: Context): Promise < void > {
     const 联军列表 = await ctx.database.get("马列联军表", {});
 
     for (const 联军资料 of 联军列表) {
@@ -16,8 +22,9 @@ async function 执行联军权力动态检测(ctx: Context): Promise<void> {
         const 权限列表更新 = 按政体动态分配权限(联军资料);
 
         await ctx.database.set(
-            "马列联军表",
-            { 联军编号: 联军资料.联军编号 },
+            "马列联军表", {
+                联军编号: 联军资料.联军编号
+            },
             权限列表更新
         );
     }
