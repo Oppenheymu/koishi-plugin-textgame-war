@@ -1,3 +1,4 @@
+
 import { Context } from "koishi";
 import { 联军政体 } from "../../../types";
 import {
@@ -8,6 +9,8 @@ import {
     设置联军权限配置,
     获取政体默认权限配置,
 } from "../../../utils";
+
+
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN", { maximumFractionDigits: 2 });
 

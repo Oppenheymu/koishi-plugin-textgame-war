@@ -8,4 +8,5 @@ export * from "./联军相关/玩家检查";
 export * from "./联军相关/设置权限";
 export * from "./联军相关/移除成员";
 export * from "./联军相关/贡献统计";
+export * from "./联军相关/成员权限";
 export * from "./联军相关/政体策略";
