@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     目标解析
-} from "../../utils";
+} from "@/utils";
 
 export function 他的全部资料(ctx: Context) {
     ctx.command("他的全部资料 <目标>", {

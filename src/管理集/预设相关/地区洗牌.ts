@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     会话检查
-} from "../../utils";
+} from "@/utils";
 
 export function 地区洗牌(ctx: Context) {
     ctx.command("地区洗牌", {

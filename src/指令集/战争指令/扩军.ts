@@ -4,7 +4,7 @@ import {
 import {
     玩家联军检查,
     生成随机图片片段
-} from "../../utils";
+} from "@/utils";
 
 const 图片概率 = 0.01;
 const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];

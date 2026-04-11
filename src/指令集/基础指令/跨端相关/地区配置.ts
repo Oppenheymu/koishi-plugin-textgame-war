@@ -4,7 +4,7 @@ import {
 import {
     地区解析,
     当前地区解析
-} from "../../../utils";
+} from "@/utils";
 
 export function 地区配置(ctx: Context) {
     ctx.command("地区配置 [地区编号:string]")

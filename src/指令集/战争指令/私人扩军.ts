@@ -4,7 +4,7 @@ import {
 import {
     玩家检查,
     更新玩家资料
-} from "../../utils";
+} from "@/utils";
 
 export function 私人扩军(ctx: Context) {
     ctx.command("私人扩军 <数量:number>").action(async ({

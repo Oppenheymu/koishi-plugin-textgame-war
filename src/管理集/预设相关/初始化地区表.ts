@@ -14,7 +14,7 @@ import {
     CapacityBase,
     CapacityLimit,
     RegionBasicDataItem,
-} from "../../types/地区相关";
+} from "@/types";
 
 const logger = new Logger("初始化地区表");
 

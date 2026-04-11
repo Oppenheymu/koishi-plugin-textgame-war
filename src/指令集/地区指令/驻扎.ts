@@ -5,7 +5,7 @@ import {
 import {
     更新玩家资料,
     驻扎检查
-} from "../../utils";
+} from "@/utils";
 
 export function 驻扎(ctx: Context) {
     ctx.command("驻扎 [地区编号:string]")

@@ -5,7 +5,7 @@ import {
     地区解析,
     用户检查,
     玩家联军检查
-} from "../../../utils";
+} from "@/utils";
 
 export function 绑定地区(ctx: Context) {
     ctx.command("绑定地区 <地区编号:string>").action(

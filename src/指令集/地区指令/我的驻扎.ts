@@ -4,7 +4,7 @@ import {
 import {
     玩家检查,
     地区解析
-} from "../../utils";
+} from "@/utils";
 
 export function 我的驻扎(ctx: Context) {
     ctx.command("我的驻扎")

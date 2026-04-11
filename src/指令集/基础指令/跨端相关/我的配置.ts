@@ -4,7 +4,7 @@ import {
 } from "koishi";
 import {
     玩家检查
-} from "../../../utils/解析用户";
+} from "@/utils";
 
 export function 我的账户配置(ctx: Context) {
     ctx.command("我的账户配置")

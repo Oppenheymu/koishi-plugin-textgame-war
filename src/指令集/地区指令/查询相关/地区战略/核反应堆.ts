@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     地区查询权限检查,
-} from "../../../../utils";
+} from "@/utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 

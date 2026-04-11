@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     初始化服务记录
-} from "../../services/每日重置签到";
+} from "@/services";
 
 export function 初始化服务表(ctx: Context) {
     ctx.command("初始化服务表", {

@@ -20,7 +20,7 @@ import {
 } from "./分配历史记录";
 import {
     批量加载插件
-} from "../../utils/插件加载";
+} from "@/utils";
 
 
 
