@@ -134,9 +134,8 @@ export async function 设置联军操作权限(
     权限等级: CoalitionPermissionLevel
 ): Promise < void > {
     await 设置联军权限配置(ctx, 联军编号, {
-            [动作]: 权限等级,
-        }
-        as Partial < Omit < CoalitionPermission, "联军编号" >> );
+        [动作]: 权限等级,
+    } as Partial < Omit < CoalitionPermission, "联军编号" >> );
 }
 
 export async function 玩家联军权限设置(

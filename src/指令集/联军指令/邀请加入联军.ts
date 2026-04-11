@@ -6,12 +6,14 @@ import {
     MemberData
 } from "../../types";
 import {
-    分配坐标逻辑,
     玩家检查,
     玩家联军检查,
     玩家联军权限设置,
     目标解析,
-} from "../../utils";
+} from "@/utils";
+import {
+    分配坐标逻辑
+} from "@/logic";
 
 const 邀请有效期毫秒 = 3 * 60 * 1000;
 const 联军地区上限 = 4;
@@ -252,8 +254,7 @@ ${username} 同志！
                             }, {
                                 地区归属国: null,
                                 是否已分配: false,
-                            }
-                            as any
+                            } as any
                         );
                     } catch {}
                 }

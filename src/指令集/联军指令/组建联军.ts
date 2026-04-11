@@ -216,8 +216,7 @@ ${username} 同志！
                             }, {
                                 地区归属国: null,
                                 是否已分配: false,
-                            }
-                            as any
+                            } as any
                         );
                     } catch {}
                 }
