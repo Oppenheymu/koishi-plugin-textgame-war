@@ -14,11 +14,15 @@ import {
 import {
     我的驻扎
 } from "./我的驻扎";
+import {
+    设置驻扎权限
+} from "./设置驻扎权限";
 
 const 地区指令列表 = [
     ...查询相关指令,
     驻扎,
-    我的驻扎
+    我的驻扎,
+    设置驻扎权限
 ];
 
 export function 地区指令(ctx: Context) {

@@ -108,6 +108,38 @@ export async function 地区解析(
     };
 }
 
+export async function 更新地区资料(
+    ctx: Context,
+    地区编号: string,
+    更新数据: Partial<Region>
+): Promise<void> {
+    const [地区资料] = await ctx.database.get("马列地区表", {
+        地区编号,
+    });
+
+    if (!地区资料) {
+        throw new Error(`未找到地区：${地区编号}`);
+    }
+
+    const 地区更新: Partial<Region> = {};
+
+    for (const [键, 值] of Object.entries(更新数据 as Record<string, unknown>)) {
+        if (键 === "地区编号") continue;
+
+        if (键 in 地区资料) {
+            (地区更新 as Record<string, unknown>)[键] = 值;
+        }
+    }
+
+    if (!Object.keys(地区更新).length) {
+        return;
+    }
+
+    await ctx.database.set("马列地区表", {
+        地区编号,
+    }, 地区更新);
+}
+
 export async function 当前地区解析(
     ctx: Context,
     session: Session | undefined
