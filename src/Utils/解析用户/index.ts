@@ -6,3 +6,4 @@ export * from "./玩家相关/获取数据";
 export * from "./联军相关/检查权限";
 export * from "./联军相关/玩家检查";
 export * from "./联军相关/设置权限";
+export * from "./联军相关/移除成员";

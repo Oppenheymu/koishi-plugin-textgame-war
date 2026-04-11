@@ -1,6 +1,5 @@
 import { Context } from "koishi";
 import dayjs from "dayjs";
-import {} from "koishi-plugin-am-i-alt";
 import { CoalitionArmy, MemberData, 联军政体 } from "../../types";
 import {
     创建改名审核工单,

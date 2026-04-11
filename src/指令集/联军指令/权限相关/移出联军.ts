@@ -1,10 +1,14 @@
+
 import { Context } from "koishi";
 import {
     获取联军权限等级,
     目标解析,
     玩家联军检查,
     玩家联军权限设置,
+    移除联军成员,
 } from "../../../utils";
+
+
 
 export function 移出联军(ctx: Context) {
     ctx.command("移出联军 <目标:string>")
@@ -55,38 +59,12 @@ export function 移出联军(ctx: Context) {
                     return "权限不足，不能移出同级或更高权限成员";
                 }
 
-                const 新联军成员列表 = { ...(联军资料.联军成员列表 ?? {}) };
-                delete 新联军成员列表[目标UID];
-
-                const 过滤成员 = (列表: string[] = []) =>
-                    列表.filter((成员) => 成员 !== 目标UID);
-
-                await Promise.all([
-                    ctx.database.set(
-                        "马列联军表",
-                        { 联军编号 },
-                        {
-                            联军成员列表: 新联军成员列表,
-                            联军成员数量: Object.keys(新联军成员列表).length,
-                            联军一级权限成员列表: 过滤成员(
-                                联军资料.联军一级权限成员列表
-                            ),
-                            联军二级权限成员列表: 过滤成员(
-                                联军资料.联军二级权限成员列表
-                            ),
-                            联军三级权限成员列表: 过滤成员(
-                                联军资料.联军三级权限成员列表
-                            ),
-                        }
-                    ),
-                    ctx.database.set(
-                        "马列玩家表",
-                        { id: 目标用户ID },
-                        {
-                            所在联军: null,
-                        }
-                    ),
-                ]);
+                await 移除联军成员(ctx, {
+                    联军编号,
+                    联军资料,
+                    目标UID,
+                    目标用户ID,
+                });
 
                 return `
 ====[征战文游]====
