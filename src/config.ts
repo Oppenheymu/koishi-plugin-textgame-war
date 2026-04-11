@@ -13,6 +13,11 @@ export interface 联军默认权限配置 {
     设置联军权限: CoalitionPermissionLevel;
     移出联军: CoalitionPermissionLevel;
     我的联军权限: CoalitionPermissionLevel;
+    查看地区军事: CoalitionPermissionLevel;
+    查看地区铁路: CoalitionPermissionLevel;
+    查看地区生物实验室: CoalitionPermissionLevel;
+    查看地区核反应堆: CoalitionPermissionLevel;
+    查看地区离心机组: CoalitionPermissionLevel;
 }
 
 export interface Sqids单项配置 {
@@ -39,6 +44,11 @@ export const 默认联军权限配置: 联军默认权限配置 = {
     设置联军权限: 4,
     移出联军: 3,
     我的联军权限: 1,
+    查看地区军事: 3,
+    查看地区铁路: 3,
+    查看地区生物实验室: 3,
+    查看地区核反应堆: 4,
+    查看地区离心机组: 4,
 };
 
 export const 默认Sqids配置: Sqids配置 = {
@@ -136,6 +146,11 @@ export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
         设置联军权限: 权限等级Schema.default(默认联军权限配置.设置联军权限),
         移出联军: 权限等级Schema.default(默认联军权限配置.移出联军),
         我的联军权限: 权限等级Schema.default(默认联军权限配置.我的联军权限),
+        查看地区军事: 权限等级Schema.default(默认联军权限配置.查看地区军事),
+        查看地区铁路: 权限等级Schema.default(默认联军权限配置.查看地区铁路),
+        查看地区生物实验室: 权限等级Schema.default(默认联军权限配置.查看地区生物实验室),
+        查看地区核反应堆: 权限等级Schema.default(默认联军权限配置.查看地区核反应堆),
+        查看地区离心机组: 权限等级Schema.default(默认联军权限配置.查看地区离心机组),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
         register: 创建Sqids单项Schema(默认Sqids配置.register).description(

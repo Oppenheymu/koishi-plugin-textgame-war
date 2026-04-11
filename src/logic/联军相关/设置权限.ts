@@ -6,13 +6,13 @@ import {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from "../../types";
+} from "@/types";
 import {
     获取默认联军权限配置
-} from "../../config";
+} from "@/config";
 import {
     玩家检查
-} from "../../utils/解析用户/玩家相关/获取数据";
+} from "@/utils";
 
 export type 联军权限动作 = CoalitionPermissionAction;
 
@@ -24,6 +24,11 @@ export const 联军权限动作列表: 联军权限动作[] = [
     "设置联军权限",
     "移出联军",
     "我的联军权限",
+    "查看地区军事",
+    "查看地区铁路",
+    "查看地区生物实验室",
+    "查看地区核反应堆",
+    "查看地区离心机组",
 ];
 
 export const 默认联军权限配置: Omit < CoalitionPermission, "联军编号" > = {
@@ -34,6 +39,11 @@ export const 默认联军权限配置: Omit < CoalitionPermission, "联军编号
     设置联军权限: 4,
     移出联军: 3,
     我的联军权限: 1,
+    查看地区军事: 3,
+    查看地区铁路: 3,
+    查看地区生物实验室: 3,
+    查看地区核反应堆: 4,
+    查看地区离心机组: 4,
 };
 
 function 读取默认联军权限配置(): Omit < CoalitionPermission, "联军编号" > {

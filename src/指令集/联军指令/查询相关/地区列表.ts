@@ -4,7 +4,7 @@ import {
 import {
     玩家联军检查,
     玩家联军权限设置
-} from "../../../utils";
+} from "@/utils";
 
 export function 地区列表(ctx: Context) {
     ctx.command("地区列表")

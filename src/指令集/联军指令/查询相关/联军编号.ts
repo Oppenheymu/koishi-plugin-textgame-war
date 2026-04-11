@@ -4,7 +4,7 @@ import {
 import {
     玩家检查,
     目标解析
-} from "../../../utils";
+} from "@/utils";
 
 export function 联军编号(ctx: Context) {
     ctx.command("联军编号 [目标:string]")

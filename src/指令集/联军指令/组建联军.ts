@@ -1,3 +1,4 @@
+
 import {
     Context
 } from "koishi";
@@ -6,7 +7,7 @@ import {
     CoalitionArmy,
     MemberData,
     联军政体
-} from "../../types";
+} from "@/types";
 import {
     玩家检查,
     获取联军Sqids
@@ -17,6 +18,8 @@ import {
     创建改名审核工单,
     分配坐标逻辑,
 } from "@/logic";
+
+
 
 export function 组建联军(ctx: Context) {
     ctx.command("组建联军 <联军名称:string>")

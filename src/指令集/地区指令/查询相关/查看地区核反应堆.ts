@@ -2,9 +2,7 @@ import {
     Context
 } from "koishi";
 import {
-    玩家联军检查,
-    地区解析,
-    当前地区解析
+    地区查询权限检查,
 } from "../../../utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -19,20 +17,16 @@ export function 查看地区核反应堆(ctx: Context) {
             session
         }, 地区编号参数) => {
             try {
-                await 玩家联军检查(ctx, session, {
-                    最低权限等级: 3,
-                    是否必须在成员列表: true,
-                });
-
-                const 规范地区编号 = 地区编号参数?.trim();
                 const {
                     地区编号,
                     地区战略资料,
                     展示地区名称
-                } = 规范地区编号
-                    ?
-                    await 地区解析(ctx, 规范地区编号) :
-                    await 当前地区解析(ctx, session);
+                } = await 地区查询权限检查(
+                    ctx,
+                    session,
+                    "查看地区核反应堆",
+                    地区编号参数
+                );
 
                 const 反应堆列表 = Object.entries(地区战略资料.核反应堆 ?? {});
 

@@ -37,6 +37,26 @@ export function 加载联军权限表(ctx: Context) {
                 type: "unsigned",
                 initial: 1
             },
+            查看地区军事: {
+                type: "unsigned",
+                initial: 3
+            },
+            查看地区铁路: {
+                type: "unsigned",
+                initial: 3
+            },
+            查看地区生物实验室: {
+                type: "unsigned",
+                initial: 3
+            },
+            查看地区核反应堆: {
+                type: "unsigned",
+                initial: 4
+            },
+            查看地区离心机组: {
+                type: "unsigned",
+                initial: 4
+            },
         }, {
             primary: "联军编号",
             unique: ["联军编号"],

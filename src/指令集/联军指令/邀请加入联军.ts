@@ -4,7 +4,7 @@ import {
 } from "koishi";
 import {
     MemberData
-} from "../../types";
+} from "@/types";
 import {
     玩家检查,
     玩家联军检查,

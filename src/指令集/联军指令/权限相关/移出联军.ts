@@ -7,7 +7,7 @@ import {
     玩家联军检查,
     玩家联军权限设置,
     移除联军成员,
-} from "../../../utils";
+} from "@/utils";
 
 export function 移出联军(ctx: Context) {
     ctx.command("移出联军 <目标:string>")

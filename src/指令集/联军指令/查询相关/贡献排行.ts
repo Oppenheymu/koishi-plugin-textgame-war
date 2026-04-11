@@ -5,7 +5,7 @@ import {
     获取联军贡献排行数据,
     玩家联军检查,
     玩家联军权限设置,
-} from "../../../utils";
+} from "@/utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 

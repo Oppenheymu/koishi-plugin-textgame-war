@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     联军政体
-} from "../../../types";
+} from "@/types";
 import {
     获取成员联军贡献,
     获取排除成员后前N贡献总和,
@@ -13,7 +13,7 @@ import {
     按政体动态分配权限,
     玩家联军检查,
     设置联军权限配置,
-} from "../../../utils";
+} from "@/utils";
 
 function 是否有效政体(输入: string): 输入 is 联军政体 {
     return Object.values(联军政体).includes(输入 as 联军政体);
