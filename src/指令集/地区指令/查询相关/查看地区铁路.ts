@@ -1,0 +1,77 @@
+import {
+    Context
+} from "koishi";
+import {
+    玩家联军检查,
+    地区解析,
+    当前地区解析
+} from "../../../utils";
+
+const 格式化 = (n: number) => n.toLocaleString("zh-CN");
+
+export function 查看地区铁路(ctx: Context) {
+    ctx.command("查看地区铁路 [地区编号:string]")
+        .alias("查看城市铁路")
+        .alias("铁路运输")
+        .alias("地区铁路")
+        .alias("城市铁路")
+        .action(async ({
+            session
+        }, 地区编号参数) => {
+            try {
+                await 玩家联军检查(ctx, session, {
+                    最低权限等级: 3,
+                    是否必须在成员列表: true,
+                });
+
+                const 规范地区编号 = 地区编号参数?.trim();
+                const {
+                    地区编号,
+                    地区战略资料,
+                    展示地区名称
+                } = 规范地区编号
+                    ?
+                    await 地区解析(ctx, 规范地区编号) :
+                    await 当前地区解析(ctx, session);
+
+                const 铁路列表 = Object.entries(地区战略资料.铁路 ?? {});
+
+                const 铁路展示 = 铁路列表.length
+                    ? 铁路列表
+                        .sort(([a], [b]) => Number(a) - Number(b))
+                        .map(([编号, 铁路信息]) => {
+                            const 负载占比 = 铁路信息.铁路运力 > 0
+                                ? `${((铁路信息.当前负载 / 铁路信息.铁路运力) * 100).toFixed(1)}%`
+                                : "0%";
+                            const 最近日志 = (铁路信息.铁路日志 ?? [])
+                                .slice(0, 2)
+                                .map((日志) => `      · ${日志.时间}，${日志.运输者} 运输 ${日志.运输物}`)
+                                .join("\n") || "      · 暂无运输记录";
+
+                            return [
+                                `  - 铁路#${编号}`,
+                                `    · 目标地区：${铁路信息.目标地区}`,
+                                `    · 状态：${铁路信息.铁路状态}`,
+                                `    · 运力：${格式化(铁路信息.当前负载)} / ${格式化(铁路信息.铁路运力)} (${负载占比})`,
+                                `    · 开通时间：${铁路信息.开通时间 || "未知"}`,
+                                "    · 最近运输：",
+                                最近日志,
+                            ].join("\n");
+                        })
+                        .join("\n")
+                    : "  - 暂无铁路记录";
+
+                return [
+                    "【地区铁路】",
+                    展示地区名称,
+                    `■ 地区编号：${地区编号}`,
+                    `■ 司令：${地区战略资料.地区司令 || "暂无"}`,
+                    `■ 铁路数量：${铁路列表.length}`,
+                    "□ 铁路详情：",
+                    铁路展示,
+                ].join("\n");
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
+}
