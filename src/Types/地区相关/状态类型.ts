@@ -1,4 +1,9 @@
+
+
+
+// 地区状态
 export interface RegionState {
+
     地区编号: string;
 
     // 这里的归属国ID用的是混淆前的自增ID

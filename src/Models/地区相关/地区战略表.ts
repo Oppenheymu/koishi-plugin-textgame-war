@@ -28,6 +28,17 @@ export function 加载地区战略表(ctx: Context) {
                 type: "unsigned",
                 initial: 0
             },
+            
+            生物实验室: {
+                type: "json"
+            },
+
+            高速离心级联: {
+                type: "json"
+            },
+            核反应堆: {
+                type: "json"
+            },
 
             已部署列车炮: {
                 type: "unsigned",

@@ -15,6 +15,7 @@ export enum TerrainType {
 }
 
 export interface Region {
+
     地区编号: string;
 
     地区地形: TerrainType;
@@ -50,4 +51,5 @@ export interface Region {
 
     炼钢厂数量: number;
     空闲的炼钢厂: number;
+
 }
