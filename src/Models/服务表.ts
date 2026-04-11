@@ -30,6 +30,11 @@ export function 加载服务表(ctx: Context) {
                 length: 255,
                 nullable: true
             },
+            上次联军资本统计日期: {
+                type: "string",
+                length: 255,
+                nullable: true
+            },
         }, {
             primary: "id",
         }

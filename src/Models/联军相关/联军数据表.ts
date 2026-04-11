@@ -51,17 +51,21 @@ export function 加载联军表(ctx: Context) {
                 type: "float",
                 initial: 0
             },
-            当天内生产总值: {
+            当天内资本增量: {
                 type: "float",
                 initial: 0
             },
-            三天内生产总值: {
+            三天内资本增量: {
                 type: "float",
                 initial: 0
             },
-            七天内生产总值: {
+            七天内资本增量: {
                 type: "float",
                 initial: 0
+            },
+            资本增量历史记录: {
+                type: "json",
+                initial: []
             },
 
             联军成员数量: {
