@@ -4,7 +4,7 @@ import {
 import {
     生成随机图片片段,
     玩家检查
-} from "../../../utils/index";
+} from "@/utils";
 import {
     记录联军资本增量
 } from "@/services/联军相关";
