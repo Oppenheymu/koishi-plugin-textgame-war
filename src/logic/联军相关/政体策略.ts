@@ -9,9 +9,11 @@ import {
 } from "@/types";
 
 import {
-    获取成员联军贡献,
+    获取成员联军贡献
+} from "@/utils/解析用户/联军相关/贡献统计";
+import {
     获取联军权限等级
-} from "@/utils";
+} from "@/utils/解析用户/联军相关/权限获取";
 
 type 联军权限配置 = Omit < CoalitionPermission, "联军编号" > ;
 

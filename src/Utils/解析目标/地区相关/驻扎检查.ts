@@ -3,11 +3,13 @@ import {
     Session
 } from "koishi";
 import {
-    玩家检查,
+    玩家检查
+} from "../../解析用户/玩家相关/获取数据";
+import {
     地区解析,
     当前地区解析,
     type 地区解析结果
-} from "@/utils";
+} from "./获取数据";
 
 
 export interface 驻扎检查结果 extends 地区解析结果 {

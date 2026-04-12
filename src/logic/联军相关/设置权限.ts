@@ -12,7 +12,7 @@ import {
 } from "@/config";
 import {
     玩家检查
-} from "@/utils";
+} from "@/utils/解析用户/玩家相关/获取数据";
 
 export type 联军权限动作 = CoalitionPermissionAction;
 

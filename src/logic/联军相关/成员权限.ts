@@ -4,7 +4,7 @@ import type {
 } from "@/types";
 import {
     获取联军权限等级
-} from "@/utils";
+} from "@/utils/解析用户/联军相关/权限获取";
 
 type 权限列表字段 = Pick <
     CoalitionArmy,

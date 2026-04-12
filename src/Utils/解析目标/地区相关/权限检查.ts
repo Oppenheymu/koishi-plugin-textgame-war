@@ -7,15 +7,19 @@ import type {
     CoalitionPermissionLevel
 } from "@/types";
 import {
-    玩家检查,
-    玩家联军检查,
+    玩家检查
+} from "../../解析用户/玩家相关/获取数据";
+import {
+    玩家联军检查
+} from "../../解析用户/联军相关/玩家检查";
+import {
     地区解析,
     当前地区解析,
     type 地区解析结果
-} from "@/utils";
+} from "./获取数据";
 import {
     玩家联军权限设置
-} from "@/logic"
+} from "@/logic/联军相关/设置权限"
 
 
 export type 地区权限检查动作 = Extract<

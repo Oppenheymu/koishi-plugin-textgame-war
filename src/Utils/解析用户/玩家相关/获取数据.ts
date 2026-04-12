@@ -7,10 +7,14 @@ import type {
     PlayerWarData
 } from "@/types";
 import {
-    会话检查,
-    用户检查,
+    会话检查
+} from "../会话相关/会话检查";
+import {
+    用户检查
+} from "../会话相关/平台检查";
+import {
     获取玩家展示名称
-} from "@/utils";
+} from "./获取名称";
 import {
     玩家解析结果
 } from "../types";

@@ -6,7 +6,7 @@ import type {
 } from "@/types";
 import {
     更新玩家资料
-} from "@/utils";
+} from "@/utils/解析用户/玩家相关/获取数据";
 
 interface 移除联军成员参数 {
     联军编号: string;
