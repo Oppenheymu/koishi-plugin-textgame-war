@@ -76,10 +76,10 @@ export function 注册(ctx: Context) {
 
                 const 初始工人 = TRandom(4000, 12000, 16000);
                 const 初始生活资料 = TRandom(8000, 50000, 90000);
-                const 初始石油 = TRandom(500, 1500, 8000);
-                const 初始钢铁 = TRandom(10000, 20000, 50000);
+                const 初始石油 = TRandom(50, 150, 800);
+                const 初始钢铁 = TRandom(100, 200, 500);
                 const 战争保护期时长 = TRandom(3, 7, 15);
-                const 初始防空弹药 = TRandom(3000, 10000, 20000);
+                const 初始防空弹药 = TRandom(300, 1000, 2000);
 
                 try {
                     const newPlayerConfig: PlayerConfig = await ctx.database.create(

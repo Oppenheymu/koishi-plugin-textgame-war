@@ -13,11 +13,15 @@ import {
 import {
     我的UID
 } from "./我的UID";
+import {
+    他的UID
+} from "./他的UID";
 
 export {
     绑定账户,
     我的账户配置,
     我的UID,
+    他的UID,
     绑定地区,
     地区配置
 };
@@ -26,6 +30,7 @@ export const 跨端相关指令 = [
     绑定账户,
     我的账户配置,
     我的UID,
+    他的UID,
     绑定地区,
     地区配置,
 ];
