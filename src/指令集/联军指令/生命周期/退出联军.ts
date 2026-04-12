@@ -3,8 +3,12 @@ import {
 } from "koishi";
 import {
     玩家联军检查,
-    移除联军成员
 } from "@/utils";
+import {
+    移除联军成员
+} from "@/logic";
+
+
 
 export function 退出联军(ctx: Context) {
     ctx.command("退出联军")

@@ -7,11 +7,15 @@ import {
 import {
     获取成员联军贡献,
     获取排除成员后前N贡献总和,
-    政变后权限重置,
     玩家联军检查,
-    设置联军权限配置,
-    获取政体默认权限配置,
 } from "@/utils";
+import {
+    政变后权限重置,
+    设置联军权限配置,
+    获取政体默认权限配置
+} from "@/logic"
+
+
 
 const 格式化 = (n: number) =>
     n.toLocaleString("zh-CN", {

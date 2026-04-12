@@ -34,6 +34,7 @@ ${username} 同志！
 ■ 成员：${格式化(联军资料.联军成员数量)} 个
 ■ 军队：${格式化(联军资料.联军军队)}
 ■ 首都：${联军资料.联军首都}
+
 `.trim();
             } catch (error) {
                 return (error as Error).message;

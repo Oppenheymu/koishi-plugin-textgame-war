@@ -5,9 +5,11 @@ import {
     获取联军权限等级,
     目标解析,
     玩家联军检查,
-    玩家联军权限设置,
-    移除联军成员,
 } from "@/utils";
+import {
+    玩家联军权限设置,
+    移除联军成员
+} from "@/logic"
 
 export function 移出联军(ctx: Context) {
     ctx.command("移出联军 <目标:string>")

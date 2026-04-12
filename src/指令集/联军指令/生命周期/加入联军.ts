@@ -8,10 +8,10 @@ import {
 import {
     玩家检查,
     玩家联军检查,
-    玩家联军权限设置,
     目标解析,
 } from "@/utils";
 import {
+    玩家联军权限设置,
     分配坐标逻辑
 } from "@/logic";
 

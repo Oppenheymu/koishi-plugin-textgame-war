@@ -2,14 +2,16 @@ import {
     Context
 } from "koishi";
 import {
+    玩家联军检查,
+} from "@/utils"
+import {
     校验联军权限动作,
     校验联军权限等级,
     设置联军操作权限,
     获取政体可设置最小权限等级,
     联军权限动作列表,
-    玩家联军检查,
     玩家联军权限设置,
-} from "@/utils";
+} from "@/logic";
 
 export function 设置联军权限(ctx: Context) {
     ctx.command("设置联军权限 <操作:string> <权限等级:number>")

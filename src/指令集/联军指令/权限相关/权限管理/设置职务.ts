@@ -5,10 +5,14 @@ import {
     联军政体
 } from "@/types";
 import {
-    获取联军成员权限等级,
     目标解析,
     玩家联军检查
 } from "@/utils";
+import {
+    获取联军成员权限等级,
+} from "@/logic";
+
+
 
 function 校验目标是本联军成员(
     目标联军编号: string | null,

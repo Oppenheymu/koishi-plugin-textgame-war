@@ -8,12 +8,16 @@ import {
     获取成员联军贡献,
     获取排除成员后前N贡献总和,
     获取排除成员后平均贡献,
+    玩家联军检查,
+} from "@/utils";
+import {
     获取政体默认权限配置,
     极权制降权到一级,
     按政体动态分配权限,
-    玩家联军检查,
-    设置联军权限配置,
-} from "@/utils";
+    设置联军权限配置
+} from "@/logic"
+
+
 
 function 是否有效政体(输入: string): 输入 is 联军政体 {
     return Object.values(联军政体).includes(输入 as 联军政体);
