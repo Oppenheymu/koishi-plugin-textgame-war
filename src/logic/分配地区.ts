@@ -5,7 +5,7 @@ import {
 /**
  * 传入的ID是混淆前的国家ID，别传错
  */
-export async function 分配坐标逻辑(ctx: Context, id: number) {
+export async function 分配坐标逻辑(ctx: Context, id: number, 联军编号: string) {
     // 1. 获取当前指针 (使用解构和可选链，逻辑保持简洁)
     const [全局配置] = await ctx.database.get("马列服务表", {
         id: "GLOBAL"
@@ -62,15 +62,28 @@ export async function 分配坐标逻辑(ctx: Context, id: number) {
     }
 
     // --- 第三步：统一盖章 ---
-    // 【优化】无论是捡漏的还是新发的，统一在这里落库，结构更扁平清晰
-    await ctx.database.set(
-        "马列地区状态机", {
-            地区编号: 目标编号
-        }, {
-            地区归属国: id,
-            是否已分配: true,
-        }
-    );
+    // 无论是捡漏还是新发，统一刷新状态机和地区控制国，避免跨表状态不一致
+    await Promise.all([
+        ctx.database.set(
+            "马列地区状态机",
+            {
+                地区编号: 目标编号,
+            },
+            {
+                地区归属国: id,
+                是否已分配: true,
+            }
+        ),
+        ctx.database.set(
+            "马列地区表",
+            {
+                地区编号: 目标编号,
+            },
+            {
+                控制国家: 联军编号,
+            }
+        ),
+    ]);
 
     return 目标编号;
 }

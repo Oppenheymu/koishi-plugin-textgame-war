@@ -198,7 +198,7 @@ ${username} 同志！
                 let 地区分配提示 = "";
 
                 if (原有地区列表.length < 联军地区上限) {
-                    const 地区分配结果 = await 分配坐标逻辑(ctx, 联军资料.id);
+                    const 地区分配结果 = await 分配坐标逻辑(ctx, 联军资料.id, 联军编号);
                     if (地区分配结果 !== "所有地区已领完！") {
                         新分配地区 = 地区分配结果;
                         if (!新联军地区列表.includes(新分配地区)) {
@@ -248,14 +248,27 @@ ${username} 同志！
             } catch (error) {
                 if (新分配地区) {
                     try {
-                        await ctx.database.set(
-                            "马列地区状态机", {
-                                地区编号: 新分配地区
-                            }, {
-                                地区归属国: null,
-                                是否已分配: false,
-                            } as any
-                        );
+                        await Promise.all([
+                            ctx.database.set(
+                                "马列地区状态机",
+                                {
+                                    地区编号: 新分配地区,
+                                },
+                                {
+                                    地区归属国: null,
+                                    是否已分配: false,
+                                } as any
+                            ),
+                            ctx.database.set(
+                                "马列地区表",
+                                {
+                                    地区编号: 新分配地区,
+                                },
+                                {
+                                    控制国家: "",
+                                }
+                            ),
+                        ]);
                     } catch {}
                 }
 

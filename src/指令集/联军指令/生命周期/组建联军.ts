@@ -123,7 +123,7 @@ ${username} 同志！
                 新联军ID = 新联军配置.id;
 
                 const 新联军编号 = `A${获取联军Sqids().encode([新联军ID])}`;
-                const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军ID);
+                const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军ID, 新联军编号);
 
                 if (地区分配结果 === "所有地区已领完！") {
                     await ctx.database.remove("马列联军表", {
@@ -209,26 +209,38 @@ ${username} 同志！
 分配的地区: ${新地区}
 `.trim();
             } catch (error) {
-                if (新联军ID !== null) {
-                    try {
-                        await ctx.database.remove("马列联军表", {
-                            id: 新联军ID,
-                        });
-                    } catch {}
-                }
-
-                if (新地区) {
-                    try {
-                        await ctx.database.set(
-                            "马列地区状态机", {
-                                地区编号: 新地区
-                            }, {
-                                地区归属国: null,
-                                是否已分配: false,
-                            } as any
-                        );
-                    } catch {}
-                }
+                try {
+                    await Promise.all([
+                        新联军ID !== null
+                            ? ctx.database.remove("马列联军表", {
+                                  id: 新联军ID,
+                              })
+                            : Promise.resolve(),
+                        新地区
+                            ? Promise.all([
+                                  ctx.database.set(
+                                      "马列地区状态机",
+                                      {
+                                          地区编号: 新地区,
+                                      },
+                                      {
+                                          地区归属国: null,
+                                          是否已分配: false,
+                                      } as any
+                                  ),
+                                  ctx.database.set(
+                                      "马列地区表",
+                                      {
+                                          地区编号: 新地区,
+                                      },
+                                      {
+                                          控制国家: "",
+                                      }
+                                  ),
+                              ])
+                            : Promise.resolve(),
+                    ]);
+                } catch {}
 
                 return (error as Error).message;
             }
