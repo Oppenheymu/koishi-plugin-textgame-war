@@ -20,6 +20,10 @@ export function 加载玩家战争表(ctx: Context) {
                 type: "unsigned",
                 initial: 0
             },
+            步兵装备: {
+                type: "unsigned",
+                initial: 0
+            },
             重炮: {
                 type: "unsigned",
                 initial: 0

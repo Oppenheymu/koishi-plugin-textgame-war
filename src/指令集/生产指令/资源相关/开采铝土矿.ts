@@ -32,7 +32,7 @@ export function 开采铝土矿(ctx: Context) {
                 return "生活资料不足，无法开采铝土矿，需要至少2000生活资料";
             }
 
-            const 增加的铝土矿 = TRandom(100, 300, 500);
+            const 增加的铝土矿 = TRandom(10, 30, 50);
             const 原本的铝土矿 = 用户资料.铝土矿;
             const 增加后的铝土矿 = 用户资料.铝土矿 + 增加的铝土矿;
 

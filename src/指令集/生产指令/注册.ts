@@ -146,6 +146,7 @@ export function 注册(ctx: Context) {
                         id: newID,
                         uid: newUID,
                         私人军队: 0,
+                        步兵装备: 0,
                         重炮: 0,
                         火箭炮: 0,
                         火箭炮弹药: 0,

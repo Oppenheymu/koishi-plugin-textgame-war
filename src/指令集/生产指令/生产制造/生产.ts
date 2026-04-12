@@ -9,6 +9,8 @@ import {
     记录联军资本增量
 } from "@/services/联军相关";
 
+
+
 const 图片概率 = 0.01;
 const 图片池 = ["工厂.jpg", "工厂2.jpg", "工厂3.jpg", "工厂5.jpg"];
 

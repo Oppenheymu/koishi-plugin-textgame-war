@@ -32,7 +32,7 @@ export function 开采铁矿石(ctx: Context) {
                 return "生活资料不足，无法开采铁矿石，需要至少2000生活资料";
             }
 
-            const 增加的铁矿石 = TRandom(60, 100, 300);
+            const 增加的铁矿石 = TRandom(6, 10, 30);
             const 原本的铁矿石 = 用户资料.铁矿石;
             const 增加后的铁矿石 = 用户资料.铁矿石 + 增加的铁矿石;
 

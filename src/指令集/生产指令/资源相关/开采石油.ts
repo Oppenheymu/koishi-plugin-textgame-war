@@ -34,7 +34,7 @@ export function 开采石油(ctx: Context) {
                     return "生活资料不足，无法开采石油，需要至少2000生活资料";
                 }
 
-                const 增加的石油 = TRandom(60, 130, 400);
+                const 增加的石油 = TRandom(6, 13, 40);
                 const 原本的石油 = 用户资料.石油;
                 const 增加后的石油 = 用户资料.石油 + 增加的石油;
 
