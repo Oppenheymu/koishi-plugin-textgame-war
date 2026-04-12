@@ -1,6 +1,9 @@
 import { Context } from "koishi";
+import { 确保服务记录 } from "@/utils/服务记录";
+
 
 let 正在执行联军资本统计 = false;
+
 
 const 格式化日期 = (时间: Date) =>
   `${时间.getFullYear()}-${String(时间.getMonth() + 1).padStart(2, "0")}-${String(
@@ -57,12 +60,10 @@ async function 执行联军资本增量日结(ctx: Context): Promise<void> {
     const [服务记录] = await ctx.database.get("马列服务表", { id: "service" });
 
     if (!服务记录) {
-      await ctx.database.create("马列服务表", {
-        id: "service",
-        上次联军资本统计日期: 今天,
-      });
+      await 确保服务记录(ctx, { 上次联军资本统计日期: 今天 });
       return;
     }
+
 
     if (服务记录.上次联军资本统计日期 && 服务记录.上次联军资本统计日期 >= 今天) {
       return;

@@ -2,6 +2,7 @@ import {
     Context
 } from "koishi";
 import dayjs from "dayjs";
+import { 确保服务记录 } from "@/utils/服务记录";
 
 let 正在执行每日重置 = false;
 
@@ -27,8 +28,7 @@ export async function 初始化服务记录(
         };
     }
 
-    await ctx.database.create("马列服务表", {
-        id: "service",
+    await 确保服务记录(ctx, {
         上次重置签到日期: 今天,
         上次全服统计日期: 今天,
     });
