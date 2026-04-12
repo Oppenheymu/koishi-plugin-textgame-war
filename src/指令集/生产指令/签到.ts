@@ -4,7 +4,7 @@ import {
 import {
     玩家检查,
     TRandom
-} from "../../utils/index";
+} from "@/utils";
 
 export function 签到(ctx: Context) {
     ctx.command("签到")

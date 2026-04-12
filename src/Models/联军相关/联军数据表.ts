@@ -28,7 +28,11 @@ export function 加载联军表(ctx: Context) {
                 length: 255
             },
 
-            联军一级权限成员列表: {
+            联军四级权限成员列表: {
+                type: "json",
+                initial: []
+            },
+            联军三级权限成员列表: {
                 type: "json",
                 initial: []
             },
@@ -36,7 +40,7 @@ export function 加载联军表(ctx: Context) {
                 type: "json",
                 initial: []
             },
-            联军三级权限成员列表: {
+                        联军一级权限成员列表: {
                 type: "json",
                 initial: []
             },

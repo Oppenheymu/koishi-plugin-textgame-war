@@ -17,7 +17,10 @@ type 联军权限配置 = Omit < CoalitionPermission, "联军编号" > ;
 
 type 权限列表字段 = Pick <
     CoalitionArmy,
-    "联军一级权限成员列表" | "联军二级权限成员列表" | "联军三级权限成员列表" >
+    "联军四级权限成员列表" |
+    "联军一级权限成员列表" |
+    "联军二级权限成员列表" |
+    "联军三级权限成员列表" >
 ;
 
 const 政体默认权限配置映射: Record < 联军政体, 联军权限配置 > = {
@@ -95,6 +98,7 @@ function 构建权限列表(
     等级映射: Record < string, CoalitionPermissionLevel > ,
     默认等级: CoalitionPermissionLevel
 ): 权限列表字段 {
+    const 四级: string[] = [];
     const 一级: string[] = [];
     const 二级: string[] = [];
     const 三级: string[] = [];
@@ -104,7 +108,12 @@ function 构建权限列表(
     for (const uid of 候选成员列表) {
         const 等级 = 等级映射[uid] ?? 默认等级;
 
-        if (等级 >= 3) {
+        if (等级 >= 4) {
+            四级.push(uid);
+            continue;
+        }
+
+        if (等级 === 3) {
             一级.push(uid);
             continue;
         }
@@ -118,6 +127,7 @@ function 构建权限列表(
     }
 
     return {
+        联军四级权限成员列表: 去重(四级),
         联军一级权限成员列表: 去重(一级),
         联军二级权限成员列表: 去重(二级),
         联军三级权限成员列表: 去重(三级),
@@ -153,7 +163,7 @@ export function 极权制降权到一级(
     for (const uid of 候选成员列表) {
         if (uid === 设置者UID) {
             const 当前等级 = 获取联军权限等级(联军资料, uid);
-            等级映射[uid] = 当前等级 >= 3 ? 3 : 当前等级 === 2 ? 2 : 1;
+            等级映射[uid] = 当前等级 >= 4 ? 4 : 当前等级 === 3 ? 3 : 当前等级 === 2 ? 2 : 1;
             continue;
         }
 

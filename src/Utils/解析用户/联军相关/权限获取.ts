@@ -13,15 +13,19 @@ export function 获取联军权限等级(
         return 4;
     }
 
-    if (联军资料.联军一级权限成员列表.includes(uid)) {
+    if ((联军资料.联军四级权限成员列表 ?? []).includes(uid)) {
+        return 4;
+    }
+
+    if ((联军资料.联军一级权限成员列表 ?? []).includes(uid)) {
         return 3;
     }
 
-    if (联军资料.联军二级权限成员列表.includes(uid)) {
+    if ((联军资料.联军二级权限成员列表 ?? []).includes(uid)) {
         return 2;
     }
 
-    if (联军资料.联军三级权限成员列表.includes(uid)) {
+    if ((联军资料.联军三级权限成员列表 ?? []).includes(uid)) {
         return 1;
     }
 

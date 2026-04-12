@@ -4,7 +4,7 @@ export enum 联军政体 {
         极权制 = "极权制",
 }
 
-interface MemberData {
+export interface MemberData {
     联军贡献: number;
     加入时间: string;
 }
@@ -24,9 +24,10 @@ export interface CoalitionArmy {
     联军元首: string;
     联军总理: string;
 
-    联军一级权限成员列表: string[];
-    联军二级权限成员列表: string[];
+    联军四级权限成员列表: string[];
     联军三级权限成员列表: string[];
+    联军二级权限成员列表: string[];
+    联军一级权限成员列表: string[];
 
     联军政治体制: 联军政体;
 
