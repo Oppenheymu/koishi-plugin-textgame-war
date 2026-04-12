@@ -1,11 +1,6 @@
 import {
     Context
 } from "koishi";
-import {
-    联军政体
-} from "@/types";
-
-
 
 export function 加载联军表(ctx: Context) {
     ctx.model.extend(
@@ -47,8 +42,7 @@ export function 加载联军表(ctx: Context) {
 
             联军政治体制: {
                 type: "string",
-                length: 32,
-                initial: 联军政体.极权制,
+                length: 32
             },
 
             联军税率: {
