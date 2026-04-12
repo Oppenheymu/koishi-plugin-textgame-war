@@ -15,7 +15,8 @@ export type CoalitionPermissionAction = |
     "查看地区离心机组" |
     "设置地区驻扎权限" |
     "分配生活资料" |
-    "分配历史记录";
+    "分配历史记录" |
+    "设置税率";
 
 export interface CoalitionPermission {
     联军编号: string;
@@ -34,4 +35,5 @@ export interface CoalitionPermission {
     设置地区驻扎权限: CoalitionPermissionLevel;
     分配生活资料: CoalitionPermissionLevel;
     分配历史记录: CoalitionPermissionLevel;
+    设置税率: CoalitionPermissionLevel;
 }

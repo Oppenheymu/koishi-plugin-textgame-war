@@ -154,6 +154,9 @@ export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
         查看地区核反应堆: 权限等级Schema.default(默认联军权限配置.查看地区核反应堆),
         查看地区离心机组: 权限等级Schema.default(默认联军权限配置.查看地区离心机组),
         设置地区驻扎权限: 权限等级Schema.default(默认联军权限配置.设置地区驻扎权限),
+        分配生活资料: 权限等级Schema.default(默认联军权限配置.分配生活资料),
+        分配历史记录: 权限等级Schema.default(默认联军权限配置.分配历史记录),
+        设置税率: 权限等级Schema.default(默认联军权限配置.设置税率),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
         register: 创建Sqids单项Schema(默认Sqids配置.register).description(
