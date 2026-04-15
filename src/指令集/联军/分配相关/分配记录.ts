@@ -9,6 +9,7 @@ export function 分配历史记录(ctx: Context) {
     .command("分配历史记录")
     .alias("查看分配历史")
     .alias("联军分配历史")
+    .alias("资料分配记录")
     .action(async ({ session }) => {
       try {
         const 权限等级需求 = await 玩家联军权限设置(ctx, session, "分配历史记录");
