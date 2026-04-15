@@ -12,7 +12,7 @@ import {
 } from "./基础指令";
 import {
     战争指令
-} from "./战争指令";
+} from "./战争";
 import {
     地区指令
 } from "./地区指令";

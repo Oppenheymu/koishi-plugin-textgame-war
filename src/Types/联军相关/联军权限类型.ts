@@ -19,6 +19,7 @@ export type CoalitionPermissionAction = |
     "设置税率";
 
 export interface CoalitionPermission {
+
     联军编号: string;
     成员列表: CoalitionPermissionLevel;
     地区列表: CoalitionPermissionLevel;
@@ -36,4 +37,5 @@ export interface CoalitionPermission {
     分配生活资料: CoalitionPermissionLevel;
     分配历史记录: CoalitionPermissionLevel;
     设置税率: CoalitionPermissionLevel;
+
 }
