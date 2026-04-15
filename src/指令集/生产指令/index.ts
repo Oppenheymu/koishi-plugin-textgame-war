@@ -28,7 +28,7 @@ import {
 } from "./地堡相关";
 import {
     批量加载插件
-} from "../../utils/插件加载";
+} from "@/utils";
 
 const 生产插件列表 = [
     签到,

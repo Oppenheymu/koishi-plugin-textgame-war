@@ -12,7 +12,8 @@ const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];
 
 export function 扩军(ctx: Context) {
     ctx.command("扩军 <数量:number>")
-        .alias("扩军")
+        .alias("国家扩军")
+        .alias('联军扩军')
         .action(async ({
             session
         }, 数量) => {

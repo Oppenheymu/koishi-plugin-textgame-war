@@ -7,7 +7,7 @@ import {
 } from "@/utils";
 
 export function 私人扩军(ctx: Context) {
-    ctx.command("私人扩军 <数量:number>").action(async ({
+    ctx.command("私人扩军 <数量:number>").alias('招兵').action(async ({
         session
     }, 数量) => {
         try {
