@@ -8,7 +8,8 @@ import {
 } from "@/utils";
 import {
     玩家联军权限设置,
-    移除联军成员
+    移除联军成员,
+    尝试发送联军信号塔通报,
 } from "@/logic"
 
 export function 移出联军(ctx: Context) {
@@ -77,6 +78,12 @@ export function 移出联军(ctx: Context) {
                     联军资料,
                     目标UID,
                     目标用户ID,
+                });
+
+                await 尝试发送联军信号塔通报(ctx, {
+                    联军编号,
+                    通报标题: "联军人事通报",
+                    通报内容: `${username} 已将 ${目标用户名} 移出联军`,
                 });
 
                 return `

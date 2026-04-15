@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家联军权限设置 } from "@/logic";
+import { 玩家联军权限设置, 尝试发送联军信号塔通报 } from "@/logic";
 import { 玩家联军检查 } from "@/utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -46,6 +46,12 @@ export function 设置扩军计划(ctx: Context) {
             扩军计划: 新上限 ?? null,
           }
         );
+
+        await 尝试发送联军信号塔通报(ctx, {
+          联军编号,
+          通报标题: "联军军务通报",
+          通报内容: `${username} 调整了扩军计划：${旧上限文本} → ${新上限文本}`,
+        });
 
         return `
 ====[征战文游]====

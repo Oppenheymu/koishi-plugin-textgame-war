@@ -1,6 +1,8 @@
 import { Context } from "koishi";
-import { 玩家联军权限设置 } from "@/logic";
+import { 玩家联军权限设置, 尝试发送联军信号塔通报 } from "@/logic";
 import { 玩家联军检查, 更新玩家资料 } from "@/utils";
+
+
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 const 贡献倍率 = 10;
@@ -57,6 +59,12 @@ export function 转入联军(ctx: Context) {
             }
           ),
         ]);
+
+        await 尝试发送联军信号塔通报(ctx, {
+          联军编号,
+          通报标题: "联军军务通报",
+          通报内容: `${username} 向联军转入了 ${格式化(数量)} 军队`,
+        });
 
         return `
 ====[征战文游]====

@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { 玩家联军权限设置 } from "@/logic";
+import { 玩家联军权限设置, 尝试发送联军信号塔通报 } from "@/logic";
 import { 玩家联军检查, 更新玩家资料, 目标解析 } from "@/utils";
 
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
@@ -76,6 +76,12 @@ export function 分配生活资料(ctx: Context) {
             生活资料分配记录: 新记录,
           }
         );
+
+        await 尝试发送联军信号塔通报(ctx, {
+          联军编号,
+          通报标题: "联军后勤通报",
+          通报内容: `${username} 向 ${接收者显示名} 分配了 ${格式化(数量)} 生活资料`,
+        });
 
         return `
 ====[征战文游]====

@@ -5,7 +5,8 @@ import {
     玩家联军检查,
 } from "@/utils";
 import {
-    移除联军成员
+    移除联军成员,
+    尝试发送联军信号塔通报,
 } from "@/logic";
 
 
@@ -38,6 +39,12 @@ export function 退出联军(ctx: Context) {
                     联军资料,
                     目标UID: uid,
                     目标用户ID: id,
+                });
+
+                await 尝试发送联军信号塔通报(ctx, {
+                    联军编号,
+                    通报标题: "联军人事通报",
+                    通报内容: `${username} 已主动退出联军`,
                 });
 
                 return `

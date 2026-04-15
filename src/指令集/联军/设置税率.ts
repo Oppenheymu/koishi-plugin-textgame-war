@@ -1,6 +1,8 @@
 import { Context } from "koishi";
 import { 玩家联军检查 } from "@/utils";
-import { 玩家联军权限设置 } from "@/logic";
+import { 玩家联军权限设置, 尝试发送联军信号塔通报 } from "@/logic";
+
+
 
 function 格式化税率显示(税率百分比: number): string {
   const 标准值 = Math.round(税率百分比 * 100) / 100;
@@ -41,6 +43,12 @@ export function 设置税率(ctx: Context) {
             联军税率: 新税率,
           }
         );
+
+        await 尝试发送联军信号塔通报(ctx, {
+          联军编号,
+          通报标题: "联军税务通报",
+          通报内容: `${username} 将联军税率由 ${格式化税率显示(旧税率百分比)} 调整为 ${格式化税率显示(新税率百分比)}`,
+        });
 
         return `
 ====[征战文游]====
