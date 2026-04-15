@@ -7,7 +7,7 @@ import {
 
 import {
     查询相关指令
-} from "./查询相关";
+} from "./查询";
 import {
     驻扎
 } from "./驻扎";
