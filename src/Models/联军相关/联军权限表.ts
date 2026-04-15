@@ -79,6 +79,14 @@ export function 加载联军权限表(ctx: Context) {
                 type: "unsigned",
                 initial: 4
             },
+            转入联军: {
+                type: "unsigned",
+                initial: 1
+            },
+            分配军队: {
+                type: "unsigned",
+                initial: 3
+            },
         }, {
             primary: "联军编号",
             unique: ["联军编号"],

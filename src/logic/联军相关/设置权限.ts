@@ -34,6 +34,8 @@ export const 联军权限动作列表: 联军权限动作[] = [
     "分配历史记录",
     "设置税率",
     "设置扩军计划",
+    "转入联军",
+    "分配军队",
 ];
 
 export const 默认联军权限配置: Omit < CoalitionPermission, "联军编号" > = {
@@ -54,6 +56,8 @@ export const 默认联军权限配置: Omit < CoalitionPermission, "联军编号
     分配历史记录: 1,
     设置税率: 4,
     设置扩军计划: 4,
+    转入联军: 1,
+    分配军队: 3,
 };
 
 function 读取默认联军权限配置(): Omit < CoalitionPermission, "联军编号" > {

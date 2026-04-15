@@ -23,6 +23,8 @@ export interface 联军默认权限配置 {
     分配历史记录: CoalitionPermissionLevel;
     设置税率: CoalitionPermissionLevel;
     设置扩军计划: CoalitionPermissionLevel;
+    转入联军: CoalitionPermissionLevel;
+    分配军队: CoalitionPermissionLevel;
 }
 
 export interface Sqids单项配置 {
@@ -59,6 +61,8 @@ export const 默认联军权限配置: 联军默认权限配置 = {
     分配历史记录: 1,
     设置税率: 4,
     设置扩军计划: 4,
+    转入联军: 1,
+    分配军队: 3,
 };
 
 export const 默认Sqids配置: Sqids配置 = {
@@ -166,6 +170,8 @@ export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
         分配历史记录: 权限等级Schema.default(默认联军权限配置.分配历史记录),
         设置税率: 权限等级Schema.default(默认联军权限配置.设置税率),
         设置扩军计划: 权限等级Schema.default(默认联军权限配置.设置扩军计划),
+        转入联军: 权限等级Schema.default(默认联军权限配置.转入联军),
+        分配军队: 权限等级Schema.default(默认联军权限配置.分配军队),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
         register: 创建Sqids单项Schema(默认Sqids配置.register).description(
