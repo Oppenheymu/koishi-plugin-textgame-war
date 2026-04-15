@@ -2,55 +2,128 @@ import {
     Context
 } from "koishi";
 import {
+    尝试发送后台信号塔日志,
+    尝试发送新闻信号塔通报
+} from "@/logic";
+import {
     确保服务记录
 } from "@/utils/服务记录";
 
 let 正在执行全服统计 = false;
 
-/**
- * 执行每日全服数据统计
- * 计算全服平均工资、平均科技等级
- * 统计并重置每日生产总值
- */
-async function 执行每日统计(ctx: Context): Promise < void > {
-    if (正在执行全服统计) return;
+export interface 全服统计执行结果 {
+    今天: string;
+    是否执行: boolean;
+    原因?: string;
+    玩家数量: number;
+    平均工资: number;
+    平均科技等级: number;
+    昨日全球生产总值: number;
+    新闻已发送数量: number;
+    新闻发送失败数量: number;
+}
+
+function 获取今天日期(): string {
+    const 现在 = new Date();
+    return `${现在.getFullYear()}-${String(现在.getMonth() + 1).padStart(2, "0")}-${String(
+        现在.getDate()
+    ).padStart(2, "0")}`;
+}
+
+function 构建全服统计新闻内容(参数: {
+    今天: string;
+    玩家数量: number;
+    平均工资: number;
+    平均科技等级: number;
+    昨日全球生产总值: number;
+    近三天全球生产总值: number;
+    近七天全球生产总值: number;
+}): string {
+    const 格式化 = (n: number) => n.toLocaleString("zh-CN");
+
+    return [
+        `日期：${参数.今天}`,
+        `玩家总数：${格式化(参数.玩家数量)}`,
+        `全球平均工资：${格式化(参数.平均工资)}`,
+        `全球平均科技等级：${格式化(参数.平均科技等级)}`,
+        `昨日全球生产总值：${格式化(参数.昨日全球生产总值)}`,
+        `近三天全球生产总值：${格式化(参数.近三天全球生产总值)}`,
+        `近七天全球生产总值：${格式化(参数.近七天全球生产总值)}`,
+    ].join("\n");
+}
+
+export async function 执行每日全服统计(
+    ctx: Context,
+    options?: {
+        忽略日期检查?: boolean;
+    }
+): Promise<全服统计执行结果> {
+    if (正在执行全服统计) {
+        return {
+            今天: 获取今天日期(),
+            是否执行: false,
+            原因: "全服统计正在执行中",
+            玩家数量: 0,
+            平均工资: 0,
+            平均科技等级: 0,
+            昨日全球生产总值: 0,
+            新闻已发送数量: 0,
+            新闻发送失败数量: 0,
+        };
+    }
+
     正在执行全服统计 = true;
+    const logger = ctx.logger("全服数据统计");
 
     try {
-        const 现在 = new Date();
-        const 今天 = `${现在.getFullYear()}-${String(
-            现在.getMonth() + 1
-        ).padStart(2, "0")}-${String(现在.getDate()).padStart(2, "0")}`;
+        const 今天 = 获取今天日期();
 
-        const 全局状态机 = await ctx.database.get("马列服务表", {
+        const [服务记录] = await ctx.database.get("马列服务表", {
             id: "service",
         });
-        const 服务记录 = 全局状态机[0];
 
         if (!服务记录) {
             await 确保服务记录(ctx, {
                 上次全服统计日期: 今天,
             });
-        } else {
+        } else if (!options?.忽略日期检查) {
             const 上次统计时间 = 服务记录.上次全服统计日期;
-            if (上次统计时间 && 今天 <= 上次统计时间) return;
+            if (上次统计时间 && 今天 <= 上次统计时间) {
+                return {
+                    今天,
+                    是否执行: false,
+                    原因: `今日已统计（上次统计日期：${上次统计时间}）`,
+                    玩家数量: 0,
+                    平均工资: 0,
+                    平均科技等级: 0,
+                    昨日全球生产总值: 0,
+                    新闻已发送数量: 0,
+                    新闻发送失败数量: 0,
+                };
+            }
         }
 
-        // 1. 获取所有玩家数据
         const players = await ctx.database.get("马列玩家表", {});
 
         if (players.length === 0) {
             await ctx.database.set(
-                "马列服务表", {
-                    id: "service"
-                }, {
-                    上次全服统计日期: 今天,
-                }
+                "马列服务表",
+                { id: "service" },
+                { 上次全服统计日期: 今天 }
             );
-            return;
+
+            return {
+                今天,
+                是否执行: true,
+                玩家数量: 0,
+                平均工资: 0,
+                平均科技等级: 0,
+                昨日全球生产总值: 0,
+                新闻已发送数量: 0,
+                新闻发送失败数量: 0,
+            };
         }
 
-        // 2. 计算平均值
         let totalWage = 0;
         let totalTech = 0;
 
@@ -62,13 +135,14 @@ async function 执行每日统计(ctx: Context): Promise < void > {
         const avgWage = Math.floor(totalWage / players.length);
         const avgTech = Math.floor(totalTech / players.length);
 
-        // 3. 处理全服数据
-        const globalData = await ctx.database.get("马列全球数据表", {
+        const [currentGlobal] = await ctx.database.get("马列全球数据表", {
             id: "global",
         });
 
-        // 如果没有全服数据，初始化
-        if (globalData.length === 0) {
+        let todayProduction = 0;
+        let history: number[] = [];
+
+        if (!currentGlobal) {
             await ctx.database.create("马列全球数据表", {
                 id: "global",
                 全球平均工资: avgWage,
@@ -78,72 +152,101 @@ async function 执行每日统计(ctx: Context): Promise < void > {
                 近三天全球生产总值: 0,
                 近七天全球生产总值: 0,
             });
+        } else {
+            todayProduction = currentGlobal.今日全球生产总值 || 0;
+            history = [...(currentGlobal.历史生产记录 || []), todayProduction];
+            if (history.length > 7) {
+                history = history.slice(-7);
+            }
+
+            const 近三天全球生产总值 = history
+                .slice(-3)
+                .reduce((a, b) => a + b, 0);
+            const 近七天全球生产总值 = history
+                .slice(-7)
+                .reduce((a, b) => a + b, 0);
 
             await ctx.database.set(
-                "马列服务表", {
-                    id: "service"
-                }, {
-                    上次全服统计日期: 今天,
+                "马列全球数据表",
+                { id: "global" },
+                {
+                    全球平均工资: avgWage,
+                    全球平均科技等级: avgTech,
+                    历史生产记录: history,
+                    近三天全球生产总值,
+                    近七天全球生产总值,
+                    今日全球生产总值: 0,
                 }
             );
-            return;
+
+            const 新闻结果 = await 尝试发送新闻信号塔通报(ctx, {
+                标题: "全服基础数据日报",
+                内容: 构建全服统计新闻内容({
+                    今天,
+                    玩家数量: players.length,
+                    平均工资: avgWage,
+                    平均科技等级: avgTech,
+                    昨日全球生产总值: todayProduction,
+                    近三天全球生产总值,
+                    近七天全球生产总值,
+                }),
+            });
+
+            await ctx.database.set(
+                "马列服务表",
+                { id: "service" },
+                { 上次全服统计日期: 今天 }
+            );
+
+            logger.info(
+                `统计完成：平均工资=${avgWage}，平均科技=${avgTech}，昨日产值=${todayProduction}`
+            );
+
+            return {
+                今天,
+                是否执行: true,
+                玩家数量: players.length,
+                平均工资: avgWage,
+                平均科技等级: avgTech,
+                昨日全球生产总值: todayProduction,
+                新闻已发送数量: 新闻结果?.已发送.length ?? 0,
+                新闻发送失败数量: 新闻结果?.发送失败.length ?? 0,
+            };
         }
 
-        const currentGlobal = globalData[0];
-        const todayProduction = currentGlobal?.今日全球生产总值 || 0;
-        let history = currentGlobal?.历史生产记录 || [];
-
-        // 将今日数据加入历史记录
-        history.push(todayProduction);
-
-        // 只保留最近7天的数据
-        if (history.length > 7) {
-            history = history.slice(history.length - 7);
-        }
-
-        // 计算近三天和近七天总值
-        const last3Days = history.slice(-3);
-        const sum3Days = last3Days.reduce((a, b) => a + b, 0);
-
-        const last7Days = history.slice(-7);
-        const sum7Days = last7Days.reduce((a, b) => a + b, 0);
-
-        // 更新数据库
         await ctx.database.set(
-            "马列全球数据表", {
-                id: "global"
-            }, {
-                全球平均工资: avgWage,
-                全球平均科技等级: avgTech,
-                历史生产记录: history,
-                近三天全球生产总值: sum3Days,
-                近七天全球生产总值: sum7Days,
-                今日全球生产总值: 0,
-            }
+            "马列服务表",
+            { id: "service" },
+            { 上次全服统计日期: 今天 }
         );
 
-        await ctx.database.set(
-            "马列服务表", {
-                id: "service"
-            }, {
-                上次全服统计日期: 今天,
-            }
-        );
-
-        console.log(
-            `[全服数据统计] 完成。平均工资: ${avgWage}, 平均科技: ${avgTech}, 昨日产值: ${todayProduction}`
-        );
+        return {
+            今天,
+            是否执行: true,
+            玩家数量: players.length,
+            平均工资: avgWage,
+            平均科技等级: avgTech,
+            昨日全球生产总值: 0,
+            新闻已发送数量: 0,
+            新闻发送失败数量: 0,
+        };
+    } catch (error) {
+        const 错误信息 = error instanceof Error ? error.message : "未知错误";
+        await 尝试发送后台信号塔日志(ctx, {
+            级别: "ERROR",
+            标题: "全服数据统计异常",
+            内容: 错误信息,
+        });
+        throw error;
     } finally {
         正在执行全服统计 = false;
     }
 }
 
-/**
- * 启动每日全服数据统计任务
- * 每5分钟检查一次，跨天仅执行一次
- */
 export function 每日全服数据统计(ctx: Context) {
     ctx.cron("*/5 * * * *", () => {
-        执行每日统计(ctx);
+        执行每日全服统计(ctx).catch((error) => {
+            ctx.logger("全服数据统计").error(error);
+        });
     });
 }

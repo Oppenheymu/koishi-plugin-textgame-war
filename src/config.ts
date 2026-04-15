@@ -38,9 +38,21 @@ export interface Sqids配置 {
     coalition: Sqids单项配置;
 }
 
+export interface 信号塔频道配置 {
+    onebot: string[];
+    discord: string[];
+    telegram: string[];
+}
+
+export interface 信号塔配置 {
+    新闻群: 信号塔频道配置;
+    后台群: 信号塔频道配置;
+}
+
 export interface PluginConfig {
     coalitionPermissionDefault: 联军默认权限配置;
     sqids: Sqids配置;
+    信号塔: 信号塔配置;
 }
 
 export const 默认联军权限配置: 联军默认权限配置 = {
@@ -78,9 +90,31 @@ export const 默认Sqids配置: Sqids配置 = {
     },
 };
 
+export const 默认信号塔频道配置: 信号塔频道配置 = {
+    onebot: [],
+    discord: [],
+    telegram: [],
+};
+
+export const 默认信号塔配置: 信号塔配置 = {
+    新闻群: {
+        ...默认信号塔频道配置,
+        onebot: [...默认信号塔频道配置.onebot],
+        discord: [...默认信号塔频道配置.discord],
+        telegram: [...默认信号塔频道配置.telegram],
+    },
+    后台群: {
+        ...默认信号塔频道配置,
+        onebot: [...默认信号塔频道配置.onebot],
+        discord: [...默认信号塔频道配置.discord],
+        telegram: [...默认信号塔频道配置.telegram],
+    },
+};
+
 export const 默认插件配置: PluginConfig = {
     coalitionPermissionDefault: 默认联军权限配置,
     sqids: 默认Sqids配置,
+    信号塔: 默认信号塔配置,
 };
 
 let 当前运行时配置: PluginConfig = {
@@ -93,6 +127,18 @@ let 当前运行时配置: PluginConfig = {
         },
         coalition: {
             ...默认Sqids配置.coalition
+        },
+    },
+    信号塔: {
+        新闻群: {
+            onebot: [...默认信号塔配置.新闻群.onebot],
+            discord: [...默认信号塔配置.新闻群.discord],
+            telegram: [...默认信号塔配置.新闻群.telegram],
+        },
+        后台群: {
+            onebot: [...默认信号塔配置.后台群.onebot],
+            discord: [...默认信号塔配置.后台群.discord],
+            telegram: [...默认信号塔配置.后台群.telegram],
         },
     },
 };
@@ -111,6 +157,18 @@ export function 初始化插件运行时配置(config: Partial < PluginConfig > 
             coalition: {
                 ...默认Sqids配置.coalition,
                 ...(config.sqids?.coalition ?? {}),
+            },
+        },
+        信号塔: {
+            新闻群: {
+                onebot: config.信号塔?.新闻群?.onebot ? [...config.信号塔.新闻群.onebot] : [...默认信号塔配置.新闻群.onebot],
+                discord: config.信号塔?.新闻群?.discord ? [...config.信号塔.新闻群.discord] : [...默认信号塔配置.新闻群.discord],
+                telegram: config.信号塔?.新闻群?.telegram ? [...config.信号塔.新闻群.telegram] : [...默认信号塔配置.新闻群.telegram],
+            },
+            后台群: {
+                onebot: config.信号塔?.后台群?.onebot ? [...config.信号塔.后台群.onebot] : [...默认信号塔配置.后台群.onebot],
+                discord: config.信号塔?.后台群?.discord ? [...config.信号塔.后台群.discord] : [...默认信号塔配置.后台群.discord],
+                telegram: config.信号塔?.后台群?.telegram ? [...config.信号塔.后台群.telegram] : [...默认信号塔配置.后台群.telegram],
             },
         },
     };
@@ -151,6 +209,20 @@ function 创建Sqids单项Schema(默认值: Sqids单项配置): Schema < Sqids�
     });
 }
 
+function 创建信号塔频道Schema(默认值: 信号塔频道配置): Schema < 信号塔频道配置 > {
+    return Schema.object({
+        onebot: Schema.array(Schema.string())
+            .default([...默认值.onebot])
+            .description("OneBot 群聊ID列表"),
+        discord: Schema.array(Schema.string())
+            .default([...默认值.discord])
+            .description("Discord 频道ID列表"),
+        telegram: Schema.array(Schema.string())
+            .default([...默认值.telegram])
+            .description("Telegram 群聊ID列表"),
+    });
+}
+
 export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
     coalitionPermissionDefault: Schema.object({
         成员列表: 权限等级Schema.default(默认联军权限配置.成员列表),
@@ -181,4 +253,12 @@ export const 插件配置Schema: Schema < PluginConfig > = Schema.object({
             "联军编号生成参数"
         ),
     }).description("Sqids 配置"),
+    信号塔: Schema.object({
+        新闻群: 创建信号塔频道Schema(默认信号塔配置.新闻群).description(
+            "新闻广播群配置"
+        ),
+        后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description(
+            "后台日志群配置"
+        ),
+    }).description("信号塔配置"),
 });
