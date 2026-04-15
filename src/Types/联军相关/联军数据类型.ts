@@ -49,6 +49,7 @@ export interface CoalitionArmy {
     联军宣称兵力: number;
 
     // 联军状态机
+    扩军计划: number | null | undefined;
     联军税率: number;
     当天内资本增量: number;
     三天内资本增量: number;

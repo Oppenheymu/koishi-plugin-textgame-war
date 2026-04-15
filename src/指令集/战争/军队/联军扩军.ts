@@ -6,6 +6,9 @@ import {
     更新玩家资料,
     生成随机图片片段
 } from "@/utils";
+import {
+    玩家联军权限设置
+} from "@/logic";
 
 const 图片概率 = 0.01;
 const 图片池 = ["行军.jpg", "行军2.jpg", "行军3.jpg", "阅兵2.jpg"];
@@ -18,6 +21,7 @@ export function 扩军(ctx: Context) {
             session
         }, 数量) => {
             try {
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, "设置扩军计划");
                 const {
                     uid,
                     id,
@@ -26,7 +30,10 @@ export function 扩军(ctx: Context) {
                     联军资料,
                     联军编号
                 } =
-                await 玩家联军检查(ctx, session);
+                await 玩家联军检查(ctx, session, {
+                    最低权限等级: 权限等级需求,
+                    是否必须在成员列表: true,
+                });
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!数量) {
@@ -39,6 +46,11 @@ ${username}同志：
 
                 if (!Number.isInteger(数量) || 数量 <= 0) {
                     return "请输入正确的扩军数量";
+                }
+
+                const 扩军计划上限 = 联军资料.扩军计划;
+                if (typeof 扩军计划上限 === "number" && 扩军计划上限 > 0 && 数量 > 扩军计划上限) {
+                    return `本次扩军上限为 ${格式化(扩军计划上限)}，请调整扩军数量`;
                 }
 
                 if (用户资料.工人 < 数量) {

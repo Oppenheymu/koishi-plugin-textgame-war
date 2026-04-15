@@ -75,6 +75,10 @@ export function 加载联军权限表(ctx: Context) {
                 type: "unsigned",
                 initial: 4
             },
+            设置扩军计划: {
+                type: "unsigned",
+                initial: 4
+            },
         }, {
             primary: "联军编号",
             unique: ["联军编号"],

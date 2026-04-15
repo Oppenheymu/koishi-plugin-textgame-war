@@ -16,7 +16,8 @@ export type CoalitionPermissionAction = |
     "设置地区驻扎权限" |
     "分配生活资料" |
     "分配历史记录" |
-    "设置税率";
+    "设置税率" |
+    "设置扩军计划";
 
 export interface CoalitionPermission {
 
@@ -37,5 +38,6 @@ export interface CoalitionPermission {
     分配生活资料: CoalitionPermissionLevel;
     分配历史记录: CoalitionPermissionLevel;
     设置税率: CoalitionPermissionLevel;
+    设置扩军计划: CoalitionPermissionLevel;
 
 }

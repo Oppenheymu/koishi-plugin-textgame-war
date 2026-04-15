@@ -8,6 +8,9 @@ export function 分配生活资料(ctx: Context) {
   ctx
     .command("分配生活资料 <数量:number> [目标:string]")
     .alias("联军分配生活资料")
+    .alias("配给资料")
+    .alias("分配资料")
+    .alias("分配资本")
     .action(async ({ session }, 数量, 目标) => {
       try {
         if (!Number.isInteger(数量) || 数量 <= 0) {
@@ -77,8 +80,8 @@ export function 分配生活资料(ctx: Context) {
         return `
 ====[征战文游]====
 ${username} 同志：
-已向 ${接收者显示名} 分配联军生活资料 ${格式化(数量)}
-联军剩余生活资料：${格式化((联军资料.联军生活资料 ?? 0) - 数量)}
+已向 ${接收者显示名} 分配联军资料 ${格式化(数量)}
+联军剩余资料：${格式化((联军资料.联军生活资料 ?? 0) - 数量)}
 `.trim();
       } catch (error) {
         return (error as Error).message;

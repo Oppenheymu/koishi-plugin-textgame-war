@@ -35,7 +35,7 @@ export function 加载联军表(ctx: Context) {
                 type: "json",
                 initial: []
             },
-                        联军一级权限成员列表: {
+            联军一级权限成员列表: {
                 type: "json",
                 initial: []
             },
@@ -45,6 +45,11 @@ export function 加载联军表(ctx: Context) {
                 length: 32
             },
 
+            扩军计划: {
+                type: "unsigned",
+                nullable: true,
+                initial: null
+            },
             联军税率: {
                 type: "float",
                 initial: 0
