@@ -3,7 +3,7 @@ import {
 } from "koishi";
 import {
     玩家检查
-} from "../../../../utils/";
+} from "../../../../utils";
 
 export function 我的地下工厂(ctx: Context) {
     ctx.command("我的地下工厂").action(async ({

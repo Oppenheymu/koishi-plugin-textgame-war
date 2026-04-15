@@ -3,19 +3,19 @@ import {
 } from "koishi";
 import {
     生产指令
-} from "./生产指令";
+} from "./生产";
 import {
     联军指令
-} from "./联军指令";
+} from "./联军";
 import {
     基础指令
-} from "./基础指令";
+} from "./基础";
 import {
     战争指令
 } from "./战争";
 import {
     地区指令
-} from "./地区指令";
+} from "./地区";
 import {
     批量加载插件
 } from "../utils/插件加载";
