@@ -1,17 +1,13 @@
-
-
-
 // 地区状态
 export interface RegionState {
+	地区编号: string;
 
-    地区编号: string;
-
-    // 这里的归属国ID用的是混淆前的自增ID
-    地区归属国: number | null;
-    是否已分配: boolean;
+	// 这里的归属国ID用的是混淆前的自增ID
+	地区归属国: number | null;
+	是否已分配: boolean;
 }
 
 export interface RegionShufflePool {
-    id: number;
-    地区编号: string;
+	id: number;
+	地区编号: string;
 }

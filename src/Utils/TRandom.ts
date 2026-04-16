@@ -7,29 +7,29 @@
  * @returns      - 随机数（整数或浮点数）
  */
 export function TRandom(
-    min: number,
-    mode: number,
-    max: number,
-    round: boolean = true
+	min: number,
+	mode: number,
+	max: number,
+	round: boolean = true,
 ): number {
-    if (min > mode || mode > max) {
-        throw new Error("参数错误：必须满足 min ≤ mode ≤ max");
-    }
-    if (min === max) return min;
+	if (min > mode || mode > max) {
+		throw new Error("参数错误：必须满足 min ≤ mode ≤ max");
+	}
+	if (min === max) return min;
 
-    const u = Math.random();
-    const c = (mode - min) / (max - min); // F(mode)
+	const u = Math.random();
+	const c = (mode - min) / (max - min); // F(mode)
 
-    let result: number;
+	let result: number;
 
-    if (u <= c) {
-        // 左半边
-        result = min + Math.sqrt(u * (max - min) * (mode - min));
-    } else {
-        // 右半边
-        result = max - Math.sqrt((1 - u) * (max - min) * (max - mode));
-    }
+	if (u <= c) {
+		// 左半边
+		result = min + Math.sqrt(u * (max - min) * (mode - min));
+	} else {
+		// 右半边
+		result = max - Math.sqrt((1 - u) * (max - min) * (max - mode));
+	}
 
-    // 根据 round 参数决定是否取整
-    return round ? Math.round(result) : result;
+	// 根据 round 参数决定是否取整
+	return round ? Math.round(result) : result;
 }

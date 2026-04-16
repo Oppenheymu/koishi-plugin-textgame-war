@@ -39,5 +39,8 @@
     "dependencies": {
         "sqids": "^0.3.0",
         "tsconfig-paths": "^4.2.0"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.4.12"
     }
 }
