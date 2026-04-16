@@ -1,13 +1,13 @@
-import type { Context } from "koishi";
-import { 生产指令 } from "./生产";
-import { 联军指令 } from "./联军";
-import { 基础指令 } from "./基础";
-import { 战争指令 } from "./战争";
-import { 地区指令 } from "./地区";
-import { 批量加载插件 } from "../utils/插件加载";
+import type { Context } from 'koishi';
+import { 批量加载插件 } from '../utils/插件加载';
+import { 地区指令 } from './地区';
+import { 基础指令 } from './基础';
+import { 战争指令 } from './战争';
+import { 生产指令 } from './生产';
+import { 联军指令 } from './联军';
 
 const 生产插件列表 = [基础指令, 联军指令, 生产指令, 战争指令, 地区指令];
 
 export function 文游指令集(ctx: Context) {
-	批量加载插件(ctx, 生产插件列表, "文游指令集模块");
+    批量加载插件(ctx, 生产插件列表, '文游指令集模块');
 }

@@ -1,1 +1,1 @@
-export * from "./检查违禁词";
+export * from './检查违禁词';
