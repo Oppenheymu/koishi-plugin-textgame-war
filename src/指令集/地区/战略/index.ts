@@ -1,5 +1,3 @@
-import { 修建铁路, 审核铁路 } from './修建铁路';
+import { 铁路相关 } from './铁路';
 
-export { 修建铁路, 审核铁路 };
-
-export const 地区战略指令 = [修建铁路, 审核铁路];
+export const 地区战略指令 = [...铁路相关];

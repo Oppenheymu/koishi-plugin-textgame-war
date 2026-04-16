@@ -233,8 +233,7 @@ export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
                 ...(config.土木工程?.地形惩罚系数 ?? {}),
             },
             跨联军铁路审批过期小时:
-                config.土木工程?.跨联军铁路审批过期小时
-                ?? 默认土木工程配置.跨联军铁路审批过期小时,
+                config.土木工程?.跨联军铁路审批过期小时 ?? 默认土木工程配置.跨联军铁路审批过期小时,
         },
     };
 }
@@ -350,8 +349,9 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         铁路类型列表: Schema.array(创建铁路类型配置Schema(默认土木工程配置.铁路类型列表[0]))
             .default(默认土木工程配置.铁路类型列表.map((配置) => ({ ...配置 })))
             .description('铁路类型与基础生产力配置'),
-        地形惩罚系数: 创建地形惩罚系数Schema(默认土木工程配置.地形惩罚系数)
-            .description('地形导致的铁路建造成本倍率'),
+        地形惩罚系数: 创建地形惩罚系数Schema(默认土木工程配置.地形惩罚系数).description(
+            '地形导致的铁路建造成本倍率'
+        ),
         跨联军铁路审批过期小时: Schema.number()
             .min(1)
             .max(168)

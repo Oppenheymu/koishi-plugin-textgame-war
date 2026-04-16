@@ -3,6 +3,7 @@ import type {
     CoalitionArmy,
     CoalitionPermission,
     GlobalData,
+    PendingRailwayBuild,
     Player,
     PlayerConfig,
     PlayerWarData,
@@ -13,7 +14,6 @@ import type {
     RegionStrategy,
     RegionTerra,
     Service,
-    PendingRailwayBuild,
 } from '@/types';
 import { 批量加载插件 } from '@/utils';
 import { 加载全球数据表 } from './全球数据表';

@@ -1,4 +1,5 @@
 import type { Context } from 'koishi';
+import type { CoalitionArmy } from '@/types';
 import { 玩家检查, 目标解析 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -32,7 +33,8 @@ function 读取资本增量(联军资料: 联军增量字段, 区间: 增量区�
 
 async function 查询对象联军资本增量(
     ctx: Context,
-    session: Session,
+    // biome-ignore lint/suspicious/noExplicitAny: koishi的问题
+    session: any,
     区间: 增量区间,
     目标?: string
 ): Promise<{ 查询用户名: string; 联军编号: string; 资本增量: number }> {

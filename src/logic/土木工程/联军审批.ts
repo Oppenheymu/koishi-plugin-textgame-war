@@ -22,10 +22,7 @@ export interface 联军审批推送结果 {
 
 const 支持平台: 审批推送平台[] = ['onebot', 'discord', 'telegram'];
 
-async function 推送联军审批消息(
-    ctx: Context,
-    参数: 联军审批推送参数
-): Promise<联军审批推送结果> {
+async function 推送联军审批消息(ctx: Context, 参数: 联军审批推送参数): Promise<联军审批推送结果> {
     const 文本内容 = 参数.文本内容?.trim();
     if (!文本内容) {
         throw new Error('审批推送失败：消息内容不能为空');
