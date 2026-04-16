@@ -24,6 +24,8 @@ export interface Region {
 
     地区总督: string;
     允许非联军成员驻扎: boolean;
+    允许非联军成员使用机场: boolean;
+    允许机场使用战斗机: boolean;
 
     // 基础设施
     当前总基础设施: number;

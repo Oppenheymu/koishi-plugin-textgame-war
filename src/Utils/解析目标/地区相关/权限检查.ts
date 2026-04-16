@@ -123,3 +123,11 @@ export async function 地区驻扎权限设置检查(
 ): Promise<地区权限检查结果> {
     return 地区权限检查(ctx, session, "设置地区驻扎权限", 地区编号参数, "设置驻扎权限");
 }
+
+export async function 地区机场权限设置检查(
+    ctx: Context,
+    session: Session | undefined,
+    地区编号参数?: string
+): Promise<地区权限检查结果> {
+    return 地区权限检查(ctx, session, "设置地区驻扎权限", 地区编号参数, "设置机场权限");
+}

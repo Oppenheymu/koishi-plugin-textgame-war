@@ -29,6 +29,14 @@ export function 加载地区表(ctx: Context) {
                 type: "boolean",
                 initial: true,
             },
+            允许非联军成员使用机场: {
+                type: "boolean",
+                initial: true,
+            },
+            允许机场使用战斗机: {
+                type: "boolean",
+                initial: true,
+            },
 
             当前总基础设施: {
                 type: "unsigned",
