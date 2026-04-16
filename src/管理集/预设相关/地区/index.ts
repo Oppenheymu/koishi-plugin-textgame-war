@@ -93,6 +93,7 @@ export function 初始化地区表(ctx: Context) {
                     地区编号: String(地区.RegionId),
                     地区司令: '',
                     铁路: {},
+                    是否有铁路: false,
                     地区驻军: 0,
                     地区堡垒: 0,
                     生物实验室: {},

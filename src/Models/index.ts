@@ -13,6 +13,7 @@ import type {
     RegionStrategy,
     RegionTerra,
     Service,
+    PendingRailwayBuild,
 } from '@/types';
 import { 批量加载插件 } from '@/utils';
 import { 加载全球数据表 } from './全球数据表';
@@ -40,6 +41,7 @@ declare module 'koishi' {
         马列地区状态机: RegionState;
         马列地区战略表: RegionStrategy;
         马列地区洗牌池: RegionShufflePool;
+        马列铁路修建申请表: PendingRailwayBuild;
 
         马列服务表: Service;
     }

@@ -9,18 +9,26 @@ interface WarRecord {
     时间: string;
 }
 
-interface RailRecord {
+export interface RailRecord {
     运输者: string;
     运输物: string;
     时间: string;
 }
 
-type RailStatus = '正常' | '中断' | '维修中' | '被破坏' | '建设中';
+export type RailStatus = '正常' | '中断' | '维修中' | '被破坏' | '建设中';
 
-interface Railroad {
+export interface Railroad {
     // 铁路通向的目标地区(编号)
     目标地区: string;
 
+    // 铁路来源地区（即发起修建的地区）
+    来源地区: string;
+
+    铁路类型: string;
+    建造需求: number;
+    已投入生产力: number;
+
+    建造进度: number;
     铁路状态: RailStatus;
 
     铁路运力: number;
@@ -46,7 +54,7 @@ interface PrepareRecord {
 interface BiologyLab {
     是否制备中: boolean;
 
-    已投入生产力: number;
+    建造进度: number;
     建造时间: string;
 
     日志: PrepareRecord[];
@@ -55,7 +63,7 @@ interface BiologyLab {
 interface Centrifuge {
     是否运行中: boolean;
 
-    已投入生产力: number;
+    建造进度: number;
     建造时间: string;
 
     日志: PrepareRecord[];
@@ -64,7 +72,7 @@ interface Centrifuge {
 interface NuclearReactor {
     是否运行中: boolean;
 
-    已投入生产力: number;
+    建造进度: number;
     建造时间: string;
 
     日志: PrepareRecord[];
@@ -78,6 +86,7 @@ export interface RegionStrategy {
     // 战略运输
 
     铁路: Record<number, Railroad>;
+    是否有铁路: boolean;
 
     // 地区军事
     地区驻军: number;
@@ -92,4 +101,37 @@ export interface RegionStrategy {
     空闲的列车炮: number;
 
     历史战争: WarRecord[];
+}
+
+export type RailBuildPendingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled' | 'expired';
+
+export interface PendingRailwayBuild {
+    id: string;
+    状态: RailBuildPendingStatus;
+
+    申请人ID: number;
+    申请人UID: string;
+    申请人名称: string;
+
+    发起联军编号: string;
+    发起联军名称: string;
+    发起地区编号: string;
+
+    目标地区编号: string;
+    目标联军编号: string;
+    目标联军名称: string;
+
+    铁路类型: string;
+    铁路类型名称: string;
+    最终需求生产力: number;
+    提供运力: number;
+
+    已投入生产力: number;
+
+    创建时间: string;
+    更新时间: string;
+    过期时间: string;
+
+    审批人UID: string;
+    审批备注: string;
 }

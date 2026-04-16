@@ -1,5 +1,5 @@
 import { Schema } from 'koishi';
-import type { CoalitionPermissionLevel } from './types';
+import type { CoalitionPermissionLevel, TerrainType } from './types';
 
 export interface 联军默认权限配置 {
     成员列表: CoalitionPermissionLevel;
@@ -45,10 +45,24 @@ export interface 信号塔配置 {
     后台群: 信号塔频道配置;
 }
 
+export interface 铁路类型配置项 {
+    类型ID: string;
+    类型名称: string;
+    需求生产力: number;
+    提供运力: number;
+}
+
+export interface 土木工程配置 {
+    铁路类型列表: 铁路类型配置项[];
+    地形惩罚系数: Record<TerrainType, number>;
+    跨联军铁路审批过期小时: number;
+}
+
 export interface PluginConfig {
     coalitionPermissionDefault: 联军默认权限配置;
     sqids: Sqids配置;
     信号塔: 信号塔配置;
+    土木工程: 土木工程配置;
 }
 
 export const 默认联军权限配置: 联军默认权限配置 = {
@@ -107,10 +121,34 @@ export const 默认信号塔配置: 信号塔配置 = {
     },
 };
 
+export const 默认土木工程配置: 土木工程配置 = {
+    铁路类型列表: [
+        { 类型ID: '铁路1', 类型名称: '轻型铁路', 需求生产力: 1_000_000, 提供运力: 1_000_000 },
+        { 类型ID: '铁路2', 类型名称: '标准铁路', 需求生产力: 3_000_000, 提供运力: 4_000_000 },
+        { 类型ID: '铁路3', 类型名称: '重型铁路', 需求生产力: 6_000_000, 提供运力: 9_000_000 },
+        { 类型ID: '铁路4', 类型名称: '特重铁路', 需求生产力: 10_000_000, 提供运力: 20_000_000 },
+    ],
+    地形惩罚系数: {
+        浅海: 1.8,
+        中海: 2,
+        深海: 2.2,
+        超深海: 2.5,
+        平原: 1,
+        高原: 1.08,
+        浅丘: 1.12,
+        深丘: 1.18,
+        低山: 1.25,
+        中山: 1.35,
+        高山: 1.5,
+    },
+    跨联军铁路审批过期小时: 24,
+};
+
 export const 默认插件配置: PluginConfig = {
     coalitionPermissionDefault: 默认联军权限配置,
     sqids: 默认Sqids配置,
     信号塔: 默认信号塔配置,
+    土木工程: 默认土木工程配置,
 };
 
 let 当前运行时配置: PluginConfig = {
@@ -136,6 +174,13 @@ let 当前运行时配置: PluginConfig = {
             discord: [...默认信号塔配置.后台群.discord],
             telegram: [...默认信号塔配置.后台群.telegram],
         },
+    },
+    土木工程: {
+        铁路类型列表: 默认土木工程配置.铁路类型列表.map((配置) => ({ ...配置 })),
+        地形惩罚系数: {
+            ...默认土木工程配置.地形惩罚系数,
+        },
+        跨联军铁路审批过期小时: 默认土木工程配置.跨联军铁路审批过期小时,
     },
 };
 
@@ -178,6 +223,18 @@ export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
                     ? [...config.信号塔.后台群.telegram]
                     : [...默认信号塔配置.后台群.telegram],
             },
+        },
+        土木工程: {
+            铁路类型列表: config.土木工程?.铁路类型列表?.length
+                ? config.土木工程.铁路类型列表.map((配置) => ({ ...配置 }))
+                : 默认土木工程配置.铁路类型列表.map((配置) => ({ ...配置 })),
+            地形惩罚系数: {
+                ...默认土木工程配置.地形惩罚系数,
+                ...(config.土木工程?.地形惩罚系数 ?? {}),
+            },
+            跨联军铁路审批过期小时:
+                config.土木工程?.跨联军铁路审批过期小时
+                ?? 默认土木工程配置.跨联军铁路审批过期小时,
         },
     };
 }
@@ -231,6 +288,34 @@ function 创建信号塔频道Schema(默认值: 信号塔频道配置): Schema<�
     });
 }
 
+function 创建铁路类型配置Schema(默认值: 铁路类型配置项): Schema<铁路类型配置项> {
+    return Schema.object({
+        类型ID: Schema.string().default(默认值.类型ID).description('铁路类型标识（如：铁路1）'),
+        类型名称: Schema.string().default(默认值.类型名称).description('铁路展示名称'),
+        需求生产力: Schema.number().min(1).default(默认值.需求生产力).description('基础生产力需求'),
+        提供运力: Schema.number()
+            .min(1)
+            .default(默认值.提供运力)
+            .description('铁路建成后提供的运力'),
+    });
+}
+
+function 创建地形惩罚系数Schema(默认值: Record<TerrainType, number>) {
+    return Schema.object({
+        浅海: Schema.number().min(0.1).default(默认值.浅海),
+        中海: Schema.number().min(0.1).default(默认值.中海),
+        深海: Schema.number().min(0.1).default(默认值.深海),
+        超深海: Schema.number().min(0.1).default(默认值.超深海),
+        平原: Schema.number().min(0.1).default(默认值.平原),
+        高原: Schema.number().min(0.1).default(默认值.高原),
+        浅丘: Schema.number().min(0.1).default(默认值.浅丘),
+        深丘: Schema.number().min(0.1).default(默认值.深丘),
+        低山: Schema.number().min(0.1).default(默认值.低山),
+        中山: Schema.number().min(0.1).default(默认值.中山),
+        高山: Schema.number().min(0.1).default(默认值.高山),
+    });
+}
+
 export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
     coalitionPermissionDefault: Schema.object({
         成员列表: 权限等级Schema.default(默认联军权限配置.成员列表),
@@ -261,4 +346,16 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         新闻群: 创建信号塔频道Schema(默认信号塔配置.新闻群).description('新闻广播群配置'),
         后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description('后台日志群配置'),
     }).description('信号塔配置'),
+    土木工程: Schema.object({
+        铁路类型列表: Schema.array(创建铁路类型配置Schema(默认土木工程配置.铁路类型列表[0]))
+            .default(默认土木工程配置.铁路类型列表.map((配置) => ({ ...配置 })))
+            .description('铁路类型与基础生产力配置'),
+        地形惩罚系数: 创建地形惩罚系数Schema(默认土木工程配置.地形惩罚系数)
+            .description('地形导致的铁路建造成本倍率'),
+        跨联军铁路审批过期小时: Schema.number()
+            .min(1)
+            .max(168)
+            .default(默认土木工程配置.跨联军铁路审批过期小时)
+            .description('跨联军铁路申请自动失效小时数'),
+    }).description('土木工程配置'),
 });
