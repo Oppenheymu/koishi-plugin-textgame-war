@@ -1,7 +1,12 @@
 import type { Context } from 'koishi';
+import { 获取铁路类型列表 } from '@/logic';
 import { 地区查询权限检查 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+
+const 铁路类型名称映射 = new Map(
+    获取铁路类型列表().map((配置) => [配置.类型ID, 配置.类型名称] as const)
+);
 
 export function 查看地区铁路(ctx: Context) {
     ctx.command('查看地区铁路 [地区编号:string]')
@@ -40,7 +45,7 @@ export function 查看地区铁路(ctx: Context) {
                               return [
                                   `  - 铁路#${编号}`,
                                   `    · 目标地区：${铁路信息.目标地区}`,
-                                  `    · 类型：${铁路信息.铁路类型 || '未知类型'}`,
+                                  `    · 类型：${铁路类型名称映射.get(铁路信息.铁路类型) || 铁路信息.铁路类型 || '未知类型'}`,
                                   `    · 状态：${铁路信息.铁路状态}`,
                                   `    · 建造进度：${(铁路信息.建造进度 ?? 0).toFixed(2)}%`,
                                   `    · 运力：${格式化(铁路信息.当前负载)} / ${格式化(铁路信息.铁路运力)} (${负载占比})`,

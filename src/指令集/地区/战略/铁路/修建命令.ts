@@ -214,16 +214,18 @@ async function 执行修建主流程(
 
     return [
         '【铁路修建】',
-        `检测到跨联军目标，已提交审核申请：${申请记录.id}`,
+        `检测到跨联军铁路，已提交申请：${申请记录.id}`,
         `目标联军：${目标联军.联军名称}（${目标联军编号}）`,
         `需求生产力：${格式化(建造成本.最终需求生产力)}`,
-        `提供运力：${格式化(建造成本.提供运力)}`,
-        `推送成功：${推送结果.已发送.length}，失败：${推送结果.发送失败.length}`,
+        `提供的运力：${格式化(建造成本.提供运力)}`,
+        `推送成功：${推送结果.已发送.length}`,
     ].join('\n');
 }
 
 export function 修建铁路(ctx: Context) {
-    ctx.command('修建铁路 <目标地区:string>').action(async ({ session }, 目标地区参数) => {
+    ctx.command('修建铁路 <目标地区:string>')
+    .alias("建造铁路")
+    .action(async ({ session }, 目标地区参数) => {
         try {
             return await 执行修建主流程(ctx, session, 目标地区参数);
         } catch (error) {
