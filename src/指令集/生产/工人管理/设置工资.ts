@@ -6,8 +6,6 @@ export function 设置工资(ctx: Context) {
 		try {
 			const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
-			// 格式化数字显示
-			const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 			// 验证工资输入
 			if (工资 === undefined || 工资 === null) {

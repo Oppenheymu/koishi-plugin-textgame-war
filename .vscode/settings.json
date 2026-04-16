@@ -1,0 +1,32 @@
+{
+  // --- 核心编辑器设置 ---
+  "editor.formatOnSave": true, // 既然装了 Biome，建议开启保存自动格式化
+  "editor.tabSize": 4, // 建议保持一致，与大多数现代项目同步
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+
+  // --- Biome 配置 (替代 Prettier 的高性能方案) ---
+  "editor.defaultFormatter": "biomejs.biome",
+  "[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[json]": { "editor.defaultFormatter": "biomejs.biome" },
+
+  // --- Error Lens (根据你截图中的插件) ---
+  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+  "errorLens.fontStyleItalic": true,
+  "errorLens.messageMaxChars": 0, // 0 表示不限制长度，让你看清错误
+
+  // --- Path Intellisense ---
+  "path-intellisense.extensionOnImport": true, // 导入时补全文件后缀名
+
+  // --- Material Icon Theme ---
+  "workbench.iconTheme": "material-icon-theme",
+
+  // --- 针对 Pretty TypeScript Errors 的优化 ---
+  // 该插件会自动处理，但建议禁用 VS Code 原本晦涩的提示
+  "typescript.format.enable": false, // 让 Biome 接管格式化
+
+  // --- 编辑器视觉辅助 ---
+  "editor.guides.bracketPairs": "active", // 增强括号配对显示
+  "editor.inlineSuggest.enabled": true // 开启内联建议
+}

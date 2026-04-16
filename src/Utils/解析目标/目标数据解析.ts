@@ -48,10 +48,10 @@ export async function 目标解析(
 	const platform = session.platform;
 
 	const atElement = session.elements?.find(
-		(el) => el.type === "at" && el.attrs?.["id"],
+		(el) => el.type === "at" && el.attrs?.id,
 	);
-	if (atElement?.attrs?.["id"]) {
-		const 目标用户ID = atElement.attrs["id"];
+	if (atElement?.attrs?.id) {
+		const 目标用户ID = atElement.attrs.id;
 		const [config] = await ctx.database.get("马列玩家配置表", {
 			[platform]: 目标用户ID,
 		});

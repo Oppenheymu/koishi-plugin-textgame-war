@@ -51,7 +51,11 @@ export function 检查违禁词(text: string): string | null {
 	let p = root;
 	for (const ch of s) {
 		while (p !== root && !p.next.has(ch)) {
-			p = p.fail!;
+			if (!p.fail) {
+				p = root;
+				break;
+			}
+			p = p.fail;
 		}
 		p = p.next.get(ch) ?? root;
 

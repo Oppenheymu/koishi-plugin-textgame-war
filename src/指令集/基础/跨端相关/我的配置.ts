@@ -1,4 +1,4 @@
-import { type Context, Session } from "koishi";
+import type { Context } from "koishi";
 import { 玩家检查 } from "@/utils";
 
 export function 我的账户配置(ctx: Context) {

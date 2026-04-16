@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 
 export function 查看版本日志(ctx: Context) {
-	ctx.command("查看征战版本日志").action(async ({ session }) => {
+	ctx.command("查看征战版本日志").action(async () => {
 		return `
 [征战文游]
 当前版本：1.0.0

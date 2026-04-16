@@ -43,7 +43,8 @@ export const build = (words: readonly string[]): Node => {
 			while (f && !f.next.has(ch)) {
 				f = f.fail;
 			}
-			nx.fail = f ? f.next.get(ch)! : root;
+			const 失配转移 = f?.next.get(ch);
+			nx.fail = 失配转移 ?? root;
 			nx.match = nx.match ?? nx.fail.match;
 			q.push(nx);
 		}

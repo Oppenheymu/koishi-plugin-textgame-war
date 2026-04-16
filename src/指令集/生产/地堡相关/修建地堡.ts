@@ -86,7 +86,9 @@ export function 修建地堡(ctx: Context) {
 
 				// 如果完成，设置完成标志
 				if (新投入 >= 配置.需求生产力) {
-					(更新对象 as any)[配置.完成字段] = true;
+					Object.assign(更新对象, {
+						[配置.完成字段]: true,
+					});
 				}
 
 				await 更新玩家资料(ctx, id, 更新对象);

@@ -23,7 +23,7 @@ export function 召回工人(ctx: Context) {
 					)}，无法召回${格式化(数量)}个工人`;
 				}
 
-				if (用户资料.小时是否生产 == false) {
+				if (用户资料.小时是否生产 === false) {
 					return `当前小时内还未生产过，无法召回工人`;
 				}
 

@@ -89,7 +89,7 @@ ${username} 同志：
 				id: "global",
 			});
 			const currentTotal =
-				globalData.length > 0 ? globalData[0]!.今日全球生产总值 : 0;
+				globalData.length > 0 ? (globalData[0]?.今日全球生产总值 ?? 0) : 0;
 
 			if (globalData.length === 0) {
 				await ctx.database.create("马列全球数据表", {

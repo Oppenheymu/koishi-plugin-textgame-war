@@ -5,11 +5,12 @@ export function 招募工人(ctx: Context) {
 	ctx.command("招募工人 <数量:number>").action(async ({ session }, 数量) => {
 		try {
 			const { id, username, 用户资料 } = await 玩家检查(ctx, session);
-			const 全球数据 = (
-				await ctx.database.get("马列全球数据表", {
-					id: "service",
-				})
-			)[0]!;
+			const [全球数据] = await ctx.database.get("马列全球数据表", {
+				id: "service",
+			});
+			if (!全球数据) {
+				return "全球劳动力市场数据缺失，请联系管理员";
+			}
 
 			// 格式化数字显示
 			const 格式化 = (n: number) => n.toLocaleString("zh-CN");

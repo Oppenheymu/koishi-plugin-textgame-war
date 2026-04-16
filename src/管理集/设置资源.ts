@@ -17,7 +17,7 @@ export function 设置资源(ctx: Context) {
 					value = true;
 				} else if (数量 === "false") {
 					value = false;
-				} else if (!isNaN(Number(数量))) {
+				} else if (!Number.isNaN(Number(数量))) {
 					value = Number(数量);
 				} else {
 					return "数量参数格式错误，只能为数字或布尔值";

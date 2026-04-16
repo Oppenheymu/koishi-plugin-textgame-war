@@ -4,6 +4,10 @@ import { 玩家检查, 目标解析 } from "@/utils";
 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 type 增量区间 = "当天" | "三天" | "七天";
+type 联军增量字段 = Pick<
+	CoalitionArmy,
+	"当天内资本增量" | "三天内资本增量" | "七天内资本增量"
+>;
 
 function 解析增量区间(输入?: string): 增量区间 {
 	const 文本 = 输入?.trim().toLowerCase() ?? "";
@@ -23,7 +27,7 @@ function 解析增量区间(输入?: string): 增量区间 {
 	throw new Error("仅支持：当天 / 三天 / 七天");
 }
 
-function 读取资本增量(联军资料: any, 区间: 增量区间): number {
+function 读取资本增量(联军资料: 联军增量字段, 区间: 增量区间): number {
 	if (区间 === "当天") return 联军资料.当天内资本增量 ?? 0;
 	if (区间 === "三天") return 联军资料.三天内资本增量 ?? 0;
 	return 联军资料.七天内资本增量 ?? 0;
@@ -31,7 +35,7 @@ function 读取资本增量(联军资料: any, 区间: 增量区间): number {
 
 async function 查询对象联军资本增量(
 	ctx: Context,
-	session: any,
+	session: Session,
 	区间: 增量区间,
 	目标?: string,
 ): Promise<{ 查询用户名: string; 联军编号: string; 资本增量: number }> {

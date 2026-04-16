@@ -1,7 +1,6 @@
-import { type Context, Logger } from "koishi";
+import { type Context, Logger, type Tables } from "koishi";
 import { resolve } from "node:path";
 import { readFile } from "node:fs/promises";
-
 import {
 	TerrainType,
 	type CapacityBase,
@@ -183,11 +182,11 @@ async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
 
 async function 写入批次(
 	ctx: Context,
-	地形批次: any[],
-	地区批次: any[],
-	状态机批次: any[],
-	配置批次: any[],
-	战略批次: any[],
+	地形批次: Tables["马列地区地形表"][],
+	地区批次: Tables["马列地区表"][],
+	状态机批次: Tables["马列地区状态机"][],
+	配置批次: Tables["马列地区配置表"][],
+	战略批次: Tables["马列地区战略表"][],
 ) {
 	try {
 		await Promise.all([
@@ -307,7 +306,7 @@ export function 初始化地区表(ctx: Context) {
 					const 基础数据批次 = 地区基础数据.slice(i, i + 批次大小);
 
 					const 地形批次 = 基础数据批次.map((地区) => ({
-						地区编号: 地区.RegionId,
+						地区编号: String(地区.RegionId),
 						是否为海洋: 地区.isOcean,
 						平均海拔: 地区.MeanElevation,
 						最大海拔: 地区.MaxElevation,
@@ -346,31 +345,35 @@ export function 初始化地区表(ctx: Context) {
 							当前总仓库容量: 0,
 							使用的仓库容量: 0,
 							炼钢厂数量: 0,
+							空闲的炼钢厂: 0,
 						};
 					});
 
 					const 状态机批次 = 基础数据批次.map((地区) => ({
-						地区编号: 地区.RegionId,
+						地区编号: String(地区.RegionId),
 						地区归属国: null,
 						是否已分配: false,
 					}));
 
 					const 配置批次 = 基础数据批次.map((地区) => ({
-						地区编号: 地区.RegionId,
-						onebot: null,
-						discord: null,
-						telegram: null,
+						地区编号: String(地区.RegionId),
+						onebot: "",
+						discord: "",
+						telegram: "",
 						地区名称: "默认名称",
 						名称是否审核: true,
-						上次改名日期: null,
+						上次改名日期: "",
 					}));
 
 					const 战略批次 = 基础数据批次.map((地区) => ({
-						地区编号: 地区.RegionId,
+						地区编号: String(地区.RegionId),
 						地区司令: "",
 						铁路: {},
 						地区驻军: 0,
 						地区堡垒: 0,
+						生物实验室: {},
+						高速离心级联: {},
+						核反应堆: {},
 						已部署列车炮: 0,
 						空闲的列车炮: 0,
 						历史战争: [],
