@@ -8,6 +8,7 @@ export interface Player {
 
     驻扎地区: string | null;
     上次驻扎日期: string;
+    上次炮击时间: string | null;
 
     今日是否签到: boolean;
     小时是否生产: boolean;

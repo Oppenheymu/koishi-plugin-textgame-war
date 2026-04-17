@@ -16,8 +16,7 @@
 
     // 保存时让 Biome 自动修复并整理导入（官方推荐键）
     "editor.codeActionsOnSave": {
-        "source.fixAll.biome": "explicit",
-        "source.organizeImports.biome": "always"
+        "source.fixAll.biome": "explicit"
     },
 
     // --- Error Lens (根据你截图中的插件) ---

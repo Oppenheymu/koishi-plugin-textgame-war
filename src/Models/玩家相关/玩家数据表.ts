@@ -38,6 +38,10 @@ export function 加载玩家表(ctx: Context) {
                 type: 'string',
                 nullable: true,
             },
+            上次炮击时间: {
+                type: 'string',
+                nullable: true,
+            },
 
             小时是否生产: {
                 type: 'boolean',

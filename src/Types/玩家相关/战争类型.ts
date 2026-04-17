@@ -5,7 +5,9 @@ export interface PlayerWarData {
     // 陆军
     私人军队: number;
     步兵装备: number;
+
     重炮: number;
+    
     火箭炮: number;
     火箭炮弹药: number;
 

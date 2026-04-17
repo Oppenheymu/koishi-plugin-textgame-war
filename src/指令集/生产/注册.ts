@@ -99,6 +99,7 @@ export function 注册(ctx: Context) {
                         所在联军: null,
                         驻扎地区: null,
                         上次驻扎日期: '',
+                        上次炮击时间: null,
                         战争保护期:
                             Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,
                         今日是否签到: true,
