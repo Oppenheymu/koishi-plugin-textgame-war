@@ -7,7 +7,7 @@ export interface PlayerWarData {
     步兵装备: number;
 
     重炮: number;
-    
+
     火箭炮: number;
     火箭炮弹药: number;
 

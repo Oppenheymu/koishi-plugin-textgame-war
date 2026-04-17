@@ -109,10 +109,7 @@ function 解析建筑类型(输入?: string): 建筑属性 | null {
     );
 }
 
-function 计算资源可执行轮次(
-    用户资料: Player,
-    资源需求: 资源需求配置
-): number {
+function 计算资源可执行轮次(用户资料: Player, 资源需求: 资源需求配置): number {
     let 最大轮次 = Number.MAX_SAFE_INTEGER;
 
     for (const [资源字段, 单轮消耗] of Object.entries(资源需求) as [
@@ -188,9 +185,13 @@ export function 修建地区建筑(ctx: Context) {
                 }
 
                 const 当前值 =
-                    (地区资料[建筑属性.当前字段 as keyof typeof 地区资料] as number) ?? 0;
+                    (地区资料[
+                        建筑属性.当前字段 as keyof typeof 地区资料
+                    ] as number) ?? 0;
                 const 上限值 =
-                    (地区资料[建筑属性.上限字段 as keyof typeof 地区资料] as number) ?? 0;
+                    (地区资料[
+                        建筑属性.上限字段 as keyof typeof 地区资料
+                    ] as number) ?? 0;
 
                 if (当前值 >= 上限值) {
                     return `${建筑属性.显示名}已达上限（${格式化(当前值)} / ${格式化(上限值)}）`;

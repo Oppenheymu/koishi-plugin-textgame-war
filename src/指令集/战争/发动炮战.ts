@@ -34,7 +34,10 @@ export function 发动炮战(ctx: Context) {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             const 输入目标 = 目标?.trim();
-            if (!输入目标 && !session?.elements?.some((el) => el.type === 'at')) {
+            if (
+                !输入目标 &&
+                !session?.elements?.some((el) => el.type === 'at')
+            ) {
                 return `
 【红色战争】
 ${username}同志：
@@ -72,7 +75,10 @@ ${username}同志：
             const 我方造成损失原始值 = 计算炮战造成损失(我方动员重炮);
             const 对方造成损失原始值 = 计算炮战造成损失(对方动员重炮);
 
-            const 对方重炮损失 = Math.min(目标用户资料.重炮, 我方造成损失原始值);
+            const 对方重炮损失 = Math.min(
+                目标用户资料.重炮,
+                我方造成损失原始值
+            );
             const 我方重炮损失 = Math.min(用户资料.重炮, 对方造成损失原始值);
 
             const 我方剩余重炮 = 用户资料.重炮 - 我方重炮损失;
