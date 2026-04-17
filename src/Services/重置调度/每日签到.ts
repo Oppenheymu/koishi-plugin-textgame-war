@@ -47,7 +47,10 @@ export async function 执行每日签到重置(ctx: Context): Promise<每日签�
         }
 
         const 玩家列表 = await ctx.database.get('马列玩家表', {});
-        await ctx.database.set('马列玩家表', {}, { 今日是否签到: false, 工人招募限额: 1000 });
+        await Promise.all([
+            ctx.database.set('马列玩家表', {}, { 今日是否签到: false, 工人招募限额: 1000 }),
+            ctx.database.set('马列联军表', {}, { 当天扩军累计: 0 }),
+        ]);
 
         服务事件中心.emit('重置与调度:每日签到重置完成', {
             日期: 今天,

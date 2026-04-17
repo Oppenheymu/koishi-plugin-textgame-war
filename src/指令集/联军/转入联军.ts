@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 玩家联军权限设置 } from '@/logic';
+import { 尝试发送联军信号塔通报, 玩家联军权限设置, 是否豁免扩军计划限制 } from '@/logic';
 import { 更新玩家资料, 玩家联军检查 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -16,7 +16,8 @@ export function 转入联军(ctx: Context) {
                 }
 
                 const 权限等级需求 = await 玩家联军权限设置(ctx, session, '转入联军');
-                const { id, uid, username, 用户资料, 联军编号, 联军资料 } = await 玩家联军检查(
+                const { id, uid, username, 用户资料, 联军编号, 联军资料, 权限等级 } =
+                    await 玩家联军检查(
                     ctx,
                     session,
                     {
@@ -32,10 +33,18 @@ export function 转入联军(ctx: Context) {
                 }
 
                 const 扩军计划上限 = 联军资料.扩军计划;
-                if (typeof 扩军计划上限 === 'number' && 扩军计划上限 > 0 && 数量 > 扩军计划上限) {
-                    throw new Error(
-                        `当前联军扩军计划上限为 ${格式化(扩军计划上限)}，本次最多转入 ${格式化(扩军计划上限)}`
-                    );
+                const 当天已扩军 = 联军资料.当天扩军累计 ?? 0;
+                const 是否豁免限制 = 是否豁免扩军计划限制(联军资料, uid, 权限等级);
+                if (!是否豁免限制 && typeof 扩军计划上限 === 'number' && 扩军计划上限 > 0) {
+                    const 当天剩余额度 = 扩军计划上限 - 当天已扩军;
+                    if (当天剩余额度 <= 0) {
+                        throw new Error(`今日扩军计划额度已用尽（上限 ${格式化(扩军计划上限)}）`);
+                    }
+                    if (数量 > 当天剩余额度) {
+                        throw new Error(
+                            `当前联军今日剩余可转入 ${格式化(当天剩余额度)}，请调整转入数量`
+                        );
+                    }
                 }
 
                 const 旧贡献 = 联军资料.联军成员列表?.[uid]?.联军贡献 ?? 0;
@@ -61,6 +70,7 @@ export function 转入联军(ctx: Context) {
                         {
                             联军军队: (联军资料.联军军队 ?? 0) + 数量,
                             联军成员列表: 新联军成员列表,
+                            当天扩军累计: 当天已扩军 + 数量,
                         }
                     ),
                 ]);

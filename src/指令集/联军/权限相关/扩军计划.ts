@@ -34,7 +34,7 @@ export function 设置扩军计划(ctx: Context) {
                 const 权限等级需求 = await 玩家联军权限设置(ctx, session, '设置扩军计划');
                 const { username, 联军编号, 联军资料 } = await 玩家联军检查(ctx, session, {
                     最低权限等级: 权限等级需求,
-                    是否必须在成员列表: true,
+                    是否必须在成员列表: false,
                 });
 
                 const { 值: 新上限, 描述: 新上限文本 } = 解析扩军计划输入(上限);

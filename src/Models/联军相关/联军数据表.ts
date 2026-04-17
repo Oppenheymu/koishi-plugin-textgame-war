@@ -49,6 +49,10 @@ export function 加载联军表(ctx: Context) {
                 nullable: true,
                 initial: null,
             },
+            当天扩军累计: {
+                type: 'unsigned',
+                initial: 0,
+            },
             联军税率: {
                 type: 'float',
                 initial: 0,
