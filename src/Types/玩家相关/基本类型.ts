@@ -39,4 +39,10 @@ export interface Player {
     金属铝: number;
     铁矿石: number;
     钢铁: number;
+    铀矿: number;
+
+    // 战略
+    浓缩铀: number;
+    钚: number;
+    生物武器: number;
 }

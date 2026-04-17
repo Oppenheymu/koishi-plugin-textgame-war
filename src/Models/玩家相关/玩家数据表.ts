@@ -135,6 +135,24 @@ export function 加载玩家表(ctx: Context) {
                 type: 'unsigned',
                 initial: 0,
             },
+            铀矿: {
+                type: 'unsigned',
+                initial: 0,
+            },
+
+            // 战略
+            浓缩铀: {
+                type: 'unsigned',
+                initial: 0,
+            },
+            钚: {
+                type: 'unsigned',
+                initial: 0,
+            },
+            生物武器: {
+                type: 'unsigned',
+                initial: 0,
+            },
         },
         {
             // 表配置

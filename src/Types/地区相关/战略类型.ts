@@ -39,7 +39,7 @@ export interface Railroad {
     铁路日志: RailRecord[];
 }
 
-type Preparation = '浓缩铀' | '钚' | '生物武器' | '化学武器';
+type Preparation = '浓缩铀' | '钚' | '生物武器';
 
 // 制备（生物武器、化学武器的）记录
 interface PrepareRecord {
