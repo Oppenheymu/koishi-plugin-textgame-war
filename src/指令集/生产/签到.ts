@@ -18,9 +18,9 @@ ${username} 同志！
 您今天已签到过了！
 `.trim();
                 } else {
-                    const 增加的工人 = TRandom(300, 1000, 3000);
-                    const 增加的石油 = TRandom(500, 1500, 2500);
-                    const 增加的钢铁 = TRandom(800, 2000, 4000);
+                    const 增加的工人 = TRandom(50, 100, 200);
+                    const 增加的石油 = TRandom(50, 150, 250);
+                    const 增加的钢铁 = TRandom(50, 100, 300);
                     const 增加的生活资料 = TRandom(10000, 20000, 50000);
                     const 增加后的工人 = 用户资料.工人 + 增加的工人;
                     const 增加后的石油 = 用户资料.石油 + 增加的石油;

@@ -6,6 +6,7 @@ export interface 驻扎检查结果 extends 地区解析结果 {
     id: number;
     uid: string;
     username: string;
+    用户资料: Awaited<ReturnType<typeof 玩家检查>>['用户资料'];
     当前驻扎地区: string | null;
 }
 
@@ -32,6 +33,7 @@ export async function 驻扎检查(
         id,
         uid,
         username,
+        用户资料,
         当前驻扎地区: 用户资料.驻扎地区 ?? null,
     };
 }

@@ -78,13 +78,33 @@ interface NuclearReactor {
     日志: PrepareRecord[];
 }
 
+export interface Warehouse {
+
+    // 资源
+    石油: number;
+    铝土矿: number;
+    金属铝: number;
+    铁矿石: number;
+    钢铁: number;
+
+    // 军事
+    步兵装备: number;
+    重炮: number;
+    火箭炮: number;
+    火箭炮弹药: number;
+    防空弹药: number;
+
+}
+
 export interface RegionStrategy {
     地区编号: string;
 
     地区司令: string;
 
-    // 战略运输
+    // 仓储
+    地区仓库: Warehouse;
 
+    // 运输
     铁路: Record<number, Railroad>;
     是否有铁路: boolean;
 

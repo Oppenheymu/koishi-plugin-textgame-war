@@ -116,10 +116,24 @@ export function 加载地区表(ctx: Context) {
             },
 
             // 地区建筑
+                        // 地区建筑
+            电解铝厂数量: {
+                type: 'unsigned',
+                initial: 0,
+            },
+            空闲的电解铝厂: {
+                type: 'unsigned',
+                initial: 0,
+            },
+
             炼钢厂数量: {
                 type: 'unsigned',
                 initial: 0,
             },
+            空闲的炼钢厂: {
+                type: 'unsigned',
+                initial: 0,
+            }
         },
         {
             primary: '地区编号',

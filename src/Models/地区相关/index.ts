@@ -3,7 +3,7 @@ import { 加载地区战略表 } from './地区战略表';
 import { 加载地区表 } from './地区数据表';
 import { 加载地区状态表 } from './地区状态机';
 import { 加载地区配置表 } from './地区配置表';
-import { 加载铁路修建申请表 } from './铁路修建申请表';
+import { 加载铁路修建申请表 } from './铁路申请表';
 
 export {
     加载地区地形表,

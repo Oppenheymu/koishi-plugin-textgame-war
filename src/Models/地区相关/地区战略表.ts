@@ -15,6 +15,10 @@ export function 加载地区战略表(ctx: Context) {
                 initial: '',
             },
 
+            地区仓库: {
+                type: 'json',
+            },
+
             铁路: {
                 type: 'json',
             },
