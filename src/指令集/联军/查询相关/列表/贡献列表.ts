@@ -10,11 +10,19 @@ export function 贡献排行(ctx: Context) {
         .alias('国家贡献排行')
         .action(async ({ session }) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '贡献排行');
-                const { username, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 权限等级需求,
-                    是否必须在成员列表: true,
-                });
+                const 权限等级需求 = await 玩家联军权限设置(
+                    ctx,
+                    session,
+                    '贡献排行'
+                );
+                const { username, 联军资料 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 权限等级需求,
+                        是否必须在成员列表: true,
+                    }
+                );
 
                 const 排行列表 = 获取联军贡献排行数据(联军资料)
                     .slice(0, 15)

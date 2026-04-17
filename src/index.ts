@@ -39,7 +39,11 @@ export function apply(ctx: Context, config: Config) {
         try {
             return await next();
         } catch (error) {
-            if ((error as Error).message.includes('Timeout with request send_group_msg')) {
+            if (
+                (error as Error).message.includes(
+                    'Timeout with request send_group_msg'
+                )
+            ) {
                 console.warn('发送群消息超时，已忽略');
                 return;
             }

@@ -11,12 +11,13 @@ export function 查看地区核反应堆(ctx: Context) {
         .alias('城市核反应堆')
         .action(async ({ session }, 地区编号参数) => {
             try {
-                const { 地区编号, 地区战略资料, 展示地区名称 } = await 地区查询权限检查(
-                    ctx,
-                    session,
-                    '查看地区核反应堆',
-                    地区编号参数
-                );
+                const { 地区编号, 地区战略资料, 展示地区名称 } =
+                    await 地区查询权限检查(
+                        ctx,
+                        session,
+                        '查看地区核反应堆',
+                        地区编号参数
+                    );
 
                 const 反应堆列表 = Object.entries(地区战略资料.核反应堆 ?? {});
 

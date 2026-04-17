@@ -14,7 +14,9 @@ function 解析扩军计划输入(输入?: string): {
         throw new Error('请输入扩军上限，或输入“无上限”取消限制');
     }
 
-    if (['无上限', '不限', '取消', '清除', 'none'].includes(文本.toLowerCase())) {
+    if (
+        ['无上限', '不限', '取消', '清除', 'none'].includes(文本.toLowerCase())
+    ) {
         return { 值: undefined, 描述: '无上限' };
     }
 
@@ -31,16 +33,26 @@ export function 设置扩军计划(ctx: Context) {
         .alias('联军扩军上限')
         .action(async ({ session }, 上限) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '设置扩军计划');
-                const { username, 联军编号, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 权限等级需求,
-                    是否必须在成员列表: false,
-                });
+                const 权限等级需求 = await 玩家联军权限设置(
+                    ctx,
+                    session,
+                    '设置扩军计划'
+                );
+                const { username, 联军编号, 联军资料 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 权限等级需求,
+                        是否必须在成员列表: false,
+                    }
+                );
 
                 const { 值: 新上限, 描述: 新上限文本 } = 解析扩军计划输入(上限);
                 const 旧上限 = 联军资料.扩军计划;
                 const 旧上限文本 =
-                    typeof 旧上限 === 'number' && 旧上限 > 0 ? 格式化(旧上限) : '无上限';
+                    typeof 旧上限 === 'number' && 旧上限 > 0
+                        ? 格式化(旧上限)
+                        : '无上限';
 
                 await ctx.database.set(
                     '马列联军表',

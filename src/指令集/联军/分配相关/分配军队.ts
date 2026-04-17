@@ -13,15 +13,16 @@ export function 分配军队(ctx: Context) {
                     throw new Error('分配数量必须是正整数');
                 }
 
-                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '分配军队');
-                const { id, uid, username, 用户资料, 联军编号, 联军资料 } = await 玩家联军检查(
+                const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
-                    {
+                    '分配军队'
+                );
+                const { id, uid, username, 用户资料, 联军编号, 联军资料 } =
+                    await 玩家联军检查(ctx, session, {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
-                    }
-                );
+                    });
 
                 let 接收者ID = id;
                 let 接收者UID = uid;
@@ -30,11 +31,8 @@ export function 分配军队(ctx: Context) {
 
                 const 输入目标 = 目标?.trim();
                 if (输入目标) {
-                    const { 目标用户ID, 目标用户名, 目标用户资料 } = await 目标解析(
-                        ctx,
-                        session,
-                        输入目标
-                    );
+                    const { 目标用户ID, 目标用户名, 目标用户资料 } =
+                        await 目标解析(ctx, session, 输入目标);
                     if (目标用户资料.所在联军 !== 联军编号) {
                         throw new Error('目标不在你的联军中，无法分配联军军队');
                     }

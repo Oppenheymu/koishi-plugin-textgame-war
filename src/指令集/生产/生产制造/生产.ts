@@ -63,7 +63,12 @@ ${username} 同志：
                     const 有效税率 = Math.min(Math.max(原始税率, 0), 1);
                     联军税额 = Math.floor(利润 * 有效税率);
 
-                    await 记录联军资本增量(ctx, 联军资料.联军编号, 利润, 联军税额);
+                    await 记录联军资本增量(
+                        ctx,
+                        联军资料.联军编号,
+                        利润,
+                        联军税额
+                    );
                 }
             }
 
@@ -88,7 +93,10 @@ ${username} 同志：
             const globalData = await ctx.database.get('马列全球数据表', {
                 id: 'global',
             });
-            const currentTotal = globalData.length > 0 ? (globalData[0]?.今日全球生产总值 ?? 0) : 0;
+            const currentTotal =
+                globalData.length > 0
+                    ? (globalData[0]?.今日全球生产总值 ?? 0)
+                    : 0;
 
             if (globalData.length === 0) {
                 await ctx.database.create('马列全球数据表', {

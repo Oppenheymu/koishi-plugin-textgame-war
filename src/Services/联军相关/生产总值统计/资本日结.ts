@@ -27,7 +27,9 @@ export async function 执行联军资本增量日结(
 
     try {
         const 今天 = 格式化日期(new Date());
-        const [服务记录] = await ctx.database.get('马列服务表', { id: 'service' });
+        const [服务记录] = await ctx.database.get('马列服务表', {
+            id: 'service',
+        });
 
         if (!服务记录) {
             await 确保服务记录(ctx, { 上次联军资本统计日期: 今天 });
@@ -43,7 +45,10 @@ export async function 执行联军资本增量日结(
         }
 
         if (!options?.忽略日期检查) {
-            if (服务记录.上次联军资本统计日期 && 服务记录.上次联军资本统计日期 >= 今天) {
+            if (
+                服务记录.上次联军资本统计日期 &&
+                服务记录.上次联军资本统计日期 >= 今天
+            ) {
                 return {
                     今天,
                     是否执行: false,
@@ -79,8 +84,12 @@ export async function 执行联军资本增量日结(
                 历史记录 = 历史记录.slice(-7);
             }
 
-            const 三天合计 = 历史记录.slice(-3).reduce((总和, 数值) => 总和 + 数值, 0);
-            const 七天合计 = 历史记录.slice(-7).reduce((总和, 数值) => 总和 + 数值, 0);
+            const 三天合计 = 历史记录
+                .slice(-3)
+                .reduce((总和, 数值) => 总和 + 数值, 0);
+            const 七天合计 = 历史记录
+                .slice(-7)
+                .reduce((总和, 数值) => 总和 + 数值, 0);
 
             await ctx.database.set(
                 '马列联军表',
@@ -94,7 +103,11 @@ export async function 执行联军资本增量日结(
             );
         }
 
-        await ctx.database.set('马列服务表', { id: 'service' }, { 上次联军资本统计日期: 今天 });
+        await ctx.database.set(
+            '马列服务表',
+            { id: 'service' },
+            { 上次联军资本统计日期: 今天 }
+        );
 
         服务事件中心.emit('联军相关:资本日结完成', {
             日期: 今天,

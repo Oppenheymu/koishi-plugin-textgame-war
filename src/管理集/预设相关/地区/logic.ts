@@ -86,7 +86,10 @@ function 获取容量基线(地形: TerrainType): CapacityBase {
     return CAPACITY_BASELINE[地形] ?? DEFAULT_CAPACITY;
 }
 
-export function 获取容量上限(地区: RegionBasicDataItem, 地形: TerrainType): CapacityLimit {
+export function 获取容量上限(
+    地区: RegionBasicDataItem,
+    地形: TerrainType
+): CapacityLimit {
     if (地区.isOcean) {
         return {
             基础设施上限: 0,
@@ -113,7 +116,11 @@ export function 获取容量上限(地区: RegionBasicDataItem, 地形: TerrainT
                 ? 0.95
                 : 1.05;
     const 崎岖系数 = clamp(1 - 地区.STDElevation / 4500, 0.55, 1.08);
-    const 地貌系数 = clamp(0.9 + 草地占比 * 0.18 + 森林占比 * 0.08 + 城镇占比 * 0.15, 0.85, 1.25);
+    const 地貌系数 = clamp(
+        0.9 + 草地占比 * 0.18 + 森林占比 * 0.08 + 城镇占比 * 0.15,
+        0.85,
+        1.25
+    );
     const 综合系数 = 海拔系数 * 崎岖系数 * 地貌系数;
 
     const 港口系数 = 水域占比 <= 0 ? 0 : clamp(0.2 + 水域占比 * 1.2, 0.2, 1.2);
@@ -122,7 +129,8 @@ export function 获取容量上限(地区: RegionBasicDataItem, 地形: TerrainT
         基础设施上限: Math.round(基线.基础设施 * 综合系数),
         公路容量上限: Math.round(基线.公路 * 综合系数),
         机场容量上限: Math.round(基线.机场 * 综合系数),
-        港口容量上限: 水域占比 <= 0 ? 0 : Math.round(基线.港口 * 综合系数 * 港口系数),
+        港口容量上限:
+            水域占比 <= 0 ? 0 : Math.round(基线.港口 * 综合系数 * 港口系数),
         居民区容量上限: Math.round(基线.居民区 * 综合系数),
         仓库容量上限: Math.round(基线.仓库 * 综合系数),
     };

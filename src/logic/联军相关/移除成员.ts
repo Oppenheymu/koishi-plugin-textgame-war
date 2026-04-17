@@ -18,7 +18,8 @@ export async function 移除联军成员(
     };
     delete 新联军成员列表[目标UID];
 
-    const 过滤成员 = (列表: string[] = []) => 列表.filter((成员) => 成员 !== 目标UID);
+    const 过滤成员 = (列表: string[] = []) =>
+        列表.filter((成员) => 成员 !== 目标UID);
 
     const 新联军成员数量 = Object.keys(新联军成员列表).length;
 

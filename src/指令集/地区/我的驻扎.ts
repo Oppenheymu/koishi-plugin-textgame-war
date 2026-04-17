@@ -14,7 +14,11 @@ export function 我的驻扎(ctx: Context) {
                     return `${username} 同志当前未驻扎，请发送：驻扎 地区编号`;
                 }
 
-                const { 地区编号, 展示地区名称, 地区资料 } = await 地区解析(ctx, 驻扎地区, session);
+                const { 地区编号, 展示地区名称, 地区资料 } = await 地区解析(
+                    ctx,
+                    驻扎地区,
+                    session
+                );
 
                 return `
 ====[征战文游]====

@@ -10,7 +10,9 @@ export interface 铁路负载重置结果 {
  * - 仅查询 `是否有铁路 = true` 的地区战略记录，避免全表扫描
  * - 批量 upsert 写回，将所有铁路 `当前负载` 重置为 0
  */
-export async function 执行每小时铁路负载重置(ctx: Context): Promise<铁路负载重置结果> {
+export async function 执行每小时铁路负载重置(
+    ctx: Context
+): Promise<铁路负载重置结果> {
     const 有铁路地区列表 = await ctx.database.get('马列地区战略表', {
         是否有铁路: true,
     });

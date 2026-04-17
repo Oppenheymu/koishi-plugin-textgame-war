@@ -54,7 +54,10 @@ export function 计算铁路建造成本(参数: {
     };
 }
 
-export function 计算建造进度百分比(已投入生产力: number, 需求生产力: number): number {
+export function 计算建造进度百分比(
+    已投入生产力: number,
+    需求生产力: number
+): number {
     if (需求生产力 <= 0) return 100;
     if (已投入生产力 <= 0) return 0;
 

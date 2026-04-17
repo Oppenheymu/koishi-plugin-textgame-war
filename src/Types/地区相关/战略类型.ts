@@ -79,7 +79,6 @@ interface NuclearReactor {
 }
 
 export interface Warehouse {
-
     // 资源
     石油: number;
     铝土矿: number;
@@ -93,7 +92,6 @@ export interface Warehouse {
     火箭炮: number;
     火箭炮弹药: number;
     防空弹药: number;
-
 }
 
 export interface RegionStrategy {
@@ -123,7 +121,12 @@ export interface RegionStrategy {
     历史战争: WarRecord[];
 }
 
-export type RailBuildPendingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled' | 'expired';
+export type RailBuildPendingStatus =
+    | 'pending'
+    | 'approved'
+    | 'rejected'
+    | 'cancelled'
+    | 'expired';
 
 export interface PendingRailwayBuild {
     id: string;

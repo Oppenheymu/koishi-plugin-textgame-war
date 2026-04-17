@@ -12,7 +12,10 @@ function 获取引用文本(session: Session | undefined): string | undefined {
     return quote?.content;
 }
 
-function 解析工单编号(session: Session | undefined, 工单编号?: number | string): number | null {
+function 解析工单编号(
+    session: Session | undefined,
+    工单编号?: number | string
+): number | null {
     if (typeof 工单编号 === 'number') {
         if (Number.isInteger(工单编号) && 工单编号 > 0) {
             return 工单编号;

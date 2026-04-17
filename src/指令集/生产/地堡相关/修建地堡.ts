@@ -49,7 +49,8 @@ export function 修建地堡(ctx: Context) {
                 }
 
                 const 配置 = 地堡库[地堡类型];
-                if (!配置) return `地堡类型不存在。支持：${Object.keys(地堡库).join('/')}`;
+                if (!配置)
+                    return `地堡类型不存在。支持：${Object.keys(地堡库).join('/')}`;
 
                 // 检查是否已完成
                 if (用户资料[配置.完成字段] as boolean) {
@@ -92,7 +93,9 @@ export function 修建地堡(ctx: Context) {
                 await 更新玩家资料(ctx, id, 更新对象);
 
                 const 完成提示 =
-                    新投入 >= 配置.需求生产力 ? '✓已完成' : `${进度百分比.toFixed(2)}%`;
+                    新投入 >= 配置.需求生产力
+                        ? '✓已完成'
+                        : `${进度百分比.toFixed(2)}%`;
 
                 return `
 ====[地堡建设]====

@@ -14,8 +14,14 @@ export function 查看地区工业(ctx: Context) {
                     ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
-                const 电解铝在用 = Math.max(0, 地区资料.电解铝厂数量 - 地区资料.空闲的电解铝厂);
-                const 炼钢在用 = Math.max(0, 地区资料.炼钢厂数量 - 地区资料.空闲的炼钢厂);
+                const 电解铝在用 = Math.max(
+                    0,
+                    地区资料.电解铝厂数量 - 地区资料.空闲的电解铝厂
+                );
+                const 炼钢在用 = Math.max(
+                    0,
+                    地区资料.炼钢厂数量 - 地区资料.空闲的炼钢厂
+                );
 
                 return [
                     '【地区工业】',

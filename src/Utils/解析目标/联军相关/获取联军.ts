@@ -26,7 +26,9 @@ export async function 目标联军解析(
         联军编号,
     });
     if (!联军资料) {
-        throw new Error('数据异常：已记录所在联军但未找到联军档案，请联系管理员');
+        throw new Error(
+            '数据异常：已记录所在联军但未找到联军档案，请联系管理员'
+        );
     }
 
     return {

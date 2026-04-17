@@ -141,7 +141,9 @@ function 构建权限列表(
     };
 }
 
-export function 获取政体默认权限配置(政体: 联军政体): Omit<CoalitionPermission, '联军编号'> {
+export function 获取政体默认权限配置(
+    政体: 联军政体
+): Omit<CoalitionPermission, '联军编号'> {
     return {
         ...政体默认权限配置映射[政体],
     };
@@ -154,31 +156,55 @@ export function 获取政体可设置最小权限等级(
     return 政体默认权限配置映射[政体][动作];
 }
 
-export function 极权制降权到一级(联军资料: CoalitionArmy, 设置者UID: string): 权限列表字段 {
+export function 极权制降权到一级(
+    联军资料: CoalitionArmy,
+    设置者UID: string
+): 权限列表字段 {
     const 等级映射: Record<string, CoalitionPermissionLevel> = {};
-    const 候选成员列表 = 获取非最高权力成员UID列表(联军资料, 联军资料.联军元首, 联军资料.联军总理);
+    const 候选成员列表 = 获取非最高权力成员UID列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理
+    );
 
     for (const uid of 候选成员列表) {
         if (uid === 设置者UID) {
             const 当前等级 = 获取联军权限等级(联军资料, uid);
-            等级映射[uid] = 当前等级 >= 4 ? 4 : 当前等级 === 3 ? 3 : 当前等级 === 2 ? 2 : 1;
+            等级映射[uid] =
+                当前等级 >= 4 ? 4 : 当前等级 === 3 ? 3 : 当前等级 === 2 ? 2 : 1;
             continue;
         }
 
         等级映射[uid] = 1;
     }
 
-    return 构建权限列表(联军资料, 联军资料.联军元首, 联军资料.联军总理, 等级映射, 1);
+    return 构建权限列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理,
+        等级映射,
+        1
+    );
 }
 
-export function 政变后权限重置(联军资料: CoalitionArmy, 新元首UID: string): 权限列表字段 {
+export function 政变后权限重置(
+    联军资料: CoalitionArmy,
+    新元首UID: string
+): 权限列表字段 {
     return 构建权限列表(联军资料, 新元首UID, 新元首UID, {}, 1);
 }
 
 export function 按政体动态分配权限(联军资料: CoalitionArmy): 权限列表字段 {
-    const 候选成员列表 = 获取非最高权力成员UID列表(联军资料, 联军资料.联军元首, 联军资料.联军总理);
+    const 候选成员列表 = 获取非最高权力成员UID列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理
+    );
 
-    const 总贡献 = 候选成员列表.reduce((总和, uid) => 总和 + 获取成员联军贡献(联军资料, uid), 0);
+    const 总贡献 = 候选成员列表.reduce(
+        (总和, uid) => 总和 + 获取成员联军贡献(联军资料, uid),
+        0
+    );
 
     const 等级映射: Record<string, CoalitionPermissionLevel> = {};
 
@@ -211,5 +237,11 @@ export function 按政体动态分配权限(联军资料: CoalitionArmy): 权限
         等级映射[uid] = 1;
     }
 
-    return 构建权限列表(联军资料, 联军资料.联军元首, 联军资料.联军总理, 等级映射, 1);
+    return 构建权限列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理,
+        等级映射,
+        1
+    );
 }

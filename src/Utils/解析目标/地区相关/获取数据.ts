@@ -1,5 +1,11 @@
 import type { Context, Session } from 'koishi';
-import type { Region, RegionConfig, RegionState, RegionStrategy, RegionTerra } from '@/types';
+import type {
+    Region,
+    RegionConfig,
+    RegionState,
+    RegionStrategy,
+    RegionTerra,
+} from '@/types';
 import { 会话检查 } from '../../解析用户/会话相关/会话检查';
 import { 用户检查 } from '../../解析用户/会话相关/平台检查';
 import { 获取地区展示名称 } from './获取名称';
@@ -41,42 +47,45 @@ export async function 地区解析(
 
     const 已知地区资料 = 地区编号 === 输入值 ? 按编号地区资料 : undefined;
 
-    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] = await Promise.all([
-        已知地区资料
-            ? Promise.resolve(已知地区资料)
-            : ctx.database
-                  .get('马列地区表', {
-                      地区编号,
-                  })
-                  .then(([data]) => data),
-        ctx.database
-            .get('马列地区地形表', {
-                地区编号,
-            })
-            .then(([data]) => data),
-        ctx.database
-            .get('马列地区状态机', {
-                地区编号,
-            })
-            .then(([data]) => data),
-        ctx.database
-            .get('马列地区配置表', {
-                地区编号,
-            })
-            .then(([data]) => data),
-        ctx.database
-            .get('马列地区战略表', {
-                地区编号,
-            })
-            .then(([data]) => data),
-    ]);
+    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
+        await Promise.all([
+            已知地区资料
+                ? Promise.resolve(已知地区资料)
+                : ctx.database
+                      .get('马列地区表', {
+                          地区编号,
+                      })
+                      .then(([data]) => data),
+            ctx.database
+                .get('马列地区地形表', {
+                    地区编号,
+                })
+                .then(([data]) => data),
+            ctx.database
+                .get('马列地区状态机', {
+                    地区编号,
+                })
+                .then(([data]) => data),
+            ctx.database
+                .get('马列地区配置表', {
+                    地区编号,
+                })
+                .then(([data]) => data),
+            ctx.database
+                .get('马列地区战略表', {
+                    地区编号,
+                })
+                .then(([data]) => data),
+        ]);
 
     if (!地区资料) {
         throw new Error(`未找到地区：${输入值}`);
     }
 
     if (!地区地形资料 || !地区状态资料 || !地区配置资料 || !地区战略资料) {
-        throw new Error(`数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`);
+        throw new Error(
+            `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`
+        );
     }
 
     return {
@@ -105,7 +114,9 @@ export async function 更新地区资料(
 
     const 地区更新: Partial<Region> = {};
 
-    for (const [键, 值] of Object.entries(更新数据 as Record<string, unknown>)) {
+    for (const [键, 值] of Object.entries(
+        更新数据 as Record<string, unknown>
+    )) {
         if (键 === '地区编号') continue;
 
         if (键 in 地区资料) {

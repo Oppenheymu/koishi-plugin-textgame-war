@@ -52,7 +52,7 @@ export interface Region {
     仓库容量上限: number;
 
     电解铝厂数量: number;
-    空闲的电解铝厂:number
+    空闲的电解铝厂: number;
 
     炼钢厂数量: number;
     空闲的炼钢厂: number;

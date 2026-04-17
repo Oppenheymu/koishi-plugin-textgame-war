@@ -12,14 +12,17 @@ export function 查看地区生物实验室(ctx: Context) {
         .alias('城市生物实验室')
         .action(async ({ session }, 地区编号参数) => {
             try {
-                const { 地区编号, 地区战略资料, 展示地区名称 } = await 地区查询权限检查(
-                    ctx,
-                    session,
-                    '查看地区生物实验室',
-                    地区编号参数
-                );
+                const { 地区编号, 地区战略资料, 展示地区名称 } =
+                    await 地区查询权限检查(
+                        ctx,
+                        session,
+                        '查看地区生物实验室',
+                        地区编号参数
+                    );
 
-                const 实验室列表 = Object.entries(地区战略资料.生物实验室 ?? {});
+                const 实验室列表 = Object.entries(
+                    地区战略资料.生物实验室 ?? {}
+                );
 
                 const 实验室展示 = 实验室列表.length
                     ? 实验室列表

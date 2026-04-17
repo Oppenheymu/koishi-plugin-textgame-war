@@ -74,7 +74,9 @@ export async function 发送联军信号塔通报(
                 return;
             }
 
-            const 平台机器人 = Object.values(ctx.bots).find((bot) => bot.platform === 平台);
+            const 平台机器人 = Object.values(ctx.bots).find(
+                (bot) => bot.platform === 平台
+            );
 
             if (!平台机器人) {
                 发送失败.push({
@@ -92,7 +94,8 @@ export async function 发送联军信号塔通报(
                     群聊ID,
                 });
             } catch (error) {
-                const 错误信息 = error instanceof Error ? error.message : '未知错误';
+                const 错误信息 =
+                    error instanceof Error ? error.message : '未知错误';
 
                 logger.warn(`信号塔发送失败：${平台}:${群聊ID}，${错误信息}`);
 

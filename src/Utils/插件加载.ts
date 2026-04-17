@@ -2,7 +2,11 @@ import type { Context } from 'koishi';
 
 type 可加载插件 = Parameters<Context['plugin']>[0];
 
-export function 批量加载插件(ctx: Context, 插件列表: 可加载插件[], 模块名: string) {
+export function 批量加载插件(
+    ctx: Context,
+    插件列表: 可加载插件[],
+    模块名: string
+) {
     const logger = ctx.logger(模块名);
     const 插件总数 = 插件列表.length;
 
@@ -24,7 +28,9 @@ export function 批量加载插件(ctx: Context, 插件列表: 可加载插件[]
         try {
             ctx.plugin(插件);
             const costTime = Date.now() - startTime;
-            logger.success(`[${i + 1}/${插件总数}] ${插件名} 加载完毕 (${costTime}ms)`);
+            logger.success(
+                `[${i + 1}/${插件总数}] ${插件名} 加载完毕 (${costTime}ms)`
+            );
             成功计数++;
         } catch (error) {
             失败计数++;

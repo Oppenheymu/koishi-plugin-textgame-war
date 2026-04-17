@@ -20,7 +20,9 @@ export async function 写入批次(
         ]);
         return;
     } catch (error) {
-        logger.warn(`upsert 批量写入失败，切换兼容单条模式：${(error as Error).message}`);
+        logger.warn(
+            `upsert 批量写入失败，切换兼容单条模式：${(error as Error).message}`
+        );
     }
 
     // 此处保持顺序遍历，避免并发过高导致 fallback 阶段的连接池爆炸

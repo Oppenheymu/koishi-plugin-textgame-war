@@ -4,7 +4,10 @@ import { 执行铁路修建, 获取有效铁路申请, 获取联军操作权限 
 import { 玩家联军检查, 获取玩家完整资料 } from '@/utils';
 import { 格式化, 解析铁路申请ID, 读取引用文本 } from './共享';
 
-function 解析审核申请ID(session: Session | undefined, 申请ID文本?: string): string | null {
+function 解析审核申请ID(
+    session: Session | undefined,
+    申请ID文本?: string
+): string | null {
     return 解析铁路申请ID(申请ID文本, 读取引用文本(session));
 }
 
@@ -18,12 +21,18 @@ async function 执行审核铁路(
     const 申请ID = 解析审核申请ID(session, 申请ID文本);
 
     if (!申请ID) {
-        throw new Error('请提供申请ID，或引用铁路申请消息后发送【审核铁路 同意】/【同意铁路】');
+        throw new Error(
+            '请提供申请ID，或引用铁路申请消息后发送【审核铁路 同意】/【同意铁路】'
+        );
     }
 
     const 申请记录 = await 获取有效铁路申请(ctx, 申请ID);
 
-    const 最低权限等级 = await 获取联军操作权限(ctx, 申请记录.目标联军编号, '设置地区驻扎权限');
+    const 最低权限等级 = await 获取联军操作权限(
+        ctx,
+        申请记录.目标联军编号,
+        '设置地区驻扎权限'
+    );
     const { uid, username, 联军编号 } = await 玩家联军检查(ctx, session, {
         最低权限等级,
         是否必须在成员列表: true,
@@ -91,11 +100,23 @@ export function 审核铁路(ctx: Context) {
                 const 规范操作 = 操作?.trim();
 
                 if (['同意', '通过', '批准'].includes(规范操作)) {
-                    return await 执行审核铁路(ctx, session, '同意', 申请ID, 备注);
+                    return await 执行审核铁路(
+                        ctx,
+                        session,
+                        '同意',
+                        申请ID,
+                        备注
+                    );
                 }
 
                 if (['驳回', '拒绝', '否决'].includes(规范操作)) {
-                    return await 执行审核铁路(ctx, session, '驳回', 申请ID, 备注);
+                    return await 执行审核铁路(
+                        ctx,
+                        session,
+                        '驳回',
+                        申请ID,
+                        备注
+                    );
                 }
 
                 return '操作无效，请使用：审核铁路 同意/驳回 申请ID';
@@ -105,19 +126,23 @@ export function 审核铁路(ctx: Context) {
         }
     );
 
-    ctx.command('同意铁路 [申请ID:text]').action(async ({ session }, 申请ID) => {
-        try {
-            return await 执行审核铁路(ctx, session, '同意', 申请ID);
-        } catch (error) {
-            return (error as Error).message;
+    ctx.command('同意铁路 [申请ID:text]').action(
+        async ({ session }, 申请ID) => {
+            try {
+                return await 执行审核铁路(ctx, session, '同意', 申请ID);
+            } catch (error) {
+                return (error as Error).message;
+            }
         }
-    });
+    );
 
-    ctx.command('驳回铁路 [申请ID:text] [备注:text]').action(async ({ session }, 申请ID, 备注) => {
-        try {
-            return await 执行审核铁路(ctx, session, '驳回', 申请ID, 备注);
-        } catch (error) {
-            return (error as Error).message;
+    ctx.command('驳回铁路 [申请ID:text] [备注:text]').action(
+        async ({ session }, 申请ID, 备注) => {
+            try {
+                return await 执行审核铁路(ctx, session, '驳回', 申请ID, 备注);
+            } catch (error) {
+                return (error as Error).message;
+            }
         }
-    });
+    );
 }

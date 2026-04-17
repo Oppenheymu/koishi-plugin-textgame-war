@@ -13,7 +13,11 @@ export function 联军编号(ctx: Context) {
                 let 联军编号: string | null;
 
                 if (输入目标) {
-                    const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 输入目标);
+                    const { 目标用户名, 目标用户资料 } = await 目标解析(
+                        ctx,
+                        session,
+                        输入目标
+                    );
                     查询用户名 = 目标用户名;
                     联军编号 = 目标用户资料.所在联军;
                 } else {

@@ -30,7 +30,9 @@ export interface 后台信号塔发送结果 {
 const 信号塔平台列表: 信号塔平台[] = ['onebot', 'discord', 'telegram'];
 
 function 标准化频道列表(频道列表: string[]): string[] {
-    return Array.from(new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean)));
+    return Array.from(
+        new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean))
+    );
 }
 
 function 构建后台日志文本(参数: {
@@ -65,7 +67,9 @@ export async function 发送后台信号塔日志(
             const 群聊列表 = 标准化频道列表(后台群配置[平台]);
             if (!群聊列表.length) return;
 
-            const 平台机器人 = Object.values(ctx.bots).find((bot) => bot.platform === 平台);
+            const 平台机器人 = Object.values(ctx.bots).find(
+                (bot) => bot.platform === 平台
+            );
 
             if (!平台机器人) {
                 发送失败.push({
@@ -81,9 +85,12 @@ export async function 发送后台信号塔日志(
                         await 平台机器人.sendMessage(群聊ID, 文本);
                         已发送.push({ 平台, 群聊ID });
                     } catch (error) {
-                        const 错误信息 = error instanceof Error ? error.message : '未知错误';
+                        const 错误信息 =
+                            error instanceof Error ? error.message : '未知错误';
 
-                        logger.warn(`后台信号塔发送失败：${平台}:${群聊ID}，${错误信息}`);
+                        logger.warn(
+                            `后台信号塔发送失败：${平台}:${群聊ID}，${错误信息}`
+                        );
 
                         发送失败.push({
                             平台,

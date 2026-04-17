@@ -10,11 +10,19 @@ export function 成员列表(ctx: Context) {
         .alias('国家成员')
         .action(async ({ session }) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '成员列表');
-                const { username, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 权限等级需求,
-                    是否必须在成员列表: true,
-                });
+                const 权限等级需求 = await 玩家联军权限设置(
+                    ctx,
+                    session,
+                    '成员列表'
+                );
+                const { username, 联军资料 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 权限等级需求,
+                        是否必须在成员列表: true,
+                    }
+                );
 
                 const 成员列表 = Object.keys(联军资料.联军成员列表 ?? {});
 

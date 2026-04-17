@@ -19,7 +19,8 @@ export function 地区洗牌(ctx: Context) {
                 ['地区编号']
             );
 
-            if (所有陆地.length === 0) return '错误：地形表中没有找到陆地数据，请先生成地形！';
+            if (所有陆地.length === 0)
+                return '错误：地形表中没有找到陆地数据，请先生成地形！';
 
             const 陆地编号列表 = 所有陆地.map((地形) => 地形.地区编号);
             const 陆地总数 = 陆地编号列表.length;
@@ -27,7 +28,11 @@ export function 地区洗牌(ctx: Context) {
             await session.send(`已找到 ${陆地总数} 处陆地，开始进行洗牌...`);
 
             // 2. 核心洗牌算法 (Fisher-Yates)
-            for (let 倒序索引 = 陆地编号列表.length - 1; 倒序索引 > 0; 倒序索引--) {
+            for (
+                let 倒序索引 = 陆地编号列表.length - 1;
+                倒序索引 > 0;
+                倒序索引--
+            ) {
                 const 随机索引 = Math.floor(Math.random() * (倒序索引 + 1));
                 // 交换元素
                 [陆地编号列表[倒序索引], 陆地编号列表[随机索引]] = [
@@ -47,8 +52,15 @@ export function 地区洗牌(ctx: Context) {
 
             // 4. 分块写入数据库并同步重置地区状态机
             const 分块大小 = 1000;
-            for (let 当前进度 = 0; 当前进度 < 陆地编号列表.length; 当前进度 += 分块大小) {
-                const 当前块编号列表 = 陆地编号列表.slice(当前进度, 当前进度 + 分块大小);
+            for (
+                let 当前进度 = 0;
+                当前进度 < 陆地编号列表.length;
+                当前进度 += 分块大小
+            ) {
+                const 当前块编号列表 = 陆地编号列表.slice(
+                    当前进度,
+                    当前进度 + 分块大小
+                );
 
                 const 洗牌池数据块 = 当前块编号列表.map((编号, 块内索引) => ({
                     id: 当前进度 + 块内索引,
@@ -63,7 +75,9 @@ export function 地区洗牌(ctx: Context) {
 
                 await Promise.all([
                     ctx.database.upsert('马列地区洗牌池', 洗牌池数据块),
-                    ctx.database.upsert('马列地区状态机', 状态机数据块, ['地区编号']),
+                    ctx.database.upsert('马列地区状态机', 状态机数据块, [
+                        '地区编号',
+                    ]),
                 ]);
 
                 // 计算并发送进度

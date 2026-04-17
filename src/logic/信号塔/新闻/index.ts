@@ -13,10 +13,16 @@ export * from './types';
 const 信号塔平台列表: 信号塔平台[] = ['onebot', 'discord', 'telegram'];
 
 function 标准化频道列表(频道列表: string[]): string[] {
-    return Array.from(new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean)));
+    return Array.from(
+        new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean))
+    );
 }
 
-function 构建新闻通报文本(参数: { 标题: string; 内容: string; 前缀: string }): string {
+function 构建新闻通报文本(参数: {
+    标题: string;
+    内容: string;
+    前缀: string;
+}): string {
     return [`【${参数.前缀}】${参数.标题}`, 参数.内容].join('\n');
 }
 
@@ -48,7 +54,9 @@ export async function 发送新闻信号塔通报(
             const 群聊列表 = 标准化频道列表(新闻群配置[平台]);
             if (!群聊列表.length) return;
 
-            const 平台机器人 = Object.values(ctx.bots).find((bot) => bot.platform === 平台);
+            const 平台机器人 = Object.values(ctx.bots).find(
+                (bot) => bot.platform === 平台
+            );
 
             if (!平台机器人) {
                 发送失败.push({
@@ -64,9 +72,12 @@ export async function 发送新闻信号塔通报(
                         await 平台机器人.sendMessage(群聊ID, 文本);
                         已发送.push({ 平台, 群聊ID });
                     } catch (error) {
-                        const 错误信息 = error instanceof Error ? error.message : '未知错误';
+                        const 错误信息 =
+                            error instanceof Error ? error.message : '未知错误';
 
-                        logger.warn(`新闻信号塔发送失败：${平台}:${群聊ID}，${错误信息}`);
+                        logger.warn(
+                            `新闻信号塔发送失败：${平台}:${群聊ID}，${错误信息}`
+                        );
 
                         发送失败.push({
                             平台,

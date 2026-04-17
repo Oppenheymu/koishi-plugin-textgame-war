@@ -3,28 +3,32 @@ import { 尝试发送联军信号塔通报, 获取联军成员权限等级 } fro
 import { 联军政体 } from '@/types';
 import { 玩家联军检查, 目标解析 } from '@/utils';
 
-function 校验目标是本联军成员(目标联军编号: string | null, 联军编号: string): boolean {
+function 校验目标是本联军成员(
+    目标联军编号: string | null,
+    联军编号: string
+): boolean {
     return 目标联军编号 === 联军编号;
 }
 
 export function 设置职务(ctx: Context) {
     ctx.command('设置总理 <目标:string>').action(async ({ session }, 目标) => {
         try {
-            const { uid, username, 联军资料, 联军编号, 权限等级 } = await 玩家联军检查(
-                ctx,
-                session,
-                {
+            const { uid, username, 联军资料, 联军编号, 权限等级 } =
+                await 玩家联军检查(ctx, session, {
                     最低权限等级: 3,
                     是否必须在成员列表: true,
-                }
-            );
+                });
 
             const 输入目标 = 目标?.trim();
             if (!输入目标) {
                 return '请指定目标用户：可以 @对方 或输入 UID';
             }
 
-            const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 输入目标);
+            const { 目标用户名, 目标用户资料 } = await 目标解析(
+                ctx,
+                session,
+                输入目标
+            );
 
             const 目标UID = 目标用户资料.uid;
             if (目标UID === uid) {
@@ -86,21 +90,22 @@ ${username} 同志！
 
     ctx.command('设置元首 <目标:string>').action(async ({ session }, 目标) => {
         try {
-            const { uid, username, 联军资料, 联军编号, 权限等级 } = await 玩家联军检查(
-                ctx,
-                session,
-                {
+            const { uid, username, 联军资料, 联军编号, 权限等级 } =
+                await 玩家联军检查(ctx, session, {
                     最低权限等级: 4,
                     是否必须在成员列表: true,
-                }
-            );
+                });
 
             const 输入目标 = 目标?.trim();
             if (!输入目标) {
                 return '请指定目标用户：可以 @对方 或输入 UID';
             }
 
-            const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 输入目标);
+            const { 目标用户名, 目标用户资料 } = await 目标解析(
+                ctx,
+                session,
+                输入目标
+            );
 
             const 目标UID = 目标用户资料.uid;
             if (目标UID === uid) {

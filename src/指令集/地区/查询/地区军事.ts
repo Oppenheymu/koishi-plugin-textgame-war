@@ -11,12 +11,13 @@ export function 查看地区军事(ctx: Context) {
         .alias('城市军事')
         .action(async ({ session }, 地区编号参数) => {
             try {
-                const { 地区编号, 地区战略资料, 展示地区名称 } = await 地区查询权限检查(
-                    ctx,
-                    session,
-                    '查看地区军事',
-                    地区编号参数
-                );
+                const { 地区编号, 地区战略资料, 展示地区名称 } =
+                    await 地区查询权限检查(
+                        ctx,
+                        session,
+                        '查看地区军事',
+                        地区编号参数
+                    );
 
                 const 历史战争记录 = 地区战略资料.历史战争 ?? [];
                 const 历史战争展示 = 历史战争记录.length

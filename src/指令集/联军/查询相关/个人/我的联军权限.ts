@@ -7,10 +7,14 @@ export function 我的联军权限(ctx: Context) {
         .alias('我的权限')
         .action(async ({ session }) => {
             try {
-                const { username, 联军编号, 权限等级 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 1,
-                    是否必须在成员列表: true,
-                });
+                const { username, 联军编号, 权限等级 } = await 玩家联军检查(
+                    ctx,
+                    session,
+                    {
+                        最低权限等级: 1,
+                        是否必须在成员列表: true,
+                    }
+                );
 
                 const 联军权限配置 = await 获取联军权限配置(ctx, 联军编号);
                 const 权限详情 = 联军权限动作列表

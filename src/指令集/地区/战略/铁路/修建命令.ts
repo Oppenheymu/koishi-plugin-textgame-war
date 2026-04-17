@@ -10,7 +10,12 @@ import {
     请求联军审批,
 } from '@/logic';
 import type { TerrainType } from '@/types';
-import { 地区解析, 地区驻扎权限设置检查, 当前地区解析, 玩家检查 } from '@/utils';
+import {
+    地区解析,
+    地区驻扎权限设置检查,
+    当前地区解析,
+    玩家检查,
+} from '@/utils';
 import {
     格式化,
     生成审核推送文本,
@@ -224,12 +229,12 @@ async function 执行修建主流程(
 
 export function 修建铁路(ctx: Context) {
     ctx.command('修建铁路 <目标地区:string>')
-    .alias("建造铁路")
-    .action(async ({ session }, 目标地区参数) => {
-        try {
-            return await 执行修建主流程(ctx, session, 目标地区参数);
-        } catch (error) {
-            return (error as Error).message;
-        }
-    });
+        .alias('建造铁路')
+        .action(async ({ session }, 目标地区参数) => {
+            try {
+                return await 执行修建主流程(ctx, session, 目标地区参数);
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
 }
