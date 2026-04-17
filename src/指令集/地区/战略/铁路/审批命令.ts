@@ -4,6 +4,10 @@ import { 执行铁路修建, 获取有效铁路申请, 获取联军操作权限 
 import { 玩家联军检查, 获取玩家完整资料 } from '@/utils';
 import { 格式化, 解析铁路申请ID, 读取引用文本 } from './共享';
 
+function 解析审核申请ID(session: Session | undefined, 申请ID文本?: string): string | null {
+    return 解析铁路申请ID(申请ID文本, 读取引用文本(session));
+}
+
 async function 执行审核铁路(
     ctx: Context,
     session: Session | undefined,
@@ -11,11 +15,10 @@ async function 执行审核铁路(
     申请ID文本?: string,
     备注?: string
 ): Promise<string> {
-    const 引用文本 = 读取引用文本(session);
-    const 申请ID = 解析铁路申请ID(申请ID文本, 引用文本);
+    const 申请ID = 解析审核申请ID(session, 申请ID文本);
 
     if (!申请ID) {
-        throw new Error('请提供申请ID，或引用申请消息后发送【审核铁路 同意】');
+        throw new Error('请提供申请ID，或引用铁路申请消息后发送【审核铁路 同意】/【同意铁路】');
     }
 
     const 申请记录 = await 获取有效铁路申请(ctx, 申请ID);

@@ -66,6 +66,24 @@ function 计算下一个铁路编号(铁路映射: Record<number, Railroad>): nu
     return Math.max(...已有编号) + 1;
 }
 
+function 查找可续建铁路编号(
+    铁路映射: Record<number, Railroad>,
+    目标地区编号: string,
+    铁路类型: string
+): number | null {
+    const 候选编号 = Object.entries(铁路映射)
+        .filter(([, 信息]) => {
+            if (信息.目标地区 !== 目标地区编号) return false;
+            if (信息.铁路类型 !== 铁路类型) return false;
+            return (信息.建造进度 ?? 0) < 100;
+        })
+        .map(([编号]) => Number(编号))
+        .filter((编号) => Number.isInteger(编号) && 编号 > 0);
+
+    if (!候选编号.length) return null;
+    return Math.max(...候选编号);
+}
+
 async function 持久化地区铁路(
     ctx: Context,
     地区编号: string,
@@ -91,9 +109,19 @@ function oldOrEmpty(原值?: string): string {
 }
 
 export function 生成铁路申请ID(): string {
-    const 时间片段 = dayjs().format('MMDDHHmm');
-    const 随机片段 = Math.random().toString(36).slice(2, 6).toUpperCase();
-    return `TL-${时间片段}-${随机片段}`;
+    return `TL${Math.floor(100000 + Math.random() * 900000)}`;
+}
+
+async function 生成唯一铁路申请ID(ctx: Context): Promise<string> {
+    for (let i = 0; i < 24; i += 1) {
+        const 候选ID = 生成铁路申请ID();
+        const [已存在] = await ctx.database.get('马列铁路修建申请表', { id: 候选ID });
+        if (!已存在) {
+            return 候选ID;
+        }
+    }
+
+    throw new Error('生成铁路申请ID失败，请稍后重试');
 }
 
 export async function 查询待审核铁路申请(
@@ -115,7 +143,7 @@ export async function 创建跨联军铁路申请(
     参数: 创建跨联军铁路申请参数
 ): Promise<PendingRailwayBuild> {
     const 创建时间 = dayjs();
-    const 申请ID = 生成铁路申请ID();
+    const 申请ID = await 生成唯一铁路申请ID(ctx);
     const 审批过期小时 = Math.max(1, 参数.审批过期小时 ?? 24);
 
     const 申请记录: PendingRailwayBuild = {
@@ -164,13 +192,9 @@ export async function 执行铁路修建(
     const { 地区战略资料: 发起地区战略资料 } = await 地区解析(ctx, 参数.发起地区编号);
     const 发起地区铁路映射 = 读取铁路映射(发起地区战略资料);
 
-    let 发起地区铁路编号 = Number(
-        Object.entries(发起地区铁路映射).find(([, 信息]) => 信息.目标地区 === 参数.目标地区编号)?.[0]
-    );
-
-    if (!Number.isInteger(发起地区铁路编号) || 发起地区铁路编号 <= 0) {
-        发起地区铁路编号 = 计算下一个铁路编号(发起地区铁路映射);
-    }
+    const 发起地区铁路编号 =
+        查找可续建铁路编号(发起地区铁路映射, 参数.目标地区编号, 参数.铁路类型) ??
+        计算下一个铁路编号(发起地区铁路映射);
 
     const 发起地区旧铁路信息 = 发起地区铁路映射[发起地区铁路编号];
     const 已投入生产力 = 发起地区旧铁路信息?.已投入生产力 ?? 0;
@@ -226,13 +250,9 @@ export async function 执行铁路修建(
         const { 地区战略资料: 目标地区战略资料 } = await 地区解析(ctx, 参数.目标地区编号);
         const 目标地区铁路映射 = 读取铁路映射(目标地区战略资料);
 
-        let 目标地区铁路编号 = Number(
-            Object.entries(目标地区铁路映射).find(([, 信息]) => 信息.目标地区 === 参数.发起地区编号)?.[0]
-        );
-
-        if (!Number.isInteger(目标地区铁路编号) || 目标地区铁路编号 <= 0) {
-            目标地区铁路编号 = 计算下一个铁路编号(目标地区铁路映射);
-        }
+        const 目标地区铁路编号 =
+            查找可续建铁路编号(目标地区铁路映射, 参数.发起地区编号, 参数.铁路类型) ??
+            计算下一个铁路编号(目标地区铁路映射);
 
         const 目标地区旧铁路信息 = 目标地区铁路映射[目标地区铁路编号];
 

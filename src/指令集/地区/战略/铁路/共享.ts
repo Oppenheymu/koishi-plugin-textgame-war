@@ -10,16 +10,37 @@ export function 读取引用文本(session: Session | undefined): string {
         session as Session & {
             quote?: {
                 content?: string;
+                message?: unknown;
             };
         }
     )?.quote;
 
-    return quote?.content ?? '';
+    const 内容 = quote?.content?.trim();
+    if (内容) return 内容;
+
+    if (typeof quote?.message === 'string') {
+        return quote.message;
+    }
+
+    if (Array.isArray(quote?.message)) {
+        return quote.message
+            .map((片段) => {
+                if (typeof 片段 === 'string') return 片段;
+                if (片段 && typeof 片段 === 'object') {
+                    const 对象 = 片段 as { attrs?: { content?: string } };
+                    return 对象.attrs?.content ?? '';
+                }
+                return '';
+            })
+            .join('');
+    }
+
+    return '';
 }
 
 export function 解析铁路申请ID(输入?: string, 引用文本?: string): string | null {
     const 文本候选 = [输入?.trim(), 引用文本?.trim()].filter(Boolean) as string[];
-    const 申请ID匹配规则 = [/TL-[A-Z0-9]{8}-[A-Z0-9]{4}/i, /PENDING-[A-Z0-9-]+/i];
+    const 申请ID匹配规则 = [/TL\d{6}/i, /TL-[A-Z0-9]{8}-[A-Z0-9]{4}/i, /PENDING-[A-Z0-9-]+/i];
 
     for (const 文本 of 文本候选) {
         for (const 规则 of 申请ID匹配规则) {
