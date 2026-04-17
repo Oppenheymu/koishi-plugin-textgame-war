@@ -1,0 +1,195 @@
+import dayjs from 'dayjs';
+import type { Context, Session } from 'koishi';
+import type { RegionStrategy } from '@/types';
+import { 更新地区战略资料, 玩家检查, 驻扎检查 } from '@/utils';
+import type { 特殊设施类型, 设施建造对象 } from './config';
+import { 特殊建筑库 } from './config';
+import {
+    创建默认设施对象,
+    执行资源与工资结算,
+    格式化,
+    组装消耗文本,
+    解析轮次,
+    计算资源可执行轮次,
+} from './utils';
+
+async function 执行特殊设施修建(
+    ctx: Context,
+    参数: {
+        session: Session | undefined;
+        类型: 特殊设施类型;
+        编号输入: number;
+        轮次输入: number;
+    }
+): Promise<string> {
+    const { session, 类型, 编号输入, 轮次输入 } = 参数;
+    const 建筑属性 = 特殊建筑库[类型];
+
+    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
+        await 驻扎检查(ctx, session);
+    const { 用户资料 } = await 玩家检查(ctx, session);
+
+    if (当前驻扎地区 !== 地区编号) {
+        return `你当前驻扎在 ${当前驻扎地区 || '未驻扎地区'}，仅驻扎在本地区的玩家可修建${建筑属性.显示名}`;
+    }
+
+    const 轮次 = 解析轮次(轮次输入);
+    if (轮次 <= 0) {
+        return '请输入有效轮次（正整数）';
+    }
+
+    if (用户资料.生产次数 <= 0) {
+        return '生产次数不足';
+    }
+
+    if (用户资料.科技等级 < 建筑属性.科技需求) {
+        return `科技等级不足，修建${建筑属性.显示名}需要科技等级 ${格式化(建筑属性.科技需求)}`;
+    }
+
+    const 单轮生产力 = 用户资料.工人 * 用户资料.生产技术;
+    if (单轮生产力 <= 0) {
+        return '当前生产力为零，无法修建';
+    }
+
+    const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
+    const 可负担工资轮次 =
+        单轮工资 > 0
+            ? Math.floor(用户资料.生活资料 / 单轮工资)
+            : Number.MAX_SAFE_INTEGER;
+    const 可负担资源轮次 = 计算资源可执行轮次(用户资料, 建筑属性.资源需求);
+
+    const 最大可执行轮次 = Math.min(
+        轮次,
+        用户资料.生产次数,
+        可负担工资轮次,
+        可负担资源轮次
+    );
+
+    if (最大可执行轮次 <= 0) {
+        return '资源或生活资料不足，无法完成任意一轮修建';
+    }
+
+    const 原始设施映射 = (地区战略资料[类型] ?? {}) as Record<
+        number,
+        设施建造对象
+    >;
+    const 设施映射: Record<number, 设施建造对象> = {
+        ...原始设施映射,
+    };
+
+    const 目标编号 = Number.isFinite(编号输入)
+        ? Math.max(1, Math.floor(编号输入 ?? 1))
+        : Math.max(
+              1,
+              ...Object.keys(设施映射).map((编号) => Number(编号) || 0)
+          ) + (Object.keys(设施映射).length ? 1 : 0);
+
+    const 现有设施 = 设施映射[目标编号] ?? 创建默认设施对象(类型);
+
+    if (现有设施.建造进度 >= 建筑属性.生产力需求) {
+        return `${建筑属性.显示名}#${目标编号} 已建成`;
+    }
+
+    const 剩余需求 = Math.max(0, 建筑属性.生产力需求 - 现有设施.建造进度);
+    const 投入总生产力 = 单轮生产力 * 最大可执行轮次;
+    const 实际投入 = Math.min(剩余需求, 投入总生产力);
+    const 实际轮次 = Math.ceil(实际投入 / 单轮生产力);
+
+    if (实际投入 <= 0 || 实际轮次 <= 0) {
+        return `${建筑属性.显示名}#${目标编号} 当前无需继续投入`;
+    }
+
+    const 更新后进度 = 现有设施.建造进度 + 实际投入;
+    const 是否完工 = 更新后进度 >= 建筑属性.生产力需求;
+
+    const { 工资消耗, 资源消耗 } = await 执行资源与工资结算(
+        ctx,
+        id,
+        用户资料,
+        实际轮次,
+        建筑属性.资源需求
+    );
+
+    设施映射[目标编号] = {
+        ...现有设施,
+        建造进度: 是否完工 ? 建筑属性.生产力需求 : 更新后进度,
+        建造时间:
+            是否完工 && !现有设施.建造时间
+                ? dayjs().format('YYYY-MM-DD HH:mm')
+                : (现有设施.建造时间 ?? ''),
+    };
+
+    await 更新地区战略资料(ctx, 地区编号, {
+        [类型]: 设施映射,
+    } as Partial<RegionStrategy>);
+
+    return [
+        '====[征战文游]====',
+        `${username} 同志：`,
+        `■ 地区：${展示地区名称}（${地区编号}）`,
+        `■ 修建目标：${建筑属性.显示名}#${目标编号}`,
+        `■ 科技需求：${格式化(建筑属性.科技需求)}`,
+        `■ 总需求生产力：${格式化(建筑属性.生产力需求)}`,
+        `■ 本次投入生产力：${格式化(实际投入)}`,
+        `■ 建造进度：${格式化(现有设施.建造进度)} → ${格式化(
+            是否完工 ? 建筑属性.生产力需求 : 更新后进度
+        )} / ${格式化(建筑属性.生产力需求)}`,
+        `■ 工资消耗：${格式化(工资消耗)}`,
+        ...组装消耗文本(资源消耗),
+        `■ 状态：${是否完工 ? '建造完成' : '建设中'}`,
+    ].join('\n');
+}
+
+export function 修建地区生物实验室(ctx: Context) {
+    ctx.command('修建地区生物实验室 [编号:number] [轮次:number]')
+        .alias('修建生物实验室')
+        .alias('建造生物实验室')
+        .action(async ({ session }, 编号输入, 轮次输入) => {
+            try {
+                return await 执行特殊设施修建(ctx, {
+                    session,
+                    类型: '生物实验室',
+                    编号输入,
+                    轮次输入,
+                });
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
+}
+
+export function 修建地区离心机组(ctx: Context) {
+    ctx.command('修建地区离心机组 [编号:number] [轮次:number]')
+        .alias('修建高速离心级联')
+        .alias('修建离心机组')
+        .action(async ({ session }, 编号输入, 轮次输入) => {
+            try {
+                return await 执行特殊设施修建(ctx, {
+                    session,
+                    类型: '高速离心级联',
+                    编号输入,
+                    轮次输入,
+                });
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
+}
+
+export function 修建地区核反应堆(ctx: Context) {
+    ctx.command('修建地区核反应堆 [编号:number] [轮次:number]')
+        .alias('修建核反应堆')
+        .alias('建造核反应堆')
+        .action(async ({ session }, 编号输入, 轮次输入) => {
+            try {
+                return await 执行特殊设施修建(ctx, {
+                    session,
+                    类型: '核反应堆',
+                    编号输入,
+                    轮次输入,
+                });
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
+}

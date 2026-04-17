@@ -1,5 +1,6 @@
 import type { Context } from 'koishi';
 import { 批量加载插件 } from '../../utils/插件加载';
+import { 地区建筑指令 } from './建筑';
 import { 我的驻扎 } from './我的驻扎';
 import { 地区战略指令 } from './战略';
 import { 设置战机权限 } from './权限/战机管理';
@@ -13,6 +14,7 @@ const 地区指令列表 = [
     ...查询相关指令,
     ...地区战略指令,
     ...地区资源指令,
+    ...地区建筑指令,
     驻扎,
     我的驻扎,
     设置驻扎权限,

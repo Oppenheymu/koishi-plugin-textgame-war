@@ -137,6 +137,44 @@ export async function 更新地区资料(
     );
 }
 
+export async function 更新地区战略资料(
+    ctx: Context,
+    地区编号: string,
+    更新数据: Partial<RegionStrategy>
+): Promise<void> {
+    const [地区战略资料] = await ctx.database.get('马列地区战略表', {
+        地区编号,
+    });
+
+    if (!地区战略资料) {
+        throw new Error(`未找到地区战略数据：${地区编号}`);
+    }
+
+    const 战略更新: Partial<RegionStrategy> = {};
+
+    for (const [键, 值] of Object.entries(
+        更新数据 as Record<string, unknown>
+    )) {
+        if (键 === '地区编号') continue;
+
+        if (键 in 地区战略资料) {
+            (战略更新 as Record<string, unknown>)[键] = 值;
+        }
+    }
+
+    if (!Object.keys(战略更新).length) {
+        return;
+    }
+
+    await ctx.database.set(
+        '马列地区战略表',
+        {
+            地区编号,
+        },
+        战略更新
+    );
+}
+
 export async function 当前地区解析(
     ctx: Context,
     session: Session | undefined

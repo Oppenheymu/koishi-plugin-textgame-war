@@ -94,6 +94,15 @@ export interface Warehouse {
     防空弹药: number;
 }
 
+export type Fortress =
+    | '一级要塞'
+    | '二级要塞'
+    | '三级要塞'
+    | '四级要塞'
+    | '五级要塞'
+    | '六级要塞'
+    | '七级要塞';
+
 export interface RegionStrategy {
     地区编号: string;
 
@@ -108,7 +117,7 @@ export interface RegionStrategy {
 
     // 地区军事
     地区驻军: number;
-    地区堡垒: number;
+    地区堡垒: Fortress;
 
     生物实验室: Record<number, BiologyLab>;
 
