@@ -21,6 +21,7 @@ function 获取权限动作(物: string) {
 export function 制取地区资源(ctx: Context) {
     ctx.command('制取 <制取物:string> [建筑编号:number]')
         .alias('开始制取')
+        .alias('制备')
         .action(async ({ session }, 制取物输入, 建筑编号) => {
             try {
                 const {

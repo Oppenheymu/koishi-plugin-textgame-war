@@ -11,6 +11,8 @@ export interface PlayerWarData {
     火箭炮: number;
     火箭炮弹药: number;
 
+    列车炮: number;
+
     // 空军
     防空弹药: number;
     侦察机: number;

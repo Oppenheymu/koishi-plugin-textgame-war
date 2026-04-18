@@ -36,6 +36,11 @@ export function 加载玩家战争表(ctx: Context) {
                 initial: 0,
             },
 
+            列车炮: {
+                type: 'unsigned',
+                initial: 0,
+            },
+
             // 空军（地面/正常状态）
             防空弹药: {
                 type: 'unsigned',
