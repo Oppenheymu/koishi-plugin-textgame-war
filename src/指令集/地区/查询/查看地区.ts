@@ -91,6 +91,7 @@ export function 查看地区(ctx: Context) {
                     `□ 地区总督：${地区资料.地区总督 || '暂无'}`,
                     ...容量行,
                     `■ 炼钢厂: ${格式化(地区资料.炼钢厂数量)}`,
+                    `■ 电解铝厂: ${格式化(地区资料.电解铝厂数量)}`,
                 ].join('\n');
             } catch (error) {
                 return (error as Error).message;

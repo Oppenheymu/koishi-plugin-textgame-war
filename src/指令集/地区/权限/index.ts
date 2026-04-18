@@ -1,3 +1,3 @@
-export * from './战机管理';
-export * from './机场管理';
-export * from './驻扎管理';
+import { 行为管理 } from './行为管理';
+
+export const 地区权限相关指令 = [...行为管理];
