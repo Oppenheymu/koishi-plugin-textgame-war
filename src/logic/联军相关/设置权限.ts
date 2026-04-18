@@ -29,6 +29,8 @@ export const 联军权限动作列表: 联军权限动作[] = [
     '设置扩军计划',
     '转入联军',
     '分配军队',
+    '设置地区总督',
+    '设置地区司令',
 ];
 
 export const 默认联军权限配置: Omit<CoalitionPermission, '联军编号'> = {
@@ -51,6 +53,8 @@ export const 默认联军权限配置: Omit<CoalitionPermission, '联军编号'>
     设置扩军计划: 4,
     转入联军: 1,
     分配军队: 3,
+    设置地区总督: 4,
+    设置地区司令: 4,
 };
 
 function 读取默认联军权限配置(): Omit<CoalitionPermission, '联军编号'> {

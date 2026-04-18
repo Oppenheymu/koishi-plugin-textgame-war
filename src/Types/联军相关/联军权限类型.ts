@@ -19,7 +19,9 @@ export type CoalitionPermissionAction =
     | '设置税率'
     | '设置扩军计划'
     | '转入联军'
-    | '分配军队';
+    | '分配军队'
+    | '设置地区总督'
+    | '设置地区司令';
 
 export interface CoalitionPermission {
     联军编号: string;
@@ -42,4 +44,6 @@ export interface CoalitionPermission {
     设置扩军计划: CoalitionPermissionLevel;
     转入联军: CoalitionPermissionLevel;
     分配军队: CoalitionPermissionLevel;
+    设置地区总督: CoalitionPermissionLevel;
+    设置地区司令: CoalitionPermissionLevel;
 }

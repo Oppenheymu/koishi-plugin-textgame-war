@@ -84,6 +84,14 @@ export function 加载联军权限表(ctx: Context) {
                 type: 'unsigned',
                 initial: 3,
             },
+            设置地区总督: {
+                type: 'unsigned',
+                initial: 4,
+            },
+            设置地区司令: {
+                type: 'unsigned',
+                initial: 4,
+            },
         },
         {
             primary: '联军编号',

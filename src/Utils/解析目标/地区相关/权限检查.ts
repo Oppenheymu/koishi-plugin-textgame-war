@@ -16,6 +16,8 @@ export type 地区权限检查动作 = Extract<
     | '查看地区核反应堆'
     | '查看地区离心机组'
     | '设置地区驻扎权限'
+    | '设置地区总督'
+    | '设置地区司令'
 >;
 
 type 地区查询权限动作 = Exclude<地区权限检查动作, '设置地区驻扎权限'>;
@@ -124,5 +126,33 @@ export async function 地区机场权限设置检查(
         '设置地区驻扎权限',
         地区编号参数,
         '设置机场权限'
+    );
+}
+
+export async function 地区总督设置检查(
+    ctx: Context,
+    session: Session | undefined,
+    地区编号参数?: string
+): Promise<地区权限检查结果> {
+    return 地区权限检查(
+        ctx,
+        session,
+        '设置地区总督',
+        地区编号参数,
+        '设置地区总督'
+    );
+}
+
+export async function 地区司令设置检查(
+    ctx: Context,
+    session: Session | undefined,
+    地区编号参数?: string
+): Promise<地区权限检查结果> {
+    return 地区权限检查(
+        ctx,
+        session,
+        '设置地区司令',
+        地区编号参数,
+        '设置地区司令'
     );
 }
