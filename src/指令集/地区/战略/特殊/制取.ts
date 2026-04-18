@@ -46,43 +46,6 @@ export function 制取地区资源(ctx: Context) {
                 const 权限动作 = 获取权限动作(制取物);
                 await 地区查询权限检查(ctx, session, 权限动作 as any, 地区编号);
 
-                // 检查玩家是否已经有制取在进行
-                const 地区战略资料值 = 地区战略资料;
-                const 所有设施 = [
-                    ...(
-                        Object.entries(地区战略资料值.生物实验室 ?? {}) as any[]
-                    ).map(([k, v]) => ({
-                        设施类型: '生物武器',
-                        建筑编号: Number(k),
-                        ...v,
-                    })),
-                    ...(
-                        Object.entries(
-                            地区战略资料值.高速离心级联 ?? {}
-                        ) as any[]
-                    ).map(([k, v]) => ({
-                        设施类型: '浓缩铀',
-                        建筑编号: Number(k),
-                        ...v,
-                    })),
-                    ...(
-                        Object.entries(地区战略资料值.核反应堆 ?? {}) as any[]
-                    ).map(([k, v]) => ({
-                        设施类型: '钚',
-                        建筑编号: Number(k),
-                        ...v,
-                    })),
-                ];
-
-                const 玩家制取中的 = 所有设施.find((设施) => {
-                    const 最近日志 = (设施.日志 ?? []).slice(-1)[0];
-                    return 设施.是否制备中 && 最近日志?.制备者 === username;
-                });
-
-                if (玩家制取中的) {
-                    return `你正在 ${玩家制取中的.设施类型} 的建筑#${玩家制取中的.建筑编号} 进行制取中，请先完成当前制取`;
-                }
-
                 const 制取物设施信息: Record<
                     string,
                     { 设施类型: 特殊设施类型; 显示名: string }
@@ -108,6 +71,22 @@ export function 制取地区资源(ctx: Context) {
                     {}) as Record<number, any>;
                 if (Object.keys(原始映射).length === 0) {
                     return `该地区暂无${设施信息.显示名}，请先修建`;
+                }
+
+                const 同类设施 = Object.entries(原始映射).map(
+                    ([编号, 数据]) => ({
+                        建筑编号: Number(编号),
+                        ...(数据 as any),
+                    })
+                );
+
+                const 玩家制取中的 = 同类设施.find((设施) => {
+                    const 最近日志 = (设施.日志 ?? []).slice(-1)[0];
+                    return 设施.是否制备中 && 最近日志?.制备者 === username;
+                });
+
+                if (玩家制取中的) {
+                    return `你正在${设施信息.显示名}#${玩家制取中的.建筑编号}制取中，请先完成当前制取`;
                 }
 
                 const 映射: Record<number, any> = { ...原始映射 };
