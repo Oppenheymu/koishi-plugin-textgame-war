@@ -7,23 +7,11 @@
 
 import type { Context } from 'koishi';
 import { 获取运行时配置 } from '@/config';
-import type { 信号塔平台 } from '../联军/types';
-import type {
-    新闻信号塔发送参数,
-    新闻信号塔发送失败记录,
-    新闻信号塔发送结果,
-    新闻信号塔发送记录,
-} from './types';
+import type { 发送失败记录, 发送记录 } from '../utils';
+import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from '../utils';
+import type { 新闻信号塔发送参数, 新闻信号塔发送结果 } from './types';
 
 export * from './types';
-
-const 信号塔平台列表: 信号塔平台[] = ['onebot', 'discord', 'telegram'];
-
-function 标准化频道列表(频道列表: string[]): string[] {
-    return Array.from(
-        new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean))
-    );
-}
 
 function 构建新闻通报文本(参数: {
     标题: string;
@@ -51,8 +39,8 @@ export async function 发送新闻信号塔通报(
     const 文本 = 构建新闻通报文本({ 标题, 内容, 前缀 });
     const logger = ctx.logger('信号塔:新闻');
 
-    const 已发送: 新闻信号塔发送记录[] = [];
-    const 发送失败: 新闻信号塔发送失败记录[] = [];
+    const 已发送: 发送记录[] = [];
+    const 发送失败: 发送失败记录[] = [];
 
     const 新闻群配置 = 获取运行时配置().信号塔.新闻群;
 
@@ -135,11 +123,7 @@ export async function 尝试发送新闻信号塔通报(
     ctx: Context,
     参数: 新闻信号塔发送参数
 ): Promise<新闻信号塔发送结果 | null> {
-    try {
-        return await 发送新闻信号塔通报(ctx, 参数);
-    } catch (error) {
-        const 错误信息 = error instanceof Error ? error.message : '未知错误';
-        ctx.logger('信号塔:新闻').warn(`新闻信号塔流程异常：${错误信息}`);
-        return null;
-    }
+    return 尝试执行(ctx.logger('信号塔:新闻'), '新闻信号塔', () =>
+        发送新闻信号塔通报(ctx, 参数)
+    );
 }

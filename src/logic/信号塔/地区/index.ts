@@ -1,4 +1,5 @@
 import type { Context } from 'koishi';
+import { 尝试执行 } from '../utils';
 import { 尝试发送新闻信号塔通报 } from '../新闻';
 import type { 地区信号塔事件参数, 地区信号塔通报结果 } from './types';
 import { 构建地区事件内容 } from './构建';
@@ -36,11 +37,7 @@ export async function 尝试发送地区信号塔通报(
     ctx: Context,
     参数: 地区信号塔事件参数
 ): Promise<地区信号塔通报结果 | null> {
-    try {
-        return await 发送地区信号塔通报(ctx, 参数);
-    } catch (error) {
-        const 错误信息 = error instanceof Error ? error.message : '未知错误';
-        ctx.logger('信号塔:地区').warn(`地区信号塔流程异常：${错误信息}`);
-        return null;
-    }
+    return 尝试执行(ctx.logger('信号塔:地区'), '地区信号塔', () =>
+        发送地区信号塔通报(ctx, 参数)
+    );
 }

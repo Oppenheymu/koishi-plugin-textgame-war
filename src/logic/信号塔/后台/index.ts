@@ -1,6 +1,7 @@
 import type { Context } from 'koishi';
 import { 获取运行时配置 } from '@/config';
-import type { 信号塔平台 } from '../联军/types';
+import type { 发送失败记录, 发送记录 } from '../utils';
+import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from '../utils';
 
 export interface 后台信号塔发送参数 {
     内容: string;
@@ -8,31 +9,12 @@ export interface 后台信号塔发送参数 {
     级别?: 'INFO' | 'WARN' | 'ERROR';
 }
 
-export interface 后台信号塔发送记录 {
-    平台: 信号塔平台;
-    群聊ID: string;
-}
-
-export interface 后台信号塔发送失败记录 {
-    平台: 信号塔平台;
-    群聊ID?: string;
-    原因: string;
-}
-
 export interface 后台信号塔发送结果 {
     标题: string;
     级别: 'INFO' | 'WARN' | 'ERROR';
     内容: string;
-    已发送: 后台信号塔发送记录[];
-    发送失败: 后台信号塔发送失败记录[];
-}
-
-const 信号塔平台列表: 信号塔平台[] = ['onebot', 'discord', 'telegram'];
-
-function 标准化频道列表(频道列表: string[]): string[] {
-    return Array.from(
-        new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean))
-    );
+    已发送: 发送记录[];
+    发送失败: 发送失败记录[];
 }
 
 function 构建后台日志文本(参数: {
@@ -57,8 +39,8 @@ export async function 发送后台信号塔日志(
     const 文本 = 构建后台日志文本({ 标题, 级别, 内容 });
     const logger = ctx.logger('信号塔:后台');
 
-    const 已发送: 后台信号塔发送记录[] = [];
-    const 发送失败: 后台信号塔发送失败记录[] = [];
+    const 已发送: 发送记录[] = [];
+    const 发送失败: 发送失败记录[] = [];
 
     const 后台群配置 = 获取运行时配置().信号塔.后台群;
 
@@ -116,11 +98,7 @@ export async function 尝试发送后台信号塔日志(
     ctx: Context,
     参数: 后台信号塔发送参数
 ): Promise<后台信号塔发送结果 | null> {
-    try {
-        return await 发送后台信号塔日志(ctx, 参数);
-    } catch (error) {
-        const 错误信息 = error instanceof Error ? error.message : '未知错误';
-        ctx.logger('信号塔:后台').warn(`后台信号塔流程异常：${错误信息}`);
-        return null;
-    }
+    return 尝试执行(ctx.logger('信号塔:后台'), '后台信号塔', () =>
+        发送后台信号塔日志(ctx, 参数)
+    );
 }

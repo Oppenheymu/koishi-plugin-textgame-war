@@ -1,3 +1,5 @@
+import type { 发送失败记录, 发送记录 } from '../utils';
+
 export type 信号塔平台 = 'onebot' | 'discord' | 'telegram';
 
 export interface 信号塔发送参数 {
@@ -6,22 +8,11 @@ export interface 信号塔发送参数 {
     通报标题?: string;
 }
 
-export interface 信号塔发送记录 {
-    平台: 信号塔平台;
-    群聊ID: string;
-}
-
-export interface 信号塔发送失败记录 {
-    平台: 信号塔平台;
-    群聊ID?: string;
-    原因: string;
-}
-
 export interface 信号塔发送结果 {
     联军编号: string;
     展示联军名称: string;
     首都地区编号: string;
     展示地区名称: string;
-    已发送: 信号塔发送记录[];
-    发送失败: 信号塔发送失败记录[];
+    已发送: 发送记录[];
+    发送失败: 发送失败记录[];
 }

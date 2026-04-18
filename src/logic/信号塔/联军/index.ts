@@ -1,14 +1,8 @@
 import type { Context } from 'koishi';
 import { 地区解析, 联军解析 } from '@/utils';
-import type {
-    信号塔发送参数,
-    信号塔发送失败记录,
-    信号塔发送结果,
-    信号塔发送记录,
-    信号塔平台,
-} from './types';
-
-const 信号塔平台列表: 信号塔平台[] = ['onebot', 'discord', 'telegram'];
+import type { 发送失败记录, 发送记录 } from '../utils';
+import { 信号塔平台列表, 尝试执行 } from '../utils';
+import type { 信号塔发送参数, 信号塔发送结果 } from './types';
 
 function 构建信号塔通报文本(参数: {
     标题: string;
@@ -60,8 +54,8 @@ export async function 发送联军信号塔通报(
     });
 
     const logger = ctx.logger('信号塔');
-    const 已发送: 信号塔发送记录[] = [];
-    const 发送失败: 信号塔发送失败记录[] = [];
+    const 已发送: 发送记录[] = [];
+    const 发送失败: 发送失败记录[] = [];
 
     await Promise.all(
         信号塔平台列表.map(async (平台) => {
@@ -122,11 +116,7 @@ export async function 尝试发送联军信号塔通报(
     ctx: Context,
     参数: 信号塔发送参数
 ): Promise<信号塔发送结果 | null> {
-    try {
-        return await 发送联军信号塔通报(ctx, 参数);
-    } catch (error) {
-        const 错误信息 = error instanceof Error ? error.message : '未知错误';
-        ctx.logger('信号塔').warn(`信号塔流程异常：${错误信息}`);
-        return null;
-    }
+    return 尝试执行(ctx.logger('信号塔'), '信号塔', () =>
+        发送联军信号塔通报(ctx, 参数)
+    );
 }
