@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: koishi的权限判断比较难 */
+
 import dayjs from 'dayjs';
 import type { Context } from 'koishi';
 import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
