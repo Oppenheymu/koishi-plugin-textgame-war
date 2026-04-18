@@ -117,7 +117,7 @@ export interface RegionStrategy {
 
     // 地区军事
     地区驻军: number;
-    地区堡垒: Fortress;
+    地区堡垒: Fortress | undefined;
 
     生物实验室: Record<number, BiologyLab>;
 

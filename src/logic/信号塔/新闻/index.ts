@@ -70,7 +70,7 @@ export async function 发送新闻信号塔通报(
                 群聊列表.map(async (群聊ID) => {
                     try {
                         // diagnostic: log bot shape when first used
-                        if (!logger['__diagnosed_' + 平台 + '_' + 群聊ID]) {
+                        if (!(logger as any)[`__diagnosed_${平台}_${群聊ID}`]) {
                             try {
                                 const shape = {
                                     platform: (平台机器人 as any)?.platform,
@@ -91,7 +91,8 @@ export async function 发送新闻信号塔通报(
                                     `新闻信号塔-机器人形状获取失败: ${(e as Error).message}`
                                 );
                             }
-                            logger['__diagnosed_' + 平台 + '_' + 群聊ID] = true;
+                            (logger as any)[`__diagnosed_${平台}_${群聊ID}`] =
+                                true;
                         }
 
                         await 平台机器人.sendMessage(群聊ID, 文本);

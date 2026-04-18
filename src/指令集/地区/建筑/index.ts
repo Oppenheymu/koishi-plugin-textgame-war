@@ -1,18 +1,18 @@
-import type { Context } from 'koishi';
-import { 修建地区堡垒 } from './要塞';
 import { 修建地区建筑 } from './修建';
 import {
     修建地区核反应堆,
     修建地区生物实验室,
     修建地区离心机组,
 } from './特殊设施';
+import { 修建地区堡垒 } from './要塞';
+import { 铁路相关 } from './铁路';
 
 export {
     修建地区堡垒,
+    修建地区建筑,
     修建地区核反应堆,
     修建地区生物实验室,
     修建地区离心机组,
-    修建地区建筑,
 };
 
 export const 地区建筑指令 = [
@@ -21,4 +21,5 @@ export const 地区建筑指令 = [
     修建地区离心机组,
     修建地区核反应堆,
     修建地区建筑,
+    ...铁路相关,
 ];

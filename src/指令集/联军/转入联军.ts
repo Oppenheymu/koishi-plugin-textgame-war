@@ -1,8 +1,8 @@
 import type { Context } from 'koishi';
 import {
     尝试发送联军信号塔通报,
-    玩家联军权限设置,
     是否豁免扩军计划限制,
+    玩家联军权限设置,
 } from '@/logic';
 import { 更新玩家资料, 玩家联军检查 } from '@/utils';
 

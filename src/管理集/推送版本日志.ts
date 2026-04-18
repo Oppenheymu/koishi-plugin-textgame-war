@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
 import { 发送联军信号塔通报 } from '@/logic';
-import { 获取版本日志, 格式化版本日志 } from '@/utils';
+import { 格式化版本日志, 获取版本日志 } from '@/utils';
 
 export function 推送版本日志(ctx: Context) {
     ctx.command('推送版本日志 [版本号]', '向全服所有联军首都推送版本日志', {

@@ -1,6 +1,7 @@
 import type { Context } from 'koishi';
-import type { Player, Region } from '@/types';
+import type { Region } from '@/types';
 import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
+import { 格式化, 计算最大可执行轮次, 资源总消耗 } from './utils';
 
 type 建筑类型 = '基础设施' | '公路' | '机场' | '港口' | '居民区' | '仓库';
 type 资源字段 = '钢铁' | '金属铝';
@@ -96,7 +97,6 @@ const 建筑库: Record<建筑类型, 建筑属性> = {
 };
 
 const 所有建筑 = Object.values(建筑库);
-const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
 function 解析建筑类型(输入?: string): 建筑属性 | null {
     const 标准输入 = 输入?.trim();
@@ -107,34 +107,6 @@ function 解析建筑类型(输入?: string): 建筑属性 | null {
             (配置) => 配置.name === 标准输入 || 配置.别名.includes(标准输入)
         ) ?? null
     );
-}
-
-function 计算资源可执行轮次(用户资料: Player, 资源需求: 资源需求配置): number {
-    let 最大轮次 = Number.MAX_SAFE_INTEGER;
-
-    for (const [资源字段, 单轮消耗] of Object.entries(资源需求) as [
-        资源字段,
-        number,
-    ][]) {
-        if (单轮消耗 <= 0) continue;
-        const 当前库存 = 用户资料[资源字段] as number;
-        最大轮次 = Math.min(最大轮次, Math.floor(当前库存 / 单轮消耗));
-    }
-
-    return 最大轮次;
-}
-
-function 组装资源消耗文本(资源需求: 资源需求配置, 轮次: number): string[] {
-    const 文本: string[] = [];
-    for (const [资源字段, 单轮消耗] of Object.entries(资源需求) as [
-        资源字段,
-        number,
-    ][]) {
-        if (单轮消耗 <= 0) continue;
-        文本.push(`■ ${资源字段}消耗：${格式化(单轮消耗 * 轮次)}`);
-    }
-
-    return 文本;
 }
 
 export function 修建地区建筑(ctx: Context) {
@@ -206,27 +178,18 @@ export function 修建地区建筑(ctx: Context) {
                     return `单轮生产力不足，修建${建筑属性.显示名}每轮至少需要 ${格式化(建筑属性.生产力需求)} 生产力`;
                 }
 
-                const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
-                const 可负担工资轮次 =
-                    单轮工资 > 0
-                        ? Math.floor(用户资料.生活资料 / 单轮工资)
-                        : Number.MAX_SAFE_INTEGER;
-                const 可负担资源轮次 = 计算资源可执行轮次(
+                // 使用通用的最大轮次计算
+                const 最大可执行轮次 = 计算最大可执行轮次(
                     用户资料,
-                    建筑属性.资源需求
-                );
-
-                const 最大可执行轮次 = Math.min(
-                    轮次,
-                    用户资料.生产次数,
-                    可负担工资轮次,
-                    可负担资源轮次
+                    建筑属性.资源需求,
+                    轮次
                 );
 
                 if (最大可执行轮次 <= 0) {
                     return '资源或生活资料不足，无法完成任意一轮修建';
                 }
 
+                const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
                 const 剩余容量 = Math.max(0, 上限值 - 当前值);
                 const 达到上限所需轮次 = Math.ceil(剩余容量 / 单轮生产力);
                 const 实际轮次 = Math.min(最大可执行轮次, 达到上限所需轮次);
@@ -237,8 +200,10 @@ export function 修建地区建筑(ctx: Context) {
                 }
 
                 const 工资消耗 = 单轮工资 * 实际轮次;
-                const 钢铁消耗 = (建筑属性.资源需求.钢铁 ?? 0) * 实际轮次;
-                const 金属铝消耗 = (建筑属性.资源需求.金属铝 ?? 0) * 实际轮次;
+                const 资源消耗 = 资源总消耗(
+                    建筑属性.资源需求 as Record<string, number>,
+                    实际轮次
+                );
                 const 更新后当前值 = 当前值 + 增量;
 
                 await Promise.all([
@@ -246,17 +211,24 @@ export function 修建地区建筑(ctx: Context) {
                         [建筑属性.当前字段]: 更新后当前值,
                     }),
                     更新玩家资料(ctx, id, {
-                        钢铁: 用户资料.钢铁 - 钢铁消耗,
-                        金属铝: 用户资料.金属铝 - 金属铝消耗,
+                        钢铁: 用户资料.钢铁 - (资源消耗.钢铁 ?? 0),
+                        金属铝: 用户资料.金属铝 - (资源消耗.金属铝 ?? 0),
                         生活资料: 用户资料.生活资料 - 工资消耗,
                         生产次数: 用户资料.生产次数 - 实际轮次,
                     }),
                 ]);
 
-                const 资源消耗文本 = 组装资源消耗文本(
-                    建筑属性.资源需求,
-                    实际轮次
-                );
+                const 资源消耗文本: string[] = [];
+                if ((资源消耗.钢铁 ?? 0) > 0) {
+                    资源消耗文本.push(
+                        `■ 钢铁消耗：${格式化(资源消耗.钢铁 ?? 0)}`
+                    );
+                }
+                if ((资源消耗.金属铝 ?? 0) > 0) {
+                    资源消耗文本.push(
+                        `■ 金属铝消耗：${格式化(资源消耗.金属铝 ?? 0)}`
+                    );
+                }
 
                 return [
                     '====[征战文游]====',

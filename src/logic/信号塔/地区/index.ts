@@ -1,11 +1,11 @@
 import type { Context } from 'koishi';
 import { 尝试发送新闻信号塔通报 } from '../新闻';
-import { 构建地区事件内容 } from './构建';
 import type { 地区信号塔事件参数, 地区信号塔通报结果 } from './types';
+import { 构建地区事件内容 } from './构建';
 
-export * from './构建';
 export * from './types';
 export * from './刷新';
+export * from './构建';
 
 /**
  * 发送地区事件信号塔通报（通用接口）

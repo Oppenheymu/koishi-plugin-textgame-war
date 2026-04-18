@@ -1,6 +1,5 @@
-import { 批量加载插件 } from '@/utils';
-
 import type { Context } from 'koishi';
+import { 批量加载插件 } from '@/utils';
 import { 执行每日全服统计, 每日全服数据统计 } from './生产统计';
 import {
     执行联军资本增量日结,

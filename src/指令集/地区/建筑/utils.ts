@@ -1,12 +1,12 @@
 import type { Context, Session } from 'koishi';
+import {
+    计算最大可执行轮次 as 计算最大可执行轮次_工具,
+    计算资源可执行轮次 as 计算资源可执行轮次_工具,
+    计算资源总消耗,
+} from '@/logic';
 import type { Player } from '@/types';
 import { 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
-import type {
-    特殊设施类型,
-    设施建造对象,
-    资源字段,
-    资源需求配置,
-} from './config';
+import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from './config';
 
 // ==================== 格式化工具 ====================
 export const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -18,29 +18,51 @@ export function 解析轮次(轮次输入: number | undefined): number {
 }
 
 // ==================== 资源计算 ====================
+/**
+ * 计算资源可执行轮次
+ * 复用 @/logic 中的通用工具
+ */
 export function 计算资源可执行轮次(
     用户资料: Player,
     资源需求: 资源需求配置
 ): number {
-    let 最大轮次 = Number.MAX_SAFE_INTEGER;
-
-    for (const [字段, 单轮消耗] of Object.entries(资源需求) as [
-        资源字段,
-        number,
-    ][]) {
-        if (单轮消耗 <= 0) continue;
-        const 当前库存 = 用户资料[字段] as number;
-        最大轮次 = Math.min(最大轮次, Math.floor(当前库存 / 单轮消耗));
-    }
-
-    return 最大轮次;
+    // 转换为通用格式调用
+    return 计算资源可执行轮次_工具(
+        {
+            钢铁: 用户资料.钢铁,
+            金属铝: 用户资料.金属铝,
+        },
+        资源需求 as Record<string, number>
+    );
 }
 
-export function 资源总消耗(资源需求: 资源需求配置, 轮次: number): 资源需求配置 {
-    return {
-        钢铁: (资源需求.钢铁 ?? 0) * 轮次,
-        金属铝: (资源需求.金属铝 ?? 0) * 轮次,
-    };
+/**
+ * 资源总消耗
+ * 直接使用建造工具中的函数
+ */
+export { 计算资源总消耗 as 资源总消耗 };
+
+/**
+ * 计算最大可执行轮次（包装为指令层格式）
+ */
+export function 计算最大可执行轮次(
+    用户资料: Player,
+    资源需求: 资源需求配置 | undefined,
+    请求轮次: number
+): number {
+    const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
+
+    return 计算最大可执行轮次_工具({
+        请求轮次,
+        玩家生产次数: 用户资料.生产次数,
+        单轮工资,
+        当前生活资料: 用户资料.生活资料,
+        玩家资源: {
+            钢铁: 用户资料.钢铁,
+            金属铝: 用户资料.金属铝,
+        },
+        资源需求: 资源需求 as Record<string, number>,
+    });
 }
 
 // ==================== 设施对象创建 ====================
@@ -72,7 +94,7 @@ export async function 执行资源与工资结算(
 ) {
     const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
     const 工资消耗 = 单轮工资 * 轮次;
-    const 资源消耗 = 资源总消耗(资源需求, 轮次);
+    const 资源消耗 = 计算资源总消耗(资源需求, 轮次);
 
     await 更新玩家资料(ctx, 玩家ID, {
         钢铁: 用户资料.钢铁 - (资源消耗.钢铁 ?? 0),

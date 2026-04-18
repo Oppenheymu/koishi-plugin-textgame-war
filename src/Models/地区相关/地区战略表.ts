@@ -32,8 +32,9 @@ export function 加载地区战略表(ctx: Context) {
                 initial: 0,
             },
             地区堡垒: {
-                type: 'unsigned',
-                initial: 0,
+                type: 'string',
+                length: 255,
+                initial: undefined,
             },
 
             生物实验室: {

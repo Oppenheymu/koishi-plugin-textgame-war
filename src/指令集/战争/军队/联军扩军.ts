@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 玩家联军权限设置, 是否豁免扩军计划限制 } from '@/logic';
+import { 是否豁免扩军计划限制, 玩家联军权限设置 } from '@/logic';
 import { 更新玩家资料, 玩家联军检查, 生成随机图片片段 } from '@/utils';
 
 const 图片概率 = 0.01;
