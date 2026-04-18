@@ -61,7 +61,7 @@ interface BiologyLab {
 }
 
 interface Centrifuge {
-    是否运行中: boolean;
+    是否制备中: boolean;
 
     建造进度: number;
     建造时间: string;
@@ -70,7 +70,7 @@ interface Centrifuge {
 }
 
 interface NuclearReactor {
-    是否运行中: boolean;
+    是否制备中: boolean;
 
     建造进度: number;
     建造时间: string;

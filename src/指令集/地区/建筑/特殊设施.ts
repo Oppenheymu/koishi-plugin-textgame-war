@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import type { Context, Session } from 'koishi';
+import { Logger } from 'koishi';
 import type { RegionStrategy } from '@/types';
 import { 更新地区战略资料, 玩家检查, 驻扎检查 } from '@/utils';
 import type { 特殊设施类型, 设施建造对象 } from './config';
@@ -12,6 +13,8 @@ import {
     解析轮次,
     计算最大可执行轮次,
 } from './utils';
+
+const logger = new Logger('特殊设施建造');
 
 async function 执行特殊设施修建(
     ctx: Context,
@@ -112,9 +115,30 @@ async function 执行特殊设施修建(
                 : (现有设施.建造时间 ?? ''),
     };
 
-    await 更新地区战略资料(ctx, 地区编号, {
+    logger.debug(
+        `[建筑完成] 类型: ${类型}, 编号: ${目标编号}, 设施数据:`,
+        设施映射
+    );
+
+    const 更新对象 = {
         [类型]: 设施映射,
-    } as Partial<RegionStrategy>);
+    } as Partial<RegionStrategy>;
+
+    logger.info(
+        `[保存前] 类型字段: ${类型}, 设施映射数量: ${Object.keys(设施映射).length}, 更新对象:`,
+        更新对象
+    );
+
+    try {
+        await 更新地区战略资料(ctx, 地区编号, 更新对象);
+        logger.info(`[保存成功] 地区: ${地区编号}, 类型: ${类型}`);
+    } catch (error) {
+        logger.error(
+            `[保存失败] 地区: ${地区编号}, 类型: ${类型}, 错误:`,
+            error
+        );
+        throw error;
+    }
 
     return [
         '====[征战文游]====',

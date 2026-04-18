@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import type { Context } from 'koishi';
 import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
 import { 地区查询权限检查 } from '@/utils/解析目标/地区相关/权限检查';
+import { 特殊建筑库, type 特殊设施类型 } from '../../建筑/config';
 import 制取配置 from './config';
 
 function 格式化(n: number) {
@@ -45,48 +46,100 @@ export function 制取地区资源(ctx: Context) {
                 const 权限动作 = 获取权限动作(制取物);
                 await 地区查询权限检查(ctx, session, 权限动作 as any, 地区编号);
 
-                // 选择对应建筑集合
-                const 建筑集合映射: Record<string, Record<number, any>> = {
-                    生物武器: (地区战略资料.生物实验室 ?? {}) as Record<
-                        number,
-                        any
-                    >,
-                    浓缩铀: (地区战略资料.高速离心级联 ?? {}) as Record<
-                        number,
-                        any
-                    >,
-                    钚: (地区战略资料.核反应堆 ?? {}) as Record<number, any>,
+                // 检查玩家是否已经有制取在进行
+                const 地区战略资料值 = 地区战略资料;
+                const 所有设施 = [
+                    ...(
+                        Object.entries(地区战略资料值.生物实验室 ?? {}) as any[]
+                    ).map(([k, v]) => ({
+                        设施类型: '生物武器',
+                        建筑编号: Number(k),
+                        ...v,
+                    })),
+                    ...(
+                        Object.entries(
+                            地区战略资料值.高速离心级联 ?? {}
+                        ) as any[]
+                    ).map(([k, v]) => ({
+                        设施类型: '浓缩铀',
+                        建筑编号: Number(k),
+                        ...v,
+                    })),
+                    ...(
+                        Object.entries(地区战略资料值.核反应堆 ?? {}) as any[]
+                    ).map(([k, v]) => ({
+                        设施类型: '钚',
+                        建筑编号: Number(k),
+                        ...v,
+                    })),
+                ];
+
+                const 玩家制取中的 = 所有设施.find((设施) => {
+                    const 最近日志 = (设施.日志 ?? []).slice(-1)[0];
+                    return 设施.是否制备中 && 最近日志?.制备者 === username;
+                });
+
+                if (玩家制取中的) {
+                    return `你正在 ${玩家制取中的.设施类型} 的建筑#${玩家制取中的.建筑编号} 进行制取中，请先完成当前制取`;
+                }
+
+                const 制取物设施信息: Record<
+                    string,
+                    { 设施类型: 特殊设施类型; 显示名: string }
+                > = {
+                    生物武器: {
+                        设施类型: '生物实验室',
+                        显示名: '生物实验室',
+                    },
+                    浓缩铀: {
+                        设施类型: '高速离心级联',
+                        显示名: '高速离心级联',
+                    },
+                    钚: {
+                        设施类型: '核反应堆',
+                        显示名: '核反应堆',
+                    },
                 };
 
-                const 集合键 = 制取物 as keyof typeof 建筑集合映射;
-                const 原始映射 = 建筑集合映射[集合键] ?? {};
+                const 设施信息 = 制取物设施信息[制取物];
+                const 生产力需求 = 特殊建筑库[设施信息.设施类型].生产力需求;
+
+                const 原始映射 = (地区战略资料[设施信息.设施类型] ??
+                    {}) as Record<number, any>;
+                if (Object.keys(原始映射).length === 0) {
+                    return `该地区暂无${设施信息.显示名}，请先修建`;
+                }
+
                 const 映射: Record<number, any> = { ...原始映射 };
 
-                let 目标编号 = Number.isFinite(Number(建筑编号))
-                    ? Math.max(1, Math.floor(Number(建筑编号) || 1))
-                    : Math.max(
-                          1,
-                          ...Object.keys(映射).map((k) => Number(k) || 0)
-                      ) + (Object.keys(映射).length ? 1 : 0);
+                let 目标编号: number;
 
-                // 找一个空闲的建筑（未制备中）
-                if (!Number.isFinite(Number(建筑编号))) {
-                    const 空闲 = Object.entries(映射).find(
-                        ([, v]) => !(v?.是否制备中 || v?.是否运行中)
-                    );
-                    if (空闲) {
-                        目标编号 = Number(空闲[0]);
+                if (Number.isFinite(Number(建筑编号))) {
+                    目标编号 = Math.max(1, Math.floor(Number(建筑编号) || 1));
+                    if (!映射[目标编号]) {
+                        return `建筑#${目标编号} 不存在，该地区${设施信息.显示名}编号为：${Object.keys(
+                            映射
+                        )
+                            .sort((a, b) => Number(a) - Number(b))
+                            .join('、')}`;
                     }
+                    if (映射[目标编号].建造进度 < 生产力需求) {
+                        return `建筑#${目标编号} 尚未建造完成，无法制取`;
+                    }
+                    if (映射[目标编号].是否制备中) {
+                        return `建筑#${目标编号} 正在制取中，请选择空闲建筑`;
+                    }
+                } else {
+                    const 空闲已建成 = Object.entries(映射).find(
+                        ([, v]) => !v?.是否制备中 && v?.建造进度 >= 生产力需求
+                    );
+                    if (!空闲已建成) {
+                        return `该地区没有已建成且空闲的${设施信息.显示名}，无法制取`;
+                    }
+                    目标编号 = Number(空闲已建成[0]);
                 }
 
-                const 设施 = 映射[目标编号] ?? {
-                    是否制备中: false,
-                    建造进度: 0,
-                    建造时间: '',
-                };
-                if (设施.是否制备中) {
-                    return `建筑#${目标编号} 正在使用中，请选择空闲建筑`;
-                }
+                const 设施 = 映射[目标编号];
 
                 const cfg = (制取配置 as any)[制取物];
                 const 资源消耗: Record<string, number> = cfg.资源消耗 ?? {};
@@ -126,9 +179,7 @@ export function 制取地区资源(ctx: Context) {
                 await Promise.all([
                     更新玩家资料(ctx, id, 玩家更新 as any),
                     更新地区战略资料(ctx, 地区编号, {
-                        ...(集合键 === '生物武器' ? { 生物实验室: 映射 } : {}),
-                        ...(集合键 === '浓缩铀' ? { 高速离心级联: 映射 } : {}),
-                        ...(集合键 === '钚' ? { 核反应堆: 映射 } : {}),
+                        [设施信息.设施类型]: 映射,
                     } as any),
                 ]);
 
@@ -142,7 +193,7 @@ export function 制取地区资源(ctx: Context) {
                         .map(([k, v]) => `${k}${格式化(v)}`)
                         .join('、')}`,
                     `■ 制取开始时间：${时间}`,
-                    `■ 预计需要：${格式化(cfg.所需小时)} 小时（系统会记录完成时间，需后台执行器完成）`,
+                    `■ 预计需要：${格式化(cfg.所需小时)} 小时`,
                 ].join('\n');
             } catch (error) {
                 return (error as Error).message;

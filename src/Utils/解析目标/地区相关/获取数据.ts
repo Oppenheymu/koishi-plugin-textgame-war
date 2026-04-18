@@ -1,4 +1,5 @@
 import type { Context, Session } from 'koishi';
+import { Logger } from 'koishi';
 import type {
     Region,
     RegionConfig,
@@ -9,6 +10,8 @@ import type {
 import { 会话检查 } from '../../解析用户/会话相关/会话检查';
 import { 用户检查 } from '../../解析用户/会话相关/平台检查';
 import { 获取地区展示名称 } from './获取名称';
+
+const logger = new Logger('地区数据更新');
 
 export type 地区解析结果 = {
     地区编号: string;
@@ -112,15 +115,14 @@ export async function 更新地区资料(
         throw new Error(`未找到地区：${地区编号}`);
     }
 
-    const 地区更新: Partial<Region> = {};
+    // 过滤掉地区编号，其他字段直接更新（不检查字段是否存在，避免 JSON 字段反序列化问题）
+    const 地区更新: Record<string, unknown> = {};
 
     for (const [键, 值] of Object.entries(
         更新数据 as Record<string, unknown>
     )) {
-        if (键 === '地区编号') continue;
-
-        if (键 in 地区资料) {
-            (地区更新 as Record<string, unknown>)[键] = 值;
+        if (键 !== '地区编号') {
+            地区更新[键] = 值;
         }
     }
 
@@ -133,7 +135,7 @@ export async function 更新地区资料(
         {
             地区编号,
         },
-        地区更新
+        地区更新 as any
     );
 }
 
@@ -142,6 +144,8 @@ export async function 更新地区战略资料(
     地区编号: string,
     更新数据: Partial<RegionStrategy>
 ): Promise<void> {
+    logger.debug(`[更新开始] 地区: ${地区编号}, 更新数据:`, 更新数据);
+
     const [地区战略资料] = await ctx.database.get('马列地区战略表', {
         地区编号,
     });
@@ -150,19 +154,27 @@ export async function 更新地区战略资料(
         throw new Error(`未找到地区战略数据：${地区编号}`);
     }
 
-    const 战略更新: Partial<RegionStrategy> = {};
+    logger.debug(`[数据库读取] 地区: ${地区编号}, 现有数据:`, {
+        生物实验室: 地区战略资料.生物实验室,
+        高速离心级联: 地区战略资料.高速离心级联,
+        核反应堆: 地区战略资料.核反应堆,
+    });
+
+    // 过滤掉地区编号，其他字段直接更新（不检查字段是否存在，避免 JSON 字段反序列化问题）
+    const 战略更新: Record<string, unknown> = {};
 
     for (const [键, 值] of Object.entries(
         更新数据 as Record<string, unknown>
     )) {
-        if (键 === '地区编号') continue;
-
-        if (键 in 地区战略资料) {
-            (战略更新 as Record<string, unknown>)[键] = 值;
+        if (键 !== '地区编号') {
+            战略更新[键] = 值;
         }
     }
 
+    logger.debug(`[准备更新] 地区: ${地区编号}, 更新字段:`, 战略更新);
+
     if (!Object.keys(战略更新).length) {
+        logger.warn(`[更新跳过] 地区: ${地区编号}, 没有有效的更新字段`);
         return;
     }
 
@@ -171,7 +183,12 @@ export async function 更新地区战略资料(
         {
             地区编号,
         },
-        战略更新
+        // biome-ignore lint/suspicious/noExplicitAny: 动态的不太好写静态类型
+        战略更新 as any
+    );
+
+    logger.info(
+        `[更新完成] 地区: ${地区编号}, 更新字段数: ${Object.keys(战略更新).length}`
     );
 }
 
