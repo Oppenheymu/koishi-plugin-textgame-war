@@ -69,6 +69,31 @@ export async function 发送新闻信号塔通报(
             await Promise.all(
                 群聊列表.map(async (群聊ID) => {
                     try {
+                        // diagnostic: log bot shape when first used
+                        if (!logger['__diagnosed_' + 平台 + '_' + 群聊ID]) {
+                            try {
+                                const shape = {
+                                    platform: (平台机器人 as any)?.platform,
+                                    has_sendMessage: typeof (平台机器人 as any)
+                                        ?.sendMessage,
+                                    has_send: typeof (平台机器人 as any)?.send,
+                                    has__request: typeof (平台机器人 as any)
+                                        ?._request,
+                                    keys: Object.keys(
+                                        (平台机器人 as any) || {}
+                                    ).slice(0, 20),
+                                };
+                                logger.debug(
+                                    `新闻信号塔-机器人形状: ${JSON.stringify(shape)}`
+                                );
+                            } catch (e) {
+                                logger.debug(
+                                    `新闻信号塔-机器人形状获取失败: ${(e as Error).message}`
+                                );
+                            }
+                            logger['__diagnosed_' + 平台 + '_' + 群聊ID] = true;
+                        }
+
                         await 平台机器人.sendMessage(群聊ID, 文本);
                         已发送.push({ 平台, 群聊ID });
                     } catch (error) {
