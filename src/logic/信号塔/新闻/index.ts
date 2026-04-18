@@ -1,3 +1,10 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: 如下
+ * 代码里用 any 主要是为了在运行时做快速诊断
+ * 并避免 TypeScript 在编译时报错
+ * 开发时临时绕过类型系统
+ * 以方便查看未知运行时字段或不同平台机器人对象差异
+ */
+
 import type { Context } from 'koishi';
 import { 获取运行时配置 } from '@/config';
 import type { 信号塔平台 } from '../联军/types';
