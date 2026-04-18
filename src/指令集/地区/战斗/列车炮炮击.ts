@@ -81,15 +81,18 @@ export function 列车炮炮击(ctx: Context) {
 
                 const 目标地区结果 = await 地区解析(ctx, 目标地区编号);
 
-                if (
+                let 数量: number;
+                if (数量输入 == null) {
+                    数量 = 可用列车炮;
+                } else if (
                     !Number.isFinite(数量输入) ||
                     (数量输入 as number) <= 0 ||
                     !Number.isInteger(数量输入 as number)
                 ) {
                     return '请输入有效的正整数数量';
+                } else {
+                    数量 = Math.min(数量输入 as number, 可用列车炮);
                 }
-
-                const 数量 = Math.min(数量输入 as number, 可用列车炮);
 
                 const 目标地区资料 = 目标地区结果.地区资料;
                 const 目标战略资料 = 目标地区结果.地区战略资料;
