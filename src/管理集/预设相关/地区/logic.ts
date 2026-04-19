@@ -11,8 +11,8 @@ function clamp(value: number, min: number, max: number): number {
 
 function 归一化占比(value: number): number {
     if (value <= 0) return 0;
-    if (value > 1) return clamp(value / 100, 0, 1); // 兼容百分比数值
-    return value; // 已经是 0-1 之间的值直接返回
+    if (value > 1) return clamp(value / 100, 0, 1);
+    return value;
 }
 
 const CAPACITY_BASELINE: Partial<Record<TerrainType, CapacityBase>> = {
@@ -86,9 +86,26 @@ function 获取容量基线(地形: TerrainType): CapacityBase {
     return CAPACITY_BASELINE[地形] ?? DEFAULT_CAPACITY;
 }
 
+const EARTH_RADIUS_KM = 6371;
+const DEG_PER_CELL_X = 360 / 160;
+const DEG_PER_CELL_Y = 180 / 80;
+const EQUATOR_CELL_AREA =
+    DEG_PER_CELL_X *
+    (Math.PI / 180) *
+    EARTH_RADIUS_KM *
+    DEG_PER_CELL_Y *
+    (Math.PI / 180) *
+    EARTH_RADIUS_KM;
+
+function 计算面积系数(面积平方公里: number): number {
+    if (面积平方公里 <= 0) return 0;
+    return clamp(面积平方公里 / EQUATOR_CELL_AREA, 0.05, 1.2);
+}
+
 export function 获取容量上限(
     地区: RegionBasicDataItem,
-    地形: TerrainType
+    地形: TerrainType,
+    面积平方公里?: number
 ): CapacityLimit {
     if (地区.isOcean) {
         return {
@@ -121,7 +138,8 @@ export function 获取容量上限(
         0.85,
         1.25
     );
-    const 综合系数 = 海拔系数 * 崎岖系数 * 地貌系数;
+    const 面积系数 = 面积平方公里 != null ? 计算面积系数(面积平方公里) : 1;
+    const 综合系数 = 海拔系数 * 崎岖系数 * 地貌系数 * 面积系数;
 
     const 港口系数 = 水域占比 <= 0 ? 0 : clamp(0.2 + 水域占比 * 1.2, 0.2, 1.2);
 

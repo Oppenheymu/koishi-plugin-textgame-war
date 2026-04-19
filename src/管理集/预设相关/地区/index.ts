@@ -1,4 +1,5 @@
 import { type Context, Logger } from 'koishi';
+import { 计算栅格边长 } from '@/utils';
 import { 获取容量上限 } from './logic';
 import { 判定地区地形, 构建进度条, 读取地区基础数据 } from './utils';
 import { 写入批次 } from './write';
@@ -29,26 +30,43 @@ export function 初始化地区表(ctx: Context) {
             for (let i = 0; i < 总数; i += 批次大小) {
                 const 基础数据批次 = 地区基础数据.slice(i, i + 批次大小);
 
-                const 地形批次 = 基础数据批次.map((地区) => ({
-                    地区编号: String(地区.RegionId),
-                    栅格X: 地区.GridX,
-                    栅格Y: 地区.GridY,
-                    是否为海洋: 地区.isOcean,
-                    平均海拔: 地区.MeanElevation,
-                    最大海拔: 地区.MaxElevation,
-                    最小海拔: 地区.MinElevation,
-                    地区崎岖度: 地区.STDElevation,
-                    水域: 地区.Water,
-                    雪地: 地区.Snow,
-                    草地: 地区.Grassland,
-                    荒地: 地区.Bareland,
-                    森林: 地区.Forest,
-                    城镇: 地区.Urban,
-                }));
+                const 地形批次 = 基础数据批次.map((地区) => {
+                    const 边长 = 计算栅格边长({
+                        gridX: 地区.GridX,
+                        gridY: 地区.GridY,
+                    });
+                    return {
+                        地区编号: String(地区.RegionId),
+                        栅格X: 地区.GridX,
+                        栅格Y: 地区.GridY,
+                        是否为海洋: 地区.isOcean,
+                        东西宽度公里: 边长.东西宽度公里,
+                        南北高度公里: 边长.南北高度公里,
+                        面积平方公里: 边长.面积平方公里,
+                        平均海拔: 地区.MeanElevation,
+                        最大海拔: 地区.MaxElevation,
+                        最小海拔: 地区.MinElevation,
+                        地区崎岖度: 地区.STDElevation,
+                        水域: 地区.Water,
+                        雪地: 地区.Snow,
+                        草地: 地区.Grassland,
+                        荒地: 地区.Bareland,
+                        森林: 地区.Forest,
+                        城镇: 地区.Urban,
+                    };
+                });
 
                 const 地区批次 = 基础数据批次.map((地区) => {
                     const 地区地形 = 判定地区地形(地区);
-                    const 容量上限 = 获取容量上限(地区, 地区地形);
+                    const 边长 = 计算栅格边长({
+                        gridX: 地区.GridX,
+                        gridY: 地区.GridY,
+                    });
+                    const 容量上限 = 获取容量上限(
+                        地区,
+                        地区地形,
+                        边长.面积平方公里
+                    );
                     return {
                         地区编号: 地区.RegionId,
                         栅格X: 地区.GridX,

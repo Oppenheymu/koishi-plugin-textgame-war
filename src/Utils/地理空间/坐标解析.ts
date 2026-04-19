@@ -30,10 +30,7 @@ export function 解析地区编号(地区编号: string): 栅格坐标 {
 
 export function 栅格坐标转地区编号(坐标: 栅格坐标): string {
     const { gridX, gridY } = 坐标;
-    if (
-        gridX < 0 || gridX >= GRID_WIDTH ||
-        gridY < 0 || gridY >= GRID_HEIGHT
-    ) {
+    if (gridX < 0 || gridX >= GRID_WIDTH || gridY < 0 || gridY >= GRID_HEIGHT) {
         throw new Error(`无效的栅格坐标：(${gridX}, ${gridY})`);
     }
     return String(gridX * 100 + gridY).padStart(5, '0');
@@ -62,6 +59,34 @@ export function 经纬度转栅格(位置: 经纬度): 栅格坐标 {
 
 export function 地区编号转经纬度(地区编号: string): 经纬度 {
     return 栅格转经纬度(解析地区编号(地区编号));
+}
+
+export interface 栅格边长 {
+    东西宽度公里: number;
+    南北高度公里: number;
+    面积平方公里: number;
+}
+
+const EARTH_RADIUS_KM = 6371;
+
+export function 计算栅格边长(坐标: 栅格坐标): 栅格边长 {
+    const { gridY } = 坐标;
+    const centerLat = 90 - gridY * DEG_PER_CELL_Y - DEG_PER_CELL_Y / 2;
+    const latRad = centerLat * (Math.PI / 180);
+
+    const 南北高度公里 = DEG_PER_CELL_Y * (Math.PI / 180) * EARTH_RADIUS_KM;
+    const 东西宽度公里 =
+        DEG_PER_CELL_X * (Math.PI / 180) * EARTH_RADIUS_KM * Math.cos(latRad);
+
+    return {
+        东西宽度公里,
+        南北高度公里,
+        面积平方公里: 东西宽度公里 * 南北高度公里,
+    };
+}
+
+export function 计算地区编号边长(地区编号: string): 栅格边长 {
+    return 计算栅格边长(解析地区编号(地区编号));
 }
 
 export function 格式化经纬度(位置: 经纬度): string {

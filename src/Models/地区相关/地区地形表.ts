@@ -25,6 +25,19 @@ export function 加载地区地形表(ctx: Context) {
                 type: 'boolean',
             },
 
+            东西宽度公里: {
+                type: 'float',
+                initial: 0,
+            },
+            南北高度公里: {
+                type: 'float',
+                initial: 0,
+            },
+            面积平方公里: {
+                type: 'float',
+                initial: 0,
+            },
+
             平均海拔: {
                 type: 'integer',
             },

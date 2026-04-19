@@ -15,6 +15,10 @@ export interface RegionTerra {
 
     是否为海洋: boolean;
 
+    东西宽度公里: number;
+    南北高度公里: number;
+    面积平方公里: number;
+
     // 地区地形
     平均海拔: number;
     最大海拔: number;
