@@ -11,10 +11,9 @@ function 是否支持平台(platform: string | undefined): platform is 支持平
     );
 }
 
-export function 用户检查(session: Session | undefined): {
-    platform: 支持平台;
-    userId: string;
-} {
+export function 用户检查(
+    session: Session | undefined
+): asserts session is Session {
     会话检查(session);
 
     if (!是否支持平台(session.platform)) {
@@ -24,9 +23,4 @@ export function 用户检查(session: Session | undefined): {
     if (!session.userId) {
         throw new Error('无法获取用户信息');
     }
-
-    return {
-        platform: session.platform,
-        userId: session.userId,
-    };
 }

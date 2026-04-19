@@ -19,7 +19,8 @@ export function 绑定地区(ctx: Context) {
                     return '请提供地区编号';
                 }
 
-                const { platform } = 用户检查(session);
+                用户检查(session);
+                const platform = session.platform;
                 const 群聊ID = session?.guildId?.trim();
                 if (!群聊ID) {
                     return '请在群聊中使用该指令';

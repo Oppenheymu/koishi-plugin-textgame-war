@@ -58,7 +58,9 @@ ${username} 同志!
             const task = 绑定任务池.get(code);
             if (!task) return '验证码无效或已过期';
 
-            const { platform, userId } = 用户检查(session);
+            用户检查(session);
+            const platform = session.platform;
+            const userId = session.userId;
 
             // 检查这个 Discord 号是不是已经绑了别人
             const [existing] = await ctx.database.get('马列玩家表', {

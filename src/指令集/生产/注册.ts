@@ -11,8 +11,10 @@ export function 注册(ctx: Context) {
         .action(async ({ session }) => {
             try {
                 会话检查(session);
+                用户检查(session);
 
-                const { platform, userId } = 用户检查(session);
+                const platform = session.platform;
+                const userId = session.userId;
 
                 const [已有玩家配置] = await ctx.database.get(
                     '马列玩家配置表',

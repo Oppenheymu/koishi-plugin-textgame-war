@@ -39,7 +39,8 @@ export async function 地区解析(
     });
 
     if (!按编号地区资料 && session) {
-        const { platform } = 用户检查(session);
+        用户检查(session);
+        const platform = session.platform;
         const [绑定配置] = await ctx.database.get('马列地区配置表', {
             [platform]: 输入值,
         });
@@ -135,6 +136,7 @@ export async function 更新地区资料(
         {
             地区编号,
         },
+        // biome-ignore lint/suspicious/noExplicitAny: 不好做静态类型
         地区更新 as any
     );
 }
@@ -197,7 +199,8 @@ export async function 当前地区解析(
     session: Session | undefined
 ): Promise<地区解析结果> {
     会话检查(session);
-    const { platform } = 用户检查(session);
+    用户检查(session);
+    const platform = session.platform;
     const 群聊ID = session?.guildId?.trim();
 
     if (!群聊ID) {

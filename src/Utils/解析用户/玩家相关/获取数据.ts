@@ -3,7 +3,6 @@ import type { Player, PlayerWarData } from '@/types';
 import { 发送并抛出错误 } from '../error';
 import type { 玩家解析结果 } from '../types';
 import { 会话检查 } from '../会话相关/会话检查';
-import { 用户检查 } from '../会话相关/平台检查';
 import { 获取玩家展示名称 } from './获取名称';
 
 export type 玩家完整资料 = Player & PlayerWarData;
@@ -125,7 +124,8 @@ export async function 玩家检查(
 ): Promise<玩家解析结果> {
     会话检查(session);
 
-    const { platform, userId } = 用户检查(session);
+    const platform = session.platform;
+    const userId = session.userId;
 
     const [玩家配置记录] = await ctx.database.get('马列玩家配置表', {
         [platform]: userId,
