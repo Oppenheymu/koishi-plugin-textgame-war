@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 地区解析, 当前地区解析 } from '@/utils';
+import { 地区解析, 当前地区解析, 地区编号转经纬度, 格式化经纬度 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
@@ -82,10 +82,13 @@ export function 查看地区(ctx: Context) {
                     }
                 );
 
+                const 经纬度 = 地区编号转经纬度(地区编号);
+
                 return [
                     `【城市情报】`,
                     展示地区名称,
                     `■ 地区编号：${地区编号}`,
+                    `■ 坐标：(${地区资料.栅格X}, ${地区资料.栅格Y}) ${格式化经纬度(经纬度)}`,
                     `■ 地区地形：${地区资料.地区地形}`,
                     `□ 归属联军：${地区资料.控制国家?.trim() || '无'}`,
                     `□ 地区总督：${地区资料.地区总督 || '暂无'}`,

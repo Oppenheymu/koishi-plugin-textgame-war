@@ -16,7 +16,7 @@ export async function 写入批次(
             ctx.database.upsert('马列地区表', 地区批次, ['地区编号']),
             ctx.database.upsert('马列地区状态机', 状态机批次, ['地区编号']),
             ctx.database.upsert('马列地区配置表', 配置批次, ['地区编号']),
-            ctx.database.upsert('马列地区战略表', 战略批次, ['地区编号']),
+            ctx.database.upsert('马列地区战略表', 战略批次 as any, ['地区编号']),
         ]);
         return;
     } catch (error) {
@@ -87,7 +87,7 @@ export async function 写入批次(
         }
 
         try {
-            await ctx.database.create('马列地区战略表', 战略记录);
+            await ctx.database.create('马列地区战略表', 战略记录 as any);
         } catch {
             const { 地区编号: _, ...updateData } = 战略记录;
             await ctx.database.set(
@@ -95,7 +95,7 @@ export async function 写入批次(
                 {
                     地区编号,
                 },
-                updateData
+                updateData as any
             );
         }
     }

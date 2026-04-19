@@ -31,6 +31,8 @@ export function 初始化地区表(ctx: Context) {
 
                 const 地形批次 = 基础数据批次.map((地区) => ({
                     地区编号: String(地区.RegionId),
+                    栅格X: 地区.GridX,
+                    栅格Y: 地区.GridY,
                     是否为海洋: 地区.isOcean,
                     平均海拔: 地区.MeanElevation,
                     最大海拔: 地区.MaxElevation,
@@ -49,6 +51,8 @@ export function 初始化地区表(ctx: Context) {
                     const 容量上限 = 获取容量上限(地区, 地区地形);
                     return {
                         地区编号: 地区.RegionId,
+                        栅格X: 地区.GridX,
+                        栅格Y: 地区.GridY,
                         地区地形,
                         ...容量上限,
                         控制国家: '',
@@ -68,6 +72,8 @@ export function 初始化地区表(ctx: Context) {
                         使用的居民区容量: 0,
                         当前总仓库容量: 0,
                         使用的仓库容量: 0,
+                        电解铝厂数量: 0,
+                        空闲的电解铝厂: 0,
                         炼钢厂数量: 0,
                         空闲的炼钢厂: 0,
                     };
@@ -92,10 +98,22 @@ export function 初始化地区表(ctx: Context) {
                 const 战略批次 = 基础数据批次.map((地区) => ({
                     地区编号: String(地区.RegionId),
                     地区司令: '',
+                    地区仓库: {
+                        石油: 0,
+                        铝土矿: 0,
+                        金属铝: 0,
+                        铁矿石: 0,
+                        钢铁: 0,
+                        步兵装备: 0,
+                        重炮: 0,
+                        火箭炮: 0,
+                        火箭炮弹药: 0,
+                        防空弹药: 0,
+                    },
                     铁路: {},
                     是否有铁路: false,
                     地区驻军: 0,
-                    地区堡垒: 0,
+                    地区堡垒: undefined,
                     生物实验室: {},
                     高速离心级联: {},
                     核反应堆: {},

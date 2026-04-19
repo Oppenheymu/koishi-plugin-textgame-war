@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 地区解析, 当前地区解析, 玩家联军检查 } from '@/utils';
+import { 地区解析, 当前地区解析, 玩家联军检查, 地区编号转经纬度, 格式化经纬度 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
@@ -22,10 +22,13 @@ export function 查看地区地形(ctx: Context) {
                     ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
+                const 经纬度 = 地区编号转经纬度(地区编号);
+
                 return `
 【地区地形情报】
 ${username} 同志！
 ■ 地区编号: ${地区编号}
+■ 坐标: (${地区地形资料.栅格X}, ${地区地形资料.栅格Y}) ${格式化经纬度(经纬度)}
 ■ 海洋: ${地区地形资料.是否为海洋 ? '是' : '否'}
 地区地形概况:
 ■ 平均海拔: ${格式化(地区地形资料.平均海拔)}

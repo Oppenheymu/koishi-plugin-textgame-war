@@ -12,6 +12,15 @@ export function 加载地区地形表(ctx: Context) {
                 length: 255,
             },
 
+            栅格X: {
+                type: 'unsigned',
+                initial: 0,
+            },
+            栅格Y: {
+                type: 'unsigned',
+                initial: 0,
+            },
+
             是否为海洋: {
                 type: 'boolean',
             },

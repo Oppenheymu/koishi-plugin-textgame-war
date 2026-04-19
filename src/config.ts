@@ -58,11 +58,21 @@ export interface 土木工程配置 {
     跨联军铁路审批过期小时: number;
 }
 
+export interface 地理配置 {
+    铁路距离基准公里: number;
+    铁路距离惩罚率: number;
+    列车炮最大射程公里: number;
+    默认行军速度公里每天: number;
+    默认铁路速度公里每天: number;
+    默认空运速度公里每天: number;
+}
+
 export interface PluginConfig {
     coalitionPermissionDefault: 联军默认权限配置;
     sqids: Sqids配置;
     信号塔: 信号塔配置;
     土木工程: 土木工程配置;
+    地理: 地理配置;
 }
 
 export const 默认联军权限配置: 联军默认权限配置 = {
@@ -164,11 +174,21 @@ export const 默认土木工程配置: 土木工程配置 = {
     跨联军铁路审批过期小时: 24,
 };
 
+export const 默认地理配置: 地理配置 = {
+    铁路距离基准公里: 500,
+    铁路距离惩罚率: 0.5,
+    列车炮最大射程公里: 100,
+    默认行军速度公里每天: 40,
+    默认铁路速度公里每天: 800,
+    默认空运速度公里每天: 2000,
+};
+
 export const 默认插件配置: PluginConfig = {
     coalitionPermissionDefault: 默认联军权限配置,
     sqids: 默认Sqids配置,
     信号塔: 默认信号塔配置,
     土木工程: 默认土木工程配置,
+    地理: 默认地理配置,
 };
 
 let 当前运行时配置: PluginConfig = {
@@ -203,6 +223,9 @@ let 当前运行时配置: PluginConfig = {
             ...默认土木工程配置.地形惩罚系数,
         },
         跨联军铁路审批过期小时: 默认土木工程配置.跨联军铁路审批过期小时,
+    },
+    地理: {
+        ...默认地理配置,
     },
 };
 
@@ -257,6 +280,10 @@ export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
             跨联军铁路审批过期小时:
                 config.土木工程?.跨联军铁路审批过期小时 ??
                 默认土木工程配置.跨联军铁路审批过期小时,
+        },
+        地理: {
+            ...默认地理配置,
+            ...(config.地理 ?? {}),
         },
     };
 }
@@ -408,4 +435,32 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
             .default(默认土木工程配置.跨联军铁路审批过期小时)
             .description('跨联军铁路申请自动失效小时数'),
     }).description('土木工程配置'),
+    地理: Schema.object({
+        铁路距离基准公里: Schema.number()
+            .min(100)
+            .default(默认地理配置.铁路距离基准公里)
+            .description('铁路建造成本距离基准（公里），距离惩罚以此归一化'),
+        铁路距离惩罚率: Schema.number()
+            .min(0)
+            .max(5)
+            .step(0.1)
+            .default(默认地理配置.铁路距离惩罚率)
+            .description('铁路建造成本距离惩罚率，0=无惩罚，1=每基准距离翻倍'),
+        列车炮最大射程公里: Schema.number()
+            .min(10)
+            .default(默认地理配置.列车炮最大射程公里)
+            .description('列车炮最大射程（公里）'),
+        默认行军速度公里每天: Schema.number()
+            .min(1)
+            .default(默认地理配置.默认行军速度公里每天)
+            .description('默认行军速度（公里/天）'),
+        默认铁路速度公里每天: Schema.number()
+            .min(10)
+            .default(默认地理配置.默认铁路速度公里每天)
+            .description('默认铁路运输速度（公里/天）'),
+        默认空运速度公里每天: Schema.number()
+            .min(100)
+            .default(默认地理配置.默认空运速度公里每天)
+            .description('默认空运速度（公里/天）'),
+    }).description('地理空间配置'),
 });

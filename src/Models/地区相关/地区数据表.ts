@@ -9,6 +9,15 @@ export function 加载地区表(ctx: Context) {
                 length: 255,
             },
 
+            栅格X: {
+                type: 'unsigned',
+                initial: 0,
+            },
+            栅格Y: {
+                type: 'unsigned',
+                initial: 0,
+            },
+
             地区地形: {
                 type: 'string',
                 length: 255,

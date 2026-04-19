@@ -28,6 +28,10 @@ export function 加载玩家表(ctx: Context) {
                 initial: null,
                 nullable: true,
             },
+            曾加入联军列表: {
+                type: 'json',
+                initial: [],
+            },
             驻扎地区: {
                 type: 'string',
                 length: 255,

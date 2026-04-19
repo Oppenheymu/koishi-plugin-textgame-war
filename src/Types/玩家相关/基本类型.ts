@@ -5,6 +5,7 @@ export interface Player {
     //状态机
     所在联军: string | null;
     战争保护期: number | null;
+    曾加入联军列表: string[];
 
     驻扎地区: string | null;
     上次驻扎日期: string;

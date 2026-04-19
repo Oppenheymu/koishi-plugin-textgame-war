@@ -20,6 +20,7 @@ import { 文游服务集 } from './services/index';
 import { 批量加载插件 } from './utils/插件加载';
 import { 文游指令集 } from './指令集/index';
 import { 文游管理集 } from './管理集/index';
+import { 确保空间索引就绪 } from './utils/地理空间';
 
 export const name = 'malie-textgame';
 
@@ -52,4 +53,13 @@ export function apply(ctx: Context, config: Config) {
     });
 
     批量加载插件(ctx, 文游模块集, '文游主模块');
+
+    ctx.on('ready', async () => {
+        try {
+            await 确保空间索引就绪(ctx);
+            ctx.logger('地理空间').info('空间索引初始化完成');
+        } catch (error) {
+            ctx.logger('地理空间').warn('空间索引初始化失败：', (error as Error).message);
+        }
+    });
 }

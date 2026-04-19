@@ -14,6 +14,9 @@ export enum TerrainType {
 
 export interface RegionBasicDataItem {
     RegionId: string;
+    GridX: number;
+    GridY: number;
+    TotalPopulation: number;
     isOcean: boolean;
     MeanElevation: number;
     STDElevation: number;

@@ -1,9 +1,17 @@
 import dayjs from 'dayjs';
 import type { Context } from 'koishi';
+import { 获取运行时配置 } from '@/config';
 import { 尝试发送地区信号塔通报 } from '@/logic/信号塔/地区';
 import { 尝试发送联军信号塔通报 } from '@/logic/信号塔/联军';
 import type { Region, RegionStrategy } from '@/types';
-import { TRandom, 更新地区战略资料, 更新地区资料, 驻扎检查 } from '@/utils';
+import {
+    TRandom,
+    更新地区战略资料,
+    更新地区资料,
+    格式化距离,
+    计算真实距离,
+    驻扎检查,
+} from '@/utils';
 import { 列车炮炮击权限检查 } from '@/utils/解析目标/地区相关/权限检查';
 import { 地区解析 } from '@/utils/解析目标/地区相关/获取数据';
 
@@ -80,6 +88,12 @@ export function 列车炮炮击(ctx: Context) {
                 }
 
                 const 目标地区结果 = await 地区解析(ctx, 目标地区编号);
+
+                const 射程 = 获取运行时配置().地理.列车炮最大射程公里;
+                const 距离 = 计算真实距离(地区编号, 目标地区编号);
+                if (距离 > 射程) {
+                    return `目标地区距离 ${格式化距离(距离)}，超出列车炮最大射程 ${格式化距离(射程)}`;
+                }
 
                 let 数量: number;
                 if (数量输入 == null) {
@@ -197,6 +211,7 @@ export function 列车炮炮击(ctx: Context) {
                     `${username} 同志：`,
                     `■ 发起地区：${展示地区名称}（${地区编号}）`,
                     `■ 目标地区：${目标地区结果.展示地区名称}（${目标地区编号}）`,
+                    `■ 射击距离：${格式化距离(距离)} / ${格式化距离(射程)}`,
                     `■ 投入列车炮：${格式化(数量)} 门`,
                     `■ 破坏效果：${破坏文本 || '无'}`,
                     `■ 剩余空闲列车炮：${格式化((地区战略资料.空闲的列车炮 ?? 0) - 数量)} 门`,

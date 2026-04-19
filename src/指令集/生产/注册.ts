@@ -97,6 +97,7 @@ export function 注册(ctx: Context) {
                         id: newID,
                         uid: newUID,
                         所在联军: null,
+                        曾加入联军列表: [],
                         驻扎地区: null,
                         上次驻扎日期: '',
                         上次炮击时间: null,
@@ -123,6 +124,10 @@ export function 注册(ctx: Context) {
                         金属铝: 0,
                         铁矿石: 0,
                         钢铁: 初始钢铁,
+                        铀矿: 0,
+                        浓缩铀: 0,
+                        钚: 0,
+                        生物武器: 0,
                     };
 
                     const newPlayerWarData: PlayerWarData = {
@@ -133,6 +138,7 @@ export function 注册(ctx: Context) {
                         重炮: 0,
                         火箭炮: 0,
                         火箭炮弹药: 0,
+                        列车炮: 0,
                         防空弹药: 初始防空弹药,
                         侦察机: 0,
                         轰炸机: 0,
