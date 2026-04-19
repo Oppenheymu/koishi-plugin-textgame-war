@@ -4,6 +4,7 @@ import {
     type RegionBasicDataItem,
     TerrainType,
 } from './types';
+import { 赤道格子面积 } from '@/utils';
 
 function clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));
@@ -86,20 +87,9 @@ function 获取容量基线(地形: TerrainType): CapacityBase {
     return CAPACITY_BASELINE[地形] ?? DEFAULT_CAPACITY;
 }
 
-const EARTH_RADIUS_KM = 6371;
-const DEG_PER_CELL_X = 360 / 160;
-const DEG_PER_CELL_Y = 180 / 80;
-const EQUATOR_CELL_AREA =
-    DEG_PER_CELL_X *
-    (Math.PI / 180) *
-    EARTH_RADIUS_KM *
-    DEG_PER_CELL_Y *
-    (Math.PI / 180) *
-    EARTH_RADIUS_KM;
-
 function 计算面积系数(面积平方公里: number): number {
     if (面积平方公里 <= 0) return 0;
-    return clamp(面积平方公里 / EQUATOR_CELL_AREA, 0.05, 1.2);
+    return clamp(面积平方公里 / 赤道格子面积, 0.05, 1.2);
 }
 
 export function 获取容量上限(

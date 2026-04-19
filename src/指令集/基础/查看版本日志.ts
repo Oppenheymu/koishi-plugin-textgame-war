@@ -2,8 +2,10 @@ import type { Context } from 'koishi';
 import { 格式化版本列表, 格式化版本日志, 获取版本日志 } from '@/utils';
 
 export function 查看版本日志(ctx: Context) {
-    ctx.command('查看征战版本日志 [版本号]', '查看游戏版本日志').action(
-        async (_, 版本号) => {
+    ctx.command('查看征战版本日志 [版本号]', '查看游戏版本日志')
+        .alias('版本日志')
+        .alias('查看版本日志')
+        .action(async (_, 版本号) => {
             // 如果提供了版本号
             if (版本号) {
                 const 日志 = 获取版本日志(版本号);
@@ -28,6 +30,5 @@ export function 查看版本日志(ctx: Context) {
                 '',
                 '💡 使用 "查看征战版本日志 1.0.0" 查看指定版本日志',
             ].join('\n');
-        }
-    );
+        });
 }

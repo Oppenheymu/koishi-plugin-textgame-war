@@ -14,6 +14,14 @@ export const TOTAL_REGIONS = GRID_WIDTH * GRID_HEIGHT;
 
 const DEG_PER_CELL_X = 360 / GRID_WIDTH;
 const DEG_PER_CELL_Y = 180 / GRID_HEIGHT;
+export const EARTH_RADIUS_KM = 6371;
+export const 赤道格子面积 =
+    DEG_PER_CELL_X *
+    (Math.PI / 180) *
+    EARTH_RADIUS_KM *
+    DEG_PER_CELL_Y *
+    (Math.PI / 180) *
+    EARTH_RADIUS_KM;
 
 export function 解析地区编号(地区编号: string): 栅格坐标 {
     const num = parseInt(地区编号, 10);
@@ -66,8 +74,6 @@ export interface 栅格边长 {
     南北高度公里: number;
     面积平方公里: number;
 }
-
-const EARTH_RADIUS_KM = 6371;
 
 export function 计算栅格边长(坐标: 栅格坐标): 栅格边长 {
     const { gridY } = 坐标;
