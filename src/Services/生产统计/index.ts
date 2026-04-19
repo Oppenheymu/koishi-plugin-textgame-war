@@ -1,4 +1,2 @@
-export * from './types';
-export * from './全服统计';
-export * from './新闻构建';
-export * from './调度器';
+import { 每日全服数据统计 } from './调度器';
+export const 生产统计服务列表 = [每日全服数据统计];

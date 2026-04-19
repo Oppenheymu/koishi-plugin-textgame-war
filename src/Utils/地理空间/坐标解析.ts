@@ -25,7 +25,7 @@ export const 赤道格子面积 =
 
 export function 解析地区编号(地区编号: string): 栅格坐标 {
     const num = parseInt(地区编号, 10);
-    if (Number.isNaN(num) || num < 0 || num >= TOTAL_REGIONS) {
+    if (Number.isNaN(num) || num < 0) {
         throw new Error(`无效的地区编号：${地区编号}`);
     }
     const gridX = Math.floor(num / 100);

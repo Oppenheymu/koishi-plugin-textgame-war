@@ -9,7 +9,7 @@ const CELL_SIZE = 62;
 const MAP_WIDTH = GRID_WIDTH * CELL_SIZE;
 const MAP_HEIGHT = GRID_HEIGHT * CELL_SIZE;
 
-const CACHE_DIR = path.resolve(__dirname, '../../cache');
+const CACHE_DIR = path.resolve(__dirname, '../../../cache');
 const FULL_MAP_CACHE = path.join(CACHE_DIR, 'full.png');
 const LOCAL_MAP_TTL = 30 * 60 * 1000;
 
@@ -378,7 +378,7 @@ function generateLocalMap(
     return canvas.toBuffer('image/png');
 }
 
-export function ProduceMap(ctx: Context) {
+export function 地图生成调度(ctx: Context) {
     ctx.cron('0 * * * *', async () => {
         console.info('[MapGenerator] 定时任务：生成全尺寸世界地图...');
         const buffer = await GenerateMap(ctx);
@@ -421,3 +421,5 @@ async function cleanExpiredCache(): Promise<void> {
         // ignore
     }
 }
+
+export const 地图生成服务列表 = [地图生成调度];

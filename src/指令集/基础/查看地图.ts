@@ -2,9 +2,9 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import type { Context } from 'koishi';
 import { h } from 'koishi';
+import { GenerateMap } from '@/services';
 import type { Region } from '@/types';
 import { 玩家检查, 玩家联军检查 } from '@/utils';
-import { GenerateMap } from './生成地图';
 
 const CACHE_DIR = path.resolve(__dirname, '../../cache');
 const FULL_MAP_CACHE = path.join(CACHE_DIR, 'full.png');
