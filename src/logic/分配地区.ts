@@ -29,9 +29,7 @@ async function 查找聚类候选(
                 if (nx < 0) nx += GRID_WIDTH;
                 if (nx >= GRID_WIDTH) nx -= GRID_WIDTH;
 
-                候选编号集合.add(
-                    栅格坐标转地区编号({ gridX: nx, gridY: ny })
-                );
+                候选编号集合.add(栅格坐标转地区编号({ gridX: nx, gridY: ny }));
             }
         }
     }
@@ -75,11 +73,7 @@ async function 盖章(
     ]);
 }
 
-export async function 分配坐标逻辑(
-    ctx: Context,
-    id: number,
-    联军编号: string
-) {
+export async function 分配坐标逻辑(ctx: Context, id: number, 联军编号: string) {
     const 已有地区列表 = await ctx.database.get(
         '马列地区表',
         { 控制国家: 联军编号 },

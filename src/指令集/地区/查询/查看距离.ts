@@ -18,17 +18,20 @@ export function 查看距离(ctx: Context) {
                     return '请提供起点和终点地区编号，例如：距离 00000 15979';
                 }
 
-                const { 地区资料: 起点资料 } = await 地区解析(ctx, 起点编号.trim());
-                const { 地区资料: 终点资料 } = await 地区解析(ctx, 终点编号.trim());
+                const { 地区资料: 起点资料 } = await 地区解析(
+                    ctx,
+                    起点编号.trim()
+                );
+                const { 地区资料: 终点资料 } = await 地区解析(
+                    ctx,
+                    终点编号.trim()
+                );
 
                 const 起点 = 起点编号.trim();
                 const 终点 = 终点编号.trim();
 
                 const 距离 = 计算真实距离(起点, 终点);
-                const 方向 = 计算方向(
-                    解析地区编号(起点),
-                    解析地区编号(终点)
-                );
+                const 方向 = 计算方向(解析地区编号(起点), 解析地区编号(终点));
                 const 起点经纬度 = 地区编号转经纬度(起点);
                 const 终点经纬度 = 地区编号转经纬度(终点);
 

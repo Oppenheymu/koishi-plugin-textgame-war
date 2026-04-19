@@ -28,7 +28,10 @@ export function 查看附近地区(ctx: Context) {
                     .map(({ 地区编号: 编号, 距离 }) => {
                         const 方向 = 计算方向(
                             { gridX: 地区资料.栅格X, gridY: 地区资料.栅格Y },
-                            { gridX: Math.floor(parseInt(编号) / 100), gridY: parseInt(编号) % 100 }
+                            {
+                                gridX: Math.floor(parseInt(编号) / 100),
+                                gridY: parseInt(编号) % 100,
+                            }
                         );
                         return `  ${方向} ${编号} — ${格式化距离(距离)}`;
                     });

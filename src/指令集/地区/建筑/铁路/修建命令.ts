@@ -109,7 +109,9 @@ async function 执行修建主流程(
               距离公里数: 距离,
           });
 
-    await session?.send(`目标距离：${格式化距离(距离)}，距离惩罚系数：${建造成本.距离惩罚系数.toFixed(2)}\n确定要修建该铁路吗？拆除是有成本的（Y/N）`);
+    await session?.send(
+        `目标距离：${格式化距离(距离)}，距离惩罚系数：${建造成本.距离惩罚系数.toFixed(2)}\n确定要修建该铁路吗？拆除是有成本的（Y/N）`
+    );
     const 确认输入 = (await session?.prompt(120000))?.trim().toUpperCase();
     if (!确认输入 || !['Y', 'YES', '是', '确认'].includes(确认输入)) {
         return '已取消铁路修建';

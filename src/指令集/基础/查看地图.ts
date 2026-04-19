@@ -6,20 +6,21 @@ import type { Region } from '@/types';
 import { 玩家检查, 玩家联军检查 } from '@/utils';
 import { GenerateMap } from './生成地图';
 
-const FULL_MAP_SAVE_PATH = path.resolve(__dirname, '../MapData/Map.png');
+const CACHE_DIR = path.resolve(__dirname, '../../cache');
+const FULL_MAP_CACHE = path.join(CACHE_DIR, 'full.png');
 
 const fullMapViewCooldowns = new Map<string, number>();
 const radiusMapViewCooldowns = new Map<string, number>();
 
 export function ViewMap(ctx: Context) {
-    ctx.command('查看地图', '查看完整的世界地图 (5分钟冷却)')
+    ctx.command('查看地图', '查看完整的世界地图')
         .alias('查看世界地图', '世界地图')
         .action(async ({ session }) => {
             const { uid } = await 玩家检查(ctx, session);
 
             const now = Date.now();
             const lastView = fullMapViewCooldowns.get(uid) || 0;
-            const cooldown = 5 * 60 * 1000;
+            const cooldown = 30 * 1000;
 
             if (now - lastView < cooldown) {
                 const remaining = Math.ceil(
@@ -30,7 +31,7 @@ export function ViewMap(ctx: Context) {
 
             try {
                 await session?.send('正在获取最新的世界地图，请稍候...');
-                const buffer = await fs.readFile(FULL_MAP_SAVE_PATH);
+                const buffer = await fs.readFile(FULL_MAP_CACHE);
                 fullMapViewCooldowns.set(uid, now);
                 return h.image(buffer, 'image/png');
             } catch {
@@ -40,7 +41,7 @@ export function ViewMap(ctx: Context) {
 
     ctx.command(
         '查看局部地图',
-        '查看以您的联军首都为中心的10格半径地图 (60分钟冷却)'
+        '查看以您的联军首都为中心的10格半径地图'
     ).action(async ({ session }) => {
         const { uid } = await 玩家检查(ctx, session);
         const { 联军资料 } = await 玩家联军检查(ctx, session);
@@ -49,7 +50,7 @@ export function ViewMap(ctx: Context) {
 
         const now = Date.now();
         const lastView = radiusMapViewCooldowns.get(uid) || 0;
-        const cooldown = 60 * 60 * 1000;
+        const cooldown = 60 * 1000;
 
         if (now - lastView < cooldown) {
             const remaining = Math.ceil((cooldown - (now - lastView)) / 1000);
@@ -94,7 +95,7 @@ export function ViewMap(ctx: Context) {
 
     ctx.command(
         '查看指定地区地图 <regionId:string>',
-        '查看以指定地区为中心的10格半径地图 (60分钟冷却)'
+        '查看以指定地区为中心的10格半径地图'
     )
         .alias('地区地图')
         .action(async ({ session }, regionId) => {
@@ -106,13 +107,13 @@ export function ViewMap(ctx: Context) {
 
             const now = Date.now();
             const lastView = radiusMapViewCooldowns.get(uid) || 0;
-            const cooldown = 60 * 60 * 1000;
+            const cooldown = 60 * 1000;
 
             if (now - lastView < cooldown) {
                 const remaining = Math.ceil(
                     (cooldown - (now - lastView)) / 1000
                 );
-                return `该功能消耗较大，请在 ${remaining} 秒后重试。`;
+                return `操作太频繁了，请在 ${remaining} 秒后重试。`;
             }
 
             await session?.send('正在生成局部地图，请稍候...');

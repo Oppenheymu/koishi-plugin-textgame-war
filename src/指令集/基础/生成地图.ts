@@ -8,7 +8,10 @@ import { GRID_HEIGHT, GRID_WIDTH } from '@/utils';
 const CELL_SIZE = 62;
 const MAP_WIDTH = GRID_WIDTH * CELL_SIZE;
 const MAP_HEIGHT = GRID_HEIGHT * CELL_SIZE;
-const FULL_MAP_SAVE_PATH = path.join(__dirname, '../MapData', 'Map.png');
+
+const CACHE_DIR = path.resolve(__dirname, '../../cache');
+const FULL_MAP_CACHE = path.join(CACHE_DIR, 'full.png');
+const LOCAL_MAP_TTL = 30 * 60 * 1000;
 
 const TERRAIN_COLORS: Record<string, string> = {
     超深海: '#0a1a3a',
@@ -122,6 +125,51 @@ function 计算格子底色(地形: string, 地貌: RegionTerra): string {
 }
 
 export async function GenerateMap(
+    ctx: Context,
+    options?: { centerGridX: number; centerGridY: number; radius: number }
+): Promise<Buffer | null> {
+    await fs.mkdir(CACHE_DIR, { recursive: true });
+
+    if (!options) {
+        const cached = await readCache(FULL_MAP_CACHE);
+        if (cached) return cached;
+        const buffer = await renderMap(ctx, undefined);
+        if (buffer) await writeCache(FULL_MAP_CACHE, buffer);
+        return buffer;
+    }
+
+    const cacheKey = `local_${options.centerGridX}_${options.centerGridY}_${options.radius}.png`;
+    const cachePath = path.join(CACHE_DIR, cacheKey);
+    const cached = await readCache(cachePath, LOCAL_MAP_TTL);
+    if (cached) return cached;
+
+    const buffer = await renderMap(ctx, options);
+    if (buffer) await writeCache(cachePath, buffer);
+    return buffer;
+}
+
+async function readCache(
+    filePath: string,
+    ttl?: number
+): Promise<Buffer | null> {
+    try {
+        const stat = await fs.stat(filePath);
+        if (ttl && Date.now() - stat.mtimeMs > ttl) return null;
+        return await fs.readFile(filePath);
+    } catch {
+        return null;
+    }
+}
+
+async function writeCache(filePath: string, buffer: Buffer): Promise<void> {
+    try {
+        await fs.writeFile(filePath, buffer);
+    } catch (error) {
+        console.error(`[MapGenerator] 写入缓存失败 ${filePath}:`, error);
+    }
+}
+
+async function renderMap(
     ctx: Context,
     options?: { centerGridX: number; centerGridY: number; radius: number }
 ): Promise<Buffer | null> {
@@ -335,20 +383,14 @@ export function ProduceMap(ctx: Context) {
         console.info('[MapGenerator] 定时任务：生成全尺寸世界地图...');
         const buffer = await GenerateMap(ctx);
         if (buffer) {
-            try {
-                await fs.mkdir(path.dirname(FULL_MAP_SAVE_PATH), {
-                    recursive: true,
-                });
-                await fs.writeFile(FULL_MAP_SAVE_PATH, buffer);
-                console.info(
-                    `[MapGenerator] 世界地图已保存: ${FULL_MAP_SAVE_PATH}`
-                );
-            } catch (error) {
-                console.error('[MapGenerator] 保存地图文件时出错:', error);
-            }
+            console.info('[MapGenerator] 世界地图已生成并缓存。');
         } else {
             console.error('[MapGenerator] 定时任务未能生成地图图片。');
         }
+    });
+
+    ctx.cron('0 */10 * * * *', async () => {
+        await cleanExpiredCache();
     });
 
     ctx.command('生成世界地图', { authority: 4 })
@@ -357,17 +399,25 @@ export function ProduceMap(ctx: Context) {
             console.info('[MapGenerator] 手动生成世界地图...');
             const buffer = await GenerateMap(ctx);
             if (buffer) {
-                try {
-                    await fs.mkdir(path.dirname(FULL_MAP_SAVE_PATH), {
-                        recursive: true,
-                    });
-                    await fs.writeFile(FULL_MAP_SAVE_PATH, buffer);
-                    return `世界地图已生成并保存。`;
-                } catch (error) {
-                    console.error('[MapGenerator] 保存地图文件时出错:', error);
-                    return '保存地图文件时出错。';
-                }
+                return '世界地图已生成并缓存。';
             }
             return '生成地图失败，请检查后台日志。';
         });
+}
+
+async function cleanExpiredCache(): Promise<void> {
+    try {
+        const files = await fs.readdir(CACHE_DIR);
+        const now = Date.now();
+        for (const file of files) {
+            if (!file.startsWith('local_') || !file.endsWith('.png')) continue;
+            const filePath = path.join(CACHE_DIR, file);
+            const stat = await fs.stat(filePath);
+            if (now - stat.mtimeMs > LOCAL_MAP_TTL) {
+                await fs.unlink(filePath);
+            }
+        }
+    } catch {
+        // ignore
+    }
 }
