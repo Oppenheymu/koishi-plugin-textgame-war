@@ -34,9 +34,7 @@ export function 获取指定等级成员UID列表(
         ]).filter((uid) => 全部成员.includes(uid));
     }
 
-    return 全部成员.filter(
-        (uid) => 获取联军成员权限等级(联军资料, uid) === 权限等级
-    );
+    return 全部成员.filter((uid) => 获取联军成员权限等级(联军资料, uid) === 权限等级);
 }
 
 export function 设置成员权限等级(
@@ -44,18 +42,10 @@ export function 设置成员权限等级(
     目标UID: string,
     权限等级: 1 | 2 | 3 | 4
 ): 权限列表字段 {
-    const 四级 = (联军资料.联军四级权限成员列表 ?? []).filter(
-        (uid) => uid !== 目标UID
-    );
-    const 一级 = (联军资料.联军一级权限成员列表 ?? []).filter(
-        (uid) => uid !== 目标UID
-    );
-    const 二级 = (联军资料.联军二级权限成员列表 ?? []).filter(
-        (uid) => uid !== 目标UID
-    );
-    const 三级 = (联军资料.联军三级权限成员列表 ?? []).filter(
-        (uid) => uid !== 目标UID
-    );
+    const 四级 = (联军资料.联军四级权限成员列表 ?? []).filter((uid) => uid !== 目标UID);
+    const 一级 = (联军资料.联军一级权限成员列表 ?? []).filter((uid) => uid !== 目标UID);
+    const 二级 = (联军资料.联军二级权限成员列表 ?? []).filter((uid) => uid !== 目标UID);
+    const 三级 = (联军资料.联军三级权限成员列表 ?? []).filter((uid) => uid !== 目标UID);
 
     if (权限等级 === 4) {
         四级.push(目标UID);

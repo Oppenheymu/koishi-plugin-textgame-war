@@ -6,11 +6,7 @@ import {
     设置联军权限配置,
 } from '@/logic';
 import { 联军政体 } from '@/types';
-import {
-    玩家联军检查,
-    获取成员联军贡献,
-    获取排除成员后前N贡献总和,
-} from '@/utils';
+import { 玩家联军检查, 获取成员联军贡献, 获取排除成员后前N贡献总和 } from '@/utils';
 
 const 格式化 = (n: number) =>
     n.toLocaleString('zh-CN', {
@@ -22,11 +18,10 @@ export function 政变(ctx: Context) {
         .alias('发动政变')
         .action(async ({ session }) => {
             try {
-                const { uid, username, 联军资料, 联军编号 } =
-                    await 玩家联军检查(ctx, session, {
-                        最低权限等级: 1,
-                        是否必须在成员列表: true,
-                    });
+                const { uid, username, 联军资料, 联军编号 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 1,
+                    是否必须在成员列表: true,
+                });
 
                 const 我的贡献 = 获取成员联军贡献(联军资料, uid);
                 const 前六总贡献 = 获取排除成员后前N贡献总和(联军资料, uid, 6);
@@ -52,11 +47,7 @@ export function 政变(ctx: Context) {
                             ...权限列表更新,
                         }
                     ),
-                    设置联军权限配置(
-                        ctx,
-                        联军编号,
-                        获取政体默认权限配置(联军政体.极权制)
-                    ),
+                    设置联军权限配置(ctx, 联军编号, 获取政体默认权限配置(联军政体.极权制)),
                 ]);
 
                 await 尝试发送联军信号塔通报(ctx, {

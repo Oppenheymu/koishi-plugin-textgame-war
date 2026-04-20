@@ -17,15 +17,11 @@ export async function 写入批次(
             ctx.database.upsert('马列地区状态机', 状态机批次, ['地区编号']),
             ctx.database.upsert('马列地区配置表', 配置批次, ['地区编号']),
             // biome-ignore lint/suspicious/noExplicitAny: 没静态类型
-            ctx.database.upsert('马列地区战略表', 战略批次 as any, [
-                '地区编号',
-            ]),
+            ctx.database.upsert('马列地区战略表', 战略批次 as any, ['地区编号']),
         ]);
         return;
     } catch (error) {
-        logger.warn(
-            `upsert 批量写入失败，切换兼容单条模式：${(error as Error).message}`
-        );
+        logger.warn(`upsert 批量写入失败，切换兼容单条模式：${(error as Error).message}`);
     }
 
     // 此处保持顺序遍历，避免并发过高导致 fallback 阶段的连接池爆炸

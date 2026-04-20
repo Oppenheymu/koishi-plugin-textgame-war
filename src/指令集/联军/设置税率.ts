@@ -23,19 +23,11 @@ export function 设置税率(ctx: Context) {
                     return '税率必须在 0 到 100 之间';
                 }
 
-                const 权限等级需求 = await 玩家联军权限设置(
-                    ctx,
-                    session,
-                    '设置税率'
-                );
-                const { username, 联军编号, 联军资料 } = await 玩家联军检查(
-                    ctx,
-                    session,
-                    {
-                        最低权限等级: 权限等级需求,
-                        是否必须在成员列表: true,
-                    }
-                );
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '设置税率');
+                const { username, 联军编号, 联军资料 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 权限等级需求,
+                    是否必须在成员列表: true,
+                });
 
                 const 新税率百分比 = Math.round(税率 * 100) / 100;
                 const 新税率 = 新税率百分比 / 100;

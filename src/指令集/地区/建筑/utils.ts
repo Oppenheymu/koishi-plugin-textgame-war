@@ -22,10 +22,7 @@ export function 解析轮次(轮次输入: number | undefined): number {
  * 计算资源可执行轮次
  * 复用 @/logic 中的通用工具
  */
-export function 计算资源可执行轮次(
-    用户资料: Player,
-    资源需求: 资源需求配置
-): number {
+export function 计算资源可执行轮次(用户资料: Player, 资源需求: 资源需求配置): number {
     // 转换为通用格式调用
     return 计算资源可执行轮次_工具(
         {
@@ -113,13 +110,11 @@ export function 组装消耗文本(资源消耗: 资源需求配置): string[] {
 }
 
 // ==================== 预检查验证 ====================
-export async function 执行预检查(
-    ctx: Context,
-    session: Session | undefined,
-    操作名: string
-) {
-    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
-        await 驻扎检查(ctx, session);
+export async function 执行预检查(ctx: Context, session: Session | undefined, 操作名: string) {
+    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } = await 驻扎检查(
+        ctx,
+        session
+    );
     const { 用户资料 } = await 玩家检查(ctx, session);
 
     if (当前驻扎地区 !== 地区编号) {

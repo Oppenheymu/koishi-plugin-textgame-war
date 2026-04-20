@@ -13,8 +13,11 @@ async function 执行设置司令(
         return '请指定目标玩家名称';
     }
 
-    const { username, 地区编号, 展示地区名称, 地区资料, 地区战略资料 } =
-        await 地区司令设置检查(ctx, session, 地区编号参数);
+    const { username, 地区编号, 展示地区名称, 地区资料, 地区战略资料 } = await 地区司令设置检查(
+        ctx,
+        session,
+        地区编号参数
+    );
 
     const 原司令 = (地区战略资料.地区司令 ?? '').trim();
     if (原司令 === 目标玩家名称) {
@@ -60,12 +63,7 @@ export function 设置司令(ctx: Context) {
         .alias('地区司令')
         .action(async ({ session }, 目标玩家参数, 地区编号参数) => {
             try {
-                return await 执行设置司令(
-                    ctx,
-                    session,
-                    目标玩家参数,
-                    地区编号参数
-                );
+                return await 执行设置司令(ctx, session, 目标玩家参数, 地区编号参数);
             } catch (error) {
                 return (error as Error).message;
             }

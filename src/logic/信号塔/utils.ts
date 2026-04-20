@@ -10,9 +10,7 @@ export const 信号塔平台列表: 信号塔平台[] = ['onebot', 'discord', 't
  * 标准化频道列表，去除重复和空值
  */
 export function 标准化频道列表(频道列表: string[]): string[] {
-    return Array.from(
-        new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean))
-    );
+    return Array.from(new Set(频道列表.map((频道) => 频道.trim()).filter(Boolean)));
 }
 
 /**

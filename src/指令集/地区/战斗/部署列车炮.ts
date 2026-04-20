@@ -1,9 +1,5 @@
 import type { Context } from 'koishi';
-import {
-    更新地区战略资料,
-    更新玩家资料,
-    驻扎检查,
-} from '@/utils';
+import { 更新地区战略资料, 更新玩家资料, 驻扎检查 } from '@/utils';
 import { 部署列车炮权限检查 } from '@/logic';
 
 function 格式化(n: number) {

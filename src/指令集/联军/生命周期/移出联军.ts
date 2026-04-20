@@ -1,9 +1,5 @@
 import type { Context } from 'koishi';
-import {
-    尝试发送联军信号塔通报,
-    玩家联军权限设置,
-    移除联军成员,
-} from '@/logic';
+import { 尝试发送联军信号塔通报, 玩家联军权限设置, 移除联军成员 } from '@/logic';
 import { 玩家联军检查, 目标解析, 获取联军权限等级 } from '@/utils';
 
 export function 移出联军(ctx: Context) {
@@ -11,16 +7,15 @@ export function 移出联军(ctx: Context) {
         .alias('踢出联军')
         .action(async ({ session }, 目标) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '移出联军');
+                const { uid, username, 联军资料, 联军编号, 权限等级 } = await 玩家联军检查(
                     ctx,
                     session,
-                    '移出联军'
-                );
-                const { uid, username, 联军资料, 联军编号, 权限等级 } =
-                    await 玩家联军检查(ctx, session, {
+                    {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
-                    });
+                    }
+                );
 
                 const 输入目标 = 目标?.trim();
                 if (!输入目标) {

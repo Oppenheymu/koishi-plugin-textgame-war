@@ -1,11 +1,6 @@
 import type { Context } from 'koishi';
 import { TRandom } from '@/infrastructure';
-import {
-    更新地区资料,
-    更新玩家资料,
-    玩家检查,
-    驻扎检查,
-} from '@/utils';
+import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
@@ -14,14 +9,8 @@ export function 地区炼钢(ctx: Context) {
         .alias('地区钢铁生产')
         .action(async ({ session }, 数量) => {
             try {
-                const {
-                    id,
-                    username,
-                    当前驻扎地区,
-                    地区编号,
-                    展示地区名称,
-                    地区资料,
-                } = await 驻扎检查(ctx, session);
+                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区资料 } =
+                    await 驻扎检查(ctx, session);
                 const { 用户资料 } = await 玩家检查(ctx, session);
 
                 if (!数量) {
@@ -62,16 +51,10 @@ export function 地区炼钢(ctx: Context) {
                     return '生活资料不足，地区炼钢需要至少2000生活资料';
                 }
 
-                const 增加的钢铁 = Math.max(
-                    1,
-                    Math.floor(数量 * TRandom(0.8, 1, 1, false))
-                );
+                const 增加的钢铁 = Math.max(1, Math.floor(数量 * TRandom(0.8, 1, 1, false)));
                 const 更新后钢铁 = 用户资料.钢铁 + 增加的钢铁;
                 const 更新后铁矿石 = 用户资料.铁矿石 - 数量;
-                const 更新后空闲炼钢厂 = Math.max(
-                    0,
-                    (地区资料.空闲的炼钢厂 ?? 0) - 1
-                );
+                const 更新后空闲炼钢厂 = Math.max(0, (地区资料.空闲的炼钢厂 ?? 0) - 1);
 
                 await Promise.all([
                     更新玩家资料(ctx, id, {

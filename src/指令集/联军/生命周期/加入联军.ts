@@ -1,10 +1,6 @@
 import dayjs from 'dayjs';
 import type { Context } from 'koishi';
-import {
-    分配坐标逻辑,
-    尝试发送联军信号塔通报,
-    玩家联军权限设置,
-} from '@/logic';
+import { 分配坐标逻辑, 尝试发送联军信号塔通报, 玩家联军权限设置 } from '@/logic';
 import type { MemberData } from '@/types';
 import { 玩家检查, 玩家联军检查, 目标解析 } from '@/utils';
 
@@ -33,19 +29,11 @@ export function 邀请加入联军(ctx: Context) {
         .alias('邀请加入国家')
         .action(async ({ session }, 目标) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(
-                    ctx,
-                    session,
-                    '邀请加入联军'
-                );
-                const { username, 联军资料, 联军编号 } = await 玩家联军检查(
-                    ctx,
-                    session,
-                    {
-                        最低权限等级: 权限等级需求,
-                        是否必须在成员列表: true,
-                    }
-                );
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '邀请加入联军');
+                const { username, 联军资料, 联军编号 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 权限等级需求,
+                    是否必须在成员列表: true,
+                });
 
                 const 输入目标 = 目标?.trim();
                 if (!输入目标) {
@@ -64,10 +52,7 @@ export function 邀请加入联军(ctx: Context) {
                     return `${目标用户名} 同志已在本联军中`;
                 }
 
-                if (
-                    目标用户资料.所在联军 &&
-                    目标用户资料.所在联军 !== 联军编号
-                ) {
+                if (目标用户资料.所在联军 && 目标用户资料.所在联军 !== 联军编号) {
                     return `${目标用户名} 同志已加入其他联军（${目标用户资料.所在联军}）`;
                 }
 
@@ -76,9 +61,7 @@ export function 邀请加入联军(ctx: Context) {
                 const 已有邀请 = 联军邀请缓存.get(邀请键);
 
                 if (已有邀请 && 当前时间戳 < 已有邀请.过期时间戳) {
-                    const 剩余秒数 = Math.ceil(
-                        (已有邀请.过期时间戳 - 当前时间戳) / 1000
-                    );
+                    const 剩余秒数 = Math.ceil((已有邀请.过期时间戳 - 当前时间戳) / 1000);
                     return `${目标用户名} 同志已有待确认邀请，请等待对方同意（剩余约${剩余秒数}秒）`;
                 }
 
@@ -119,10 +102,7 @@ ${username} 同志！
             let 新分配地区: string | null = null;
 
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(
-                    ctx,
-                    session
-                );
+                const { id, uid, username, 用户资料 } = await 玩家检查(ctx, session);
 
                 const 联军编号 = 输入联军编号?.trim();
                 if (!联军编号) {
@@ -179,16 +159,10 @@ ${username} 同志！
                 const 新联军地区列表 = [...原有地区列表];
                 let 地区分配提示 = '';
 
-                const 曾加入本联军 = (用户资料.曾加入联军列表 ?? []).includes(
-                    联军编号
-                );
+                const 曾加入本联军 = (用户资料.曾加入联军列表 ?? []).includes(联军编号);
 
                 if (原有地区列表.length < 联军地区上限 && !曾加入本联军) {
-                    const 地区分配结果 = await 分配坐标逻辑(
-                        ctx,
-                        联军资料.id,
-                        联军编号
-                    );
+                    const 地区分配结果 = await 分配坐标逻辑(ctx, 联军资料.id, 联军编号);
                     if (地区分配结果 !== '所有地区已领完！') {
                         新分配地区 = 地区分配结果;
                         if (!新联军地区列表.includes(新分配地区)) {
@@ -199,8 +173,7 @@ ${username} 同志！
                         地区分配提示 = '\n■ 地区分配：当前无可分配新地区';
                     }
                 } else if (曾加入本联军) {
-                    地区分配提示 =
-                        '\n■ 地区分配：你曾加入过本联军，不再触发新地区分配';
+                    地区分配提示 = '\n■ 地区分配：你曾加入过本联军，不再触发新地区分配';
                 } else {
                     地区分配提示 = `\n■ 地区分配：已达到上限（${联军地区上限}块）`;
                 }
@@ -226,10 +199,7 @@ ${username} 同志！
                         {
                             所在联军: 联军编号,
                             曾加入联军列表: [
-                                ...new Set([
-                                    ...(用户资料.曾加入联军列表 ?? []),
-                                    联军编号,
-                                ]),
+                                ...new Set([...(用户资料.曾加入联军列表 ?? []), 联军编号]),
                             ],
                             驻扎地区:
                                 用户资料.驻扎地区 ||

@@ -18,14 +18,8 @@ export function 修建地区堡垒(ctx: Context) {
         .alias('升级堡垒')
         .action(async ({ session }, 轮次输入) => {
             try {
-                const {
-                    id,
-                    username,
-                    地区编号,
-                    展示地区名称,
-                    地区战略资料,
-                    用户资料,
-                } = await 执行预检查(ctx, session, '修建地区堡垒');
+                const { id, username, 地区编号, 展示地区名称, 地区战略资料, 用户资料 } =
+                    await 执行预检查(ctx, session, '修建地区堡垒');
 
                 const 轮次 = 解析轮次(轮次输入);
                 if (轮次 <= 0) {
@@ -56,11 +50,7 @@ export function 修建地区堡垒(ctx: Context) {
                 }
 
                 // 使用通用的最大轮次计算
-                const 最大可执行轮次 = 计算最大可执行轮次(
-                    用户资料,
-                    升级配置.资源需求,
-                    轮次
-                );
+                const 最大可执行轮次 = 计算最大可执行轮次(用户资料, 升级配置.资源需求, 轮次);
 
                 if (最大可执行轮次 <= 0) {
                     return '资源或生活资料不足，无法完成任意一轮修建';
@@ -70,9 +60,7 @@ export function 修建地区堡垒(ctx: Context) {
                 const 单轮生产力 = 用户资料.工人 * 用户资料.生产技术;
                 const 投入总生产力 = 单轮生产力 * 最大可执行轮次;
                 const 是否有足够生产力 = 投入总生产力 >= 升级配置.生产力需求;
-                const 实际轮次 = 是否有足够生产力
-                    ? 最大可执行轮次
-                    : 最大可执行轮次;
+                const 实际轮次 = 是否有足够生产力 ? 最大可执行轮次 : 最大可执行轮次;
 
                 const { 工资消耗, 资源消耗 } = await 执行资源与工资结算(
                     ctx,

@@ -38,18 +38,9 @@ export function 读取引用文本(session: Session | undefined): string {
     return '';
 }
 
-export function 解析铁路申请ID(
-    输入?: string,
-    引用文本?: string
-): string | null {
-    const 文本候选 = [输入?.trim(), 引用文本?.trim()].filter(
-        Boolean
-    ) as string[];
-    const 申请ID匹配规则 = [
-        /TL\d{6}/i,
-        /TL-[A-Z0-9]{8}-[A-Z0-9]{4}/i,
-        /PENDING-[A-Z0-9-]+/i,
-    ];
+export function 解析铁路申请ID(输入?: string, 引用文本?: string): string | null {
+    const 文本候选 = [输入?.trim(), 引用文本?.trim()].filter(Boolean) as string[];
+    const 申请ID匹配规则 = [/TL\d{6}/i, /TL-[A-Z0-9]{8}-[A-Z0-9]{4}/i, /PENDING-[A-Z0-9-]+/i];
 
     for (const 文本 of 文本候选) {
         for (const 规则 of 申请ID匹配规则) {
@@ -70,11 +61,7 @@ export function 解析铁路类型输入(输入: string | undefined): string | n
     const 配置列表 = 获取铁路类型列表();
     const 数字输入 = Number(规范输入);
 
-    if (
-        Number.isInteger(数字输入) &&
-        数字输入 >= 1 &&
-        数字输入 <= 配置列表.length
-    ) {
+    if (Number.isInteger(数字输入) && 数字输入 >= 1 && 数字输入 <= 配置列表.length) {
         return 配置列表[数字输入 - 1].类型ID;
     }
 

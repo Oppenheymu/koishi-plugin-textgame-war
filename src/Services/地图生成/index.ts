@@ -94,18 +94,12 @@ function 计算格子底色(地形: string, 地貌: RegionTerra): string {
     }
 
     const entries: { color: string; weight: number }[] = [];
-    if (地貌.森林 > 0)
-        entries.push({ color: PHYSIO_COLORS.森林, weight: 地貌.森林 });
-    if (地貌.草地 > 0)
-        entries.push({ color: PHYSIO_COLORS.草地, weight: 地貌.草地 });
-    if (地貌.荒地 > 0)
-        entries.push({ color: PHYSIO_COLORS.荒地, weight: 地貌.荒地 });
-    if (地貌.雪地 > 0)
-        entries.push({ color: PHYSIO_COLORS.雪地, weight: 地貌.雪地 });
-    if (地貌.城镇 > 0)
-        entries.push({ color: PHYSIO_COLORS.城镇, weight: 地貌.城镇 });
-    if (地貌.水域 > 0)
-        entries.push({ color: PHYSIO_COLORS.水域, weight: 地貌.水域 });
+    if (地貌.森林 > 0) entries.push({ color: PHYSIO_COLORS.森林, weight: 地貌.森林 });
+    if (地貌.草地 > 0) entries.push({ color: PHYSIO_COLORS.草地, weight: 地貌.草地 });
+    if (地貌.荒地 > 0) entries.push({ color: PHYSIO_COLORS.荒地, weight: 地貌.荒地 });
+    if (地貌.雪地 > 0) entries.push({ color: PHYSIO_COLORS.雪地, weight: 地貌.雪地 });
+    if (地貌.城镇 > 0) entries.push({ color: PHYSIO_COLORS.城镇, weight: 地貌.城镇 });
+    if (地貌.水域 > 0) entries.push({ color: PHYSIO_COLORS.水域, weight: 地貌.水域 });
 
     if (entries.length === 0) {
         return TERRAIN_COLORS[地形] ?? '#7cb342';
@@ -148,10 +142,7 @@ export async function GenerateMap(
     return buffer;
 }
 
-async function readCache(
-    filePath: string,
-    ttl?: number
-): Promise<Buffer | null> {
+async function readCache(filePath: string, ttl?: number): Promise<Buffer | null> {
     try {
         const stat = await fs.stat(filePath);
         if (ttl && Date.now() - stat.mtimeMs > ttl) return null;
@@ -198,10 +189,7 @@ async function renderMap(
         let colorIndex = 0;
         const getOwnerColor = (owner: string) => {
             if (!ownerColorMap.has(owner)) {
-                ownerColorMap.set(
-                    owner,
-                    COALITION_PALETTE[colorIndex % COALITION_PALETTE.length]
-                );
+                ownerColorMap.set(owner, COALITION_PALETTE[colorIndex % COALITION_PALETTE.length]);
                 colorIndex++;
             }
             return ownerColorMap.get(owner) as string;

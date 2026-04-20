@@ -30,9 +30,7 @@ export interface 每小时地区刷新结果 {
  * - 仅查询 `是否有铁路 = true` 的地区战略记录，避免全表扫描
  * - 批量 upsert 写回，将所有铁路 `当前负载` 重置为 0
  */
-export async function 执行每小时铁路负载重置(
-    ctx: Context
-): Promise<铁路负载重置结果> {
+export async function 执行每小时铁路负载重置(ctx: Context): Promise<铁路负载重置结果> {
     const 有铁路地区列表 = await ctx.database.get('马列地区战略表', {
         是否有铁路: true,
     });
@@ -78,9 +76,7 @@ export async function 执行每小时铁路负载重置(
  * - 将空闲炼钢厂刷新为炼钢厂总数
  * - 将空闲电解铝厂刷新为电解铝厂总数
  */
-export async function 执行每小时地区工业刷新(
-    ctx: Context
-): Promise<地区工业刷新结果> {
+export async function 执行每小时地区工业刷新(ctx: Context): Promise<地区工业刷新结果> {
     const 地区列表 = await ctx.database.get('马列地区表', {});
 
     if (!地区列表.length) {
@@ -103,19 +99,13 @@ export async function 执行每小时地区工业刷新(
             const 原空闲炼钢厂 = 地区.空闲的炼钢厂 ?? 0;
             const 原空闲电解铝厂 = 地区.空闲的电解铝厂 ?? 0;
 
-            if (
-                原空闲炼钢厂 === 目标空闲炼钢厂 &&
-                原空闲电解铝厂 === 目标空闲电解铝厂
-            ) {
+            if (原空闲炼钢厂 === 目标空闲炼钢厂 && 原空闲电解铝厂 === 目标空闲电解铝厂) {
                 return null;
             }
 
             刷新工业地区数量 += 1;
             刷新炼钢空闲数量 += Math.max(0, 目标空闲炼钢厂 - 原空闲炼钢厂);
-            刷新电解铝空闲数量 += Math.max(
-                0,
-                目标空闲电解铝厂 - 原空闲电解铝厂
-            );
+            刷新电解铝空闲数量 += Math.max(0, 目标空闲电解铝厂 - 原空闲电解铝厂);
 
             return {
                 地区编号: 地区.地区编号,
@@ -140,9 +130,7 @@ export async function 执行每小时地区工业刷新(
     };
 }
 
-export async function 执行每小时列车炮重置(
-    ctx: Context
-): Promise<列车炮重置结果> {
+export async function 执行每小时列车炮重置(ctx: Context): Promise<列车炮重置结果> {
     const 有列车炮地区列表 = await ctx.database.get('马列地区战略表', {
         已部署列车炮: { $gt: 0 },
     });
@@ -187,9 +175,7 @@ export async function 执行每小时列车炮重置(
     };
 }
 
-export async function 执行每小时地区刷新(
-    ctx: Context
-): Promise<每小时地区刷新结果> {
+export async function 执行每小时地区刷新(ctx: Context): Promise<每小时地区刷新结果> {
     const [铁路结果, 工业结果, 列车炮结果] = await Promise.all([
         执行每小时铁路负载重置(ctx),
         执行每小时地区工业刷新(ctx),

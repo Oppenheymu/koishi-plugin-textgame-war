@@ -25,8 +25,11 @@ async function 执行战机权限设置(
     地区编号参数: string | undefined,
     权限模式: 战机权限模式
 ): Promise<string> {
-    const { username, 地区编号, 展示地区名称, 地区资料 } =
-        await 地区机场权限设置检查(ctx, session, 地区编号参数);
+    const { username, 地区编号, 展示地区名称, 地区资料 } = await 地区机场权限设置检查(
+        ctx,
+        session,
+        地区编号参数
+    );
 
     const 允许机场使用战斗机 = 权限模式 === '允许战机';
     const 原状态 = 地区资料.允许机场使用战斗机 ?? true;
@@ -59,12 +62,7 @@ export function 设置战机权限(ctx: Context) {
                     return '参数无效，请使用：允许 / 禁止（可选地区编号）';
                 }
 
-                return await 执行战机权限设置(
-                    ctx,
-                    session,
-                    地区编号参数,
-                    权限模式
-                );
+                return await 执行战机权限设置(ctx, session, 地区编号参数, 权限模式);
             } catch (error) {
                 return (error as Error).message;
             }
@@ -76,12 +74,7 @@ export function 设置战机权限(ctx: Context) {
         .alias('战机解禁')
         .action(async ({ session }, 地区编号参数) => {
             try {
-                return await 执行战机权限设置(
-                    ctx,
-                    session,
-                    地区编号参数,
-                    '允许战机'
-                );
+                return await 执行战机权限设置(ctx, session, 地区编号参数, '允许战机');
             } catch (error) {
                 return (error as Error).message;
             }
@@ -93,12 +86,7 @@ export function 设置战机权限(ctx: Context) {
         .alias('战机禁飞')
         .action(async ({ session }, 地区编号参数) => {
             try {
-                return await 执行战机权限设置(
-                    ctx,
-                    session,
-                    地区编号参数,
-                    '禁止战机'
-                );
+                return await 执行战机权限设置(ctx, session, 地区编号参数, '禁止战机');
             } catch (error) {
                 return (error as Error).message;
             }

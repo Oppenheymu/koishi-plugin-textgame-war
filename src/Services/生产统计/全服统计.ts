@@ -56,11 +56,7 @@ export async function 执行每日全服统计(
         const 玩家列表 = await ctx.database.get('马列玩家表', {});
 
         if (玩家列表.length === 0) {
-            await ctx.database.set(
-                '马列服务表',
-                { id: 'service' },
-                { 上次全服统计日期: 今天 }
-            );
+            await ctx.database.set('马列服务表', { id: 'service' }, { 上次全服统计日期: 今天 });
             return {
                 今天,
                 是否执行: true,
@@ -109,12 +105,8 @@ export async function 执行每日全服统计(
                 历史生产记录 = 历史生产记录.slice(-7);
             }
 
-            const 近三天全球生产总值 = 历史生产记录
-                .slice(-3)
-                .reduce((a, b) => a + b, 0);
-            const 近七天全球生产总值 = 历史生产记录
-                .slice(-7)
-                .reduce((a, b) => a + b, 0);
+            const 近三天全球生产总值 = 历史生产记录.slice(-3).reduce((a, b) => a + b, 0);
+            const 近七天全球生产总值 = 历史生产记录.slice(-7).reduce((a, b) => a + b, 0);
 
             await ctx.database.set(
                 '马列全球数据表',
@@ -142,11 +134,7 @@ export async function 执行每日全服统计(
                 }),
             });
 
-            await ctx.database.set(
-                '马列服务表',
-                { id: 'service' },
-                { 上次全服统计日期: 今天 }
-            );
+            await ctx.database.set('马列服务表', { id: 'service' }, { 上次全服统计日期: 今天 });
 
             服务事件中心.emit('生产与统计:全服统计完成', {
                 日期: 今天,
@@ -170,11 +158,7 @@ export async function 执行每日全服统计(
             };
         }
 
-        await ctx.database.set(
-            '马列服务表',
-            { id: 'service' },
-            { 上次全服统计日期: 今天 }
-        );
+        await ctx.database.set('马列服务表', { id: 'service' }, { 上次全服统计日期: 今天 });
 
         return {
             今天,

@@ -21,10 +21,7 @@ export function 组建联军(ctx: Context) {
             let 新地区: string | null = null;
 
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(
-                    ctx,
-                    session
-                );
+                const { id, uid, username, 用户资料 } = await 玩家检查(ctx, session);
 
                 const amIAlt服务 = (
                     ctx as Context & {
@@ -106,11 +103,7 @@ ${username} 同志！
                 新联军ID = 新联军配置.id;
 
                 const 新联军编号 = `A${获取联军Sqids().encode([新联军ID])}`;
-                const 地区分配结果 = await 分配坐标逻辑(
-                    ctx,
-                    新联军ID,
-                    新联军编号
-                );
+                const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军ID, 新联军编号);
 
                 if (地区分配结果 === '所有地区已领完！') {
                     await ctx.database.remove('马列联军表', {
@@ -177,10 +170,7 @@ ${username} 同志！
                         {
                             所在联军: 新联军编号,
                             曾加入联军列表: [
-                                ...new Set([
-                                    ...(用户资料.曾加入联军列表 ?? []),
-                                    新联军编号,
-                                ]),
+                                ...new Set([...(用户资料.曾加入联军列表 ?? []), 新联军编号]),
                             ],
                         }
                     ),

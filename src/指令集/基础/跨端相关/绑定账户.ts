@@ -11,47 +11,40 @@ interface BindTask {
 const 绑定任务池 = new Map<string, BindTask>();
 
 export function 绑定账户(ctx: Context) {
-    ctx.command('绑定账户', '获取一个跨平台绑定令牌来绑定账号').action(
-        async ({ session }) => {
-            try {
-                const { id, username } = await 玩家检查(ctx, session);
+    ctx.command('绑定账户', '获取一个跨平台绑定令牌来绑定账号').action(async ({ session }) => {
+        try {
+            const { id, username } = await 玩家检查(ctx, session);
 
-                // 1. 清理过期任务池
-                for (const [code, task] of 绑定任务池.entries()) {
-                    if (task.ownerId === id) {
-                        clearTimeout(task.timer);
-                        绑定任务池.delete(code);
-                    }
+            // 1. 清理过期任务池
+            for (const [code, task] of 绑定任务池.entries()) {
+                if (task.ownerId === id) {
+                    clearTimeout(task.timer);
+                    绑定任务池.delete(code);
                 }
+            }
 
-                // 2. 生成 6 位随机码
-                const code = Math.floor(
-                    100000 + Math.random() * 900000
-                ).toString();
+            // 2. 生成 6 位随机码
+            const code = Math.floor(100000 + Math.random() * 900000).toString();
 
-                // 3. 存入内存，5 分钟后自动删除
-                const timer = setTimeout(
-                    () => 绑定任务池.delete(code),
-                    5 * 60 * 1000
-                );
-                绑定任务池.set(code, {
-                    ownerId: id,
-                    targetPlatform: '',
-                    targetUserId: '',
-                    timer,
-                });
+            // 3. 存入内存，5 分钟后自动删除
+            const timer = setTimeout(() => 绑定任务池.delete(code), 5 * 60 * 1000);
+            绑定任务池.set(code, {
+                ownerId: id,
+                targetPlatform: '',
+                targetUserId: '',
+                timer,
+            });
 
-                return `
+            return `
 ====[征战文游]====
 ${username} 同志!
 您的验证码为：${code}
 请在5分钟在目标平台输入:
   确认绑定 ${code}`.trim();
-            } catch (error) {
-                return (error as Error).message;
-            }
+        } catch (error) {
+            return (error as Error).message;
         }
-    );
+    });
 
     ctx.command('确认绑定 <code:string>').action(async ({ session }, code) => {
         try {

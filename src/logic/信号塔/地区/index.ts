@@ -37,7 +37,5 @@ export async function 尝试发送地区信号塔通报(
     ctx: Context,
     参数: 地区信号塔事件参数
 ): Promise<地区信号塔通报结果 | null> {
-    return 尝试执行(ctx.logger('信号塔:地区'), '地区信号塔', () =>
-        发送地区信号塔通报(ctx, 参数)
-    );
+    return 尝试执行(ctx.logger('信号塔:地区'), '地区信号塔', () => 发送地区信号塔通报(ctx, 参数));
 }

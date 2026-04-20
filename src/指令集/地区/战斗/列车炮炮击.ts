@@ -2,11 +2,7 @@ import dayjs from 'dayjs';
 import type { Context } from 'koishi';
 import { 获取运行时配置 } from '@/config';
 import { TRandom } from '@/infrastructure';
-import {
-    列车炮炮击权限检查,
-    尝试发送地区信号塔通报,
-    尝试发送联军信号塔通报,
-} from '@/logic';
+import { 列车炮炮击权限检查, 尝试发送地区信号塔通报, 尝试发送联军信号塔通报 } from '@/logic';
 import type { Region, RegionStrategy } from '@/types';
 import { 地区解析, 更新地区战略资料, 更新地区资料, 驻扎检查 } from '@/utils';
 import { 格式化距离, 计算真实距离 } from '@/地理集';
@@ -50,14 +46,8 @@ export function 列车炮炮击(ctx: Context) {
         .alias('列车炮轰击')
         .action(async ({ session }, 目标地区输入, 数量输入) => {
             try {
-                const {
-                    用户资料,
-                    username,
-                    当前驻扎地区,
-                    地区编号,
-                    展示地区名称,
-                    地区战略资料,
-                } = await 驻扎检查(ctx, session);
+                const { 用户资料, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
+                    await 驻扎检查(ctx, session);
 
                 if (当前驻扎地区 !== 地区编号) {
                     return `你当前驻扎在 ${当前驻扎地区 || '未驻扎地区'}，仅驻扎在本地区的玩家可发动列车炮炮击`;

@@ -6,11 +6,7 @@ export function 他的全部资料(ctx: Context) {
         authority: 3,
     }).action(async ({ session }, 目标) => {
         try {
-            const { 目标用户名, 目标用户资料 } = await 目标解析(
-                ctx,
-                session,
-                目标
-            );
+            const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 目标);
             const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
             return `

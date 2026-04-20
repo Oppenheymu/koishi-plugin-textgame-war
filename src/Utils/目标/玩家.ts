@@ -14,10 +14,7 @@ export async function 目标解析(
 }> {
     会话检查(session);
 
-    async function 获取目标配置(config: {
-        id: number;
-        username: string;
-    }): Promise<{
+    async function 获取目标配置(config: { id: number; username: string }): Promise<{
         目标用户ID: number;
         目标用户名: string;
         目标用户资料: Player & PlayerWarData;
@@ -28,14 +25,10 @@ export async function 目标解析(
         ]);
 
         if (!目标用户资料)
-            throw new Error(
-                `数据异常：目标用户配置存在但玩家档案丢失，请联系管理员`
-            );
+            throw new Error(`数据异常：目标用户配置存在但玩家档案丢失，请联系管理员`);
 
         if (!目标用户战争资料)
-            throw new Error(
-                `数据异常：目标用户配置存在但玩家战争档案丢失，请联系管理员`
-            );
+            throw new Error(`数据异常：目标用户配置存在但玩家战争档案丢失，请联系管理员`);
 
         return {
             目标用户ID: config.id,
@@ -46,9 +39,7 @@ export async function 目标解析(
 
     const platform = session.platform;
 
-    const atElement = session.elements?.find(
-        (el) => el.type === 'at' && el.attrs?.id
-    );
+    const atElement = session.elements?.find((el) => el.type === 'at' && el.attrs?.id);
     if (atElement?.attrs?.id) {
         const 目标用户ID = atElement.attrs.id;
         const [config] = await ctx.database.get('马列玩家配置表', {
@@ -63,9 +54,7 @@ export async function 目标解析(
 
     const 输入 = 目标?.trim();
     if (!输入) {
-        throw new Error(
-            '请指定目标用户：可以 @对方 或 直接输入对方 UID / QQ号'
-        );
+        throw new Error('请指定目标用户：可以 @对方 或 直接输入对方 UID / QQ号');
     }
 
     let [config] = await ctx.database.get('马列玩家配置表', { uid: 输入 });

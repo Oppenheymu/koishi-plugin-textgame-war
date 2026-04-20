@@ -1,10 +1,5 @@
 import type { 栅格坐标, 经纬度 } from './坐标解析';
-import {
-    EARTH_RADIUS_KM,
-    GRID_WIDTH,
-    栅格转经纬度,
-    解析地区编号,
-} from './坐标解析';
+import { EARTH_RADIUS_KM, GRID_WIDTH, 栅格转经纬度, 解析地区编号 } from './坐标解析';
 
 function toRadians(degrees: number): number {
     return degrees * (Math.PI / 180);
@@ -17,9 +12,7 @@ export function haversineDistance(a: 经纬度, b: 经纬度): number {
     const sinDLon = Math.sin(dLon / 2);
     const h =
         sinDLat * sinDLat +
-        Math.cos(toRadians(a.latitude)) *
-            Math.cos(toRadians(b.latitude)) *
-            sinDLon * sinDLon;
+        Math.cos(toRadians(a.latitude)) * Math.cos(toRadians(b.latitude)) * sinDLon * sinDLon;
     return EARTH_RADIUS_KM * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
 }
 
@@ -36,17 +29,11 @@ export function 计算栅格经纬度距离(坐标A: 栅格坐标, 坐标B: 栅�
 }
 
 export function 切比雪夫网格距离(坐标A: 栅格坐标, 坐标B: 栅格坐标): number {
-    return Math.max(
-        Math.abs(坐标A.gridX - 坐标B.gridX),
-        Math.abs(坐标A.gridY - 坐标B.gridY)
-    );
+    return Math.max(Math.abs(坐标A.gridX - 坐标B.gridX), Math.abs(坐标A.gridY - 坐标B.gridY));
 }
 
 export function 曼哈顿网格距离(坐标A: 栅格坐标, 坐标B: 栅格坐标): number {
-    return (
-        Math.abs(坐标A.gridX - 坐标B.gridX) +
-        Math.abs(坐标A.gridY - 坐标B.gridY)
-    );
+    return Math.abs(坐标A.gridX - 坐标B.gridX) + Math.abs(坐标A.gridY - 坐标B.gridY);
 }
 
 export function 格式化距离(公里数: number): string {

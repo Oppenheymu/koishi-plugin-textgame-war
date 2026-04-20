@@ -62,11 +62,7 @@ export function 初始化地区表(ctx: Context) {
                         gridX: 地区.GridX,
                         gridY: 地区.GridY,
                     });
-                    const 容量上限 = 获取容量上限(
-                        地区,
-                        地区地形,
-                        边长.面积平方公里
-                    );
+                    const 容量上限 = 获取容量上限(地区, 地区地形, 边长.面积平方公里);
                     return {
                         地区编号: 地区.RegionId,
                         栅格X: 地区.GridX,
@@ -140,14 +136,7 @@ export function 初始化地区表(ctx: Context) {
                     历史战争: [],
                 }));
 
-                await 写入批次(
-                    ctx,
-                    地形批次,
-                    地区批次,
-                    状态机批次,
-                    配置批次,
-                    战略批次
-                );
+                await 写入批次(ctx, 地形批次, 地区批次, 状态机批次, 配置批次, 战略批次);
 
                 已处理 += 地区批次.length;
 

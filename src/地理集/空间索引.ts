@@ -68,11 +68,8 @@ export class 地区空间索引 {
                 if (dx === 0 && dy === 0) continue;
                 const nx = 坐标.gridX + dx;
                 const ny = 坐标.gridY + dy;
-                if (nx < 0 || nx >= GRID_WIDTH || ny < 0 || ny >= GRID_HEIGHT)
-                    continue;
-                const 邻居编号 = this.坐标到编号.get(
-                    栅格坐标转键({ gridX: nx, gridY: ny })
-                );
+                if (nx < 0 || nx >= GRID_WIDTH || ny < 0 || ny >= GRID_HEIGHT) continue;
+                const 邻居编号 = this.坐标到编号.get(栅格坐标转键({ gridX: nx, gridY: ny }));
                 if (邻居编号) 结果.push(邻居编号);
             }
         }

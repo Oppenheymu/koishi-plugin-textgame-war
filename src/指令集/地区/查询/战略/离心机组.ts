@@ -10,17 +10,14 @@ export function 查看地区离心机组(ctx: Context) {
         .alias('城市离心机组')
         .action(async ({ session }, 地区编号参数) => {
             try {
-                const { 地区编号, 地区战略资料, 展示地区名称 } =
-                    await 地区查询权限检查(
-                        ctx,
-                        session,
-                        '查看地区离心机组',
-                        地区编号参数
-                    );
-
-                const 离心机组列表 = Object.entries(
-                    地区战略资料.高速离心级联 ?? {}
+                const { 地区编号, 地区战略资料, 展示地区名称 } = await 地区查询权限检查(
+                    ctx,
+                    session,
+                    '查看地区离心机组',
+                    地区编号参数
                 );
+
+                const 离心机组列表 = Object.entries(地区战略资料.高速离心级联 ?? {});
 
                 const 建造需求 = 特殊建筑库.高速离心级联.生产力需求;
 
@@ -37,10 +34,7 @@ export function 查看地区离心机组(ctx: Context) {
                                       )
                                       .join('\n') || '      · 暂无制备记录';
 
-                              const 百分比 = (
-                                  (离心机组信息.建造进度 / 建造需求) *
-                                  100
-                              ).toFixed(1);
+                              const 百分比 = ((离心机组信息.建造进度 / 建造需求) * 100).toFixed(1);
 
                               return [
                                   `  - 离心机组#${编号}`,

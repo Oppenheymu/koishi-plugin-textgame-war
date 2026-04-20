@@ -11,14 +11,10 @@ export function 修改地区名称(ctx: Context) {
         .alias('修改城市名称')
         .action(async ({ session }, 新名称, 地区编号参数) => {
             try {
-                const { id, uid, username, 联军资料 } = await 玩家联军检查(
-                    ctx,
-                    session,
-                    {
-                        最低权限等级: 4,
-                        是否必须在成员列表: true,
-                    }
-                );
+                const { id, uid, username, 联军资料 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 4,
+                    是否必须在成员列表: true,
+                });
 
                 const 规范地区编号 = 地区编号参数?.trim();
                 const { 地区编号, 地区配置资料 } = 规范地区编号
@@ -29,10 +25,7 @@ export function 修改地区名称(ctx: Context) {
                     return '只能修改本联军控制地区的名称';
                 }
 
-                const 改名冷却提示 = 检查改名冷却(
-                    地区配置资料.上次改名日期,
-                    '地区'
-                );
+                const 改名冷却提示 = 检查改名冷却(地区配置资料.上次改名日期, '地区');
                 if (改名冷却提示) {
                     return 改名冷却提示;
                 }

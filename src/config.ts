@@ -278,8 +278,7 @@ export function 初始化插件运行时配置(config: Partial<PluginConfig>) {
                 ...(config.土木工程?.地形惩罚系数 ?? {}),
             },
             跨联军铁路审批过期小时:
-                config.土木工程?.跨联军铁路审批过期小时 ??
-                默认土木工程配置.跨联军铁路审批过期小时,
+                config.土木工程?.跨联军铁路审批过期小时 ?? 默认土木工程配置.跨联军铁路审批过期小时,
         },
         地理: {
             ...默认地理配置,
@@ -337,20 +336,11 @@ function 创建信号塔频道Schema(默认值: 信号塔频道配置): Schema<�
     });
 }
 
-function 创建铁路类型配置Schema(
-    默认值: 铁路类型配置项
-): Schema<铁路类型配置项> {
+function 创建铁路类型配置Schema(默认值: 铁路类型配置项): Schema<铁路类型配置项> {
     return Schema.object({
-        类型ID: Schema.string()
-            .default(默认值.类型ID)
-            .description('铁路类型标识（如：铁路1）'),
-        类型名称: Schema.string()
-            .default(默认值.类型名称)
-            .description('铁路展示名称'),
-        需求生产力: Schema.number()
-            .min(1)
-            .default(默认值.需求生产力)
-            .description('基础生产力需求'),
+        类型ID: Schema.string().default(默认值.类型ID).description('铁路类型标识（如：铁路1）'),
+        类型名称: Schema.string().default(默认值.类型名称).description('铁路展示名称'),
+        需求生产力: Schema.number().min(1).default(默认值.需求生产力).description('基础生产力需求'),
         提供运力: Schema.number()
             .min(1)
             .default(默认值.提供运力)
@@ -385,18 +375,10 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         我的联军权限: 权限等级Schema.default(默认联军权限配置.我的联军权限),
         查看地区军事: 权限等级Schema.default(默认联军权限配置.查看地区军事),
         查看地区铁路: 权限等级Schema.default(默认联军权限配置.查看地区铁路),
-        查看地区生物实验室: 权限等级Schema.default(
-            默认联军权限配置.查看地区生物实验室
-        ),
-        查看地区核反应堆: 权限等级Schema.default(
-            默认联军权限配置.查看地区核反应堆
-        ),
-        查看地区离心机组: 权限等级Schema.default(
-            默认联军权限配置.查看地区离心机组
-        ),
-        设置地区驻扎权限: 权限等级Schema.default(
-            默认联军权限配置.设置地区驻扎权限
-        ),
+        查看地区生物实验室: 权限等级Schema.default(默认联军权限配置.查看地区生物实验室),
+        查看地区核反应堆: 权限等级Schema.default(默认联军权限配置.查看地区核反应堆),
+        查看地区离心机组: 权限等级Schema.default(默认联军权限配置.查看地区离心机组),
+        设置地区驻扎权限: 权限等级Schema.default(默认联军权限配置.设置地区驻扎权限),
         分配生活资料: 权限等级Schema.default(默认联军权限配置.分配生活资料),
         分配历史记录: 权限等级Schema.default(默认联军权限配置.分配历史记录),
         设置税率: 权限等级Schema.default(默认联军权限配置.设置税率),
@@ -405,30 +387,20 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         分配军队: 权限等级Schema.default(默认联军权限配置.分配军队),
     }).description('联军默认权限配置'),
     sqids: Schema.object({
-        register: 创建Sqids单项Schema(默认Sqids配置.register).description(
-            '玩家 UID 生成参数'
-        ),
-        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description(
-            '联军编号生成参数'
-        ),
+        register: 创建Sqids单项Schema(默认Sqids配置.register).description('玩家 UID 生成参数'),
+        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description('联军编号生成参数'),
     }).description('Sqids 配置'),
     信号塔: Schema.object({
-        新闻群: 创建信号塔频道Schema(默认信号塔配置.新闻群).description(
-            '新闻广播群配置'
-        ),
-        后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description(
-            '后台日志群配置'
-        ),
+        新闻群: 创建信号塔频道Schema(默认信号塔配置.新闻群).description('新闻广播群配置'),
+        后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description('后台日志群配置'),
     }).description('信号塔配置'),
     土木工程: Schema.object({
-        铁路类型列表: Schema.array(
-            创建铁路类型配置Schema(默认土木工程配置.铁路类型列表[0])
-        )
+        铁路类型列表: Schema.array(创建铁路类型配置Schema(默认土木工程配置.铁路类型列表[0]))
             .default(默认土木工程配置.铁路类型列表.map((配置) => ({ ...配置 })))
             .description('铁路类型与基础生产力配置'),
-        地形惩罚系数: 创建地形惩罚系数Schema(
-            默认土木工程配置.地形惩罚系数
-        ).description('地形导致的铁路建造成本倍率'),
+        地形惩罚系数: 创建地形惩罚系数Schema(默认土木工程配置.地形惩罚系数).description(
+            '地形导致的铁路建造成本倍率'
+        ),
         跨联军铁路审批过期小时: Schema.number()
             .min(1)
             .max(168)

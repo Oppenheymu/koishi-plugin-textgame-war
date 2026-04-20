@@ -130,12 +130,7 @@ export interface RegionStrategy {
     历史战争: WarRecord[];
 }
 
-export type RailBuildPendingStatus =
-    | 'pending'
-    | 'approved'
-    | 'rejected'
-    | 'cancelled'
-    | 'expired';
+export type RailBuildPendingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled' | 'expired';
 
 export interface PendingRailwayBuild {
     id: string;

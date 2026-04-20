@@ -5,10 +5,7 @@ import { 玩家检查, 目标解析 } from '@/utils';
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 
 type 增量区间 = '当天' | '三天' | '七天';
-type 联军增量字段 = Pick<
-    CoalitionArmy,
-    '当天内资本增量' | '三天内资本增量' | '七天内资本增量'
->;
+type 联军增量字段 = Pick<CoalitionArmy, '当天内资本增量' | '三天内资本增量' | '七天内资本增量'>;
 
 function 解析增量区间(输入?: string): 增量区间 {
     const 文本 = 输入?.trim().toLowerCase() ?? '';
@@ -47,11 +44,7 @@ async function 查询对象联军资本增量(
     let 联军编号: string | null;
 
     if (输入目标) {
-        const { 目标用户名, 目标用户资料 } = await 目标解析(
-            ctx,
-            session,
-            输入目标
-        );
+        const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 输入目标);
         查询用户名 = 目标用户名;
         联军编号 = 目标用户资料.所在联军;
     } else {
@@ -66,9 +59,7 @@ async function 查询对象联军资本增量(
 
     const [联军资料] = await ctx.database.get('马列联军表', { 联军编号 });
     if (!联军资料) {
-        throw new Error(
-            '数据异常：已记录所在联军但未找到联军档案，请联系管理员'
-        );
+        throw new Error('数据异常：已记录所在联军但未找到联军档案，请联系管理员');
     }
 
     return {
@@ -78,12 +69,7 @@ async function 查询对象联军资本增量(
     };
 }
 
-function 构建查询返回文本(
-    查询用户名: string,
-    联军编号: string,
-    区间: 增量区间,
-    数值: number
-) {
+function 构建查询返回文本(查询用户名: string, 联军编号: string, 区间: 增量区间, 数值: number) {
     return `
 ====[征战文游]====
 ${查询用户名} 同志：
@@ -102,8 +88,12 @@ export function 联军生产总值查询(ctx: Context) {
         .action(async ({ session }, 几天内, 目标) => {
             try {
                 const 区间 = 解析增量区间(几天内);
-                const { 查询用户名, 联军编号, 资本增量 } =
-                    await 查询对象联军资本增量(ctx, session, 区间, 目标);
+                const { 查询用户名, 联军编号, 资本增量 } = await 查询对象联军资本增量(
+                    ctx,
+                    session,
+                    区间,
+                    目标
+                );
 
                 return 构建查询返回文本(查询用户名, 联军编号, 区间, 资本增量);
             } catch (error) {
@@ -116,8 +106,12 @@ export function 联军生产总值查询(ctx: Context) {
         .alias('当天GDP')
         .action(async ({ session }, 目标) => {
             try {
-                const { 查询用户名, 联军编号, 资本增量 } =
-                    await 查询对象联军资本增量(ctx, session, '当天', 目标);
+                const { 查询用户名, 联军编号, 资本增量 } = await 查询对象联军资本增量(
+                    ctx,
+                    session,
+                    '当天',
+                    目标
+                );
 
                 return 构建查询返回文本(查询用户名, 联军编号, '当天', 资本增量);
             } catch (error) {
@@ -130,8 +124,12 @@ export function 联军生产总值查询(ctx: Context) {
         .alias('三天GDP')
         .action(async ({ session }, 目标) => {
             try {
-                const { 查询用户名, 联军编号, 资本增量 } =
-                    await 查询对象联军资本增量(ctx, session, '三天', 目标);
+                const { 查询用户名, 联军编号, 资本增量 } = await 查询对象联军资本增量(
+                    ctx,
+                    session,
+                    '三天',
+                    目标
+                );
 
                 return 构建查询返回文本(查询用户名, 联军编号, '三天', 资本增量);
             } catch (error) {
@@ -144,8 +142,12 @@ export function 联军生产总值查询(ctx: Context) {
         .alias('七天GDP')
         .action(async ({ session }, 目标) => {
             try {
-                const { 查询用户名, 联军编号, 资本增量 } =
-                    await 查询对象联军资本增量(ctx, session, '七天', 目标);
+                const { 查询用户名, 联军编号, 资本增量 } = await 查询对象联军资本增量(
+                    ctx,
+                    session,
+                    '七天',
+                    目标
+                );
 
                 return 构建查询返回文本(查询用户名, 联军编号, '七天', 资本增量);
             } catch (error) {

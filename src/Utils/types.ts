@@ -8,10 +8,7 @@ import type {
 
 export type 联军权限等级 = CoalitionPermissionLevel;
 
-export type 支持平台 = keyof Pick<
-    PlayerConfig,
-    'onebot' | 'discord' | 'telegram'
->;
+export type 支持平台 = keyof Pick<PlayerConfig, 'onebot' | 'discord' | 'telegram'>;
 
 export type 玩家完整资料 = Player & PlayerWarData;
 

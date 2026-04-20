@@ -8,11 +8,7 @@ export function 他的UID(ctx: Context) {
         .alias('他的编号')
         .action(async ({ session }, 目标) => {
             try {
-                const { 目标用户名, 目标用户资料 } = await 目标解析(
-                    ctx,
-                    session,
-                    目标
-                );
+                const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 目标);
 
                 return `${目标用户名} 的UID是：${目标用户资料.uid}`;
             } catch (error) {

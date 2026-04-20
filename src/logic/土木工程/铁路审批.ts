@@ -29,9 +29,7 @@ async function 推送铁路申请过期通知(
     申请记录: PendingRailwayBuild
 ): Promise<{ 通知成功: number; 通知失败: number }> {
     const 通知文本 = 生成过期通知文本(申请记录);
-    const 地区编号列表 = Array.from(
-        new Set([申请记录.发起地区编号, 申请记录.目标地区编号])
-    );
+    const 地区编号列表 = Array.from(new Set([申请记录.发起地区编号, 申请记录.目标地区编号]));
 
     let 通知成功 = 0;
     let 通知失败 = 0;
@@ -61,10 +59,7 @@ async function 推送铁路申请过期通知(
     };
 }
 
-export async function 获取有效铁路申请(
-    ctx: Context,
-    申请ID: string
-): Promise<PendingRailwayBuild> {
+export async function 获取有效铁路申请(ctx: Context, 申请ID: string): Promise<PendingRailwayBuild> {
     const [申请记录] = await ctx.database.get('马列铁路修建申请表', {
         id: 申请ID,
     });
@@ -102,9 +97,7 @@ export async function 获取有效铁路申请(
     return 申请记录;
 }
 
-export async function 执行铁路审批自动过期处理(
-    ctx: Context
-): Promise<铁路审批自动过期结果> {
+export async function 执行铁路审批自动过期处理(ctx: Context): Promise<铁路审批自动过期结果> {
     const 待处理列表 = await ctx.database.get('马列铁路修建申请表', {
         状态: 'pending',
     });

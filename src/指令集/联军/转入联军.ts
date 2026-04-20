@@ -1,9 +1,5 @@
 import type { Context } from 'koishi';
-import {
-    尝试发送联军信号塔通报,
-    是否豁免扩军计划限制,
-    玩家联军权限设置,
-} from '@/logic';
+import { 尝试发送联军信号塔通报, 是否豁免扩军计划限制, 玩家联军权限设置 } from '@/logic';
 import { 更新玩家资料, 玩家联军检查 } from '@/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
@@ -19,23 +15,12 @@ export function 转入联军(ctx: Context) {
                     throw new Error('转入数量必须是正整数');
                 }
 
-                const 权限等级需求 = await 玩家联军权限设置(
-                    ctx,
-                    session,
-                    '转入联军'
-                );
-                const {
-                    id,
-                    uid,
-                    username,
-                    用户资料,
-                    联军编号,
-                    联军资料,
-                    权限等级,
-                } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 权限等级需求,
-                    是否必须在成员列表: true,
-                });
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '转入联军');
+                const { id, uid, username, 用户资料, 联军编号, 联军资料, 权限等级 } =
+                    await 玩家联军检查(ctx, session, {
+                        最低权限等级: 权限等级需求,
+                        是否必须在成员列表: true,
+                    });
 
                 if ((用户资料.私人军队 ?? 0) < 数量) {
                     throw new Error(
@@ -45,21 +30,11 @@ export function 转入联军(ctx: Context) {
 
                 const 扩军计划上限 = 联军资料.扩军计划;
                 const 当天已扩军 = 联军资料.当天扩军累计 ?? 0;
-                const 是否豁免限制 = 是否豁免扩军计划限制(
-                    联军资料,
-                    uid,
-                    权限等级
-                );
-                if (
-                    !是否豁免限制 &&
-                    typeof 扩军计划上限 === 'number' &&
-                    扩军计划上限 > 0
-                ) {
+                const 是否豁免限制 = 是否豁免扩军计划限制(联军资料, uid, 权限等级);
+                if (!是否豁免限制 && typeof 扩军计划上限 === 'number' && 扩军计划上限 > 0) {
                     const 当天剩余额度 = 扩军计划上限 - 当天已扩军;
                     if (当天剩余额度 <= 0) {
-                        throw new Error(
-                            `今日扩军计划额度已用尽（上限 ${格式化(扩军计划上限)}）`
-                        );
+                        throw new Error(`今日扩军计划额度已用尽（上限 ${格式化(扩军计划上限)}）`);
                     }
                     if (数量 > 当天剩余额度) {
                         throw new Error(

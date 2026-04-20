@@ -28,11 +28,7 @@ function 格式化权限列表(
 function 创建固定等级命令(ctx: Context, 命令名: string, 等级: 1 | 2 | 3 | 4) {
     ctx.command(命令名).action(async ({ session }) => {
         try {
-            const 权限等级需求 = await 玩家联军权限设置(
-                ctx,
-                session,
-                '成员列表'
-            );
+            const 权限等级需求 = await 玩家联军权限设置(ctx, session, '成员列表');
             const { username, 联军资料 } = await 玩家联军检查(ctx, session, {
                 最低权限等级: 权限等级需求,
                 是否必须在成员列表: true,
@@ -60,19 +56,11 @@ export function 权限列表(ctx: Context) {
         .alias('查看权限列表')
         .action(async ({ session }, 输入等级) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(
-                    ctx,
-                    session,
-                    '成员列表'
-                );
-                const { username, 联军资料 } = await 玩家联军检查(
-                    ctx,
-                    session,
-                    {
-                        最低权限等级: 权限等级需求,
-                        是否必须在成员列表: true,
-                    }
-                );
+                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '成员列表');
+                const { username, 联军资料 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 权限等级需求,
+                    是否必须在成员列表: true,
+                });
 
                 const 标准输入 = 输入等级?.trim();
                 if (!标准输入) {
