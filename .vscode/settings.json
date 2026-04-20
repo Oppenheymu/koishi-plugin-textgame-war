@@ -12,7 +12,7 @@
     "[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
     "[javascriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
     "[json]": { "editor.defaultFormatter": "biomejs.biome" },
-    "[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[jsonc]": { "editor.defaultFormatter": "vscode.json-language-features" },
 
     // 保存时让 Biome 自动修复并整理导入（官方推荐键）
     "editor.codeActionsOnSave": {
