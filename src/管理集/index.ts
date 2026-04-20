@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 批量加载插件 } from '@/utils';
+import { 批量加载插件 } from '@/infrastructure';
 import { 信号塔调试 } from './信号塔调试';
 import { 推送版本日志 } from './推送版本日志';
 import { 稽查相关指令 } from './稽查相关';

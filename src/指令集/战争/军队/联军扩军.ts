@@ -1,6 +1,7 @@
 import type { Context } from 'koishi';
 import { 是否豁免扩军计划限制, 玩家联军权限设置 } from '@/logic';
-import { 更新玩家资料, 玩家联军检查, 生成随机图片片段 } from '@/utils';
+import { 生成随机图片片段 } from '@/infrastructure';
+import { 更新玩家资料, 玩家联军检查 } from '@/utils';
 
 const 图片概率 = 0.01;
 const 图片池 = ['行军.jpg', '行军2.jpg', '行军3.jpg', '阅兵2.jpg'];

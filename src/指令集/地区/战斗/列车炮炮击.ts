@@ -1,19 +1,15 @@
 import dayjs from 'dayjs';
 import type { Context } from 'koishi';
 import { 获取运行时配置 } from '@/config';
-import { 尝试发送地区信号塔通报 } from '@/logic/信号塔/地区';
-import { 尝试发送联军信号塔通报 } from '@/logic/信号塔/联军';
-import type { Region, RegionStrategy } from '@/types';
+import { TRandom } from '@/infrastructure';
 import {
-    TRandom,
-    更新地区战略资料,
-    更新地区资料,
-    格式化距离,
-    计算真实距离,
-    驻扎检查,
-} from '@/utils';
-import { 列车炮炮击权限检查 } from '@/utils/解析目标/地区相关/权限检查';
-import { 地区解析 } from '@/utils/解析目标/地区相关/获取数据';
+    列车炮炮击权限检查,
+    尝试发送地区信号塔通报,
+    尝试发送联军信号塔通报,
+} from '@/logic';
+import type { Region, RegionStrategy } from '@/types';
+import { 地区解析, 更新地区战略资料, 更新地区资料, 驻扎检查 } from '@/utils';
+import { 格式化距离, 计算真实距离 } from '@/地理集';
 
 function 格式化(n: number) {
     return n.toLocaleString('zh-CN');

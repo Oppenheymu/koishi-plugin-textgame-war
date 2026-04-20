@@ -1,6 +1,5 @@
 import type { Context } from 'koishi';
-import { 获取铁路类型列表 } from '@/logic';
-import { 地区查询权限检查 } from '@/utils';
+import { 获取铁路类型列表, 地区查询权限检查 } from '@/logic';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 

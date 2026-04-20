@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
+import { TRandom } from '@/infrastructure';
 import {
-    TRandom,
     更新地区资料,
     更新玩家资料,
     玩家检查,

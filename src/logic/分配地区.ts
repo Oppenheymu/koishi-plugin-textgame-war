@@ -1,10 +1,10 @@
 import type { Context } from 'koishi';
 import {
-    解析地区编号,
-    栅格坐标转地区编号,
-    GRID_WIDTH,
     GRID_HEIGHT,
-} from '@/utils';
+    GRID_WIDTH,
+    栅格坐标转地区编号,
+    解析地区编号,
+} from '@/地理集';
 
 const CLUSTER_RADIUS = 5;
 

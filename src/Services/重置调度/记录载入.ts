@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 确保服务记录 } from '@/utils/服务记录';
+import { 确保服务记录 } from '@/infrastructure';
 import { 获取今天日期 } from '../utils';
 import type { 服务记录初始化结果 } from './types';
 

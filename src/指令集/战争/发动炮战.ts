@@ -1,6 +1,7 @@
 import type { Context } from 'koishi';
 import { 尝试发送联军信号塔通报 } from '@/logic';
-import { TRandom, 更新玩家资料, 玩家检查, 目标解析 } from '@/utils';
+import { TRandom } from '@/infrastructure';
+import { 更新玩家资料, 玩家检查, 目标解析 } from '@/utils';
 
 const 操炮所需兵力 = 10;
 

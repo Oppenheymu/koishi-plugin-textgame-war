@@ -1,13 +1,13 @@
 import type { Context } from 'koishi';
+import { 地区解析 } from '@/utils';
 import {
-    地区解析,
-    计算真实距离,
-    计算方向,
-    格式化距离,
-    格式化经纬度,
     地区编号转经纬度,
+    格式化经纬度,
+    格式化距离,
     解析地区编号,
-} from '@/utils';
+    计算方向,
+    计算真实距离,
+} from '@/地理集';
 
 export function 查看距离(ctx: Context) {
     ctx.command('距离 <起点地区编号:string> <终点地区编号:string>')

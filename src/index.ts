@@ -14,13 +14,12 @@ import { register as 注册路径别名 } from 'tsconfig-paths';
 
 import type { PluginConfig } from './config';
 import { 初始化插件运行时配置, 插件配置Schema } from './config';
-
+import { 批量加载插件 } from './infrastructure';
 import { 数据库服务 } from './models/index';
 import { 文游服务集 } from './services/index';
-import { 批量加载插件 } from './utils/插件加载';
+import { 确保空间索引就绪 } from './地理集';
 import { 文游指令集 } from './指令集/index';
 import { 文游管理集 } from './管理集/index';
-import { 确保空间索引就绪 } from './utils/地理空间';
 
 export const name = 'malie-textgame';
 

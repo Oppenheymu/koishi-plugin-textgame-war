@@ -5,7 +5,7 @@ import type {
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
 } from '@/types';
-import { 玩家检查 } from '@/utils/解析用户/玩家相关/获取数据';
+import { 玩家检查 } from '@/utils';
 
 export type 联军权限动作 = CoalitionPermissionAction;
 

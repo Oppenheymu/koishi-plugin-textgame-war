@@ -8,7 +8,8 @@ import {
     检查违禁词,
 } from '@/logic';
 import { type CoalitionArmy, type MemberData, 联军政体 } from '@/types';
-import { TRandom, 玩家检查, 获取联军Sqids } from '@/utils';
+import { TRandom, 获取联军Sqids } from '@/infrastructure';
+import { 玩家检查 } from '@/utils';
 
 export function 组建联军(ctx: Context) {
     ctx.command('组建联军 <联军名称:string>')

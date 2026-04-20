@@ -1,5 +1,5 @@
 import { type Context, Logger } from 'koishi';
-import { 计算栅格边长 } from '@/utils';
+import { 计算栅格边长 } from '@/地理集';
 import { 获取容量上限 } from './logic';
 import { 判定地区地形, 构建进度条, 读取地区基础数据 } from './utils';
 import { 写入批次 } from './write';

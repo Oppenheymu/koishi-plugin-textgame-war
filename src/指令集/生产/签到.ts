@@ -1,5 +1,6 @@
 import type { Context } from 'koishi';
-import { TRandom, 玩家检查 } from '@/utils';
+import { TRandom } from '@/infrastructure';
+import { 玩家检查 } from '@/utils';
 
 export function 签到(ctx: Context) {
     ctx.command('签到')

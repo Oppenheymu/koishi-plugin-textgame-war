@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import { createCanvas } from 'canvas';
 import type { Context } from 'koishi';
 import type { Region, RegionTerra } from '@/types';
-import { GRID_HEIGHT, GRID_WIDTH } from '@/utils';
+import { GRID_HEIGHT, GRID_WIDTH } from '@/地理集';
 
 const CELL_SIZE = 62;
 const MAP_WIDTH = GRID_WIDTH * CELL_SIZE;

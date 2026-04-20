@@ -4,20 +4,15 @@ import { 获取运行时配置 } from '@/config';
 import {
     世界银行地区编号,
     创建跨联军铁路申请,
+    地区驻扎权限设置检查,
     执行铁路修建,
     查询待审核铁路申请,
     计算铁路建造成本,
     请求联军审批,
 } from '@/logic';
 import type { TerrainType } from '@/types';
-import {
-    地区解析,
-    地区驻扎权限设置检查,
-    当前地区解析,
-    玩家检查,
-    计算真实距离,
-    格式化距离,
-} from '@/utils';
+import { 地区解析, 当前地区解析, 玩家检查 } from '@/utils';
+import { 格式化距离, 计算真实距离 } from '@/地理集';
 import {
     格式化,
     生成审核推送文本,

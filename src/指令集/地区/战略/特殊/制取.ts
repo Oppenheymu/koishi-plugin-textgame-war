@@ -2,8 +2,13 @@
 
 import dayjs from 'dayjs';
 import type { Context } from 'koishi';
-import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
-import { 地区查询权限检查 } from '@/utils/解析目标/地区相关/权限检查';
+import {
+    更新地区战略资料,
+    更新玩家资料,
+    玩家检查,
+    驻扎检查,
+} from '@/utils';
+import { 地区查询权限检查 } from '@/logic';
 import { 特殊建筑库, type 特殊设施类型 } from '../../建筑/config';
 import 制取配置 from './config';
 
