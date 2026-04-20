@@ -1,13 +1,8 @@
-import * as fs from 'node:fs/promises';
-import * as path from 'node:path';
 import type { Context } from 'koishi';
 import { h } from 'koishi';
 import { GenerateMap } from '@/services';
 import type { Region } from '@/types';
 import { 玩家检查, 玩家联军检查 } from '@/utils';
-
-const CACHE_DIR = path.resolve(__dirname, '../../cache');
-const FULL_MAP_CACHE = path.join(CACHE_DIR, 'full.png');
 
 export function ViewMap(ctx: Context) {
     ctx.command('查看地图', '查看完整的世界地图')
@@ -15,10 +10,13 @@ export function ViewMap(ctx: Context) {
         .action(async ({ session }) => {
             await 玩家检查(ctx, session);
 
+            await session?.send('正在获取最新的世界地图，请稍候...');
             try {
-                await session?.send('正在获取最新的世界地图，请稍候...');
-                const buffer = await fs.readFile(FULL_MAP_CACHE);
-                return h.image(buffer, 'image/png');
+                const buffer = await GenerateMap(ctx);
+                if (buffer) {
+                    return h.image(buffer, 'image/png');
+                }
+                return '抱歉，世界地图当前不可用。可能是尚未生成或服务器出现问题，请稍后重试。';
             } catch {
                 return '抱歉，世界地图当前不可用。可能是尚未生成或服务器出现问题，请稍后重试。';
             }
@@ -40,11 +38,7 @@ export function ViewMap(ctx: Context) {
                 const 目标地区 = (
                     await ctx.database.get('马列地区表', { 地区编号: regionId })
                 )[0] as Region | undefined;
-                if (
-                    !目标地区 ||
-                    目标地区.栅格X == null ||
-                    目标地区.栅格Y == null
-                ) {
+                if (!目标地区 || 目标地区.栅格X == null || 目标地区.栅格Y == null) {
                     return `地区编号 ${regionId} 的数据不完整。`;
                 }
                 centerName = `地区 ${regionId}`;
@@ -59,11 +53,7 @@ export function ViewMap(ctx: Context) {
                 const 首都地区 = (
                     await ctx.database.get('马列地区表', { 地区编号: 首都编号 })
                 )[0] as Region | undefined;
-                if (
-                    !首都地区 ||
-                    首都地区.栅格X == null ||
-                    首都地区.栅格Y == null
-                ) {
+                if (!首都地区 || 首都地区.栅格X == null || 首都地区.栅格Y == null) {
                     return '错误：联军首都地区数据不完整，请联系管理员。';
                 }
                 centerName = '联军首都';
@@ -71,9 +61,7 @@ export function ViewMap(ctx: Context) {
                 centerGridY = 首都地区.栅格Y;
             }
 
-            await session?.send(
-                `正在为您生成以${centerName}为中心的局部地图，请稍候...`
-            );
+            await session?.send(`正在为您生成以${centerName}为中心的局部地图，请稍候...`);
             try {
                 const buffer = await GenerateMap(ctx, {
                     centerGridX,

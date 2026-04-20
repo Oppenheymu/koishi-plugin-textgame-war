@@ -41,10 +41,22 @@ async function 查找聚类候选(
     const 候选编号列表 = Array.from(候选编号集合);
     if (候选编号列表.length === 0) return [];
 
+    const 陆地候选 = await ctx.database.get(
+        '马列地区地形表',
+        {
+            地区编号: { $in: 候选编号列表 },
+            是否为海洋: false,
+        },
+        ['地区编号']
+    );
+
+    const 陆地候选编号 = 陆地候选.map((r) => r.地区编号);
+    if (陆地候选编号.length === 0) return [];
+
     const 未分配记录 = await ctx.database.get(
         '马列地区状态机',
         {
-            地区编号: { $in: 候选编号列表 },
+            地区编号: { $in: 陆地候选编号 },
             是否已分配: false,
         },
         ['地区编号']
