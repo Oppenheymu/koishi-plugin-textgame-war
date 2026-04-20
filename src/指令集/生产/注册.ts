@@ -59,8 +59,6 @@ export function 注册(ctx: Context) {
                 const 初始生活资料 = TRandom(8000, 50000, 90000);
                 const 初始石油 = TRandom(50, 150, 800);
                 const 初始钢铁 = TRandom(100, 200, 500);
-                const 战争保护期时长 = TRandom(3, 7, 15);
-                const 初始防空弹药 = TRandom(300, 1000, 2000);
 
                 try {
                     const newPlayerConfig: PlayerConfig = await ctx.database.create(
@@ -102,7 +100,7 @@ export function 注册(ctx: Context) {
                         驻扎地区: null,
                         上次驻扎日期: '',
                         上次炮击时间: null,
-                        战争保护期: Date.now() + 战争保护期时长 * 24 * 60 * 60 * 1000,
+                        战争保护期: null,
                         今日是否签到: true,
                         小时是否生产: false,
                         稳定度: 80,
@@ -139,7 +137,7 @@ export function 注册(ctx: Context) {
                         火箭炮: 0,
                         火箭炮弹药: 0,
                         列车炮: 0,
-                        防空弹药: 初始防空弹药,
+                        防空弹药: 0,
                         侦察机: 0,
                         轰炸机: 0,
                         隐形轰炸机: 0,
@@ -194,7 +192,6 @@ ${username} 同志 注册成功
 ■ 石油：${格式化(初始石油)}
 ■ 生活资料：${格式化(初始生活资料)}
 
-□新手战争保护期：${战争保护期时长}天
 发送[帮助]查看指令表
 发送[词典]查看设定
 `.trim();
