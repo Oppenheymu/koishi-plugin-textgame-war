@@ -8,7 +8,6 @@ import { 地区解析, 当前地区解析, type 地区解析结果 } from '@/uti
 export type 地区权限检查动作 = Extract<
     CoalitionPermissionAction,
     | '查看地区军事'
-    | '查看地区铁路'
     | '查看地区生物实验室'
     | '查看地区核反应堆'
     | '查看地区离心机组'

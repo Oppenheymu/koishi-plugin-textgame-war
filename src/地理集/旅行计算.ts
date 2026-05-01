@@ -39,16 +39,5 @@ export function 计算旅行时间(
     return Math.ceil(天数 * 10) / 10;
 }
 
-export function 计算铁路旅行时间(
-    地区编号A: string,
-    地区编号B: string,
-    铁路速度公里每天: number = 800
-): number {
-    const 距离 = 计算真实距离(地区编号A, 地区编号B);
-    const 天数 = 距离 / 铁路速度公里每天;
-    return Math.ceil(天数 * 10) / 10;
-}
-
 export const DEFAULT_MARCH_SPEED = 40;
-export const DEFAULT_RAIL_SPEED = 800;
 export const DEFAULT_AIR_SPEED = 2000;

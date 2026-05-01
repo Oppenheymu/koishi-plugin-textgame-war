@@ -124,8 +124,6 @@ export function 初始化地区表(ctx: Context) {
                         火箭炮弹药: 0,
                         防空弹药: 0,
                     },
-                    铁路: {},
-                    是否有铁路: false,
                     地区驻军: 0,
                     地区堡垒: undefined,
                     生物实验室: {},

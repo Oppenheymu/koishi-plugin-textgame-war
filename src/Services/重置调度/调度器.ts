@@ -1,5 +1,4 @@
 import type { Context } from 'koishi';
-import { 执行铁路审批自动过期处理 } from '@/logic';
 import { 执行每小时地区刷新 } from './刷新地区';
 import { 执行每日签到重置 } from './每日签到';
 import { 执行每时生产重置 } from './每时生产';
@@ -24,14 +23,6 @@ export function 每小时刷新地区(ctx: Context) {
     ctx.cron('0 * * * *', () => {
         执行每小时地区刷新(ctx).catch((error) => {
             ctx.logger('每时刷新地区').error(error);
-        });
-    });
-}
-
-export function 每分钟处理铁路审批过期(ctx: Context) {
-    ctx.cron('* * * * *', () => {
-        执行铁路审批自动过期处理(ctx).catch((error) => {
-            ctx.logger('铁路审批自动过期').error(error);
         });
     });
 }

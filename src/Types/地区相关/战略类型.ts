@@ -9,36 +9,6 @@ interface WarRecord {
     时间: string;
 }
 
-export interface RailRecord {
-    运输者: string;
-    运输物: string;
-    时间: string;
-}
-
-export type RailStatus = '正常' | '中断' | '维修中' | '被破坏' | '建设中';
-
-export interface Railroad {
-    // 铁路通向的目标地区(编号)
-    目标地区: string;
-
-    // 铁路来源地区（即发起修建的地区）
-    来源地区: string;
-
-    铁路类型: string;
-    建造需求: number;
-    已投入生产力: number;
-
-    建造进度: number;
-    铁路状态: RailStatus;
-
-    铁路运力: number;
-    当前负载: number;
-
-    开通时间: string;
-
-    铁路日志: RailRecord[];
-}
-
 type Preparation = '浓缩铀' | '钚' | '生物武器';
 
 // 制备（生物武器、化学武器的）记录
@@ -111,10 +81,6 @@ export interface RegionStrategy {
     // 仓储
     地区仓库: Warehouse;
 
-    // 运输
-    铁路: Record<number, Railroad>;
-    是否有铁路: boolean;
-
     // 地区军事
     地区驻军: number;
     地区堡垒: Fortress | undefined;
@@ -128,37 +94,4 @@ export interface RegionStrategy {
     空闲的列车炮: number;
 
     历史战争: WarRecord[];
-}
-
-export type RailBuildPendingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled' | 'expired';
-
-export interface PendingRailwayBuild {
-    id: string;
-    状态: RailBuildPendingStatus;
-
-    申请人ID: number;
-    申请人UID: string;
-    申请人名称: string;
-
-    发起联军编号: string;
-    发起联军名称: string;
-    发起地区编号: string;
-
-    目标地区编号: string;
-    目标联军编号: string;
-    目标联军名称: string;
-
-    铁路类型: string;
-    铁路类型名称: string;
-    最终需求生产力: number;
-    提供运力: number;
-
-    已投入生产力: number;
-
-    创建时间: string;
-    更新时间: string;
-    过期时间: string;
-
-    审批人UID: string;
-    审批备注: string;
 }

@@ -19,14 +19,6 @@ export function 加载地区战略表(ctx: Context) {
                 type: 'json',
             },
 
-            铁路: {
-                type: 'json',
-            },
-            是否有铁路: {
-                type: 'boolean',
-                initial: false,
-            },
-
             地区驻军: {
                 type: 'unsigned',
                 initial: 0,

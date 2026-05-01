@@ -9,7 +9,6 @@ export type CoalitionPermissionAction =
     | '移出联军'
     | '我的联军权限'
     | '查看地区军事'
-    | '查看地区铁路'
     | '查看地区生物实验室'
     | '查看地区核反应堆'
     | '查看地区离心机组'
@@ -35,7 +34,6 @@ export interface CoalitionPermission {
     移出联军: CoalitionPermissionLevel;
     我的联军权限: CoalitionPermissionLevel;
     查看地区军事: CoalitionPermissionLevel;
-    查看地区铁路: CoalitionPermissionLevel;
     查看地区生物实验室: CoalitionPermissionLevel;
     查看地区核反应堆: CoalitionPermissionLevel;
     查看地区离心机组: CoalitionPermissionLevel;

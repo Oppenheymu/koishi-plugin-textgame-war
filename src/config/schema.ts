@@ -1,6 +1,6 @@
 import { Schema } from 'koishi';
 import type { TerrainType } from '../types';
-import type { Sqids单项配置, 信号塔频道配置, 铁路类型配置项, PluginConfig } from './types';
+import type { Sqids单项配置, 信号塔频道配置, PluginConfig } from './types';
 import {
     默认联军权限配置,
     默认Sqids配置,
@@ -48,18 +48,6 @@ function 创建信号塔频道Schema(默认值: 信号塔频道配置): Schema<�
     });
 }
 
-function 创建铁路类型配置Schema(默认值: 铁路类型配置项): Schema<铁路类型配置项> {
-    return Schema.object({
-        类型ID: Schema.string().default(默认值.类型ID).description('铁路类型标识（如：铁路1）'),
-        类型名称: Schema.string().default(默认值.类型名称).description('铁路展示名称'),
-        需求生产力: Schema.number().min(1).default(默认值.需求生产力).description('基础生产力需求'),
-        提供运力: Schema.number()
-            .min(1)
-            .default(默认值.提供运力)
-            .description('铁路建成后提供的运力'),
-    });
-}
-
 function 创建地形惩罚系数Schema(默认值: Record<TerrainType, number>) {
     return Schema.object({
         浅海: Schema.number().min(0.1).default(默认值.浅海),
@@ -86,7 +74,6 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         移出联军: 权限等级Schema.default(默认联军权限配置.移出联军),
         我的联军权限: 权限等级Schema.default(默认联军权限配置.我的联军权限),
         查看地区军事: 权限等级Schema.default(默认联军权限配置.查看地区军事),
-        查看地区铁路: 权限等级Schema.default(默认联军权限配置.查看地区铁路),
         查看地区生物实验室: 权限等级Schema.default(默认联军权限配置.查看地区生物实验室),
         查看地区核反应堆: 权限等级Schema.default(默认联军权限配置.查看地区核反应堆),
         查看地区离心机组: 权限等级Schema.default(默认联军权限配置.查看地区离心机组),
@@ -107,29 +94,11 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description('后台日志群配置'),
     }).description('信号塔配置'),
     土木工程: Schema.object({
-        铁路类型列表: Schema.array(创建铁路类型配置Schema(默认土木工程配置.铁路类型列表[0]))
-            .default(默认土木工程配置.铁路类型列表.map((配置) => ({ ...配置 })))
-            .description('铁路类型与基础生产力配置'),
         地形惩罚系数: 创建地形惩罚系数Schema(默认土木工程配置.地形惩罚系数).description(
-            '地形导致的铁路建造成本倍率'
+            '地形导致的建造成本倍率'
         ),
-        跨联军铁路审批过期小时: Schema.number()
-            .min(1)
-            .max(168)
-            .default(默认土木工程配置.跨联军铁路审批过期小时)
-            .description('跨联军铁路申请自动失效小时数'),
     }).description('土木工程配置'),
     地理: Schema.object({
-        铁路距离基准公里: Schema.number()
-            .min(100)
-            .default(默认地理配置.铁路距离基准公里)
-            .description('铁路建造成本距离基准（公里），距离惩罚以此归一化'),
-        铁路距离惩罚率: Schema.number()
-            .min(0)
-            .max(5)
-            .step(0.1)
-            .default(默认地理配置.铁路距离惩罚率)
-            .description('铁路建造成本距离惩罚率，0=无惩罚，1=每基准距离翻倍'),
         列车炮最大射程公里: Schema.number()
             .min(10)
             .default(默认地理配置.列车炮最大射程公里)
@@ -138,10 +107,6 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
             .min(1)
             .default(默认地理配置.默认行军速度公里每天)
             .description('默认行军速度（公里/天）'),
-        默认铁路速度公里每天: Schema.number()
-            .min(10)
-            .default(默认地理配置.默认铁路速度公里每天)
-            .description('默认铁路运输速度（公里/天）'),
         默认空运速度公里每天: Schema.number()
             .min(100)
             .default(默认地理配置.默认空运速度公里每天)

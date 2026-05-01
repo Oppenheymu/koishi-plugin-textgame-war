@@ -3,7 +3,6 @@ import type {
     CoalitionArmy,
     CoalitionPermission,
     GlobalData,
-    PendingRailwayBuild,
     Player,
     PlayerConfig,
     PlayerWarData,
@@ -41,7 +40,6 @@ declare module 'koishi' {
         马列地区状态机: RegionState;
         马列地区战略表: RegionStrategy;
         马列地区洗牌池: RegionShufflePool;
-        马列铁路修建申请表: PendingRailwayBuild;
 
         马列服务表: Service;
     }

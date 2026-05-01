@@ -5,7 +5,6 @@ export type {
     Sqids配置,
     信号塔频道配置,
     信号塔配置,
-    铁路类型配置项,
     土木工程配置,
     地理配置,
     PluginConfig,

@@ -10,8 +10,6 @@ export type 地区事件类型 = '刷新' | '权限变更' | '战争' | '政治'
  */
 export interface 地区刷新事件参数 {
     类型: 'refresh';
-    重置地区数量: number;
-    重置铁路数量: number;
     刷新工业地区数量: number;
     刷新炼钢空闲数量: number;
     刷新电解铝空闲数量: number;

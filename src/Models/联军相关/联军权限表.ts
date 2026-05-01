@@ -40,10 +40,6 @@ export function 加载联军权限表(ctx: Context) {
                 type: 'unsigned',
                 initial: 3,
             },
-            查看地区铁路: {
-                type: 'unsigned',
-                initial: 3,
-            },
             查看地区生物实验室: {
                 type: 'unsigned',
                 initial: 3,
