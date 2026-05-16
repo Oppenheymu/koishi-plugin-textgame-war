@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 检查名称是否重复 } from '@/logic';
 import type { Player, PlayerConfig, PlayerWarData } from '@/types';
+import { 检查名称是否重复 } from '@/logic';
 import { TRandom, 获取注册Sqids } from '@/infrastructure';
 import { 会话检查, 用户检查 } from '@/utils';
 
@@ -131,21 +131,24 @@ export function 注册(ctx: Context) {
                     const newPlayerWarData: PlayerWarData = {
                         id: newID,
                         uid: newUID,
-                        私人军队: 0,
                         步兵装备: 0,
-                        重炮: 0,
+                        卡车: 0,
+                        火炮: 0,
                         火箭炮: 0,
-                        火箭炮弹药: 0,
                         列车炮: 0,
+                        火箭弹: 0,
                         防空弹药: 0,
+                        轻型航弹: 0,
+                        重型航弹: 0,
                         侦察机: 0,
-                        轰炸机: 0,
+                        战斗机: 0,
+                        预警机: 0,
+                        战术轰炸机: 0,
+                        战略轰炸机: 0,
                         隐形轰炸机: 0,
                         大型运输机: 0,
                         小型运输机: 0,
-                        预警机: 0,
                         巡航中的预警机: 0,
-                        战斗机: 0,
                         巡航中的战斗机: 0,
                         地下工厂投入: 0,
                         是否有地下工厂: false,
@@ -153,12 +156,15 @@ export function 注册(ctx: Context) {
                         是否有地下机库: false,
                         地下弹药库投入: 0,
                         是否有地下弹药库: false,
-                        地下飞机: 0,
-                        地下隐形飞机: 0,
+                        地下侦察机: 0,
+                        地下战斗机: 0,
                         地下预警机: 0,
+                        地下战术轰炸机: 0,
+                        地下战略轰炸机: 0,
+                        地下隐形轰炸机: 0,
                         地下大型运输机: 0,
                         地下小型运输机: 0,
-                        地下火箭炮炮弹: 0,
+                        地下火箭弹: 0,
                         地下防空弹药: 0,
                     };
 

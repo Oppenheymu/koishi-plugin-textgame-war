@@ -1,38 +1,51 @@
 import type { Context } from 'koishi';
-import type { Player, PlayerWarData } from '../../../types';
-import { 更新玩家资料, 玩家检查 } from '../../../utils';
+import type { PlayerWarData } from '@/types';
+import { 更新玩家资料, 玩家检查 } from '@/utils';
+import type { 玩家完整资料 } from '@/utils/types';
 
 interface 物资配置 {
     name: string;
-    字段: keyof Player | keyof PlayerWarData;
+    字段: keyof 玩家完整资料;
     地堡: keyof PlayerWarData;
-    地下字段: keyof Player | keyof PlayerWarData;
+    地下字段: keyof 玩家完整资料;
 }
 
 const 物资库: Record<string, 物资配置> = {
-    工人: {
-        name: '工人',
-        字段: '工人',
-        地堡: '是否有地下工厂',
-        地下字段: '地下工人',
-    },
-    飞机: {
-        name: '飞机',
-        字段: '轰炸机',
+    侦察机: {
+        name: '侦察机',
+        字段: '侦察机',
         地堡: '是否有地下机库',
-        地下字段: '地下飞机',
+        地下字段: '地下侦察机',
     },
-    隐形飞机: {
-        name: '隐形飞机',
-        字段: '隐形轰炸机',
+    战斗机: {
+        name: '战斗机',
+        字段: '战斗机',
         地堡: '是否有地下机库',
-        地下字段: '地下隐形飞机',
+        地下字段: '地下战斗机',
     },
     预警机: {
         name: '预警机',
         字段: '预警机',
         地堡: '是否有地下机库',
         地下字段: '地下预警机',
+    },
+    战术轰炸机: {
+        name: '战术轰炸机',
+        字段: '战术轰炸机',
+        地堡: '是否有地下机库',
+        地下字段: '地下战术轰炸机',
+    },
+    战略轰炸机: {
+        name: '战略轰炸机',
+        字段: '战略轰炸机',
+        地堡: '是否有地下机库',
+        地下字段: '地下战略轰炸机',
+    },
+    隐形轰炸机: {
+        name: '隐形轰炸机',
+        字段: '隐形轰炸机',
+        地堡: '是否有地下机库',
+        地下字段: '地下隐形轰炸机',
     },
     大型运输机: {
         name: '大型运输机',
@@ -54,9 +67,9 @@ const 物资库: Record<string, 物资配置> = {
     },
     火箭弹: {
         name: '火箭弹',
-        字段: '火箭炮弹药',
+        字段: '火箭弹',
         地堡: '是否有地下弹药库',
-        地下字段: '地下火箭炮炮弹',
+        地下字段: '地下火箭弹',
     },
 };
 
@@ -70,7 +83,7 @@ export function 转移地堡物资(ctx: Context) {
                 return `
 ====[工业生产]====
 □格式：转入地面 物资 数量
-□示例：转入地面 工人 100
+□示例：转入地面 战斗机 100
 □物资：${Object.keys(物资库).join('/')}`.trim();
             }
 
@@ -113,7 +126,7 @@ export function 转移地堡物资(ctx: Context) {
                 return `
 ====[工业生产]====
 □格式：转入地下 物资 数量
-□示例：转入地下 工人 100
+□示例：转入地下 战斗机 100
 □物资：${Object.keys(物资库).join('/')}`.trim();
             }
 

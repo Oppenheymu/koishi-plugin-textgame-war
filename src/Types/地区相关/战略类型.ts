@@ -58,10 +58,14 @@ export interface Warehouse {
 
     // 军事
     步兵装备: number;
-    重炮: number;
+    卡车: number;
+    火炮: number;
     火箭炮: number;
-    火箭炮弹药: number;
+    列车炮: number;
+    火箭弹: number;
     防空弹药: number;
+    轻型航弹: number;
+    重型航弹: number;
 }
 
 export type Fortress =
