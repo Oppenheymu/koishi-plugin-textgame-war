@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import type { PlayerWarData } from '../../../types';
-import { 玩家检查 } from '../../../utils';
+import type { PlayerWarData } from '../../../../types';
+import { 玩家检查 } from '../../../../utils';
 
 export function 我的弹药(ctx: Context) {
     ctx.command('我的弹药').action(async ({ session }) => {
