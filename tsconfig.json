@@ -19,7 +19,7 @@
         "composite": true,
         "incremental": true,
 
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
 

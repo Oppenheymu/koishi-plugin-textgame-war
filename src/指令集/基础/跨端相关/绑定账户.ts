@@ -52,6 +52,8 @@ ${username} 同志!
             if (!task) return '验证码无效或已过期';
 
             用户检查(session);
+            if (!session.userId) return '无法获取用户信息';
+            if (!session.platform) return '无法获取平台信息';
             const platform = session.platform;
             const userId = session.userId;
 
