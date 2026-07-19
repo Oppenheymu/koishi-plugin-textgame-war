@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 联军权限动作列表, 获取联军权限配置 } from '@/logic';
-import { 玩家联军检查 } from '@/utils';
+import { 联军权限动作列表, 获取联军权限配置 } from '#/logic';
+import { 玩家联军检查 } from '#/utils';
 
 export function 我的联军权限(ctx: Context) {
     ctx.command('我的联军权限')

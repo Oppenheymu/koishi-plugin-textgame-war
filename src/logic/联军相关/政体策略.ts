@@ -3,10 +3,10 @@ import type {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from '@/types';
-import { 联军政体 } from '@/types';
-import { 获取联军权限等级 } from '@/utils';
-import { 获取成员联军贡献 } from '@/utils';
+} from '#/types';
+import { 联军政体 } from '#/types';
+import { 获取联军权限等级 } from '#/utils';
+import { 获取成员联军贡献 } from '#/utils';
 
 type 联军权限配置 = Omit<CoalitionPermission, '联军编号'>;
 

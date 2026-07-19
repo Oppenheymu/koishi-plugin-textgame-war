@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 创建改名审核工单, 校验名称文本, 检查名称是否重复, 检查改名冷却 } from '@/logic';
-import { 玩家联军检查 } from '@/utils';
+import { 创建改名审核工单, 校验名称文本, 检查名称是否重复, 检查改名冷却 } from '#/logic';
+import { 玩家联军检查 } from '#/utils';
 
 export function 修改联军名称(ctx: Context) {
     ctx.command('修改联军名称 <新名称:string>')

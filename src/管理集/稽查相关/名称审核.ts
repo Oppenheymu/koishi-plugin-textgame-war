@@ -1,5 +1,5 @@
 import type { Context, Session } from 'koishi';
-import { 审核通过改名工单, 审核驳回改名工单, 解析引用工单编号 } from '@/logic';
+import { 审核通过改名工单, 审核驳回改名工单, 解析引用工单编号 } from '#/logic';
 
 function 获取引用文本(session: Session | undefined): string | undefined {
     const quote = (

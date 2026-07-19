@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 目标解析 } from '@/utils';
+import { 目标解析 } from '#/utils';
 
 export function 他的UID(ctx: Context) {
     ctx.command('他的UID <目标:string>')

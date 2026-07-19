@@ -13,8 +13,8 @@ import type {
     RegionStrategy,
     RegionTerra,
     Service,
-} from '@/types';
-import { 批量加载插件 } from '@/infrastructure';
+} from '#/types';
+import { 批量加载插件 } from '#/infrastructure';
 import { 加载全球数据表 } from './全球数据表';
 import { 加载地形相关表 } from './地区相关';
 import { 加载服务表 } from './服务表';

@@ -1,11 +1,11 @@
 import type { Context, Session } from 'koishi';
-import { 获取默认联军权限配置 } from '@/config';
+import { 获取默认联军权限配置 } from '#/config';
 import type {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from '@/types';
-import { 玩家检查 } from '@/utils';
+} from '#/types';
+import { 玩家检查 } from '#/utils';
 
 export type 联军权限动作 = CoalitionPermissionAction;
 

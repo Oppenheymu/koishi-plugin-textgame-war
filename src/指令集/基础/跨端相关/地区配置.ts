@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 地区解析, 当前地区解析 } from '@/utils';
+import { 地区解析, 当前地区解析 } from '#/utils';
 
 export function 地区配置(ctx: Context) {
     ctx.command('地区配置 [地区编号:string]')

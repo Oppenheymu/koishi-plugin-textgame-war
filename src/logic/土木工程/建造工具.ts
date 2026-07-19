@@ -1,5 +1,5 @@
-import { 获取运行时配置 } from '@/config';
-import type { TerrainType } from '@/types';
+import { 获取运行时配置 } from '#/config';
+import type { TerrainType } from '#/types';
 
 // ==================== 类型定义 ====================
 

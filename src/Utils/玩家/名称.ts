@@ -1,4 +1,4 @@
-import type { PlayerConfig } from '@/types';
+import type { PlayerConfig } from '#/types';
 
 export function 获取玩家展示名称(
     玩家配置: Pick<PlayerConfig, 'username' | '名称是否审核'>

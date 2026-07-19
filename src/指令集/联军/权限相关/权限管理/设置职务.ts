@@ -1,7 +1,7 @@
 import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 获取联军成员权限等级 } from '@/logic';
-import { 联军政体 } from '@/types';
-import { 玩家联军检查, 目标解析 } from '@/utils';
+import { 尝试发送联军信号塔通报, 获取联军成员权限等级 } from '#/logic';
+import { 联军政体 } from '#/types';
+import { 玩家联军检查, 目标解析 } from '#/utils';
 
 function 校验目标是本联军成员(目标联军编号: string | null, 联军编号: string): boolean {
     return 目标联军编号 === 联军编号;

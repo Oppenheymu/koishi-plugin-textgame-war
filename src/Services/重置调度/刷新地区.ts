@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 尝试发送地区刷新信号塔通报 } from '@/logic';
+import { 尝试发送地区刷新信号塔通报 } from '#/logic';
 
 export interface 地区工业刷新结果 {
     刷新工业地区数量: number;

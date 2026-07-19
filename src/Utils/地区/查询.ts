@@ -1,5 +1,5 @@
 import type { Context, Session } from 'koishi';
-import type { Region, RegionConfig, RegionState, RegionStrategy, RegionTerra } from '@/types';
+import type { Region, RegionConfig, RegionState, RegionStrategy, RegionTerra } from '#/types';
 import { 会话检查, 用户检查 } from '../会话';
 import { 获取地区展示名称 } from './名称';
 

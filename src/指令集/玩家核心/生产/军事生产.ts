@@ -1,7 +1,7 @@
 import type { Context } from 'koishi';
-import { 生成随机图片片段 } from '@/infrastructure';
-import type { Player, PlayerWarData } from '@/types';
-import { 更新玩家资料, 玩家检查 } from '@/utils';
+import { 生成随机图片片段 } from '#/infrastructure';
+import type { Player, PlayerWarData } from '#/types';
+import { 更新玩家资料, 玩家检查 } from '#/utils';
 
 interface 物品属性 {
     name: string;

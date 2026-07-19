@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import type { Fortress } from '@/types';
-import { 更新地区战略资料 } from '@/utils';
+import type { Fortress } from '#/types';
+import { 更新地区战略资料 } from '#/utils';
 import { 堡垒升级库 } from './config';
 import {
     执行资源与工资结算,

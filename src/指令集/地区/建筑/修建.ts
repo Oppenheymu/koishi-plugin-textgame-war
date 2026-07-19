@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import type { Region } from '@/types';
-import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
+import type { Region } from '#/types';
+import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '#/utils';
 import { 格式化, 计算最大可执行轮次, 资源总消耗 } from './utils';
 
 type 建筑类型 = '基础设施' | '公路' | '机场' | '港口' | '居民区' | '仓库';

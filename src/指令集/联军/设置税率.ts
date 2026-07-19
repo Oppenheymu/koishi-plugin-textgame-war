@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 玩家联军权限设置 } from '@/logic';
-import { 玩家联军检查 } from '@/utils';
+import { 尝试发送联军信号塔通报, 玩家联军权限设置 } from '#/logic';
+import { 玩家联军检查 } from '#/utils';
 
 function 格式化税率显示(税率百分比: number): string {
     const 标准值 = Math.round(税率百分比 * 100) / 100;

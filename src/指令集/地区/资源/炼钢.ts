@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { TRandom } from '@/infrastructure';
-import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
+import { TRandom } from '#/infrastructure';
+import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '#/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 

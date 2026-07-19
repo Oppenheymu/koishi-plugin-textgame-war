@@ -1,5 +1,5 @@
-import type { CoalitionArmy, CoalitionPermissionLevel } from '@/types';
-import { 获取联军权限等级 } from '@/utils';
+import type { CoalitionArmy, CoalitionPermissionLevel } from '#/types';
+import { 获取联军权限等级 } from '#/utils';
 
 type 权限列表字段 = Pick<
     CoalitionArmy,

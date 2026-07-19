@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import type { Context, Session } from 'koishi';
 import { Logger } from 'koishi';
-import type { RegionStrategy } from '@/types';
-import { 更新地区战略资料, 玩家检查, 驻扎检查 } from '@/utils';
+import type { RegionStrategy } from '#/types';
+import { 更新地区战略资料, 玩家检查, 驻扎检查 } from '#/utils';
 import type { 特殊设施类型, 设施建造对象 } from './config';
 import { 特殊建筑库 } from './config';
 import {

@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import type { RegionConfig } from '@/types';
+import type { RegionConfig } from '#/types';
 
 export type 审批推送平台 = 'onebot' | 'discord' | 'telegram';
 

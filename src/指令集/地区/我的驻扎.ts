@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 地区解析, 玩家检查 } from '@/utils';
+import { 地区解析, 玩家检查 } from '#/utils';
 
 export function 我的驻扎(ctx: Context) {
     ctx.command('我的驻扎')

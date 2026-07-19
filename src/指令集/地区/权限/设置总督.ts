@@ -1,6 +1,6 @@
 import type { Context, Session } from 'koishi';
-import { 尝试发送地区信号塔通报, 尝试发送联军信号塔通报, 地区总督设置检查 } from '@/logic';
-import { 更新地区资料 } from '@/utils';
+import { 尝试发送地区信号塔通报, 尝试发送联军信号塔通报, 地区总督设置检查 } from '#/logic';
+import { 更新地区资料 } from '#/utils';
 
 async function 执行设置总督(
     ctx: Context,

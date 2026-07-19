@@ -1,5 +1,5 @@
 {
-    "name": "koishi-plugin-malie-textgame",
+    "name": "koishi-plugin-textgame-war",
     "version": "0.19.8",
     "contributors": [
         "Xiao-xiaochen <200345727+Xiao-xiaochen@users.noreply.github.com>",
@@ -34,10 +34,13 @@
         }
     },
     "peerDependencies": {
-        "koishi": "^4.17.4"
+        "koishi": "^4.17.4",
+        "koishi-plugin-cron-fix": "*",
+        "koishi-plugin-infra-am-i-alt": "*"
     },
     "dependencies": {
         "canvas": "^3.2.3",
+        "dayjs": "^1.11.13",
         "sqids": "^0.3.0",
         "tsconfig-paths": "^4.2.0"
     },

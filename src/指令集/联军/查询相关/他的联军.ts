@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 目标联军解析 } from '@/utils';
+import { 目标联军解析 } from '#/utils';
 
 export function 他的联军(ctx: Context) {
     ctx.command('他的联军 <目标:string>')

@@ -3,9 +3,9 @@ import {
     计算最大可执行轮次 as 计算最大可执行轮次_工具,
     计算资源可执行轮次 as 计算资源可执行轮次_工具,
     计算资源总消耗,
-} from '@/logic';
-import type { Player } from '@/types';
-import { 更新玩家资料, 玩家检查, 驻扎检查 } from '@/utils';
+} from '#/logic';
+import type { Player } from '#/types';
+import { 更新玩家资料, 玩家检查, 驻扎检查 } from '#/utils';
 import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from './config';
 
 // ==================== 格式化工具 ====================

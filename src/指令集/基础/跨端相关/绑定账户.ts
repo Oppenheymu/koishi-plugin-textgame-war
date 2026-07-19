@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 玩家检查, 用户检查 } from '@/utils';
+import { 玩家检查, 用户检查 } from '#/utils';
 
 interface BindTask {
     ownerId: number;

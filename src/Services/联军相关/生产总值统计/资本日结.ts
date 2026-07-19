@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 尝试发送后台信号塔日志 } from '@/logic';
-import { 确保服务记录 } from '@/infrastructure';
+import { 尝试发送后台信号塔日志 } from '#/logic';
+import { 确保服务记录 } from '#/infrastructure';
 import { 服务事件中心, 格式化日期 } from '../../utils';
 import type { 联军资本统计执行结果 } from './types';
 import { 推送联军生产总值排行新闻, 生成联军生产总值排行榜 } from './排行榜';

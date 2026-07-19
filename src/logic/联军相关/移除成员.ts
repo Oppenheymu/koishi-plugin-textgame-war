@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import type { CoalitionArmy } from '@/types';
-import { 更新玩家资料 } from '@/utils';
+import type { CoalitionArmy } from '#/types';
+import { 更新玩家资料 } from '#/utils';
 
 interface 移除联军成员参数 {
     联军编号: string;

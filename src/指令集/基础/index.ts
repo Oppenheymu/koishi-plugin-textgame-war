@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 批量加载插件 } from '@/infrastructure';
+import { 批量加载插件 } from '#/infrastructure';
 import { 改名相关指令 } from './改名相关';
 import { ViewMap } from './查看地图';
 import { 查看版本日志 } from './版本日志';

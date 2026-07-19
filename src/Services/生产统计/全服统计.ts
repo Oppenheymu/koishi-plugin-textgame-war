@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 尝试发送后台信号塔日志, 尝试发送新闻信号塔通报 } from '@/logic';
-import { 确保服务记录 } from '@/infrastructure';
+import { 尝试发送后台信号塔日志, 尝试发送新闻信号塔通报 } from '#/logic';
+import { 确保服务记录 } from '#/infrastructure';
 import { 服务事件中心, 获取今天日期 } from '../utils';
 import type { 全服统计执行结果 } from './types';
 import { 构建全服统计新闻内容 } from './新闻构建';

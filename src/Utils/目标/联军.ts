@@ -1,5 +1,5 @@
 import type { Context, Session } from 'koishi';
-import type { CoalitionArmy, Player } from '@/types';
+import type { CoalitionArmy, Player } from '#/types';
 import { 获取联军展示名称 } from '../联军/名称';
 import { 目标解析 } from './玩家';
 

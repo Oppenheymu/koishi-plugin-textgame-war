@@ -4,7 +4,7 @@ import type {
     Player,
     PlayerConfig,
     PlayerWarData,
-} from '@/types';
+} from '#/types';
 
 export type 联军权限等级 = CoalitionPermissionLevel;
 

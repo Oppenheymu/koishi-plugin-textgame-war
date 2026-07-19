@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 会话检查 } from '@/utils';
+import { 会话检查 } from '#/utils';
 
 export function 地区洗牌(ctx: Context) {
     ctx.command('地区洗牌', {

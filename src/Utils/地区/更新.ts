@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
 import { Logger } from 'koishi';
-import type { Region, RegionStrategy } from '@/types';
+import type { Region, RegionStrategy } from '#/types';
 
 const logger = new Logger('地区数据更新');
 

@@ -6,9 +6,9 @@ import { register as 注册路径别名 } from 'tsconfig-paths';
 注册路径别名({
     baseUrl: __dirname,
     paths: {
-        '@/*': ['*'],
-        '@utils/*': ['utils/*'],
-        '@logic/*': ['logic/*'],
+        '#/*': ['*'],
+        '#utils/*': ['utils/*'],
+        '#logic/*': ['logic/*'],
     },
 });
 

@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { TRandom } from '@/infrastructure';
-import { 玩家检查 } from '@/utils';
+import { TRandom } from '#/infrastructure';
+import { 玩家检查 } from '#/utils';
 
 export function 开采铝土矿(ctx: Context) {
     ctx.command('开采铝土矿').action(async ({ session }) => {

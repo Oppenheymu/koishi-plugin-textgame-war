@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 地区解析, 联军解析 } from '@/utils';
+import { 地区解析, 联军解析 } from '#/utils';
 import type { 发送失败记录, 发送记录 } from '../utils';
 import { 信号塔平台列表, 尝试执行 } from '../utils';
 import type { 信号塔发送参数, 信号塔发送结果 } from './types';

@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 玩家联军权限设置 } from '@/logic';
-import { 玩家联军检查 } from '@/utils';
+import { 玩家联军权限设置 } from '#/logic';
+import { 玩家联军检查 } from '#/utils';
 
 export function 地区列表(ctx: Context) {
     ctx.command('地区列表')

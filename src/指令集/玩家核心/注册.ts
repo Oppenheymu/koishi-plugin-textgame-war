@@ -1,8 +1,8 @@
 import type { Context } from 'koishi';
-import type { Player, PlayerConfig, PlayerWarData } from '@/types';
-import { 检查名称是否重复 } from '@/logic';
-import { TRandom, 获取注册Sqids } from '@/infrastructure';
-import { 会话检查, 用户检查 } from '@/utils';
+import type { Player, PlayerConfig, PlayerWarData } from '#/types';
+import { 检查名称是否重复 } from '#/logic';
+import { TRandom, 获取注册Sqids } from '#/infrastructure';
+import { 会话检查, 用户检查 } from '#/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 

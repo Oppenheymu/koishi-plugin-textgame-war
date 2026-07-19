@@ -1,4 +1,4 @@
-import type { TerrainType } from '@/types';
+import type { TerrainType } from '#/types';
 import { 计算真实距离 } from './距离计算';
 
 const 地形移动系数: Record<TerrainType, number> = {

@@ -1,7 +1,7 @@
 import type { Context } from 'koishi';
-import { 尝试发送新闻信号塔通报 } from '@/logic';
-import type { CoalitionArmy } from '@/types';
-import { 获取联军展示名称 } from '@/utils';
+import { 尝试发送新闻信号塔通报 } from '#/logic';
+import type { CoalitionArmy } from '#/types';
+import { 获取联军展示名称 } from '#/utils';
 import { 格式化数值 } from '../../utils';
 import type { 联军生产总值排行推送结果, 联军生产总值排行项 } from './types';
 

@@ -28,9 +28,9 @@
         "isolatedModules": true,
 
         "paths": {
-            "@/*": ["./src/*"],
-            "@utils/*": ["./src/utils/*"],
-            "@logic/*": ["./src/logic/*"]
+            "#/*": ["./src/*"],
+            "#utils/*": ["./src/utils/*"],
+            "#logic/*": ["./src/logic/*"]
         }
     },
 

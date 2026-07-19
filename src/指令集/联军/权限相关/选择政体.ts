@@ -5,14 +5,14 @@ import {
     极权制降权到一级,
     获取政体默认权限配置,
     设置联军权限配置,
-} from '@/logic';
-import { 联军政体 } from '@/types';
+} from '#/logic';
+import { 联军政体 } from '#/types';
 import {
     玩家联军检查,
     获取成员联军贡献,
     获取排除成员后前N贡献总和,
     获取排除成员后平均贡献,
-} from '@/utils';
+} from '#/utils';
 
 function 是否有效政体(输入: string): 输入 is 联军政体 {
     return Object.values(联军政体).includes(输入 as 联军政体);

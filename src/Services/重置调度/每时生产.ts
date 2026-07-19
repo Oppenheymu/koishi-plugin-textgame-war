@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import type { Player } from '@/types';
+import type { Player } from '#/types';
 import { 服务事件中心 } from '../utils';
 import type { 每时生产重置结果 } from './types';
 

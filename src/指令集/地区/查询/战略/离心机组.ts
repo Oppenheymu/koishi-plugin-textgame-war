@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 地区查询权限检查 } from '@/logic';
+import { 地区查询权限检查 } from '#/logic';
 import { 特殊建筑库 } from '../../建筑/config';
 
 export function 查看地区离心机组(ctx: Context) {

@@ -1,7 +1,7 @@
 import type { Context } from 'koishi';
-import type { PlayerWarData } from '@/types';
-import { 更新玩家资料, 玩家检查 } from '@/utils';
-import type { 玩家完整资料 } from '@/utils/types';
+import type { PlayerWarData } from '#/types';
+import { 更新玩家资料, 玩家检查 } from '#/utils';
+import type { 玩家完整资料 } from '#/utils/types';
 
 interface 物资配置 {
     name: string;

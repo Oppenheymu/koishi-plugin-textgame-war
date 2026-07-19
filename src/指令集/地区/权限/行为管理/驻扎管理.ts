@@ -1,6 +1,6 @@
 import type { Context, Session } from 'koishi';
-import { 地区驻扎权限设置检查 } from '@/logic';
-import { 更新地区资料 } from '@/utils';
+import { 地区驻扎权限设置检查 } from '#/logic';
+import { 更新地区资料 } from '#/utils';
 
 type 驻扎权限模式 = '允许全部' | '仅联军';
 

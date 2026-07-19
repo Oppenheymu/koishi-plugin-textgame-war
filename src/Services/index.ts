@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 批量加载插件 } from '@/infrastructure';
+import { 批量加载插件 } from '#/infrastructure';
 import { GenerateMap, 地图生成服务列表 } from './地图生成';
 import { 生产统计服务列表 } from './生产统计';
 import { 联军服务列表 } from './联军相关';

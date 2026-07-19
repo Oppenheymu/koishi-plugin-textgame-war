@@ -4,9 +4,9 @@ import {
     政变后权限重置,
     获取政体默认权限配置,
     设置联军权限配置,
-} from '@/logic';
-import { 联军政体 } from '@/types';
-import { 玩家联军检查, 获取成员联军贡献, 获取排除成员后前N贡献总和 } from '@/utils';
+} from '#/logic';
+import { 联军政体 } from '#/types';
+import { 玩家联军检查, 获取成员联军贡献, 获取排除成员后前N贡献总和 } from '#/utils';
 
 const 格式化 = (n: number) =>
     n.toLocaleString('zh-CN', {

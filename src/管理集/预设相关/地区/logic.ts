@@ -1,4 +1,4 @@
-import { 赤道格子面积 } from '@/地理集';
+import { 赤道格子面积 } from '#/地理集';
 import {
     type CapacityBase,
     type CapacityLimit,

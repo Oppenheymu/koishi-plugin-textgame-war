@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 创建改名审核工单, 校验名称文本, 检查改名冷却 } from '@/logic';
-import { 地区解析, 当前地区解析, 玩家联军检查 } from '@/utils';
+import { 创建改名审核工单, 校验名称文本, 检查改名冷却 } from '#/logic';
+import { 地区解析, 当前地区解析, 玩家联军检查 } from '#/utils';
 
 export function 修改地区名称(ctx: Context) {
     ctx.command('修改地区名称 <新名称:string> [地区编号:string]')

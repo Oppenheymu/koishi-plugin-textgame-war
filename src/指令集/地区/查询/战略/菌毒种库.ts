@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
 import { Logger } from 'koishi';
-import { 地区查询权限检查 } from '@/logic';
+import { 地区查询权限检查 } from '#/logic';
 import { 特殊建筑库 } from '../../建筑/config';
 
 const logger = new Logger('菌毒种库查询');

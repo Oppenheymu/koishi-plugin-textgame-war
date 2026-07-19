@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 移除联军成员 } from '@/logic';
-import { 玩家联军检查 } from '@/utils';
+import { 尝试发送联军信号塔通报, 移除联军成员 } from '#/logic';
+import { 玩家联军检查 } from '#/utils';
 
 export function 退出联军(ctx: Context) {
     ctx.command('退出联军')

@@ -1,7 +1,7 @@
 import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 获取联军成员权限等级, 设置成员权限等级 } from '@/logic';
-import { 联军政体 } from '@/types';
-import { 玩家联军检查, 目标解析 } from '@/utils';
+import { 尝试发送联军信号塔通报, 获取联军成员权限等级, 设置成员权限等级 } from '#/logic';
+import { 联军政体 } from '#/types';
+import { 玩家联军检查, 目标解析 } from '#/utils';
 
 function 解析权限等级输入(输入: number): 1 | 2 | 3 | 4 | null {
     if (!Number.isInteger(输入)) {

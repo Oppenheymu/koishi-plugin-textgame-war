@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { h, Logger } from 'koishi';
 import { 查找项目根目录 } from './目录查找';
 
@@ -40,7 +40,7 @@ export function 生成随机图片片段(
 
     logger.warn(`命中图片：${随机图片}`);
 
-    const 当前文件目录 = dirname(fileURLToPath(import.meta.url));
+    const 当前文件目录 = __dirname;
     const 项目根目录 = 查找项目根目录(当前文件目录);
 
     const 图片路径候选 = [

@@ -1,8 +1,8 @@
 import type { Context } from 'koishi';
 import { h } from 'koishi';
-import { GenerateMap } from '@/services';
-import type { Region } from '@/types';
-import { 玩家检查, 玩家联军检查 } from '@/utils';
+import { GenerateMap } from '#/services';
+import type { Region } from '#/types';
+import { 玩家检查, 玩家联军检查 } from '#/utils';
 
 export function ViewMap(ctx: Context) {
     ctx.command('查看地图', '查看完整的世界地图')

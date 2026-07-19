@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import type { Player, PlayerWarData } from '@/types';
+import type { Player, PlayerWarData } from '#/types';
 
 const 玩家档案字段集合 = new Set<keyof Player>([
     'id',

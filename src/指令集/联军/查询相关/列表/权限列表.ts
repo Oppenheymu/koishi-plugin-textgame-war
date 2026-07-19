@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 玩家联军权限设置, 获取指定等级成员UID列表 } from '@/logic';
-import { 玩家联军检查 } from '@/utils';
+import { 玩家联军权限设置, 获取指定等级成员UID列表 } from '#/logic';
+import { 玩家联军检查 } from '#/utils';
 
 const 等级映射: Record<string, 1 | 2 | 3 | 4> = {
     '1': 1,

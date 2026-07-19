@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 玩家联军权限设置 } from '@/logic';
-import { 更新玩家资料, 玩家联军检查, 目标解析 } from '@/utils';
+import { 尝试发送联军信号塔通报, 玩家联军权限设置 } from '#/logic';
+import { 更新玩家资料, 玩家联军检查, 目标解析 } from '#/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 

@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 格式化版本列表, 格式化版本日志, 获取版本日志 } from '@/infrastructure';
+import { 格式化版本列表, 格式化版本日志, 获取版本日志 } from '#/infrastructure';
 
 export function 查看版本日志(ctx: Context) {
     ctx.command('查看征战版本日志 [版本号]', '查看游戏版本日志')

@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { GRID_HEIGHT, GRID_WIDTH, 栅格坐标转地区编号, 解析地区编号 } from '@/地理集';
+import { GRID_HEIGHT, GRID_WIDTH, 栅格坐标转地区编号, 解析地区编号 } from '#/地理集';
 
 const CLUSTER_RADIUS = 5;
 

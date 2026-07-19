@@ -1,6 +1,6 @@
 import type { Context } from 'koishi';
-import type { CoalitionArmy } from '@/types';
-import { 玩家检查, 目标解析 } from '@/utils';
+import type { CoalitionArmy } from '#/types';
+import { 玩家检查, 目标解析 } from '#/utils';
 
 const 格式化 = (n: number) => n.toLocaleString('zh-CN');
 

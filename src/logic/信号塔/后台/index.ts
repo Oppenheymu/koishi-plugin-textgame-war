@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 获取运行时配置 } from '@/config';
+import { 获取运行时配置 } from '#/config';
 import type { 发送失败记录, 发送记录 } from '../utils';
 import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from '../utils';
 

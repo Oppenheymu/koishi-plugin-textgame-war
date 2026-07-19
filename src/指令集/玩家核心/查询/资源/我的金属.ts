@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 玩家检查 } from '@/utils';
+import { 玩家检查 } from '#/utils';
 
 export function 我的金属(ctx: Context) {
     ctx.command('我的金属').action(async ({ session }) => {

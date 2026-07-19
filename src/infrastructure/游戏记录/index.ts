@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import type { Service } from '@/types';
+import type { Service } from '#/types';
 
 type 服务记录默认字段 = Partial<
     Pick<

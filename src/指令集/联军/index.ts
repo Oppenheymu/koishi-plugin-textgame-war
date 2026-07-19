@@ -1,5 +1,5 @@
 import type { Context } from 'koishi';
-import { 批量加载插件 } from '@/infrastructure';
+import { 批量加载插件 } from '#/infrastructure';
 import { 分配相关指令 } from './分配相关';
 import { 权限相关指令 } from './权限相关';
 import { 查询相关指令 } from './查询相关';

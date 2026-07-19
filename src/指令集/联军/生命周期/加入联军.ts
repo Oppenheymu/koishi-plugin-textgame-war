@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import type { Context } from 'koishi';
-import { 分配坐标逻辑, 尝试发送联军信号塔通报, 玩家联军权限设置 } from '@/logic';
-import type { MemberData } from '@/types';
-import { 玩家检查, 玩家联军检查, 目标解析 } from '@/utils';
+import { 分配坐标逻辑, 尝试发送联军信号塔通报, 玩家联军权限设置 } from '#/logic';
+import type { MemberData } from '#/types';
+import { 玩家检查, 玩家联军检查, 目标解析 } from '#/utils';
 
 const 邀请有效期毫秒 = 3 * 60 * 1000;
 const 联军地区上限 = 4;
