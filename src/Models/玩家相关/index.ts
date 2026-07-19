@@ -1,6 +1,6 @@
-import { 加载玩家战争表 } from './玩家战争表';
-import { 加载玩家表 } from './玩家数据表';
-import { 加载玩家配置表 } from './玩家配置表';
+import { 加载玩家战争表 } from "./玩家战争表";
+import { 加载玩家表 } from "./玩家数据表";
+import { 加载玩家配置表 } from "./玩家配置表";
 
 export { 加载玩家战争表, 加载玩家表, 加载玩家配置表 };
 

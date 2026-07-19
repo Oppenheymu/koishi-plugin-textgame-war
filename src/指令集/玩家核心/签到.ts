@@ -1,15 +1,15 @@
-import type { Context } from 'koishi';
-import { TRandom } from '#/infrastructure';
-import { 玩家检查 } from '#/utils';
+import type { Context } from "koishi";
+import { TRandom } from "#/infrastructure";
+import { 玩家检查 } from "#/utils";
 
 export function 签到(ctx: Context) {
-    ctx.command('签到')
-        .alias('阅读报告')
+    ctx.command("签到")
+        .alias("阅读报告")
         .action(async ({ session }) => {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             try {
                 if (用户资料.今日是否签到 === true) {
@@ -29,7 +29,7 @@ ${username} 同志！
                     const 增加后的生活资料 = 用户资料.生活资料 + 增加的生活资料;
 
                     await ctx.database.set(
-                        '马列玩家表',
+                        "马列玩家表",
                         {
                             id: id,
                         },
@@ -39,18 +39,18 @@ ${username} 同志！
                             石油: 增加后的石油,
                             钢铁: 增加后的钢铁,
                             生活资料: 增加后的生活资料,
-                        }
+                        },
                     );
 
                     if (用户资料.厂房 < 10000) {
                         await ctx.database.set(
-                            '马列玩家表',
+                            "马列玩家表",
                             {
                                 id: id,
                             },
                             {
                                 厂房: 10000,
-                            }
+                            },
                         );
                     }
 

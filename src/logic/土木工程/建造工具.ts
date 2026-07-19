@@ -1,5 +1,5 @@
-import { 获取运行时配置 } from '#/config';
-import type { TerrainType } from '#/types';
+import { 获取运行时配置 } from "#/config";
+import type { TerrainType } from "#/types";
 
 // ==================== 类型定义 ====================
 
@@ -42,7 +42,10 @@ export function 获取地形惩罚系数(地形?: TerrainType): number {
 /**
  * 计算建筑建造成本（支持地形惩罚）
  */
-export function 计算建筑成本(参数: { 配置: 建筑配置; 地形?: TerrainType }): 建筑成本结果 {
+export function 计算建筑成本(参数: {
+    配置: 建筑配置;
+    地形?: TerrainType;
+}): 建筑成本结果 {
     const { 配置, 地形 } = 参数;
     const 地形惩罚系数 = 获取地形惩罚系数(地形);
     const 最终生产力需求 = Math.ceil(配置.基础生产力需求 * 地形惩罚系数);
@@ -68,7 +71,10 @@ export function 计算建筑成本(参数: { 配置: 建筑配置; 地形?: Terr
 /**
  * 计算建造进度百分比
  */
-export function 计算建造进度百分比(已投入生产力: number, 需求生产力: number): number {
+export function 计算建造进度百分比(
+    已投入生产力: number,
+    需求生产力: number,
+): number {
     if (需求生产力 <= 0) return 100;
     if (已投入生产力 <= 0) return 0;
 
@@ -89,7 +95,7 @@ export function 判断是否完工(当前进度: number, 所需生产力: number
  */
 export function 计算资源可执行轮次(
     玩家资源: Record<string, number>,
-    资源需求: Record<string, number> | undefined
+    资源需求: Record<string, number> | undefined,
 ): number {
     if (!资源需求) return Number.MAX_SAFE_INTEGER;
 
@@ -109,7 +115,7 @@ export function 计算资源可执行轮次(
  */
 export function 计算资源总消耗(
     资源需求: Record<string, number> | undefined,
-    轮次: number
+    轮次: number,
 ): Record<string, number> {
     if (!资源需求 || 轮次 <= 0) return {};
 
@@ -134,11 +140,20 @@ export function 计算最大可执行轮次(参数: {
     玩家资源: Record<string, number>;
     资源需求?: Record<string, number>;
 }): number {
-    const { 请求轮次, 玩家生产次数, 单轮工资, 当前生活资料, 玩家资源, 资源需求 } = 参数;
+    const {
+        请求轮次,
+        玩家生产次数,
+        单轮工资,
+        当前生活资料,
+        玩家资源,
+        资源需求,
+    } = 参数;
 
     // 工资轮次限制
     const 可负担工资轮次 =
-        单轮工资 > 0 ? Math.floor(当前生活资料 / 单轮工资) : Number.MAX_SAFE_INTEGER;
+        单轮工资 > 0
+            ? Math.floor(当前生活资料 / 单轮工资)
+            : Number.MAX_SAFE_INTEGER;
 
     // 资源轮次限制
     const 可负担资源轮次 = 计算资源可执行轮次(玩家资源, 资源需求);
@@ -146,5 +161,3 @@ export function 计算最大可执行轮次(参数: {
     // 综合所有限制
     return Math.min(请求轮次, 玩家生产次数, 可负担工资轮次, 可负担资源轮次);
 }
-
-

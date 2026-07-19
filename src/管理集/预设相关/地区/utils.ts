@@ -1,18 +1,21 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { type RegionBasicDataItem, TerrainType } from './types';
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { type RegionBasicDataItem, TerrainType } from "./types";
 
 export function 构建进度条(当前: number, 总数: number): string {
     const 长度 = 20;
     const 比例 = 总数 === 0 ? 1 : 当前 / 总数;
     const 已完成 = Math.min(长度, Math.floor(比例 * 长度));
-    const 条 = `${'█'.repeat(已完成)}${'░'.repeat(长度 - 已完成)}`;
+    const 条 = `${"█".repeat(已完成)}${"░".repeat(长度 - 已完成)}`;
     return `[${条}] ${(比例 * 100).toFixed(1)}% (${当前}/${总数})`;
 }
 
 export async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
-    const 文件路径 = resolve(__dirname, '../../../../assets/RegionBasicData.json');
-    const 原始内容 = await readFile(文件路径, 'utf-8');
+    const 文件路径 = resolve(
+        __dirname,
+        "../../../../assets/RegionBasicData.json",
+    );
+    const 原始内容 = await readFile(文件路径, "utf-8");
     return JSON.parse(原始内容) as RegionBasicDataItem[];
 }
 

@@ -1,73 +1,85 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: 动态流程不好做静态类型 */
 
-import dayjs from 'dayjs';
-import type { Context } from 'koishi';
-import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '#/utils';
-import { 地区查询权限检查 } from '#/logic';
-import { 特殊建筑库, type 特殊设施类型 } from '../../建筑/config';
-import 制取配置 from './config';
+import dayjs from "dayjs";
+import type { Context } from "koishi";
+import { 地区查询权限检查 } from "#/logic";
+import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
+import { 特殊建筑库, type 特殊设施类型 } from "../../建筑/config";
+import 制取配置 from "./config";
 
 function 格式化(n: number) {
-    return n.toLocaleString('zh-CN');
+    return n.toLocaleString("zh-CN");
 }
 
 function 获取权限动作(物: string) {
-    if (物 === '生物武器') return '查看地区生物实验室';
-    if (物 === '浓缩铀') return '查看地区离心机组';
-    if (物 === '钚') return '查看地区核反应堆';
-    return '查看地区生物实验室';
+    if (物 === "生物武器") return "查看地区生物实验室";
+    if (物 === "浓缩铀") return "查看地区离心机组";
+    if (物 === "钚") return "查看地区核反应堆";
+    return "查看地区生物实验室";
 }
 
 export function 制取地区资源(ctx: Context) {
-    ctx.command('制取 <制取物:string> [建筑编号:number]')
-        .alias('开始制取')
-        .alias('制备')
+    ctx.command("制取 <制取物:string> [建筑编号:number]")
+        .alias("开始制取")
+        .alias("制备")
         .action(async ({ session }, 制取物输入, 建筑编号) => {
             try {
-                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
-                    await 驻扎检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    当前驻扎地区,
+                    地区编号,
+                    展示地区名称,
+                    地区战略资料,
+                } = await 驻扎检查(ctx, session);
 
                 const { 用户资料 } = await 玩家检查(ctx, session);
 
                 if (当前驻扎地区 !== 地区编号) {
-                    return `你当前驻扎在 ${当前驻扎地区 || '未驻扎地区'}，仅驻扎在本地区的玩家可发起制取`;
+                    return `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可发起制取`;
                 }
 
                 const 制取物 = 制取物输入?.trim();
                 if (!制取物 || !(制取物 in 制取配置)) {
-                    return `未知制取物，请选择：${Object.keys(制取配置).join('、')}`;
+                    return `未知制取物，请选择：${Object.keys(制取配置).join("、")}`;
                 }
 
                 const 权限动作 = 获取权限动作(制取物);
                 await 地区查询权限检查(ctx, session, 权限动作 as any, 地区编号);
 
-                const 制取物设施信息: Record<string, { 设施类型: 特殊设施类型; 显示名: string }> = {
+                const 制取物设施信息: Record<
+                    string,
+                    { 设施类型: 特殊设施类型; 显示名: string }
+                > = {
                     生物武器: {
-                        设施类型: '生物实验室',
-                        显示名: '生物实验室',
+                        设施类型: "生物实验室",
+                        显示名: "生物实验室",
                     },
                     浓缩铀: {
-                        设施类型: '高速离心级联',
-                        显示名: '高速离心级联',
+                        设施类型: "高速离心级联",
+                        显示名: "高速离心级联",
                     },
                     钚: {
-                        设施类型: '核反应堆',
-                        显示名: '核反应堆',
+                        设施类型: "核反应堆",
+                        显示名: "核反应堆",
                     },
                 };
 
                 const 设施信息 = 制取物设施信息[制取物];
                 const 生产力需求 = 特殊建筑库[设施信息.设施类型].生产力需求;
 
-                const 原始映射 = (地区战略资料[设施信息.设施类型] ?? {}) as Record<number, any>;
+                const 原始映射 = (地区战略资料[设施信息.设施类型] ??
+                    {}) as Record<number, any>;
                 if (Object.keys(原始映射).length === 0) {
                     return `该地区暂无${设施信息.显示名}，请先修建`;
                 }
 
-                const 同类设施 = Object.entries(原始映射).map(([编号, 数据]) => ({
-                    建筑编号: Number(编号),
-                    ...(数据 as any),
-                }));
+                const 同类设施 = Object.entries(原始映射).map(
+                    ([编号, 数据]) => ({
+                        建筑编号: Number(编号),
+                        ...(数据 as any),
+                    }),
+                );
 
                 const 玩家制取中的 = 同类设施.find((设施) => {
                     const 最近日志 = (设施.日志 ?? []).slice(-1)[0];
@@ -86,10 +98,10 @@ export function 制取地区资源(ctx: Context) {
                     目标编号 = Math.max(1, Math.floor(Number(建筑编号) || 1));
                     if (!映射[目标编号]) {
                         return `建筑#${目标编号} 不存在，该地区${设施信息.显示名}编号为：${Object.keys(
-                            映射
+                            映射,
                         )
                             .sort((a, b) => Number(a) - Number(b))
-                            .join('、')}`;
+                            .join("、")}`;
                     }
                     if (映射[目标编号].建造进度 < 生产力需求) {
                         return `建筑#${目标编号} 尚未建造完成，无法制取`;
@@ -99,7 +111,7 @@ export function 制取地区资源(ctx: Context) {
                     }
                 } else {
                     const 空闲已建成 = Object.entries(映射).find(
-                        ([, v]) => !v?.是否制备中 && v?.建造进度 >= 生产力需求
+                        ([, v]) => !v?.是否制备中 && v?.建造进度 >= 生产力需求,
                     );
                     if (!空闲已建成) {
                         return `该地区没有已建成且空闲的${设施信息.显示名}，无法制取`;
@@ -127,7 +139,7 @@ export function 制取地区资源(ctx: Context) {
                 }
 
                 // 标记制备中并写入日志
-                const 时间 = dayjs().format('YYYY-MM-DD HH:mm');
+                const 时间 = dayjs().format("YYYY-MM-DD HH:mm");
 
                 const 日志项 = {
                     制备者: username,
@@ -152,17 +164,17 @@ export function 制取地区资源(ctx: Context) {
                 ]);
 
                 return [
-                    '====[征战文游]====',
+                    "====[征战文游]====",
                     `${username} 同志：`,
                     `■ 地区：${展示地区名称}（${地区编号}）`,
                     `■ 建筑目标：#${目标编号}`,
                     `■ 制取目标：${制取物} x${格式化(cfg.产出数量)}`,
                     `■ 消耗：${Object.entries(资源消耗)
                         .map(([k, v]) => `${k}${格式化(v)}`)
-                        .join('、')}`,
+                        .join("、")}`,
                     `■ 制取开始时间：${时间}`,
                     `■ 预计需要：${格式化(cfg.所需小时)} 小时`,
-                ].join('\n');
+                ].join("\n");
             } catch (error) {
                 return (error as Error).message;
             }

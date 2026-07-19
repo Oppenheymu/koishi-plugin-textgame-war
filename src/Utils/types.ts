@@ -4,11 +4,14 @@ import type {
     Player,
     PlayerConfig,
     PlayerWarData,
-} from '#/types';
+} from "#/types";
 
 export type 联军权限等级 = CoalitionPermissionLevel;
 
-export type 支持平台 = keyof Pick<PlayerConfig, 'onebot' | 'discord' | 'telegram'>;
+export type 支持平台 = keyof Pick<
+    PlayerConfig,
+    "onebot" | "discord" | "telegram"
+>;
 
 export type 玩家完整资料 = Player & PlayerWarData;
 

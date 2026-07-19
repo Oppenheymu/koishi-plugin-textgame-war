@@ -1,25 +1,25 @@
-import type { Context } from 'koishi';
-import { TRandom } from '#/infrastructure';
-import { 玩家检查 } from '#/utils';
+import type { Context } from "koishi";
+import { TRandom } from "#/infrastructure";
+import { 玩家检查 } from "#/utils";
 
 export function 开采铁矿石(ctx: Context) {
-    ctx.command('开采铁矿石').action(async ({ session }) => {
+    ctx.command("开采铁矿石").action(async ({ session }) => {
         try {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (用户资料.生产次数 <= 0) {
-                return '生产次数不足';
+                return "生产次数不足";
             }
 
             if (用户资料.工人 < 400) {
-                return '工人不足，无法开采铁矿石，需要至少400工人';
+                return "工人不足，无法开采铁矿石，需要至少400工人";
             }
 
             if (用户资料.生活资料 < 2000) {
-                return '生活资料不足，无法开采铁矿石，需要至少2000生活资料';
+                return "生活资料不足，无法开采铁矿石，需要至少2000生活资料";
             }
 
             const 增加的铁矿石 = TRandom(6, 10, 30);
@@ -27,7 +27,7 @@ export function 开采铁矿石(ctx: Context) {
             const 增加后的铁矿石 = 用户资料.铁矿石 + 增加的铁矿石;
 
             await ctx.database.set(
-                '马列玩家表',
+                "马列玩家表",
                 {
                     id: id,
                 },
@@ -35,7 +35,7 @@ export function 开采铁矿石(ctx: Context) {
                     铁矿石: 增加后的铁矿石,
                     生活资料: 用户资料.生活资料 - 2000,
                     生产次数: 用户资料.生产次数 - 1,
-                }
+                },
             );
             return `
 ====[征战文游]====

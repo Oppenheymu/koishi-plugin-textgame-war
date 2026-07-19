@@ -1,13 +1,13 @@
-import type { Context } from 'koishi';
-import { 玩家检查 } from '../../../utils/index';
+import type { Context } from "koishi";
+import { 玩家检查 } from "../../../utils/index";
 
 export function 工人休假(ctx: Context) {
-    ctx.command('工人休假 <数量:number>').action(async ({ session }, 数量) => {
+    ctx.command("工人休假 <数量:number>").action(async ({ session }, 数量) => {
         try {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 输入验证
             if (!数量 || 数量 <= 0 || !Number.isInteger(数量)) {
@@ -16,7 +16,7 @@ export function 工人休假(ctx: Context) {
 
             if (数量 > 用户资料.工人) {
                 return `工人不足！当前工人：${格式化(
-                    用户资料.工人
+                    用户资料.工人,
                 )}，无法休假${格式化(数量)}个工人`;
             }
 
@@ -26,7 +26,8 @@ export function 工人休假(ctx: Context) {
 
             // 计算休假后的数据
             const 新工人数 = 用户资料.工人 - 数量;
-            const 总工人数 = 用户资料.工人 + 用户资料.地下工人 + 用户资料.休假工人;
+            const 总工人数 =
+                用户资料.工人 + 用户资料.地下工人 + 用户资料.休假工人;
             const 新休假工人数 = 用户资料.休假工人 + 数量;
             const 未休假工人数 = 用户资料.工人 + 用户资料.地下工人;
 
@@ -39,7 +40,7 @@ export function 工人休假(ctx: Context) {
 
             // 更新数据库
             await ctx.database.set(
-                '马列玩家表',
+                "马列玩家表",
                 {
                     id: id,
                 },
@@ -47,7 +48,7 @@ export function 工人休假(ctx: Context) {
                     工人: 新工人数,
                     休假工人: 新休假工人数,
                     稳定度: 新稳定度,
-                }
+                },
             );
 
             return `

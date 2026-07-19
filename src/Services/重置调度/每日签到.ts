@@ -1,17 +1,19 @@
-import type { Context } from 'koishi';
-import { 服务事件中心 } from '../utils';
-import type { 每日签到重置结果 } from './types';
-import { 初始化服务记录 } from './记录载入';
+import type { Context } from "koishi";
+import { 服务事件中心 } from "../utils";
+import type { 每日签到重置结果 } from "./types";
+import { 初始化服务记录 } from "./记录载入";
 
 let 正在执行每日重置 = false;
 
-export async function 执行每日签到重置(ctx: Context): Promise<每日签到重置结果> {
+export async function 执行每日签到重置(
+    ctx: Context,
+): Promise<每日签到重置结果> {
     if (正在执行每日重置) {
         return {
             是否执行: false,
-            今天: '',
+            今天: "",
             重置玩家数量: 0,
-            原因: '每日签到重置正在执行中',
+            原因: "每日签到重置正在执行中",
         };
     }
 
@@ -19,8 +21,8 @@ export async function 执行每日签到重置(ctx: Context): Promise<每日签�
 
     try {
         const { created, 今天 } = await 初始化服务记录(ctx);
-        const [服务记录] = await ctx.database.get('马列服务表', {
-            id: 'service',
+        const [服务记录] = await ctx.database.get("马列服务表", {
+            id: "service",
         });
 
         if (!服务记录) {
@@ -28,7 +30,7 @@ export async function 执行每日签到重置(ctx: Context): Promise<每日签�
                 是否执行: false,
                 今天,
                 重置玩家数量: 0,
-                原因: '服务记录缺失',
+                原因: "服务记录缺失",
             };
         }
 
@@ -45,16 +47,24 @@ export async function 执行每日签到重置(ctx: Context): Promise<每日签�
         }
 
         if (!created) {
-            await ctx.database.set('马列服务表', { id: 'service' }, { 上次重置签到日期: 今天 });
+            await ctx.database.set(
+                "马列服务表",
+                { id: "service" },
+                { 上次重置签到日期: 今天 },
+            );
         }
 
-        const 玩家列表 = await ctx.database.get('马列玩家表', {});
+        const 玩家列表 = await ctx.database.get("马列玩家表", {});
         await Promise.all([
-            ctx.database.set('马列玩家表', {}, { 今日是否签到: false, 工人招募限额: 1000 }),
-            ctx.database.set('马列联军表', {}, { 当天扩军累计: 0 }),
+            ctx.database.set(
+                "马列玩家表",
+                {},
+                { 今日是否签到: false, 工人招募限额: 1000 },
+            ),
+            ctx.database.set("马列联军表", {}, { 当天扩军累计: 0 }),
         ]);
 
-        服务事件中心.emit('重置与调度:每日签到重置完成', {
+        服务事件中心.emit("重置与调度:每日签到重置完成", {
             日期: 今天,
             重置玩家数量: 玩家列表.length,
         });

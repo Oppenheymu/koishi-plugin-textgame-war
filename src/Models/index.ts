@@ -1,4 +1,5 @@
-import type { Context } from 'koishi';
+import type { Context } from "koishi";
+import { 批量加载插件 } from "#/infrastructure";
 import type {
     CoalitionArmy,
     CoalitionPermission,
@@ -13,17 +14,16 @@ import type {
     RegionStrategy,
     RegionTerra,
     Service,
-} from '#/types';
-import { 批量加载插件 } from '#/infrastructure';
-import { 加载全球数据表 } from './全球数据表';
-import { 加载地形相关表 } from './地区相关';
-import { 加载服务表 } from './服务表';
-import { 加载玩家相关表 } from './玩家相关';
-import { 加载联军相关表 } from './联军相关';
+} from "#/types";
+import { 加载全球数据表 } from "./全球数据表";
+import { 加载地形相关表 } from "./地区相关";
+import { 加载服务表 } from "./服务表";
+import { 加载玩家相关表 } from "./玩家相关";
+import { 加载联军相关表 } from "./联军相关";
 
 // 扩展 Koishi 数据表类型定义
 
-declare module 'koishi' {
+declare module "koishi" {
     interface Tables {
         马列联军表: CoalitionArmy;
         马列联军权限表: CoalitionPermission;
@@ -56,5 +56,5 @@ const 数据库插件列表 = [
 
 // 统一挂载所有数据库相关服务
 export function 数据库服务(ctx: Context) {
-    批量加载插件(ctx, 数据库插件列表, '数据库服务模块');
+    批量加载插件(ctx, 数据库插件列表, "数据库服务模块");
 }

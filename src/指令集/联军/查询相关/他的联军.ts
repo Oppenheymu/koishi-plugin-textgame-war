@@ -1,18 +1,15 @@
-import type { Context } from 'koishi';
-import { 目标联军解析 } from '#/utils';
+import type { Context } from "koishi";
+import { 目标联军解析 } from "#/utils";
 
 export function 他的联军(ctx: Context) {
-    ctx.command('他的联军 <目标:string>')
-        .alias('查看他的联军')
-        .alias('他的国家')
+    ctx.command("他的联军 <目标:string>")
+        .alias("查看他的联军")
+        .alias("他的国家")
         .action(async ({ session }, 目标) => {
             try {
-                const { 目标用户名, 联军资料, 展示联军名称 } = await 目标联军解析(
-                    ctx,
-                    session,
-                    目标
-                );
-                const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+                const { 目标用户名, 联军资料, 展示联军名称 } =
+                    await 目标联军解析(ctx, session, 目标);
+                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 return `
 ====[征战文游]====

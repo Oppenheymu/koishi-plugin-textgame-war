@@ -1,12 +1,12 @@
-import dayjs from 'dayjs';
-import type { Context } from 'koishi';
+import dayjs from "dayjs";
+import type { Context } from "koishi";
 
-import { 检查违禁词 } from '../违禁检查';
-import { 审核群号 } from './state';
+import { 检查违禁词 } from "../违禁检查";
+import { 审核群号 } from "./state";
 
-type 改名类型 = '玩家' | '联军' | '地区';
+type 改名类型 = "玩家" | "联军" | "地区";
 
-type 工单状态 = '待审核' | '已通过' | '已驳回';
+type 工单状态 = "待审核" | "已通过" | "已驳回";
 
 interface 改名审核工单 {
     工单编号: number;
@@ -31,25 +31,28 @@ function 获取待审核工单(工单编号: number): 改名审核工单 {
     if (!工单) {
         throw new Error(`未找到改名工单 #${工单编号}`);
     }
-    if (工单.状态 !== '待审核') {
+    if (工单.状态 !== "待审核") {
         throw new Error(`改名工单 #${工单编号} 已处理（${工单.状态}）`);
     }
     return 工单;
 }
 
 function 获取工单目标标识(工单: 改名审核工单): string {
-    if (工单.类型 === '联军') {
+    if (工单.类型 === "联军") {
         return `联军编号：${工单.联军编号}`;
     }
 
-    if (工单.类型 === '地区') {
+    if (工单.类型 === "地区") {
         return `地区编号：${工单.地区编号}`;
     }
 
     return `玩家ID：${工单.玩家ID}`;
 }
 
-async function 推送改名审核工单(ctx: Context, 工单: 改名审核工单): Promise<void> {
+async function 推送改名审核工单(
+    ctx: Context,
+    工单: 改名审核工单,
+): Promise<void> {
     const 推送文本 = [
         `【改名工单 #${工单.工单编号}】`,
         `类型：${工单.类型}`,
@@ -57,10 +60,12 @@ async function 推送改名审核工单(ctx: Context, 工单: 改名审核工单
         获取工单目标标识(工单),
         `新名称：${工单.新名称}`,
         `创建时间：${工单.创建时间}`,
-        '管理员回复本条消息并发送【审核通过】或【审核驳回】',
-    ].join('\n');
+        "管理员回复本条消息并发送【审核通过】或【审核驳回】",
+    ].join("\n");
 
-    const onebotBot = Object.values(ctx.bots).find((bot) => bot.platform === 'onebot');
+    const onebotBot = Object.values(ctx.bots).find(
+        (bot) => bot.platform === "onebot",
+    );
 
     if (!onebotBot) return;
 
@@ -69,14 +74,21 @@ async function 推送改名审核工单(ctx: Context, 工单: 改名审核工单
     } catch {}
 }
 
-export function 解析改名时间戳(上次改名日期: string | null | undefined): number | null {
+export function 解析改名时间戳(
+    上次改名日期: string | null | undefined,
+): number | null {
     const 文本 = 上次改名日期?.trim();
     if (!文本) return null;
 
     const 格式匹配 = 文本.match(/^(\d{4})-(\d{1,2})-(\d{1,2})-(\d{1,2})$/);
     if (格式匹配) {
         const [, 年, 月, 日, 时] = 格式匹配;
-        const 时间戳 = new Date(Number(年), Number(月) - 1, Number(日), Number(时)).getTime();
+        const 时间戳 = new Date(
+            Number(年),
+            Number(月) - 1,
+            Number(日),
+            Number(时),
+        ).getTime();
         return Number.isNaN(时间戳) ? null : 时间戳;
     }
 
@@ -86,7 +98,7 @@ export function 解析改名时间戳(上次改名日期: string | null | undefi
 
 export function 检查改名冷却(
     上次改名日期: string | null | undefined,
-    名称类型: 改名类型
+    名称类型: 改名类型,
 ): string | null {
     const 上次改名时间戳 = 解析改名时间戳(上次改名日期);
     if (!上次改名时间戳) return null;
@@ -119,15 +131,15 @@ export async function 创建改名审核工单(
         玩家ID?: number;
         联军编号?: string;
         地区编号?: string;
-    }
+    },
 ): Promise<{
     工单编号: number;
 }> {
     const 工单编号 = 获取下一个工单编号();
     const 工单: 改名审核工单 = {
         工单编号,
-        状态: '待审核',
-        创建时间: dayjs().format('YYYY-M-D-H'),
+        状态: "待审核",
+        创建时间: dayjs().format("YYYY-M-D-H"),
         ...payload,
     };
 
@@ -149,7 +161,10 @@ export function 解析引用工单编号(引用文本: string | undefined): numb
     return 编号;
 }
 
-export function 校验名称文本(新名称: string, 名称类型: 改名类型): string | null {
+export function 校验名称文本(
+    新名称: string,
+    名称类型: 改名类型,
+): string | null {
     const 规范名称 = 新名称.trim();
 
     if (!规范名称) return `请提供${名称类型}名称`;
@@ -177,34 +192,37 @@ export async function 检查名称是否重复(
     options?: {
         排除玩家ID?: number;
         排除联军编号?: string;
-    }
-): Promise<'玩家' | '联军' | null> {
-    const [重名玩家] = await ctx.database.get('马列玩家配置表', {
+    },
+): Promise<"玩家" | "联军" | null> {
+    const [重名玩家] = await ctx.database.get("马列玩家配置表", {
         username: 名称,
     });
     if (重名玩家 && 重名玩家.id !== options?.排除玩家ID) {
-        return '玩家';
+        return "玩家";
     }
 
-    const [重名联军] = await ctx.database.get('马列联军表', {
+    const [重名联军] = await ctx.database.get("马列联军表", {
         联军名称: 名称,
     });
     if (重名联军 && 重名联军.联军编号 !== options?.排除联军编号) {
-        return '联军';
+        return "联军";
     }
 
     return null;
 }
 
-export async function 审核通过改名工单(ctx: Context, 工单编号: number): Promise<string> {
+export async function 审核通过改名工单(
+    ctx: Context,
+    工单编号: number,
+): Promise<string> {
     const 工单 = 获取待审核工单(工单编号);
 
-    if (工单.类型 !== '地区') {
+    if (工单.类型 !== "地区") {
         const 排除参数: {
             排除玩家ID?: number;
             排除联军编号?: string;
         } = {};
-        if (typeof 工单.玩家ID === 'number') {
+        if (typeof 工单.玩家ID === "number") {
             排除参数.排除玩家ID = 工单.玩家ID;
         }
         if (工单.联军编号) {
@@ -217,63 +235,63 @@ export async function 审核通过改名工单(ctx: Context, 工单编号: numbe
         }
     }
 
-    if (工单.类型 === '玩家') {
-        if (typeof 工单.玩家ID !== 'number') {
-            throw new Error('工单数据异常：缺少玩家ID');
+    if (工单.类型 === "玩家") {
+        if (typeof 工单.玩家ID !== "number") {
+            throw new Error("工单数据异常：缺少玩家ID");
         }
 
         await ctx.database.set(
-            '马列玩家配置表',
+            "马列玩家配置表",
             {
                 id: 工单.玩家ID,
             },
             {
                 username: 工单.新名称,
                 名称是否审核: true,
-                上次改名日期: dayjs().format('YYYY-M-D-H'),
-            }
+                上次改名日期: dayjs().format("YYYY-M-D-H"),
+            },
         );
-    } else if (工单.类型 === '联军') {
+    } else if (工单.类型 === "联军") {
         if (!工单.联军编号) {
-            throw new Error('工单数据异常：缺少联军编号');
+            throw new Error("工单数据异常：缺少联军编号");
         }
 
         await ctx.database.set(
-            '马列联军表',
+            "马列联军表",
             {
                 联军编号: 工单.联军编号,
             },
             {
                 联军名称: 工单.新名称,
                 名称是否审核: true,
-                上次改名日期: dayjs().format('YYYY-M-D-H'),
-            }
+                上次改名日期: dayjs().format("YYYY-M-D-H"),
+            },
         );
     } else {
         if (!工单.地区编号) {
-            throw new Error('工单数据异常：缺少地区编号');
+            throw new Error("工单数据异常：缺少地区编号");
         }
 
         await ctx.database.set(
-            '马列地区配置表',
+            "马列地区配置表",
             {
                 地区编号: 工单.地区编号,
             },
             {
                 地区名称: 工单.新名称,
                 名称是否审核: true,
-                上次改名日期: dayjs().format('YYYY-M-D-H'),
-            }
+                上次改名日期: dayjs().format("YYYY-M-D-H"),
+            },
         );
     }
 
-    工单.状态 = '已通过';
+    工单.状态 = "已通过";
     return `改名工单 #${工单编号} 已通过`;
 }
 
 export function 审核驳回改名工单(工单编号: number, 原因?: string): string {
     const 工单 = 获取待审核工单(工单编号);
-    工单.状态 = '已驳回';
+    工单.状态 = "已驳回";
 
     const 规范原因 = 原因?.trim();
     if (规范原因) {

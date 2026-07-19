@@ -1,15 +1,15 @@
-import type { 新闻信号塔发送结果 } from '../新闻';
+import type { 新闻信号塔发送结果 } from "../新闻";
 
 /**
  * 地区信号塔事件类型
  */
-export type 地区事件类型 = '刷新' | '权限变更' | '战争' | '政治';
+export type 地区事件类型 = "刷新" | "权限变更" | "战争" | "政治";
 
 /**
  * 地区刷新事件参数
  */
 export interface 地区刷新事件参数 {
-    类型: 'refresh';
+    类型: "refresh";
     刷新工业地区数量: number;
     刷新炼钢空闲数量: number;
     刷新电解铝空闲数量: number;
@@ -19,8 +19,8 @@ export interface 地区刷新事件参数 {
  * 地区权限变更事件参数
  */
 export interface 地区权限变更事件参数 {
-    类型: 'permission';
-    操作类型: '设置总督' | '设置司令';
+    类型: "permission";
+    操作类型: "设置总督" | "设置司令";
     玩家名称: string;
     地区名称: string;
     地区编号: string;
@@ -28,8 +28,8 @@ export interface 地区权限变更事件参数 {
 }
 
 export interface 地区战争事件参数 {
-    类型: 'war';
-    战争类型: '列车炮炮击';
+    类型: "war";
+    战争类型: "列车炮炮击";
     发起者: string;
     发起地区名称: string;
     发起地区编号: string;
@@ -39,7 +39,10 @@ export interface 地区战争事件参数 {
     破坏概要: string;
 }
 
-export type 地区信号塔事件参数 = 地区刷新事件参数 | 地区权限变更事件参数 | 地区战争事件参数;
+export type 地区信号塔事件参数 =
+    | 地区刷新事件参数
+    | 地区权限变更事件参数
+    | 地区战争事件参数;
 
 /**
  * 地区信号塔通报结果

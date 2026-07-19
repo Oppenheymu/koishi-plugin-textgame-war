@@ -41,7 +41,7 @@ export function 栅格坐标转地区编号(坐标: 栅格坐标): string {
     if (gridX < 0 || gridX >= GRID_WIDTH || gridY < 0 || gridY >= GRID_HEIGHT) {
         throw new Error(`无效的栅格坐标：(${gridX}, ${gridY})`);
     }
-    return String(gridX * 100 + gridY).padStart(5, '0');
+    return String(gridX * 100 + gridY).padStart(5, "0");
 }
 
 export function 栅格转经纬度(坐标: 栅格坐标): 经纬度 {
@@ -81,7 +81,8 @@ export function 计算栅格边长(坐标: 栅格坐标): 栅格边长 {
     const latRad = centerLat * (Math.PI / 180);
 
     const 南北高度公里 = DEG_PER_CELL_Y * (Math.PI / 180) * EARTH_RADIUS_KM;
-    const 东西宽度公里 = DEG_PER_CELL_X * (Math.PI / 180) * EARTH_RADIUS_KM * Math.cos(latRad);
+    const 东西宽度公里 =
+        DEG_PER_CELL_X * (Math.PI / 180) * EARTH_RADIUS_KM * Math.cos(latRad);
 
     return {
         东西宽度公里,
@@ -95,7 +96,7 @@ export function 计算地区编号边长(地区编号: string): 栅格边长 {
 }
 
 export function 格式化经纬度(位置: 经纬度): string {
-    const latDir = 位置.latitude >= 0 ? 'N' : 'S';
-    const lonDir = 位置.longitude >= 0 ? 'E' : 'W';
+    const latDir = 位置.latitude >= 0 ? "N" : "S";
+    const lonDir = 位置.longitude >= 0 ? "E" : "W";
     return `${Math.abs(位置.latitude).toFixed(2)}°${latDir}, ${Math.abs(位置.longitude).toFixed(2)}°${lonDir}`;
 }

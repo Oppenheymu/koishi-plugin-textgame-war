@@ -9,7 +9,7 @@ interface WarRecord {
     时间: string;
 }
 
-type Preparation = '浓缩铀' | '钚' | '生物武器';
+type Preparation = "浓缩铀" | "钚" | "生物武器";
 
 // 制备（生物武器、化学武器的）记录
 interface PrepareRecord {
@@ -69,13 +69,13 @@ export interface Warehouse {
 }
 
 export type Fortress =
-    | '一级要塞'
-    | '二级要塞'
-    | '三级要塞'
-    | '四级要塞'
-    | '五级要塞'
-    | '六级要塞'
-    | '七级要塞';
+    | "一级要塞"
+    | "二级要塞"
+    | "三级要塞"
+    | "四级要塞"
+    | "五级要塞"
+    | "六级要塞"
+    | "七级要塞";
 
 export interface RegionStrategy {
     地区编号: string;

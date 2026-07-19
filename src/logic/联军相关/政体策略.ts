@@ -3,19 +3,18 @@ import type {
     CoalitionPermission,
     CoalitionPermissionAction,
     CoalitionPermissionLevel,
-} from '#/types';
-import { 联军政体 } from '#/types';
-import { 获取联军权限等级 } from '#/utils';
-import { 获取成员联军贡献 } from '#/utils';
+} from "#/types";
+import { 联军政体 } from "#/types";
+import { 获取成员联军贡献, 获取联军权限等级 } from "#/utils";
 
-type 联军权限配置 = Omit<CoalitionPermission, '联军编号'>;
+type 联军权限配置 = Omit<CoalitionPermission, "联军编号">;
 
 type 权限列表字段 = Pick<
     CoalitionArmy,
-    | '联军四级权限成员列表'
-    | '联军一级权限成员列表'
-    | '联军二级权限成员列表'
-    | '联军三级权限成员列表'
+    | "联军四级权限成员列表"
+    | "联军一级权限成员列表"
+    | "联军二级权限成员列表"
+    | "联军三级权限成员列表"
 >;
 
 const 政体默认权限配置映射: Record<联军政体, 联军权限配置> = {
@@ -96,10 +95,10 @@ const 政体默认权限配置映射: Record<联军政体, 联军权限配置> =
 function 获取非最高权力成员UID列表(
     联军资料: CoalitionArmy,
     元首UID: string,
-    总理UID: string
+    总理UID: string,
 ): string[] {
     return Object.keys(联军资料.联军成员列表 ?? {}).filter(
-        (uid) => uid !== 元首UID && uid !== 总理UID
+        (uid) => uid !== 元首UID && uid !== 总理UID,
     );
 }
 
@@ -112,7 +111,7 @@ function 构建权限列表(
     元首UID: string,
     总理UID: string,
     等级映射: Record<string, CoalitionPermissionLevel>,
-    默认等级: CoalitionPermissionLevel
+    默认等级: CoalitionPermissionLevel,
 ): 权限列表字段 {
     const 四级: string[] = [];
     const 一级: string[] = [];
@@ -150,7 +149,9 @@ function 构建权限列表(
     };
 }
 
-export function 获取政体默认权限配置(政体: 联军政体): Omit<CoalitionPermission, '联军编号'> {
+export function 获取政体默认权限配置(
+    政体: 联军政体,
+): Omit<CoalitionPermission, "联军编号"> {
     return {
         ...政体默认权限配置映射[政体],
     };
@@ -158,36 +159,60 @@ export function 获取政体默认权限配置(政体: 联军政体): Omit<Coali
 
 export function 获取政体可设置最小权限等级(
     政体: 联军政体,
-    动作: CoalitionPermissionAction
+    动作: CoalitionPermissionAction,
 ): CoalitionPermissionLevel {
     return 政体默认权限配置映射[政体][动作];
 }
 
-export function 极权制降权到一级(联军资料: CoalitionArmy, 设置者UID: string): 权限列表字段 {
+export function 极权制降权到一级(
+    联军资料: CoalitionArmy,
+    设置者UID: string,
+): 权限列表字段 {
     const 等级映射: Record<string, CoalitionPermissionLevel> = {};
-    const 候选成员列表 = 获取非最高权力成员UID列表(联军资料, 联军资料.联军元首, 联军资料.联军总理);
+    const 候选成员列表 = 获取非最高权力成员UID列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理,
+    );
 
     for (const uid of 候选成员列表) {
         if (uid === 设置者UID) {
             const 当前等级 = 获取联军权限等级(联军资料, uid);
-            等级映射[uid] = 当前等级 >= 4 ? 4 : 当前等级 === 3 ? 3 : 当前等级 === 2 ? 2 : 1;
+            等级映射[uid] =
+                当前等级 >= 4 ? 4 : 当前等级 === 3 ? 3 : 当前等级 === 2 ? 2 : 1;
             continue;
         }
 
         等级映射[uid] = 1;
     }
 
-    return 构建权限列表(联军资料, 联军资料.联军元首, 联军资料.联军总理, 等级映射, 1);
+    return 构建权限列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理,
+        等级映射,
+        1,
+    );
 }
 
-export function 政变后权限重置(联军资料: CoalitionArmy, 新元首UID: string): 权限列表字段 {
+export function 政变后权限重置(
+    联军资料: CoalitionArmy,
+    新元首UID: string,
+): 权限列表字段 {
     return 构建权限列表(联军资料, 新元首UID, 新元首UID, {}, 1);
 }
 
 export function 按政体动态分配权限(联军资料: CoalitionArmy): 权限列表字段 {
-    const 候选成员列表 = 获取非最高权力成员UID列表(联军资料, 联军资料.联军元首, 联军资料.联军总理);
+    const 候选成员列表 = 获取非最高权力成员UID列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理,
+    );
 
-    const 总贡献 = 候选成员列表.reduce((总和, uid) => 总和 + 获取成员联军贡献(联军资料, uid), 0);
+    const 总贡献 = 候选成员列表.reduce(
+        (总和, uid) => 总和 + 获取成员联军贡献(联军资料, uid),
+        0,
+    );
 
     const 等级映射: Record<string, CoalitionPermissionLevel> = {};
 
@@ -220,5 +245,11 @@ export function 按政体动态分配权限(联军资料: CoalitionArmy): 权限
         等级映射[uid] = 1;
     }
 
-    return 构建权限列表(联军资料, 联军资料.联军元首, 联军资料.联军总理, 等级映射, 1);
+    return 构建权限列表(
+        联军资料,
+        联军资料.联军元首,
+        联军资料.联军总理,
+        等级映射,
+        1,
+    );
 }

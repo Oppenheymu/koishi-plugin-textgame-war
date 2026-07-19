@@ -1,11 +1,11 @@
-import { 查看地区地形 } from './地区地形';
-import { 查看地区工业 } from './地区工业';
-import { 地区战略相关 } from './战略';
-import { 查看地区 } from './查看地区';
-import { 查看附近地区 } from './附近地区';
-import { 查看距离 } from './查看距离';
+import { 查看地区地形 } from "./地区地形";
+import { 查看地区工业 } from "./地区工业";
+import { 地区战略相关 } from "./战略";
+import { 查看地区 } from "./查看地区";
+import { 查看距离 } from "./查看距离";
+import { 查看附近地区 } from "./附近地区";
 
-export { 查看地区, 查看地区地形, 查看地区工业, 查看附近地区, 查看距离 };
+export { 查看地区, 查看地区地形, 查看地区工业, 查看距离, 查看附近地区 };
 
 export const 查询相关指令 = [
     查看地区,

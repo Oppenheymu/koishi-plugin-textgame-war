@@ -1,5 +1,5 @@
-import type { TerrainType } from '#/types';
-import { 计算真实距离 } from './距离计算';
+import type { TerrainType } from "#/types";
+import { 计算真实距离 } from "./距离计算";
 
 const 地形移动系数: Record<TerrainType, number> = {
     浅海: 3.0,
@@ -24,10 +24,10 @@ export function 计算旅行时间(
     地区编号B: string,
     速度公里每天: number,
     起点地形?: TerrainType,
-    终点地形?: TerrainType
+    终点地形?: TerrainType,
 ): number {
     if (速度公里每天 <= 0) {
-        throw new Error('速度必须大于 0');
+        throw new Error("速度必须大于 0");
     }
 
     const 距离 = 计算真实距离(地区编号A, 地区编号B);

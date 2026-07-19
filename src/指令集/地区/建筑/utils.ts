@@ -1,15 +1,15 @@
-import type { Context, Session } from 'koishi';
+import type { Context, Session } from "koishi";
 import {
     计算最大可执行轮次 as 计算最大可执行轮次_工具,
     计算资源可执行轮次 as 计算资源可执行轮次_工具,
     计算资源总消耗,
-} from '#/logic';
-import type { Player } from '#/types';
-import { 更新玩家资料, 玩家检查, 驻扎检查 } from '#/utils';
-import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from './config';
+} from "#/logic";
+import type { Player } from "#/types";
+import { 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
+import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from "./config";
 
 // ==================== 格式化工具 ====================
-export const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+export const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 // ==================== 轮次处理 ====================
 export function 解析轮次(轮次输入: number | undefined): number {
@@ -22,14 +22,17 @@ export function 解析轮次(轮次输入: number | undefined): number {
  * 计算资源可执行轮次
  * 复用 @/logic 中的通用工具
  */
-export function 计算资源可执行轮次(用户资料: Player, 资源需求: 资源需求配置): number {
+export function 计算资源可执行轮次(
+    用户资料: Player,
+    资源需求: 资源需求配置,
+): number {
     // 转换为通用格式调用
     return 计算资源可执行轮次_工具(
         {
             钢铁: 用户资料.钢铁,
             金属铝: 用户资料.金属铝,
         },
-        资源需求 as Record<string, number>
+        资源需求 as Record<string, number>,
     );
 }
 
@@ -45,7 +48,7 @@ export { 计算资源总消耗 as 资源总消耗 };
 export function 计算最大可执行轮次(
     用户资料: Player,
     资源需求: 资源需求配置 | undefined,
-    请求轮次: number
+    请求轮次: number,
 ): number {
     const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
 
@@ -67,7 +70,7 @@ export function 创建默认设施对象(类型: 特殊设施类型): 设施建�
     return {
         是否制备中: false,
         建造进度: 0,
-        建造时间: '',
+        建造时间: "",
         日志: [],
     };
 }
@@ -78,7 +81,7 @@ export async function 执行资源与工资结算(
     玩家ID: number,
     用户资料: Player,
     轮次: number,
-    资源需求: 资源需求配置
+    资源需求: 资源需求配置,
 ) {
     const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
     const 工资消耗 = 单轮工资 * 轮次;
@@ -110,25 +113,27 @@ export function 组装消耗文本(资源消耗: 资源需求配置): string[] {
 }
 
 // ==================== 预检查验证 ====================
-export async function 执行预检查(ctx: Context, session: Session | undefined, 操作名: string) {
-    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } = await 驻扎检查(
-        ctx,
-        session
-    );
+export async function 执行预检查(
+    ctx: Context,
+    session: Session | undefined,
+    操作名: string,
+) {
+    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
+        await 驻扎检查(ctx, session);
     const { 用户资料 } = await 玩家检查(ctx, session);
 
     if (当前驻扎地区 !== 地区编号) {
         throw new Error(
-            `你当前驻扎在 ${当前驻扎地区 || '未驻扎地区'}，仅驻扎在本地区的玩家可${操作名}`
+            `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可${操作名}`,
         );
     }
 
     if (用户资料.生产次数 <= 0) {
-        throw new Error('生产次数不足');
+        throw new Error("生产次数不足");
     }
 
     if (用户资料.工人 * 用户资料.生产技术 <= 0) {
-        throw new Error('当前生产力为零，无法修建');
+        throw new Error("当前生产力为零，无法修建");
     }
 
     return { id, username, 地区编号, 展示地区名称, 地区战略资料, 用户资料 };

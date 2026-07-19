@@ -1,12 +1,12 @@
 import type {
-    联军默认权限配置,
+    PluginConfig,
     Sqids配置,
-    信号塔频道配置,
     信号塔配置,
+    信号塔频道配置,
     土木工程配置,
     地理配置,
-    PluginConfig,
-} from './types';
+    联军默认权限配置,
+} from "./types";
 
 export const 默认联军权限配置: 联军默认权限配置 = {
     成员列表: 4,
@@ -31,12 +31,12 @@ export const 默认联军权限配置: 联军默认权限配置 = {
 
 export const 默认Sqids配置: Sqids配置 = {
     register: {
-        alphabet: '4027159386',
+        alphabet: "4027159386",
         minLength: 6,
         blocklist: [],
     },
     coalition: {
-        alphabet: '9087564312',
+        alphabet: "9087564312",
         minLength: 5,
         blocklist: [],
     },

@@ -1,11 +1,11 @@
-import type { PluginConfig, 联军默认权限配置 } from './types';
 import {
-    默认联军权限配置,
     默认Sqids配置,
     默认信号塔配置,
     默认土木工程配置,
     默认地理配置,
-} from './defaults';
+    默认联军权限配置,
+} from "./defaults";
+import type { PluginConfig, 联军默认权限配置 } from "./types";
 
 let 当前运行时配置: PluginConfig = {
     coalitionPermissionDefault: {

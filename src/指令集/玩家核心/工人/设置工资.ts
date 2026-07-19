@@ -1,8 +1,8 @@
-import type { Context } from 'koishi';
-import { 玩家检查 } from '../../../utils/index';
+import type { Context } from "koishi";
+import { 玩家检查 } from "../../../utils/index";
 
 export function 设置工资(ctx: Context) {
-    ctx.command('设置工资 <工资:number>').action(async ({ session }, 工资) => {
+    ctx.command("设置工资 <工资:number>").action(async ({ session }, 工资) => {
         try {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
@@ -29,17 +29,17 @@ ${username} 同志：
 
             // 更新工资
             await ctx.database.set(
-                '马列玩家表',
+                "马列玩家表",
                 {
                     id: id,
                 },
                 {
                     工人工资: 工资,
-                }
+                },
             );
 
             const 最低工资 = Math.floor(用户资料.生产技术 / 2);
-            const 工资状态 = 工资 >= 最低工资 ? '✓ 稳定' : '✗ 不稳定';
+            const 工资状态 = 工资 >= 最低工资 ? "✓ 稳定" : "✗ 不稳定";
 
             return `
 【设置工资】

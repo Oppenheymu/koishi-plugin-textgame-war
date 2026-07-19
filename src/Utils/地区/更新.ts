@@ -1,18 +1,20 @@
-import type { Context } from 'koishi';
-import { Logger } from 'koishi';
-import type { Region, RegionStrategy } from '#/types';
+import type { Context } from "koishi";
+import { Logger } from "koishi";
+import type { Region, RegionStrategy } from "#/types";
 
-const logger = new Logger('地区数据更新');
+const logger = new Logger("地区数据更新");
 
 export async function 更新地区资料(
     ctx: Context,
     地区编号: string,
-    更新数据: Partial<Region>
+    更新数据: Partial<Region>,
 ): Promise<void> {
     const 地区更新: Record<string, unknown> = {};
 
-    for (const [键, 值] of Object.entries(更新数据 as Record<string, unknown>)) {
-        if (键 !== '地区编号') {
+    for (const [键, 值] of Object.entries(
+        更新数据 as Record<string, unknown>,
+    )) {
+        if (键 !== "地区编号") {
             地区更新[键] = 值;
         }
     }
@@ -22,24 +24,26 @@ export async function 更新地区资料(
     }
 
     await ctx.database.set(
-        '马列地区表',
+        "马列地区表",
         { 地区编号 },
         // biome-ignore lint/suspicious/noExplicitAny: 不好做静态类型
-        地区更新 as any
+        地区更新 as any,
     );
 }
 
 export async function 更新地区战略资料(
     ctx: Context,
     地区编号: string,
-    更新数据: Partial<RegionStrategy>
+    更新数据: Partial<RegionStrategy>,
 ): Promise<void> {
     logger.debug(`[更新开始] 地区: ${地区编号}, 更新数据:`, 更新数据);
 
     const 战略更新: Record<string, unknown> = {};
 
-    for (const [键, 值] of Object.entries(更新数据 as Record<string, unknown>)) {
-        if (键 !== '地区编号') {
+    for (const [键, 值] of Object.entries(
+        更新数据 as Record<string, unknown>,
+    )) {
+        if (键 !== "地区编号") {
             战略更新[键] = 值;
         }
     }
@@ -51,7 +55,9 @@ export async function 更新地区战略资料(
         return;
     }
 
-    await ctx.database.set('马列地区战略表', { 地区编号 }, 战略更新 as any);
+    await ctx.database.set("马列地区战略表", { 地区编号 }, 战略更新 as any);
 
-    logger.info(`[更新完成] 地区: ${地区编号}, 更新字段数: ${Object.keys(战略更新).length}`);
+    logger.info(
+        `[更新完成] 地区: ${地区编号}, 更新字段数: ${Object.keys(战略更新).length}`,
+    );
 }

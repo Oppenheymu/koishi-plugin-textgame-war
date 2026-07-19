@@ -1,4 +1,4 @@
-import type { Context } from 'koishi';
+import type { Context } from "koishi";
 
 /**
  * 状态机服务
@@ -8,35 +8,35 @@ import type { Context } from 'koishi';
 
 export function 加载服务表(ctx: Context) {
     ctx.model.extend(
-        '马列服务表',
+        "马列服务表",
         {
             id: {
-                type: 'string',
+                type: "string",
                 length: 255,
             },
 
             当前地区洗牌指针: {
-                type: 'unsigned',
+                type: "unsigned",
                 initial: 0,
             },
             上次重置签到日期: {
-                type: 'string',
+                type: "string",
                 length: 255,
                 nullable: true,
             },
             上次全服统计日期: {
-                type: 'string',
+                type: "string",
                 length: 255,
                 nullable: true,
             },
             上次联军资本统计日期: {
-                type: 'string',
+                type: "string",
                 length: 255,
                 nullable: true,
             },
         },
         {
-            primary: 'id',
-        }
+            primary: "id",
+        },
     );
 }

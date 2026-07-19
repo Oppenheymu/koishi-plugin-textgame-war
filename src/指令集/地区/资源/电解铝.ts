@@ -1,34 +1,40 @@
-import type { Context } from 'koishi';
-import { TRandom } from '#/infrastructure';
-import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from '#/utils';
+import type { Context } from "koishi";
+import { TRandom } from "#/infrastructure";
+import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 地区电解铝(ctx: Context) {
-    ctx.command('地区电解铝 <数量:number>')
-        .alias('地区炼铝')
+    ctx.command("地区电解铝 <数量:number>")
+        .alias("地区炼铝")
         .action(async ({ session }, 数量) => {
             try {
-                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区资料 } =
-                    await 驻扎检查(ctx, session);
+                const {
+                    id,
+                    username,
+                    当前驻扎地区,
+                    地区编号,
+                    展示地区名称,
+                    地区资料,
+                } = await 驻扎检查(ctx, session);
                 const { 用户资料 } = await 玩家检查(ctx, session);
 
                 if (!数量) {
                     return [
-                        '=====[地区工业]=====',
-                        '格式：地区电解铝 <数量>',
-                        '说明：消耗铝土矿，经地区电解铝厂转化为金属铝（单厂单次上限30）',
+                        "=====[地区工业]=====",
+                        "格式：地区电解铝 <数量>",
+                        "说明：消耗铝土矿，经地区电解铝厂转化为金属铝（单厂单次上限30）",
                         `■ 当前地区：${展示地区名称}（${地区编号}）`,
                         `■ 空闲电解铝厂：${格式化(地区资料.空闲的电解铝厂)}`,
-                    ].join('\n');
+                    ].join("\n");
                 }
 
                 if (当前驻扎地区 !== 地区编号) {
-                    return `你当前驻扎在 ${当前驻扎地区 || '未驻扎地区'}，仅驻扎在本地区的玩家可使用地区电解铝`;
+                    return `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可使用地区电解铝`;
                 }
 
                 if (数量 <= 0 || !Number.isInteger(数量)) {
-                    return '请输入有效的电解数量（正整数）';
+                    return "请输入有效的电解数量（正整数）";
                 }
 
                 if (地区资料.空闲的电解铝厂 <= 0) {
@@ -40,21 +46,27 @@ export function 地区电解铝(ctx: Context) {
                 }
 
                 if (用户资料.生产次数 <= 0) {
-                    return '生产次数不足';
+                    return "生产次数不足";
                 }
 
                 if (用户资料.工人 < 400) {
-                    return '工人不足，地区电解铝需要至少400工人';
+                    return "工人不足，地区电解铝需要至少400工人";
                 }
 
                 if (用户资料.生活资料 < 2000) {
-                    return '生活资料不足，地区电解铝需要至少2000生活资料';
+                    return "生活资料不足，地区电解铝需要至少2000生活资料";
                 }
 
-                const 增加的金属铝 = Math.max(1, Math.floor(数量 * TRandom(0.75, 0.9, 1, false)));
+                const 增加的金属铝 = Math.max(
+                    1,
+                    Math.floor(数量 * TRandom(0.75, 0.9, 1, false)),
+                );
                 const 更新后金属铝 = 用户资料.金属铝 + 增加的金属铝;
                 const 更新后铝土矿 = 用户资料.铝土矿 - 数量;
-                const 更新后空闲电解铝厂 = Math.max(0, (地区资料.空闲的电解铝厂 ?? 0) - 1);
+                const 更新后空闲电解铝厂 = Math.max(
+                    0,
+                    (地区资料.空闲的电解铝厂 ?? 0) - 1,
+                );
 
                 await Promise.all([
                     更新玩家资料(ctx, id, {
@@ -69,14 +81,14 @@ export function 地区电解铝(ctx: Context) {
                 ]);
 
                 return [
-                    '====[征战文游]====',
+                    "====[征战文游]====",
                     `${username} 同志：`,
                     `■ 地区：${展示地区名称}（${地区编号}）`,
                     `■ 金属铝：${格式化(用户资料.金属铝)} → ${格式化(更新后金属铝)}`,
                     `■ 铝土矿：${格式化(用户资料.铝土矿)} → ${格式化(更新后铝土矿)}`,
                     `■ 空闲电解铝厂：${格式化(地区资料.空闲的电解铝厂)} → ${格式化(更新后空闲电解铝厂)}`,
-                    '■ 发出工资：2000',
-                ].join('\n');
+                    "■ 发出工资：2000",
+                ].join("\n");
             } catch (error) {
                 return (error as Error).message;
             }

@@ -1,6 +1,6 @@
-import type { Context } from 'koishi';
-import { 尝试发送地区信号塔通报 } from './index';
-import type { 地区信号塔通报结果, 地区刷新事件参数 } from './types';
+import type { Context } from "koishi";
+import { 尝试发送地区信号塔通报 } from "./index";
+import type { 地区信号塔通报结果, 地区刷新事件参数 } from "./types";
 
 /**
  * 地区刷新信号塔参数（向后兼容）
@@ -17,10 +17,10 @@ export interface 地区刷新信号塔参数 {
  */
 export async function 尝试发送地区刷新信号塔通报(
     ctx: Context,
-    参数: 地区刷新信号塔参数
+    参数: 地区刷新信号塔参数,
 ): Promise<地区信号塔通报结果 | null> {
     return await 尝试发送地区信号塔通报(ctx, {
-        类型: 'refresh',
+        类型: "refresh",
         刷新工业地区数量: 参数.刷新工业地区数量,
         刷新炼钢空闲数量: 参数.刷新炼钢空闲数量,
         刷新电解铝空闲数量: 参数.刷新电解铝空闲数量,

@@ -1,12 +1,12 @@
-import type { Context } from 'koishi';
-import { 玩家检查, 目标解析 } from '#/utils';
+import type { Context } from "koishi";
+import { 玩家检查, 目标解析 } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 联军生活资料查询(ctx: Context) {
-    ctx.command('查看联军生活资料 [目标:string]')
-        .alias('联军生活资料')
-        .alias('查看生活资料')
+    ctx.command("查看联军生活资料 [目标:string]")
+        .alias("联军生活资料")
+        .alias("查看生活资料")
         .action(async ({ session }, 目标) => {
             try {
                 const 输入目标 = 目标?.trim();
@@ -15,7 +15,11 @@ export function 联军生活资料查询(ctx: Context) {
                 let 联军编号: string | null;
 
                 if (输入目标) {
-                    const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 输入目标);
+                    const { 目标用户名, 目标用户资料 } = await 目标解析(
+                        ctx,
+                        session,
+                        输入目标,
+                    );
                     查询用户名 = 目标用户名;
                     联军编号 = 目标用户资料.所在联军;
                 } else {
@@ -28,11 +32,13 @@ export function 联军生活资料查询(ctx: Context) {
                     throw new Error(`${查询用户名} 同志目前不在任何联军中`);
                 }
 
-                const [联军资料] = await ctx.database.get('马列联军表', {
+                const [联军资料] = await ctx.database.get("马列联军表", {
                     联军编号,
                 });
                 if (!联军资料) {
-                    throw new Error('数据异常：已记录所在联军但未找到联军档案，请联系管理员');
+                    throw new Error(
+                        "数据异常：已记录所在联军但未找到联军档案，请联系管理员",
+                    );
                 }
 
                 return `

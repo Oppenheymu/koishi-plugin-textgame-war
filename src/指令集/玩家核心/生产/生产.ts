@@ -1,18 +1,18 @@
-import type { Context } from 'koishi';
-import { 记录联军资本增量 } from '#/services/联军相关';
-import { 生成随机图片片段 } from '#/infrastructure';
-import { 玩家检查 } from '#/utils';
+import type { Context } from "koishi";
+import { 生成随机图片片段 } from "#/infrastructure";
+import { 记录联军资本增量 } from "#/services/联军相关";
+import { 玩家检查 } from "#/utils";
 
 const 图片概率 = 0.01;
-const 图片池 = ['工厂.jpg', '工厂2.jpg', '工厂3.jpg', '工厂5.jpg'];
+const 图片池 = ["工厂.jpg", "工厂2.jpg", "工厂3.jpg", "工厂5.jpg"];
 
 export function 生产(ctx: Context) {
-    ctx.command('生产').action(async ({ session }) => {
+    ctx.command("生产").action(async ({ session }) => {
         try {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 检查生产次数
             if (用户资料.生产次数 <= 0) {
@@ -55,7 +55,7 @@ ${username} 同志：
 
             let 联军税额 = 0;
             if (用户资料.所在联军 && 利润 > 0) {
-                const [联军资料] = await ctx.database.get('马列联军表', {
+                const [联军资料] = await ctx.database.get("马列联军表", {
                     联军编号: 用户资料.所在联军,
                 });
 
@@ -64,7 +64,12 @@ ${username} 同志：
                     const 有效税率 = Math.min(Math.max(原始税率, 0), 1);
                     联军税额 = Math.floor(利润 * 有效税率);
 
-                    await 记录联军资本增量(ctx, 联军资料.联军编号, 利润, 联军税额);
+                    await 记录联军资本增量(
+                        ctx,
+                        联军资料.联军编号,
+                        利润,
+                        联军税额,
+                    );
                 }
             }
 
@@ -73,7 +78,7 @@ ${username} 同志：
             const 新生产次数 = 用户资料.生产次数 - 1;
 
             await ctx.database.set(
-                '马列玩家表',
+                "马列玩家表",
                 {
                     id: id,
                 },
@@ -82,29 +87,32 @@ ${username} 同志：
                     生活资料: 新生活资料,
                     稳定度: 新稳定度,
                     生产次数: 新生产次数,
-                }
+                },
             );
 
             // 更新今日全球生产总值
-            const globalData = await ctx.database.get('马列全球数据表', {
-                id: 'global',
+            const globalData = await ctx.database.get("马列全球数据表", {
+                id: "global",
             });
-            const currentTotal = globalData.length > 0 ? (globalData[0]?.今日全球生产总值 ?? 0) : 0;
+            const currentTotal =
+                globalData.length > 0
+                    ? (globalData[0]?.今日全球生产总值 ?? 0)
+                    : 0;
 
             if (globalData.length === 0) {
-                await ctx.database.create('马列全球数据表', {
-                    id: 'global',
+                await ctx.database.create("马列全球数据表", {
+                    id: "global",
                     今日全球生产总值: 总产出,
                 });
             } else {
                 await ctx.database.set(
-                    '马列全球数据表',
+                    "马列全球数据表",
                     {
-                        id: 'global',
+                        id: "global",
                     },
                     {
                         今日全球生产总值: currentTotal + 总产出,
-                    }
+                    },
                 );
             }
 

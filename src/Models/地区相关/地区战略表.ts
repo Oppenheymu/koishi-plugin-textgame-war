@@ -1,61 +1,61 @@
-import type { Context } from 'koishi';
+import type { Context } from "koishi";
 
 export function 加载地区战略表(ctx: Context) {
     ctx.model.extend(
-        '马列地区战略表',
+        "马列地区战略表",
         {
             地区编号: {
-                type: 'string',
+                type: "string",
                 length: 255,
             },
 
             地区司令: {
-                type: 'string',
+                type: "string",
                 length: 255,
-                initial: '',
+                initial: "",
             },
 
             地区仓库: {
-                type: 'json',
+                type: "json",
             },
 
             地区驻军: {
-                type: 'unsigned',
+                type: "unsigned",
                 initial: 0,
             },
             地区堡垒: {
-                type: 'string',
+                type: "string",
                 length: 255,
                 initial: undefined,
             },
 
             生物实验室: {
-                type: 'json',
+                type: "json",
             },
 
             高速离心级联: {
-                type: 'json',
+                type: "json",
             },
             核反应堆: {
-                type: 'json',
+                type: "json",
             },
 
             已部署列车炮: {
-                type: 'unsigned',
+                type: "unsigned",
                 initial: 0,
             },
             空闲的列车炮: {
-                type: 'unsigned',
+                type: "unsigned",
                 initial: 0,
             },
 
             历史战争: {
-                type: 'json',
+                type: "json",
             },
         },
         {
-            primary: '地区编号',
-            unique: ['地区编号'],
-        }
+            primary: "地区编号",
+            unique: ["地区编号"],
+        },
     );
 }

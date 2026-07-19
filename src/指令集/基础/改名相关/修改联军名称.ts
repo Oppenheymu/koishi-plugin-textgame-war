@@ -1,24 +1,33 @@
-import type { Context } from 'koishi';
-import { 创建改名审核工单, 校验名称文本, 检查名称是否重复, 检查改名冷却 } from '#/logic';
-import { 玩家联军检查 } from '#/utils';
+import type { Context } from "koishi";
+import {
+    创建改名审核工单,
+    校验名称文本,
+    检查名称是否重复,
+    检查改名冷却,
+} from "#/logic";
+import { 玩家联军检查 } from "#/utils";
 
 export function 修改联军名称(ctx: Context) {
-    ctx.command('修改联军名称 <新名称:string>')
-        .alias('联军改名')
+    ctx.command("修改联军名称 <新名称:string>")
+        .alias("联军改名")
         .action(async ({ session }, 新名称) => {
             try {
-                const { id, uid, username, 联军编号, 联军资料 } = await 玩家联军检查(ctx, session, {
-                    最低权限等级: 4,
-                    是否必须在成员列表: true,
-                });
+                const { id, uid, username, 联军编号, 联军资料 } =
+                    await 玩家联军检查(ctx, session, {
+                        最低权限等级: 4,
+                        是否必须在成员列表: true,
+                    });
 
-                const 改名冷却提示 = 检查改名冷却(联军资料.上次改名日期, '联军');
+                const 改名冷却提示 = 检查改名冷却(
+                    联军资料.上次改名日期,
+                    "联军",
+                );
                 if (改名冷却提示) {
                     return 改名冷却提示;
                 }
 
-                const 规范名称 = 新名称?.trim() ?? '';
-                const 校验结果 = 校验名称文本(规范名称, '联军');
+                const 规范名称 = 新名称?.trim() ?? "";
+                const 校验结果 = 校验名称文本(规范名称, "联军");
                 if (校验结果) {
                     return 校验结果;
                 }
@@ -31,7 +40,7 @@ export function 修改联军名称(ctx: Context) {
                 }
 
                 const { 工单编号 } = await 创建改名审核工单(ctx, {
-                    类型: '联军',
+                    类型: "联军",
                     新名称: 规范名称,
                     申请人ID: id,
                     申请人UID: uid,

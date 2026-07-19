@@ -7,7 +7,7 @@ export function 构建全服统计新闻内容(参数: {
     近三天全球生产总值: number;
     近七天全球生产总值: number;
 }): string {
-    const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+    const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
     return [
         `日期：${参数.今天}`,
@@ -17,5 +17,5 @@ export function 构建全服统计新闻内容(参数: {
         `昨日全球生产总值：${格式化(参数.昨日全球生产总值)}`,
         `近三天全球生产总值：${格式化(参数.近三天全球生产总值)}`,
         `近七天全球生产总值：${格式化(参数.近七天全球生产总值)}`,
-    ].join('\n');
+    ].join("\n");
 }

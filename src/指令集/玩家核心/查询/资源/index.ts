@@ -1,7 +1,7 @@
-import { 我的金属 } from './我的金属';
-import { 我的钢铁 } from './我的钢铁';
-import { 我的铀 } from './我的铀';
-import { 我的铝 } from './我的铝';
+import { 我的金属 } from "./我的金属";
+import { 我的钢铁 } from "./我的钢铁";
+import { 我的铀 } from "./我的铀";
+import { 我的铝 } from "./我的铝";
 
 export { 我的金属, 我的钢铁, 我的铀, 我的铝 };
 

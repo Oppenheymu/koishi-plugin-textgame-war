@@ -8,7 +8,7 @@ export type {
     土木工程配置,
     地理配置,
     PluginConfig,
-} from './types';
+} from "./types";
 
 export {
     默认联军权限配置,
@@ -18,12 +18,12 @@ export {
     默认土木工程配置,
     默认地理配置,
     默认插件配置,
-} from './defaults';
+} from "./defaults";
 
 export {
     初始化插件运行时配置,
     获取运行时配置,
     获取默认联军权限配置,
-} from './runtime';
+} from "./runtime";
 
-export { 插件配置Schema } from './schema';
+export { 插件配置Schema } from "./schema";

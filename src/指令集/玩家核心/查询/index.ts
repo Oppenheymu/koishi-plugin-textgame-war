@@ -1,10 +1,10 @@
-import { 军事查询指令 } from './军事';
-import { 我的全部资料 } from './我的全部资料';
-import { 我的工人 } from './我的工人';
-import { 我的生产次数 } from './生产次数';
-import { 我的科技 } from './我的科技';
-import { 我的资料 } from './我的资料';
-import { 资源相关指令 } from './资源';
+import { 军事查询指令 } from "./军事";
+import { 我的全部资料 } from "./我的全部资料";
+import { 我的工人 } from "./我的工人";
+import { 我的科技 } from "./我的科技";
+import { 我的资料 } from "./我的资料";
+import { 我的生产次数 } from "./生产次数";
+import { 资源相关指令 } from "./资源";
 
 export { 我的全部资料, 我的工人, 我的生产次数, 我的科技, 我的资料 };
 

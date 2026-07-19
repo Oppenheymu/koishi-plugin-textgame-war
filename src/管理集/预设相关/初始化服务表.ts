@@ -1,8 +1,8 @@
-import type { Context } from 'koishi';
-import { 初始化服务记录 } from '#/services';
+import type { Context } from "koishi";
+import { 初始化服务记录 } from "#/services";
 
 export function 初始化服务表(ctx: Context) {
-    ctx.command('初始化服务表', {
+    ctx.command("初始化服务表", {
         authority: 3,
     }).action(async () => {
         try {
@@ -12,13 +12,13 @@ export function 初始化服务表(ctx: Context) {
                 return `服务表初始化成功：已创建 service 记录，日期 ${今天}`;
             }
 
-            const 全局状态机 = await ctx.database.get('马列服务表', {
-                id: 'service',
+            const 全局状态机 = await ctx.database.get("马列服务表", {
+                id: "service",
             });
             const 服务记录 = 全局状态机[0];
 
             if (!服务记录) {
-                return '服务表初始化失败：未找到 service 记录';
+                return "服务表初始化失败：未找到 service 记录";
             }
 
             const 修复字段: {
@@ -36,16 +36,16 @@ export function 初始化服务表(ctx: Context) {
 
             if (Object.keys(修复字段).length > 0) {
                 await ctx.database.set(
-                    '马列服务表',
+                    "马列服务表",
                     {
-                        id: 'service',
+                        id: "service",
                     },
-                    修复字段
+                    修复字段,
                 );
-                return `服务表已修复：${Object.keys(修复字段).join('、')}`;
+                return `服务表已修复：${Object.keys(修复字段).join("、")}`;
             }
 
-            return '服务表已是正常状态，无需初始化';
+            return "服务表已是正常状态，无需初始化";
         } catch (error) {
             return (error as Error).message;
         }

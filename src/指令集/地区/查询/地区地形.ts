@@ -1,16 +1,16 @@
-import type { Context } from 'koishi';
-import { 地区解析, 当前地区解析, 玩家联军检查 } from '#/utils';
-import { 地区编号转经纬度, 格式化经纬度 } from '#/地理集';
+import type { Context } from "koishi";
+import { 地区解析, 当前地区解析, 玩家联军检查 } from "#/utils";
+import { 地区编号转经纬度, 格式化经纬度 } from "#/地理集";
 
-const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 查看地区地形(ctx: Context) {
-    ctx.command('查看地区地形 [地区编号:string]')
-        .alias('查看城市地形')
-        .alias('城市地形')
-        .alias('城市地貌')
-        .alias('地区地形')
-        .alias('地区地貌')
+    ctx.command("查看地区地形 [地区编号:string]")
+        .alias("查看城市地形")
+        .alias("城市地形")
+        .alias("城市地貌")
+        .alias("地区地形")
+        .alias("地区地貌")
         .action(async ({ session }, 地区编号参数) => {
             try {
                 const { username } = await 玩家联军检查(ctx, session, {
@@ -31,7 +31,7 @@ ${username} 同志！
 ■ 地区编号: ${地区编号}
 ■ 坐标: (${地区地形资料.栅格X}, ${地区地形资料.栅格Y}) ${格式化经纬度(经纬度)}
 ■ 格子尺寸: ${地区地形资料.东西宽度公里.toFixed(0)}×${地区地形资料.南北高度公里.toFixed(0)} km (${(地区地形资料.面积平方公里 / 1000).toFixed(1)}k km²)
-■ 海洋: ${地区地形资料.是否为海洋 ? '是' : '否'}
+■ 海洋: ${地区地形资料.是否为海洋 ? "是" : "否"}
 地区地形概况:
 ■ 平均海拔: ${格式化(地区地形资料.平均海拔)}
 □ 最大海拔: ${格式化(地区地形资料.最大海拔)}

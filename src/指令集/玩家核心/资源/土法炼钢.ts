@@ -1,14 +1,14 @@
-import type { Context } from 'koishi';
-import { TRandom } from '#/infrastructure';
-import { 玩家检查 } from '#/utils';
+import type { Context } from "koishi";
+import { TRandom } from "#/infrastructure";
+import { 玩家检查 } from "#/utils";
 
 export function 土法炼钢(ctx: Context) {
-    ctx.command('土法炼钢 <数量:number>').action(async ({ session }, 数量) => {
+    ctx.command("土法炼钢 <数量:number>").action(async ({ session }, 数量) => {
         try {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (!数量) {
                 return `
@@ -20,23 +20,24 @@ export function 土法炼钢(ctx: Context) {
             }
 
             if (数量 <= 0 || !Number.isInteger(数量)) {
-                return '请输入有效的数量';
+                return "请输入有效的数量";
             }
 
-            if (100 <= 数量) return '一次最多可以炼制100钢铁';
+            if (100 <= 数量) return "一次最多可以炼制100钢铁";
 
-            if (用户资料.铁矿石 <= 数量) return `铁矿石不足，当前铁矿石${格式化(用户资料.铁矿石)}`;
+            if (用户资料.铁矿石 <= 数量)
+                return `铁矿石不足，当前铁矿石${格式化(用户资料.铁矿石)}`;
 
             if (用户资料.生产次数 <= 0) {
-                return '生产次数不足';
+                return "生产次数不足";
             }
 
             if (用户资料.工人 < 400) {
-                return '工人不足，无法开采石油，需要至少400工人';
+                return "工人不足，无法开采石油，需要至少400工人";
             }
 
             if (用户资料.生活资料 < 2000) {
-                return '生活资料不足，无法开采石油，需要至少2000生活资料';
+                return "生活资料不足，无法开采石油，需要至少2000生活资料";
             }
 
             const 原本的钢铁 = 用户资料.钢铁;
@@ -47,7 +48,7 @@ export function 土法炼钢(ctx: Context) {
             const 减少后的铁矿石 = 用户资料.铁矿石 - 数量;
 
             await ctx.database.set(
-                '马列玩家表',
+                "马列玩家表",
                 {
                     id: id,
                 },
@@ -56,7 +57,7 @@ export function 土法炼钢(ctx: Context) {
                     铁矿石: 减少后的铁矿石,
                     生活资料: 用户资料.生活资料 - 2000,
                     生产次数: 用户资料.生产次数 - 1,
-                }
+                },
             );
             return `
 ====[征战文游]====

@@ -1,7 +1,7 @@
-import type { Context } from 'koishi';
-import type { RegionConfig } from '#/types';
+import type { Context } from "koishi";
+import type { RegionConfig } from "#/types";
 
-export type 审批推送平台 = 'onebot' | 'discord' | 'telegram';
+export type 审批推送平台 = "onebot" | "discord" | "telegram";
 
 export interface 联军审批推送参数 {
     文本内容: string;
@@ -20,16 +20,19 @@ export interface 联军审批推送结果 {
     }>;
 }
 
-const 支持平台: 审批推送平台[] = ['onebot', 'discord', 'telegram'];
+const 支持平台: 审批推送平台[] = ["onebot", "discord", "telegram"];
 
-async function 推送联军审批消息(ctx: Context, 参数: 联军审批推送参数): Promise<联军审批推送结果> {
+async function 推送联军审批消息(
+    ctx: Context,
+    参数: 联军审批推送参数,
+): Promise<联军审批推送结果> {
     const 文本内容 = 参数.文本内容?.trim();
     if (!文本内容) {
-        throw new Error('审批推送失败：消息内容不能为空');
+        throw new Error("审批推送失败：消息内容不能为空");
     }
 
-    const 已发送: 联军审批推送结果['已发送'] = [];
-    const 发送失败: 联军审批推送结果['发送失败'] = [];
+    const 已发送: 联军审批推送结果["已发送"] = [];
+    const 发送失败: 联军审批推送结果["发送失败"] = [];
 
     await Promise.all(
         支持平台.map(async (平台) => {
@@ -37,17 +40,19 @@ async function 推送联军审批消息(ctx: Context, 参数: 联军审批推送
             if (!群聊ID) {
                 发送失败.push({
                     平台,
-                    原因: '目标地区未绑定该平台群聊',
+                    原因: "目标地区未绑定该平台群聊",
                 });
                 return;
             }
 
-            const 机器人 = Object.values(ctx.bots).find((bot) => bot.platform === 平台);
+            const 机器人 = Object.values(ctx.bots).find(
+                (bot) => bot.platform === 平台,
+            );
             if (!机器人) {
                 发送失败.push({
                     平台,
                     群聊ID,
-                    原因: '未找到可用机器人',
+                    原因: "未找到可用机器人",
                 });
                 return;
             }
@@ -56,14 +61,15 @@ async function 推送联军审批消息(ctx: Context, 参数: 联军审批推送
                 await 机器人.sendMessage(群聊ID, 文本内容);
                 已发送.push({ 平台, 群聊ID });
             } catch (error) {
-                const 错误信息 = error instanceof Error ? error.message : '未知错误';
+                const 错误信息 =
+                    error instanceof Error ? error.message : "未知错误";
                 发送失败.push({
                     平台,
                     群聊ID,
                     原因: 错误信息,
                 });
             }
-        })
+        }),
     );
 
     return {
@@ -74,7 +80,7 @@ async function 推送联军审批消息(ctx: Context, 参数: 联军审批推送
 
 export async function 请求联军审批(
     ctx: Context,
-    参数: 联军审批推送参数
+    参数: 联军审批推送参数,
 ): Promise<联军审批推送结果> {
     return 推送联军审批消息(ctx, 参数);
 }

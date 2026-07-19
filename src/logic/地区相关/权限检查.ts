@@ -1,22 +1,29 @@
-import type { Context, Session } from 'koishi';
-import { 玩家联军权限设置 } from '../联军相关/设置权限';
-import type { CoalitionPermissionAction, CoalitionPermissionLevel } from '#/types';
-import { 玩家检查 } from '#/utils';
-import { 玩家联军检查 } from '#/utils';
-import { 地区解析, 当前地区解析, type 地区解析结果 } from '#/utils';
+import type { Context, Session } from "koishi";
+import type {
+    CoalitionPermissionAction,
+    CoalitionPermissionLevel,
+} from "#/types";
+import {
+    地区解析,
+    type 地区解析结果,
+    当前地区解析,
+    玩家检查,
+    玩家联军检查,
+} from "#/utils";
+import { 玩家联军权限设置 } from "../联军相关/设置权限";
 
 export type 地区权限检查动作 = Extract<
     CoalitionPermissionAction,
-    | '查看地区军事'
-    | '查看地区生物实验室'
-    | '查看地区核反应堆'
-    | '查看地区离心机组'
-    | '设置地区驻扎权限'
-    | '设置地区总督'
-    | '设置地区司令'
+    | "查看地区军事"
+    | "查看地区生物实验室"
+    | "查看地区核反应堆"
+    | "查看地区离心机组"
+    | "设置地区驻扎权限"
+    | "设置地区总督"
+    | "设置地区司令"
 >;
 
-type 地区查询权限动作 = Exclude<地区权限检查动作, '设置地区驻扎权限'>;
+type 地区查询权限动作 = Exclude<地区权限检查动作, "设置地区驻扎权限">;
 
 export interface 地区权限检查结果 extends 地区解析结果 {
     username: string;
@@ -34,7 +41,7 @@ async function 地区权限检查(
     session: Session | undefined,
     动作: 地区权限检查动作,
     地区编号参数: string | undefined,
-    操作描述: string
+    操作描述: string,
 ): Promise<地区权限检查结果> {
     const { username } = await 玩家检查(ctx, session);
 
@@ -43,14 +50,16 @@ async function 地区权限检查(
         ? await 地区解析(ctx, 规范地区编号, session)
         : ((await 当前地区解析(ctx, session)) as 地区解析结果);
 
-    const 是否地区总督 = (地区结果.地区资料.地区总督 ?? '').trim() === username.trim();
-    const 是否地区司令 = (地区结果.地区战略资料.地区司令 ?? '').trim() === username.trim();
+    const 是否地区总督 =
+        (地区结果.地区资料.地区总督 ?? "").trim() === username.trim();
+    const 是否地区司令 =
+        (地区结果.地区战略资料.地区司令 ?? "").trim() === username.trim();
 
     if (是否地区总督 || 是否地区司令) {
         return {
             ...地区结果,
             username,
-            联军编号: '',
+            联军编号: "",
             权限等级: 1,
             权限等级需求: 1,
             是否地区总督,
@@ -70,7 +79,9 @@ async function 地区权限检查(
     }
 
     if (联军编号 !== 控制国家) {
-        throw new Error(`只有地区控制国的有权限成员，或地区总督/司令可${操作描述}`);
+        throw new Error(
+            `只有地区控制国的有权限成员，或地区总督/司令可${操作描述}`,
+        );
     }
 
     return {
@@ -88,39 +99,63 @@ export async function 地区查询权限检查(
     ctx: Context,
     session: Session | undefined,
     动作: 地区查询权限动作,
-    地区编号参数?: string
+    地区编号参数?: string,
 ): Promise<地区查询权限结果> {
-    return 地区权限检查(ctx, session, 动作, 地区编号参数, '查看该地区情报');
+    return 地区权限检查(ctx, session, 动作, 地区编号参数, "查看该地区情报");
 }
 
 export async function 地区驻扎权限设置检查(
     ctx: Context,
     session: Session | undefined,
-    地区编号参数?: string
+    地区编号参数?: string,
 ): Promise<地区权限检查结果> {
-    return 地区权限检查(ctx, session, '设置地区驻扎权限', 地区编号参数, '设置驻扎权限');
+    return 地区权限检查(
+        ctx,
+        session,
+        "设置地区驻扎权限",
+        地区编号参数,
+        "设置驻扎权限",
+    );
 }
 
 export async function 地区机场权限设置检查(
     ctx: Context,
     session: Session | undefined,
-    地区编号参数?: string
+    地区编号参数?: string,
 ): Promise<地区权限检查结果> {
-    return 地区权限检查(ctx, session, '设置地区驻扎权限', 地区编号参数, '设置机场权限');
+    return 地区权限检查(
+        ctx,
+        session,
+        "设置地区驻扎权限",
+        地区编号参数,
+        "设置机场权限",
+    );
 }
 
 export async function 地区总督设置检查(
     ctx: Context,
     session: Session | undefined,
-    地区编号参数?: string
+    地区编号参数?: string,
 ): Promise<地区权限检查结果> {
-    return 地区权限检查(ctx, session, '设置地区总督', 地区编号参数, '设置地区总督');
+    return 地区权限检查(
+        ctx,
+        session,
+        "设置地区总督",
+        地区编号参数,
+        "设置地区总督",
+    );
 }
 
 export async function 地区司令设置检查(
     ctx: Context,
     session: Session | undefined,
-    地区编号参数?: string
+    地区编号参数?: string,
 ): Promise<地区权限检查结果> {
-    return 地区权限检查(ctx, session, '设置地区司令', 地区编号参数, '设置地区司令');
+    return 地区权限检查(
+        ctx,
+        session,
+        "设置地区司令",
+        地区编号参数,
+        "设置地区司令",
+    );
 }

@@ -1,13 +1,13 @@
-import { type Context, Logger } from 'koishi';
-import { 计算栅格边长 } from '#/地理集';
-import { 获取容量上限 } from './logic';
-import { 判定地区地形, 构建进度条, 读取地区基础数据 } from './utils';
-import { 写入批次 } from './write';
+import { type Context, Logger } from "koishi";
+import { 计算栅格边长 } from "#/地理集";
+import { 获取容量上限 } from "./logic";
+import { 判定地区地形, 构建进度条, 读取地区基础数据 } from "./utils";
+import { 写入批次 } from "./write";
 
-const logger = new Logger('初始化地区表');
+const logger = new Logger("初始化地区表");
 
 export function 初始化地区表(ctx: Context) {
-    ctx.command('初始化地区表', {
+    ctx.command("初始化地区表", {
         authority: 3,
     }).action(async ({ session }) => {
         const 发送进度 = async (内容: string) => {
@@ -16,7 +16,7 @@ export function 初始化地区表(ctx: Context) {
         };
 
         try {
-            await 发送进度('开始初始化地区表，正在读取地区基础数据...');
+            await 发送进度("开始初始化地区表，正在读取地区基础数据...");
             const 地区基础数据 = await 读取地区基础数据();
             const 总数 = 地区基础数据.length;
 
@@ -62,15 +62,19 @@ export function 初始化地区表(ctx: Context) {
                         gridX: 地区.GridX,
                         gridY: 地区.GridY,
                     });
-                    const 容量上限 = 获取容量上限(地区, 地区地形, 边长.面积平方公里);
+                    const 容量上限 = 获取容量上限(
+                        地区,
+                        地区地形,
+                        边长.面积平方公里,
+                    );
                     return {
                         地区编号: 地区.RegionId,
                         栅格X: 地区.GridX,
                         栅格Y: 地区.GridY,
                         地区地形,
                         ...容量上限,
-                        控制国家: '',
-                        地区总督: '',
+                        控制国家: "",
+                        地区总督: "",
                         允许非联军成员驻扎: true,
                         允许非联军成员使用机场: true,
                         允许机场使用战斗机: true,
@@ -101,17 +105,17 @@ export function 初始化地区表(ctx: Context) {
 
                 const 配置批次 = 基础数据批次.map((地区) => ({
                     地区编号: String(地区.RegionId),
-                    onebot: '',
-                    discord: '',
-                    telegram: '',
-                    地区名称: '默认名称',
+                    onebot: "",
+                    discord: "",
+                    telegram: "",
+                    地区名称: "默认名称",
                     名称是否审核: true,
-                    上次改名日期: '',
+                    上次改名日期: "",
                 }));
 
                 const 战略批次 = 基础数据批次.map((地区) => ({
                     地区编号: String(地区.RegionId),
-                    地区司令: '',
+                    地区司令: "",
                     地区仓库: {
                         石油: 0,
                         铝土矿: 0,
@@ -138,7 +142,14 @@ export function 初始化地区表(ctx: Context) {
                     历史战争: [],
                 }));
 
-                await 写入批次(ctx, 地形批次, 地区批次, 状态机批次, 配置批次, 战略批次);
+                await 写入批次(
+                    ctx,
+                    地形批次,
+                    地区批次,
+                    状态机批次,
+                    配置批次,
+                    战略批次,
+                );
 
                 已处理 += 地区批次.length;
 

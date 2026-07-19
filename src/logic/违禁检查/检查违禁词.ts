@@ -1,22 +1,23 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { build } from './构建匹配树';
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { build } from "./构建匹配树";
 
 const IGNORE_CHARS_RE = /[\u200B-\u200D\uFEFF\p{White_Space}\p{P}\p{S}_]+/gu;
 
-const norm = (s: string) => s.normalize('NFKC').toLowerCase().replace(IGNORE_CHARS_RE, '');
+const norm = (s: string) =>
+    s.normalize("NFKC").toLowerCase().replace(IGNORE_CHARS_RE, "");
 
 const loadWords = (): string[] => {
-    const dir = resolve(__dirname, '..');
+    const dir = resolve(__dirname, "..");
     const files = [
-        resolve(dir, '../assets/SensitiveLexicon.json'),
-        resolve(dir, '../../src/assets/SensitiveLexicon.json'),
-        resolve(process.cwd(), 'src/assets/SensitiveLexicon.json'),
+        resolve(dir, "../assets/SensitiveLexicon.json"),
+        resolve(dir, "../../src/assets/SensitiveLexicon.json"),
+        resolve(process.cwd(), "src/assets/SensitiveLexicon.json"),
     ];
 
     for (const file of files) {
         try {
-            const content = readFileSync(file, 'utf8');
+            const content = readFileSync(file, "utf8");
             const json = JSON.parse(content) as {
                 words?: unknown;
             };
@@ -25,7 +26,7 @@ const loadWords = (): string[] => {
                 const seen = new Set<string>();
                 const words: string[] = [];
                 for (const w of json.words) {
-                    if (typeof w !== 'string') continue;
+                    if (typeof w !== "string") continue;
                     const n = norm(w);
                     if (!n || seen.has(n)) continue;
                     seen.add(n);

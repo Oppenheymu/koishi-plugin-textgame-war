@@ -1,36 +1,41 @@
-import type { Context } from 'koishi';
-import { 尝试发送联军信号塔通报, 玩家联军权限设置, 移除联军成员 } from '#/logic';
-import { 玩家联军检查, 目标解析, 获取联军权限等级 } from '#/utils';
+import type { Context } from "koishi";
+import {
+    尝试发送联军信号塔通报,
+    玩家联军权限设置,
+    移除联军成员,
+} from "#/logic";
+import { 玩家联军检查, 目标解析, 获取联军权限等级 } from "#/utils";
 
 export function 移出联军(ctx: Context) {
-    ctx.command('移出联军 <目标:string>')
-        .alias('踢出联军')
+    ctx.command("移出联军 <目标:string>")
+        .alias("踢出联军")
         .action(async ({ session }, 目标) => {
             try {
-                const 权限等级需求 = await 玩家联军权限设置(ctx, session, '移出联军');
-                const { uid, username, 联军资料, 联军编号, 权限等级 } = await 玩家联军检查(
+                const 权限等级需求 = await 玩家联军权限设置(
                     ctx,
                     session,
-                    {
+                    "移出联军",
+                );
+                const { uid, username, 联军资料, 联军编号, 权限等级 } =
+                    await 玩家联军检查(ctx, session, {
                         最低权限等级: 权限等级需求,
                         是否必须在成员列表: true,
-                    }
-                );
+                    });
 
                 const 输入目标 = 目标?.trim();
                 if (!输入目标) {
-                    return '请指定目标用户：可以 @对方 或输入 UID';
+                    return "请指定目标用户：可以 @对方 或输入 UID";
                 }
 
                 const { 目标用户ID, 目标用户名, 目标用户资料 } = await 目标解析(
                     ctx,
                     session,
-                    输入目标
+                    输入目标,
                 );
 
                 const 目标UID = 目标用户资料.uid;
                 if (目标UID === uid) {
-                    return '不能移出自己';
+                    return "不能移出自己";
                 }
 
                 if (目标用户资料.所在联军 !== 联军编号) {
@@ -42,12 +47,12 @@ export function 移出联军(ctx: Context) {
                 }
 
                 if (联军资料.联军元首 === 目标UID) {
-                    return '不能移出联军元首';
+                    return "不能移出联军元首";
                 }
 
                 const 目标权限等级 = 获取联军权限等级(联军资料, 目标UID);
                 if (权限等级 <= 目标权限等级) {
-                    return '权限不足，不能移出同级或更高权限成员';
+                    return "权限不足，不能移出同级或更高权限成员";
                 }
 
                 await 移除联军成员(ctx, {
@@ -59,7 +64,7 @@ export function 移出联军(ctx: Context) {
 
                 await 尝试发送联军信号塔通报(ctx, {
                     联军编号,
-                    通报标题: '联军人事通报',
+                    通报标题: "联军人事通报",
                     通报内容: `${username} 已将 ${目标用户名} 移出联军`,
                 });
 

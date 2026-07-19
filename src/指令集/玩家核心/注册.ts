@@ -1,14 +1,14 @@
-import type { Context } from 'koishi';
-import type { Player, PlayerConfig, PlayerWarData } from '#/types';
-import { 检查名称是否重复 } from '#/logic';
-import { TRandom, 获取注册Sqids } from '#/infrastructure';
-import { 会话检查, 用户检查 } from '#/utils';
+import type { Context } from "koishi";
+import { TRandom, 获取注册Sqids } from "#/infrastructure";
+import { 检查名称是否重复 } from "#/logic";
+import type { Player, PlayerConfig, PlayerWarData } from "#/types";
+import { 会话检查, 用户检查 } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString('zh-CN');
+const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 注册(ctx: Context) {
-    ctx.command('注册')
-        .alias('首次阅读报告')
+    ctx.command("注册")
+        .alias("首次阅读报告")
         .action(async ({ session }) => {
             try {
                 会话检查(session);
@@ -17,19 +17,23 @@ export function 注册(ctx: Context) {
                 const platform = session.platform;
                 const userId = session.userId;
 
-                const [已有玩家配置] = await ctx.database.get('马列玩家配置表', {
-                    [platform]: userId,
-                });
+                const [已有玩家配置] = await ctx.database.get(
+                    "马列玩家配置表",
+                    {
+                        [platform]: userId,
+                    },
+                );
 
                 if (已有玩家配置) {
-                    const [已有玩家档案列表, 已有玩家战争档案列表] = await Promise.all([
-                        ctx.database.get('马列玩家表', {
-                            id: 已有玩家配置.id,
-                        }),
-                        ctx.database.get('马列玩家战争表', {
-                            id: 已有玩家配置.id,
-                        }),
-                    ]);
+                    const [已有玩家档案列表, 已有玩家战争档案列表] =
+                        await Promise.all([
+                            ctx.database.get("马列玩家表", {
+                                id: 已有玩家配置.id,
+                            }),
+                            ctx.database.get("马列玩家战争表", {
+                                id: 已有玩家配置.id,
+                            }),
+                        ]);
 
                     const [已有玩家档案] = 已有玩家档案列表;
                     const [已有玩家战争档案] = 已有玩家战争档案列表;
@@ -39,21 +43,21 @@ export function 注册(ctx: Context) {
                     }
 
                     await Promise.all([
-                        ctx.database.remove('马列玩家表', {
+                        ctx.database.remove("马列玩家表", {
                             id: 已有玩家配置.id,
                         }),
-                        ctx.database.remove('马列玩家战争表', {
+                        ctx.database.remove("马列玩家战争表", {
                             id: 已有玩家配置.id,
                         }),
-                        ctx.database.remove('马列玩家配置表', {
+                        ctx.database.remove("马列玩家配置表", {
                             id: 已有玩家配置.id,
                         }),
                     ]);
                 }
 
                 let newID = 0;
-                let newUID = '';
-                let username = '';
+                let newUID = "";
+                let username = "";
 
                 const 初始工人 = TRandom(4000, 12000, 16000);
                 const 初始生活资料 = TRandom(8000, 50000, 90000);
@@ -61,21 +65,19 @@ export function 注册(ctx: Context) {
                 const 初始钢铁 = TRandom(100, 200, 500);
 
                 try {
-                    const newPlayerConfig: PlayerConfig = await ctx.database.create(
-                        '马列玩家配置表',
-                        {
+                    const newPlayerConfig: PlayerConfig =
+                        await ctx.database.create("马列玩家配置表", {
                             [platform]: userId,
-                            username: '',
+                            username: "",
                             名称是否审核: true,
-                        }
-                    );
+                        });
 
                     newID = newPlayerConfig.id;
                     newUID = 获取注册Sqids().encode([newID]);
 
                     const 初始名称 =
-                        platform === 'onebot'
-                            ? (session.username?.trim() ?? '')
+                        platform === "onebot"
+                            ? (session.username?.trim() ?? "")
                             : `默认名称${newUID}`;
 
                     username = 初始名称 || `默认名称${newUID}`;
@@ -87,7 +89,7 @@ export function 注册(ctx: Context) {
                         username = `默认名称${newUID}`;
                     }
 
-                    await ctx.database.set('马列玩家配置表', newID, {
+                    await ctx.database.set("马列玩家配置表", newID, {
                         uid: newUID,
                         username,
                     });
@@ -98,7 +100,7 @@ export function 注册(ctx: Context) {
                         所在联军: null,
                         曾加入联军列表: [],
                         驻扎地区: null,
-                        上次驻扎日期: '',
+                        上次驻扎日期: "",
                         上次炮击时间: null,
                         战争保护期: null,
                         今日是否签到: true,
@@ -169,19 +171,19 @@ export function 注册(ctx: Context) {
                     };
 
                     await Promise.all([
-                        ctx.database.create('马列玩家表', newPlayerData),
-                        ctx.database.create('马列玩家战争表', newPlayerWarData),
+                        ctx.database.create("马列玩家表", newPlayerData),
+                        ctx.database.create("马列玩家战争表", newPlayerWarData),
                     ]);
                 } catch (error) {
                     if (newID) {
                         await Promise.allSettled([
-                            ctx.database.remove('马列玩家表', {
+                            ctx.database.remove("马列玩家表", {
                                 id: newID,
                             }),
-                            ctx.database.remove('马列玩家战争表', {
+                            ctx.database.remove("马列玩家战争表", {
                                 id: newID,
                             }),
-                            ctx.database.remove('马列玩家配置表', {
+                            ctx.database.remove("马列玩家配置表", {
                                 id: newID,
                             }),
                         ]);
