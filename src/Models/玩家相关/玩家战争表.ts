@@ -23,6 +23,52 @@ export function 加载玩家战争表(ctx: Context) {
                 type: "unsigned",
                 initial: 0,
             },
+            //装甲单位
+            两栖坦克: {
+                type: "unsigned",
+                initial: 0,
+            },
+            轻型坦克: {
+                type: "unsigned",
+                initial: 0,
+            },
+            中型坦克: {
+                type: "unsigned",
+                initial: 0,
+            },
+            重型坦克: {
+                type: "unsigned",
+                initial: 0,
+            },
+            现代坦克: {
+                type: "unsigned",
+                initial: 0,
+            },
+
+            装甲运兵车: {
+                type: "unsigned",
+                initial: 0,
+            },
+            两栖装甲运兵车: {
+                type: "unsigned",
+                initial: 0,
+            },
+
+            //自行式支援
+            坦克歼击车: {
+                type: "unsigned",
+                initial: 0,
+            },
+            自行防空车: {
+                type: "unsigned",
+                initial: 0,
+            },
+
+            //炮兵
+            野战炮: {
+                type: "unsigned",
+                initial: 0,
+            },
             火炮: {
                 type: "unsigned",
                 initial: 0,

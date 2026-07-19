@@ -5,6 +5,22 @@ export interface PlayerWarData {
     // 陆军
     步兵装备: number;
     卡车: number;
+    //装甲单位
+    两栖坦克: number;
+    轻型坦克: number;
+    中型坦克: number;
+    重型坦克: number;
+    现代坦克: number;
+
+    装甲运兵车: number;
+    两栖装甲运兵车: number;
+
+    //自行式支援
+    坦克歼击车: number;
+    自行防空车: number;
+
+    //炮兵
+    野战炮: number;
     火炮: number;
     火箭炮: number;
     列车炮: number;
