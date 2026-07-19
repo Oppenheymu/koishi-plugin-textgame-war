@@ -3,7 +3,7 @@
     "version": "0.20.0",
     "contributors": [
         "Xiao-xiaochen <200345727+Xiao-xiaochen@users.noreply.github.com>",
-        "Oppenheimu <266071743+Oppenheimu@users.noreply.github.com>"
+        "Oppenheymu <Oppenheymu@gmail.com>"
     ],
     "main": "lib/index.js",
     "typings": "lib/index.d.ts",
@@ -11,10 +11,10 @@
         "lib",
         "dist"
     ],
-    "homepage": "https://github.com/Oppenheimu/malie-textgame",
+    "homepage": "https://github.com/Oppenheymu/koishi-plugin-textgame-war",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Oppenheimu/malie-textgame.git"
+        "url": "git+https://github.com/Oppenheymu/koishi-plugin-textgame-war.git"
     },
     "keywords": [
         "chatbot",
