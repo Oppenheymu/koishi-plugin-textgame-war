@@ -23,7 +23,7 @@
     ],
     "koishi": {
         "description": {
-            "zh": "Koishi史上最强文游。 基于koishi框架，使用Typescript对马列文游进行的重构"
+            "zh": "Koishi史上最强文游"
         },
         "service": {
             "required": [
