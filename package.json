@@ -36,7 +36,7 @@
     "peerDependencies": {
         "koishi": "^4.17.4",
         "koishi-plugin-cron-fix": "*",
-        "koishi-plugin-infra-am-i-alt": "*"
+        "koishi-plugin-am-i-alt": "*"
     },
     "dependencies": {
         "canvas": "^3.2.3",

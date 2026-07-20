@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import "koishi-plugin-cron-fix";
-import "koishi-plugin-infra-am-i-alt";
+import "koishi-plugin-am-i-alt";
 import { register as 注册路径别名 } from "tsconfig-paths";
 
 注册路径别名({
