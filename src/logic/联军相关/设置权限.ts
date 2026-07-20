@@ -32,6 +32,8 @@ export const 联军权限动作列表: 联军权限动作[] = [
     "设置地区司令",
     "部署列车炮",
     "列车炮炮击",
+    "授衔",
+    "任命指挥官",
 ];
 
 export const 默认联军权限配置: Omit<CoalitionPermission, "联军编号"> = {
@@ -57,6 +59,8 @@ export const 默认联军权限配置: Omit<CoalitionPermission, "联军编号">
     设置地区司令: 4,
     部署列车炮: 3,
     列车炮炮击: 3,
+    授衔: 4,
+    任命指挥官: 3,
 };
 
 function 读取默认联军权限配置(): Omit<CoalitionPermission, "联军编号"> {

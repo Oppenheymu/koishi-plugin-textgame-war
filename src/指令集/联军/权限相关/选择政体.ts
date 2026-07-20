@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
 import {
+    同步元首政体军衔,
     尝试发送联军信号塔通报,
     按政体动态分配权限,
     极权制降权到一级,
@@ -99,6 +100,9 @@ export function 选择政体(ctx: Context) {
                         获取政体默认权限配置(目标政体),
                     ),
                 ]);
+
+                // 政体联动：元首自动军衔按新政体重算
+                await 同步元首政体军衔(ctx, 联军编号);
 
                 await 尝试发送联军信号塔通报(ctx, {
                     联军编号,

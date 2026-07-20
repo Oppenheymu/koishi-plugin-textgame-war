@@ -4,7 +4,7 @@ import type { Context } from "koishi";
 import { 检查违禁词 } from "../违禁检查";
 import { 审核群号 } from "./state";
 
-type 改名类型 = "玩家" | "联军" | "地区";
+type 改名类型 = "玩家" | "联军" | "地区" | "军队";
 
 type 工单状态 = "待审核" | "已通过" | "已驳回";
 
@@ -18,6 +18,7 @@ interface 改名审核工单 {
     玩家ID?: number;
     联军编号?: string;
     地区编号?: string;
+    军队编号?: number;
     状态: 工单状态;
     创建时间: string;
     驳回原因?: string;
@@ -44,6 +45,10 @@ function 获取工单目标标识(工单: 改名审核工单): string {
 
     if (工单.类型 === "地区") {
         return `地区编号：${工单.地区编号}`;
+    }
+
+    if (工单.类型 === "军队") {
+        return `军队编号：${工单.军队编号}`;
     }
 
     return `玩家ID：${工单.玩家ID}`;
@@ -131,6 +136,7 @@ export async function 创建改名审核工单(
         玩家ID?: number;
         联军编号?: string;
         地区编号?: string;
+        军队编号?: number;
     },
 ): Promise<{
     工单编号: number;
@@ -265,6 +271,21 @@ export async function 审核通过改名工单(
                 联军名称: 工单.新名称,
                 名称是否审核: true,
                 上次改名日期: dayjs().format("YYYY-M-D-H"),
+            },
+        );
+    } else if (工单.类型 === "军队") {
+        if (typeof 工单.军队编号 !== "number") {
+            throw new Error("工单数据异常：缺少军队编号");
+        }
+
+        await ctx.database.set(
+            "马列军队表",
+            {
+                id: 工单.军队编号,
+            },
+            {
+                名称: 工单.新名称,
+                名称是否审核: true,
             },
         );
     } else {

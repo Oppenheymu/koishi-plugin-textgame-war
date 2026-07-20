@@ -22,7 +22,9 @@ export type CoalitionPermissionAction =
     | "设置地区总督"
     | "设置地区司令"
     | "部署列车炮"
-    | "列车炮炮击";
+    | "列车炮炮击"
+    | "授衔"
+    | "任命指挥官";
 
 export interface CoalitionPermission {
     联军编号: string;
@@ -48,4 +50,6 @@ export interface CoalitionPermission {
     设置地区司令: CoalitionPermissionLevel;
     部署列车炮: CoalitionPermissionLevel;
     列车炮炮击: CoalitionPermissionLevel;
+    授衔: CoalitionPermissionLevel;
+    任命指挥官: CoalitionPermissionLevel;
 }

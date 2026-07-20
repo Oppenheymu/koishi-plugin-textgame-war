@@ -88,6 +88,22 @@ export function 加载联军权限表(ctx: Context) {
                 type: "unsigned",
                 initial: 4,
             },
+            部署列车炮: {
+                type: "unsigned",
+                initial: 3,
+            },
+            列车炮炮击: {
+                type: "unsigned",
+                initial: 3,
+            },
+            授衔: {
+                type: "unsigned",
+                initial: 4,
+            },
+            任命指挥官: {
+                type: "unsigned",
+                initial: 3,
+            },
         },
         {
             primary: "联军编号",

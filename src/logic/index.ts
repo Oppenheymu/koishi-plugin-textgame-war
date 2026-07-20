@@ -1,4 +1,5 @@
 export * from "./信号塔";
+export * from "./军事相关";
 export * from "./分配地区";
 export * from "./土木工程";
 export * from "./地区相关";

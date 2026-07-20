@@ -1,8 +1,11 @@
 import type { Context } from "koishi";
 import { 批量加载插件 } from "#/infrastructure";
 import type {
+    Army,
+    Battle,
     CoalitionArmy,
     CoalitionPermission,
+    CoalitionRank,
     GlobalData,
     Player,
     PlayerConfig,
@@ -16,6 +19,7 @@ import type {
     Service,
 } from "#/types";
 import { 加载全球数据表 } from "./全球数据表";
+import { 加载军事相关表 } from "./军事相关";
 import { 加载地形相关表 } from "./地区相关";
 import { 加载服务表 } from "./服务表";
 import { 加载玩家相关表 } from "./玩家相关";
@@ -41,6 +45,10 @@ declare module "koishi" {
         马列地区战略表: RegionStrategy;
         马列地区洗牌池: RegionShufflePool;
 
+        马列联军军衔表: CoalitionRank;
+        马列军队表: Army;
+        马列战斗表: Battle;
+
         马列服务表: Service;
     }
 }
@@ -52,6 +60,7 @@ const 数据库插件列表 = [
     ...加载玩家相关表,
     ...加载联军相关表,
     ...加载地形相关表,
+    ...加载军事相关表,
 ];
 
 // 统一挂载所有数据库相关服务
