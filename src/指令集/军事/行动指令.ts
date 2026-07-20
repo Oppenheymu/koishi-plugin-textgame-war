@@ -7,6 +7,7 @@ import { 军队解析, 玩家联军检查 } from "#/utils";
 export function 进军(ctx: Context) {
     ctx.command("进军 <编号:number> <地区编号:string>")
         .alias("军队进军")
+        .alias("行军")
         .action(async ({ session }, 编号, 地区编号) => {
             try {
                 const 结果 = await 玩家联军检查(ctx, session);
