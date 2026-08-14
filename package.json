@@ -35,14 +35,13 @@
     },
     "peerDependencies": {
         "koishi": "^4.17.4",
-        "koishi-plugin-cron-fix": "*",
-        "koishi-plugin-am-i-alt": "*"
+        "koishi-plugin-am-i-alt": "*",
+        "koishi-plugin-cron-fix": "*"
     },
     "dependencies": {
         "canvas": "^3.2.3",
         "dayjs": "^1.11.13",
-        "sqids": "^0.3.0",
-        "tsconfig-paths": "^4.2.0"
+        "sqids": "^0.3.0"
     },
     "devDependencies": {
         "@biomejs/biome": "2.4.12"
