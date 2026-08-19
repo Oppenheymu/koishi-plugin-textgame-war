@@ -1,5 +1,7 @@
-import type { CoalitionPermissionLevel } from "#ctx/coalition/domain/types/联军权限类型";
 import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
+
+import type { CoalitionPermissionLevel } from "#ctx/coalition/domain/types/联军权限类型";
+
 import { 获取联军权限等级 } from "#ctx/coalition/domain/权限";
 
 type 权限列表字段 = Pick<

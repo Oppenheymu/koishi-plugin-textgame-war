@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 目标联军解析 } from "#shared/target/联军";
+import { 目标联军解析 } from "#shared/target";
 
 export function 查看联军名称(ctx: Context) {
     ctx.command("查看联军名称 <目标>", {

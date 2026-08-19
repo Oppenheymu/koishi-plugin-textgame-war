@@ -1,10 +1,10 @@
 import type { Context, Session } from "koishi";
-import type { CoalitionPermissionAction, CoalitionPermissionLevel } from "#ctx/coalition/domain/types/联军权限类型";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 地区解析, 当前地区解析 } from "#ctx/region/domain/查询";
+import type { CoalitionPermissionAction, CoalitionPermissionLevel } from "#ctx/coalition";
+import { 玩家联军权限设置, 玩家联军检查 } from "#ctx/coalition";
+import { 玩家检查 } from "#ctx/player";
 import type { 地区解析结果 } from "#ctx/region/domain/查询";
-import { 玩家联军权限设置 } from "#ctx/coalition/domain/设置权限";
+
+import { 地区解析, 当前地区解析 } from "#ctx/region/domain/查询";
 
 type 地区权限检查动作 = Extract<
     CoalitionPermissionAction,

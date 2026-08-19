@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
-import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
-import { 更新玩家资料 } from "#ctx/player/domain/更新";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import type { PlayerWarData } from "#ctx/player";
+import { 更新玩家资料, 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
 import type { 玩家完整资料 } from "#shared/kernel/跨域类型";
 

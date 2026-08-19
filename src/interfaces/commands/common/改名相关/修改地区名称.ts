@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
-import { 创建改名审核工单, 校验名称文本, 检查改名冷却 } from "#ctx/naming/工单服务";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 地区解析, 当前地区解析 } from "#ctx/region/domain/查询";
+import { 玩家联军检查 } from "#ctx/coalition";
+import { 创建改名审核工单, 校验名称文本, 检查改名冷却 } from "#ctx/naming";
+import { 地区解析, 当前地区解析 } from "#ctx/region";
 
 export function 修改地区名称(ctx: Context) {
     ctx.command("修改地区名称 <新名称:string> [地区编号:string]")

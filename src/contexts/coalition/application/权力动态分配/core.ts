@@ -1,7 +1,9 @@
 import type { Context } from "koishi";
-import { 按政体动态分配权限 } from "#ctx/coalition/domain/政体策略";
-import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
 import type { 联军权力检测结果 } from "#ctx/coalition/application/权力动态分配/types";
+
+import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
+
+import { 按政体动态分配权限 } from "#ctx/coalition/domain/政体策略";
 
 async function 执行联军权力动态检测(ctx: Context): Promise<联军权力检测结果> {
     const 联军列表 = await ctx.database.get("马列联军表", {});

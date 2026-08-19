@@ -1,5 +1,10 @@
+import type {
+    地区信号塔事件参数,
+    地区刷新事件参数,
+    地区权限变更事件参数,
+} from "#ctx/beacon/地区/types";
+
 import { 格式化 } from "#shared/format";
-import type { 地区信号塔事件参数, 地区刷新事件参数, 地区权限变更事件参数 } from "#ctx/beacon/地区/types";
 
 function 构建地区刷新事件内容(参数: 地区刷新事件参数): {
     标题: string;

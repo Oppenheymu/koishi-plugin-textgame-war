@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
-import type { Player } from "#ctx/player/domain/types/基本类型";
+import type { Player } from "#ctx/player";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
 
 interface 科技结算结果 {
     新科技等级: number;

@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 地区解析 } from "#ctx/region/domain/查询";
+import { 玩家检查 } from "#ctx/player";
+import { 地区解析 } from "#ctx/region";
 
 export function 我的驻扎(ctx: Context) {
     ctx.command("我的驻扎")

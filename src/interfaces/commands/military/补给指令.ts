@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
-import { 分配装备工作流, 扩军工作流, 裁军工作流 } from "#ctx/military/domain/军队工作流";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 军队解析 } from "#ctx/military/domain/军队解析";
+import { 玩家联军检查 } from "#ctx/coalition";
+import { 军队解析, 分配装备工作流, 扩军工作流, 裁军工作流 } from "#ctx/military";
 import { 格式化 } from "#shared/format";
 
 export function 分配装备(ctx: Context) {

@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 import { 生成随机图片片段 } from "#/infrastructure";
-import { 记录联军资本增量 } from "#ctx/coalition/application/生产总值统计";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 记录联军资本增量 } from "#ctx/coalition";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
 
 const 图片概率 = 0.01;

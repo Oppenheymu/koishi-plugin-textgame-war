@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
 
 export function 使用科技蓝图(ctx: Context) {
     ctx.command("使用科技蓝图 <数量:number>").action(async ({ session }, 数量) => {

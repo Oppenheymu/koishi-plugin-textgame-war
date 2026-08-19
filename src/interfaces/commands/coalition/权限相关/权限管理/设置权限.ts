@@ -1,8 +1,14 @@
 import type { Context } from "koishi";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 校验联军权限动作, 校验联军权限等级, 玩家联军权限设置, 联军权限动作列表, 设置联军操作权限 } from "#ctx/coalition/domain/设置权限";
-import { 获取政体可设置最小权限等级 } from "#ctx/coalition/domain/政体策略";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
+import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import {
+    校验联军权限动作,
+    校验联军权限等级,
+    玩家联军权限设置,
+    玩家联军检查,
+    联军权限动作列表,
+    获取政体可设置最小权限等级,
+    设置联军操作权限,
+} from "#ctx/coalition";
 
 export function 设置联军权限(ctx: Context) {
     ctx.command("设置联军权限 <操作:string> <权限等级:number>")

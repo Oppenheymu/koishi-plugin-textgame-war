@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
 
 export function 我的钢铁(ctx: Context) {

@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
 import type { 地区信号塔通报结果, 地区刷新事件参数 } from "#ctx/beacon/地区/types";
+
 import { 尝试发送地区信号塔通报 } from "#ctx/beacon/地区/发送";
 
 /**

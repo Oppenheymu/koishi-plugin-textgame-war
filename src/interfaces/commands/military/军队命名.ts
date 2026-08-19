@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
-import { 军队命名工作流 } from "#ctx/military/domain/军队工作流";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 军队解析 } from "#ctx/military/domain/军队解析";
+import { 玩家联军检查 } from "#ctx/coalition";
+import { 军队命名工作流, 军队解析 } from "#ctx/military";
 
 export function 军队命名(ctx: Context) {
     ctx.command("军队命名 <编号:number> <名称:text>")

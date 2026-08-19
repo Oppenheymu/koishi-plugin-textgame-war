@@ -1,7 +1,7 @@
 import type { Context, Session } from "koishi";
-import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import { 获取联军展示名称 } from "#ctx/coalition/domain/名称";
+import type { CoalitionArmy } from "#ctx/coalition";
+import { 获取联军展示名称 } from "#ctx/coalition";
+import type { Player } from "#ctx/player";
 import { 目标解析 } from "#shared/target/玩家";
 
 export async function 目标联军解析(

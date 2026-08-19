@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import { 格式化 } from "#shared/format";
-import { 目标联军解析 } from "#shared/target/联军";
+import { 目标联军解析 } from "#shared/target";
 
 export function 他的联军(ctx: Context) {
     ctx.command("他的联军 <目标:string>")

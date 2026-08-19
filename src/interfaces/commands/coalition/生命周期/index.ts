@@ -1,7 +1,8 @@
-import { 邀请加入联军 } from "#/interfaces/commands/coalition/生命周期/加入联军";
 import { 政变 } from "#/interfaces/commands/coalition/生命周期/发动政变";
+import { 同意加入联军 } from "#/interfaces/commands/coalition/生命周期/同意加入联军";
 import { 移出联军 } from "#/interfaces/commands/coalition/生命周期/移出联军";
 import { 组建联军 } from "#/interfaces/commands/coalition/生命周期/组建联军";
 import { 退出联军 } from "#/interfaces/commands/coalition/生命周期/退出联军";
+import { 邀请加入联军 } from "#/interfaces/commands/coalition/生命周期/邀请加入联军";
 
-export const 联军生命周期 = [政变, 邀请加入联军, 退出联军, 移出联军, 组建联军];
+export const 联军生命周期 = [政变, 邀请加入联军, 同意加入联军, 退出联军, 移出联军, 组建联军];

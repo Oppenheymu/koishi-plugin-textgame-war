@@ -1,8 +1,7 @@
 import type { Context, Session } from "koishi";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
+import type { Player, PlayerWarData } from "#ctx/player";
+import { 合并玩家资料 } from "#ctx/player";
 import { 会话检查 } from "#shared/session";
-import { 合并玩家资料 } from "#ctx/player/domain/查询";
 
 export async function 目标解析(
     ctx: Context,

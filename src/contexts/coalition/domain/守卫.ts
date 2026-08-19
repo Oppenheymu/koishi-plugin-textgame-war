@@ -1,8 +1,9 @@
 import type { Context, Session } from "koishi";
+import { 获取联军权限等级 } from "#ctx/coalition/domain/权限";
+
+import { 玩家检查 } from "#ctx/player";
 import type { 玩家联军检查选项, 玩家联军解析结果 } from "#shared/kernel/跨域类型";
 import { 会话检查, 发送并抛出错误 } from "#shared/session";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 获取联军权限等级 } from "#ctx/coalition/domain/权限";
 
 export async function 玩家联军检查(
     ctx: Context,

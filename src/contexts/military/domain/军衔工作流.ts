@@ -1,10 +1,12 @@
 // 军衔工作流（详见 军事系统.prompt.md 第 2 章：双轨授衔 / 政体联动 / 褫夺）
 import type { Context } from "koishi";
-import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
+import type { CoalitionArmy } from "#ctx/coalition";
+import { 获取联军操作权限 } from "#ctx/coalition";
 import { 政体元首自动军衔 } from "#ctx/military/domain/types/常量";
+
 import { 军衔, 尉官军衔列表 } from "#ctx/military/domain/types/枚举";
+
 import { 获取联军军衔记录 } from "#ctx/military/domain/军队解析";
-import { 获取联军操作权限 } from "#ctx/coalition/domain/设置权限";
 
 export interface 授衔操作者信息 {
     uid: string;

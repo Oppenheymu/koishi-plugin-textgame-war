@@ -1,7 +1,9 @@
 import type { Context } from "koishi";
-import { 服务事件中心 } from "#shared/events";
 import type { 每日签到重置结果 } from "#ctx/world/application/scheduler/types";
+
 import { 初始化服务记录 } from "#ctx/world/application/scheduler/记录载入";
+
+import { 服务事件中心 } from "#shared/events";
 
 let 正在执行每日重置 = false;
 

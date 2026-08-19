@@ -1,12 +1,18 @@
 import type { Context } from "koishi";
-import { 获取联军操作权限 } from "#ctx/coalition/domain/设置权限";
-import { 任命指挥官工作流 } from "#ctx/military/domain/军队工作流";
-import { 授衔工作流, 褫夺军衔工作流 } from "#ctx/military/domain/军衔工作流";
-import { 军衔权益表 } from "#ctx/military/domain/types/常量";
-import { 军衔, 军衔名称映射, 解析军衔名称 } from "#ctx/military/domain/types/枚举";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 军队解析, 获取玩家军队列表, 获取联军军衔记录 } from "#ctx/military/domain/军队解析";
-import { 目标解析 } from "#shared/target/玩家";
+import { 玩家联军检查, 获取联军操作权限 } from "#ctx/coalition";
+import {
+    任命指挥官工作流,
+    军衔,
+    军衔名称映射,
+    军衔权益表,
+    军队解析,
+    授衔工作流,
+    获取玩家军队列表,
+    获取联军军衔记录,
+    褫夺军衔工作流,
+    解析军衔名称,
+} from "#ctx/military";
+import { 目标解析 } from "#shared/target";
 
 export function 授衔(ctx: Context) {
     ctx.command("授衔 <目标:string> <军衔名:string>")

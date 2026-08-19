@@ -2,7 +2,9 @@
 // 每 5 分钟轮询：到达无敌军 → 驻扎；到达有敌军 → 创建/加入战斗；撤退到达 → 驻扎
 import type { Context } from "koishi";
 import type { Army, Battle } from "#ctx/military/domain/types/数据类型";
+
 import { 军队命令, 军队状态, 战斗状态, 战斗阵营 } from "#ctx/military/domain/types/枚举";
+
 import { 加载联军名称缓存, 向地区绑定群推送 } from "#ctx/military/domain/战报推送";
 
 /** 军队到达目标地区后的入场处理（触发战斗或驻扎） */

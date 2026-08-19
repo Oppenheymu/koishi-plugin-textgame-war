@@ -1,9 +1,7 @@
 import type { Context } from "koishi";
 import { TRandom } from "#/infrastructure";
-import { 更新玩家资料 } from "#ctx/player/domain/更新";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 更新地区资料 } from "#ctx/region/domain/更新";
-import { 驻扎检查 } from "#ctx/region/domain/守卫";
+import { 更新玩家资料, 玩家检查 } from "#ctx/player";
+import { 更新地区资料, 驻扎检查 } from "#ctx/region";
 import { 格式化 } from "#shared/format";
 
 export function 地区电解铝(ctx: Context) {

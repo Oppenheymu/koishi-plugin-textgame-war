@@ -1,7 +1,17 @@
 // 战场宽度与地形地貌修正（纯函数，不落表，详见 军事系统.prompt.md 5.3 / 6.1）
-import type { RegionTerra } from "#ctx/region/domain/types/地貌类型";
-import type { TerrainType } from "#ctx/region/domain/types/数据类型";
-import { 地形基础宽度, 地形攻击修正, 地形速度修正, 地貌攻击修正, 地貌速度修正, 战场宽度上限, 战场宽度下限, 超宽惩罚上限 } from "#ctx/military/domain/types/常量";
+
+import {
+    地形基础宽度,
+    地形攻击修正,
+    地形速度修正,
+    地貌攻击修正,
+    地貌速度修正,
+    战场宽度上限,
+    战场宽度下限,
+    超宽惩罚上限,
+} from "#ctx/military/domain/types/常量";
+
+import type { RegionTerra, TerrainType } from "#ctx/region";
 
 type 地貌占比 = Pick<RegionTerra, "水域" | "雪地" | "草地" | "荒地" | "森林" | "城镇">;
 

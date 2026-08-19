@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 import { Logger } from "koishi";
-import { 地区查询权限检查 } from "#ctx/region/domain/权限检查";
 import { 特殊建筑库 } from "#/interfaces/commands/region/建筑/config";
+import { 地区查询权限检查 } from "#ctx/region";
 
 const logger = new Logger("核反应堆查询");
 

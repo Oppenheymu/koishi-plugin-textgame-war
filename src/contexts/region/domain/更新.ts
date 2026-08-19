@@ -1,7 +1,8 @@
 import type { Context } from "koishi";
 import { Logger } from "koishi";
-import type { Region } from "#ctx/region/domain/types/数据类型";
 import type { RegionStrategy } from "#ctx/region/domain/types/战略类型";
+
+import type { Region } from "#ctx/region/domain/types/数据类型";
 
 const logger = new Logger("地区数据更新");
 

@@ -1,8 +1,10 @@
 // 军事系统可调参数常量区（详见 军事系统.prompt.md，所有数值均可调）
 // 直接从具体模块导入，避免经 #/types barrel 造成循环依赖
-import { TerrainType } from "#ctx/region/domain/types/数据类型";
-import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
+
+import { 联军政体 } from "#ctx/coalition";
 import { 军衔 } from "#ctx/military/domain/types/枚举";
+
+import { TerrainType } from "#ctx/region";
 
 // ---- 军衔体系（第 2 章）----
 

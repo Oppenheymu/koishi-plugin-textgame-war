@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 玩家检查 } from "#ctx/player";
 
 export function 设置工资(ctx: Context) {
     ctx.command("设置工资 <工资:number>").action(async ({ session }, 工资) => {

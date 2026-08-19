@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
 
 export function 提升科技到(ctx: Context) {
     ctx.command("提升科技到 <目标等级:number>").action(async ({ session }, 目标等级) => {

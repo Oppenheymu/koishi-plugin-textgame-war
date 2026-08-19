@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 初始化服务记录 } from "#ctx/world/application/scheduler/记录载入";
+import { 初始化服务记录 } from "#ctx/world";
 
 export function 初始化服务表(ctx: Context) {
     ctx.command("初始化服务表", {

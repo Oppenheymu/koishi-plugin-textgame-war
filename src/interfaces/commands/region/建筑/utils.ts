@@ -1,12 +1,17 @@
 import type { Context, Session } from "koishi";
-import { 计算资源总消耗 } from "#ctx/region/domain/construction/建造工具";
-import { 计算最大可执行轮次 as 计算最大可执行轮次工具 } from "#ctx/region/domain/construction/建造工具";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import { 更新玩家资料 } from "#ctx/player/domain/更新";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 驻扎检查 } from "#ctx/region/domain/守卫";
+import type {
+    特殊设施类型,
+    设施建造对象,
+    资源需求配置,
+} from "#/interfaces/commands/region/建筑/config";
+import type { Player } from "#ctx/player";
+import { 更新玩家资料, 玩家检查 } from "#ctx/player";
+import {
+    计算最大可执行轮次 as 计算最大可执行轮次工具,
+    计算资源总消耗,
+    驻扎检查,
+} from "#ctx/region";
 import { 格式化 } from "#shared/format";
-import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from "#/interfaces/commands/region/建筑/config";
 
 // 格式化工具统一由 #/utils 提供，此处 re-export 保持下游引用不变
 export { 格式化 } from "#shared/format";

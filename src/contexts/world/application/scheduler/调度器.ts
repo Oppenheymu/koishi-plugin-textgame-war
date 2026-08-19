@@ -1,6 +1,8 @@
 import type { Context } from "koishi";
 import { 执行每小时地区刷新 } from "#ctx/world/application/scheduler/刷新地区";
+
 import { 执行每日签到重置 } from "#ctx/world/application/scheduler/每日签到";
+
 import { 执行每时生产重置 } from "#ctx/world/application/scheduler/每时生产";
 
 export function 每日重置签到检查(ctx: Context) {

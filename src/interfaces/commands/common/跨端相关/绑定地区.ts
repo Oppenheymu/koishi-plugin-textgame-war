@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 地区解析 } from "#ctx/region/domain/查询";
+import { 玩家联军检查 } from "#ctx/coalition";
+import { 地区解析 } from "#ctx/region";
 import { 用户检查 } from "#shared/session";
 
 export function 绑定地区(ctx: Context) {

@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
+import type { PlayerWarData } from "#ctx/player";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
 
 export function 我的装备(ctx: Context) {
     ctx.command("我的装备")

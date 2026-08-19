@@ -1,6 +1,5 @@
 import type { Context } from "koishi";
-import { 获取联军展示名称 } from "#ctx/coalition/domain/名称";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
+import { 玩家联军检查, 获取联军展示名称 } from "#ctx/coalition";
 import { 格式化 } from "#shared/format";
 
 export function 我的联军(ctx: Context) {

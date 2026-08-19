@@ -1,9 +1,7 @@
 import type { Context } from "koishi";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 获取联军成员权限等级 } from "#ctx/coalition/domain/成员权限";
-import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 目标解析 } from "#shared/target/玩家";
+import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import { 玩家联军检查, 联军政体, 获取联军成员权限等级 } from "#ctx/coalition";
+import { 目标解析 } from "#shared/target";
 
 function 校验目标是本联军成员(目标联军编号: string | null, 联军编号: string): boolean {
     return 目标联军编号 === 联军编号;

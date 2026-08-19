@@ -2,14 +2,14 @@ import type { Context } from "koishi";
 import "koishi-plugin-cron-fix";
 import "koishi-plugin-am-i-alt";
 
+import { 文游指令集 } from "#/composition/指令集";
+import { 数据库服务 } from "#/composition/数据库服务";
+import { 文游服务集 } from "#/composition/服务集";
+import { 文游管理集 } from "#/composition/管理集";
 import type { PluginConfig } from "#/config";
 import { 初始化插件运行时配置, 插件配置Schema } from "#/config";
 import { 批量加载插件 } from "#/infrastructure";
-import { 数据库服务 } from "#/composition/数据库服务";
-import { 文游服务集 } from "#/composition/服务集";
-import { 确保空间索引就绪 } from "#ctx/region/domain/geography/空间索引";
-import { 文游指令集 } from "#/composition/指令集";
-import { 文游管理集 } from "#/composition/管理集";
+import { 确保空间索引就绪 } from "#ctx/region";
 
 export const name = "malie-textgame";
 

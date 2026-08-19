@@ -1,11 +1,17 @@
 import type { Context } from "koishi";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 设置联军权限配置 } from "#ctx/coalition/domain/设置权限";
-import { 按政体动态分配权限, 极权制降权到一级, 获取政体默认权限配置 } from "#ctx/coalition/domain/政体策略";
-import { 同步元首政体军衔 } from "#ctx/military/domain/军衔工作流";
-import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
-import { 获取成员联军贡献, 获取排除成员后前N贡献总和, 获取排除成员后平均贡献 } from "#ctx/coalition/domain/贡献";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
+import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import {
+    按政体动态分配权限,
+    极权制降权到一级,
+    玩家联军检查,
+    联军政体,
+    获取成员联军贡献,
+    获取排除成员后前N贡献总和,
+    获取排除成员后平均贡献,
+    获取政体默认权限配置,
+    设置联军权限配置,
+} from "#ctx/coalition";
+import { 同步元首政体军衔 } from "#ctx/military";
 
 function 是否有效政体(输入: string): 输入 is 联军政体 {
     return Object.values(联军政体).includes(输入 as 联军政体);

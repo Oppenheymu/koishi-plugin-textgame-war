@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 玩家检查 } from "#ctx/player";
 import { 用户检查 } from "#shared/session";
 
 interface BindTask {

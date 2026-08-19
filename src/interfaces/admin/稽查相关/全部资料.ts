@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import { 格式化 } from "#shared/format";
-import { 目标解析 } from "#shared/target/玩家";
+import { 目标解析 } from "#shared/target";
 
 export function 他的全部资料(ctx: Context) {
     ctx.command("他的全部资料 <目标>", {

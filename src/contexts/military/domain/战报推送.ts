@@ -1,7 +1,7 @@
 // 战报推送（详见 军事系统.prompt.md 6.9）
 // 推送目标：战斗发生地区绑定群聊（每轮简报）+ 双方联军首都绑定群聊（大战报）
 import type { Context } from "koishi";
-import { 获取联军展示名称 } from "#ctx/coalition/domain/名称";
+import { 获取联军展示名称 } from "#ctx/coalition";
 
 const 战报平台列表 = ["onebot", "discord", "telegram"] as const;
 

@@ -1,10 +1,7 @@
 import type { Context } from "koishi";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 玩家联军权限设置 } from "#ctx/coalition/domain/设置权限";
-import { 移除联军成员 } from "#ctx/coalition/domain/移除成员";
-import { 获取联军权限等级 } from "#ctx/coalition/domain/权限";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 目标解析 } from "#shared/target/玩家";
+import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import { 玩家联军权限设置, 玩家联军检查, 移除联军成员, 获取联军权限等级 } from "#ctx/coalition";
+import { 目标解析 } from "#shared/target";
 
 export function 移出联军(ctx: Context) {
     ctx.command("移出联军 <目标:string>")

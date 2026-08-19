@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
 import { 确保空间索引就绪 } from "#ctx/region/domain/geography/空间索引";
+
 import { 计算真实距离 } from "#ctx/region/domain/geography/距离计算";
 
 export async function 获取相邻地区(

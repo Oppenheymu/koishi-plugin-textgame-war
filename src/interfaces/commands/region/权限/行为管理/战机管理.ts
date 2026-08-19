@@ -1,6 +1,5 @@
 import type { Context, Session } from "koishi";
-import { 地区机场权限设置检查 } from "#ctx/region/domain/权限检查";
-import { 更新地区资料 } from "#ctx/region/domain/更新";
+import { 地区机场权限设置检查, 更新地区资料 } from "#ctx/region";
 
 type 战机权限模式 = "允许战机" | "禁止战机";
 

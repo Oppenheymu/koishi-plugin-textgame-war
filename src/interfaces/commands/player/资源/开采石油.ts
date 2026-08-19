@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import { TRandom } from "#/infrastructure";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
 
 export function 开采石油(ctx: Context) {

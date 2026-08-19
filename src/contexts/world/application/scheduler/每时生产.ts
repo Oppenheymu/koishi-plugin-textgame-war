@@ -1,7 +1,8 @@
 import type { Context } from "koishi";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import { 服务事件中心 } from "#shared/events";
+import type { Player } from "#ctx/player";
 import type { 每时生产重置结果 } from "#ctx/world/application/scheduler/types";
+
+import { 服务事件中心 } from "#shared/events";
 
 export async function 执行每时生产重置(ctx: Context): Promise<每时生产重置结果> {
     const logger = ctx.logger("文游服务");

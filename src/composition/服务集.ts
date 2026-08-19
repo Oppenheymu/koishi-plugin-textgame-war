@@ -1,18 +1,12 @@
 import type { Context } from "koishi";
 import { 批量加载插件 } from "#/infrastructure";
-import { 军事服务列表 } from "#ctx/military/application";
-import { GenerateMap, 地图生成服务列表 } from "#ctx/world/application/mapgen";
-import { 生产统计服务列表 } from "#ctx/world/application/stats";
-import { 联军服务列表 } from "#ctx/coalition/application";
-import { 初始化服务记录, 重置调度服务列表 } from "#ctx/world/application/scheduler";
+import { 联军服务列表 } from "#ctx/coalition";
+import { 军事服务列表 } from "#ctx/military";
+import { 地图生成服务列表, 生产统计服务列表, 重置调度服务列表 } from "#ctx/world";
 
-export * from "#ctx/military/application";
-export * from "#ctx/world/application/mapgen";
-export * from "#ctx/world/application/stats";
-export * from "#ctx/coalition/application";
-export * from "#ctx/world/application/scheduler";
-
-export { GenerateMap, 初始化服务记录 };
+export * from "#ctx/coalition";
+export * from "#ctx/military";
+export * from "#ctx/world";
 
 const 服务插件列表 = [
     ...重置调度服务列表,

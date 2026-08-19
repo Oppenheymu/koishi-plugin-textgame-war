@@ -1,1 +1,1 @@
-export * from "#ctx/world/domain/types/全球数据";
+export * from "./全球数据.js";

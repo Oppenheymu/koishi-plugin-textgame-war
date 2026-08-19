@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 创建改名审核工单, 校验名称文本, 检查名称是否重复, 检查改名冷却 } from "#ctx/naming/工单服务";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 创建改名审核工单, 校验名称文本, 检查名称是否重复, 检查改名冷却 } from "#ctx/naming";
+import { 玩家检查 } from "#ctx/player";
 
 export function 修改玩家名称(ctx: Context) {
     ctx.command("修改玩家名称 <新名称:string>")

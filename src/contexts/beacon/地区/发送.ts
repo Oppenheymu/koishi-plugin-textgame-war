@@ -1,8 +1,11 @@
 import type { Context } from "koishi";
 import { 尝试执行 } from "#ctx/beacon/utils";
-import { 尝试发送新闻信号塔通报 } from "#ctx/beacon/新闻";
+
 import type { 地区信号塔事件参数, 地区信号塔通报结果 } from "#ctx/beacon/地区/types";
+
 import { 构建地区事件内容 } from "#ctx/beacon/地区/构建";
+
+import { 尝试发送新闻信号塔通报 } from "#ctx/beacon/新闻";
 
 /**
  * 发送地区事件信号塔通报（通用接口）

@@ -1,7 +1,5 @@
 import type { Context } from "koishi";
-import { 获取指定等级成员UID列表 } from "#ctx/coalition/domain/成员权限";
-import { 玩家联军权限设置 } from "#ctx/coalition/domain/设置权限";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
+import { 玩家联军权限设置, 玩家联军检查, 获取指定等级成员UID列表 } from "#ctx/coalition";
 
 const 等级映射: Record<string, 1 | 2 | 3 | 4> = {
     "1": 1,

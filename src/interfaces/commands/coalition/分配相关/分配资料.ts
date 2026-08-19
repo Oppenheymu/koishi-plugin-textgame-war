@@ -1,10 +1,9 @@
 import type { Context } from "koishi";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 玩家联军权限设置 } from "#ctx/coalition/domain/设置权限";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 更新玩家资料 } from "#ctx/player/domain/更新";
+import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import { 玩家联军权限设置, 玩家联军检查 } from "#ctx/coalition";
+import { 更新玩家资料 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 目标解析 } from "#shared/target/玩家";
+import { 目标解析 } from "#shared/target";
 
 export function 分配生活资料(ctx: Context) {
     ctx.command("分配生活资料 <数量:number> [目标:string]")

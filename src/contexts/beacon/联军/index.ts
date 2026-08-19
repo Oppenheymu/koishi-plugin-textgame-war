@@ -1,9 +1,9 @@
 import type { Context } from "koishi";
-import { 联军解析 } from "#ctx/coalition/domain/查询";
-import { 地区解析 } from "#ctx/region/domain/查询";
 import type { 发送失败记录, 发送记录 } from "#ctx/beacon/utils";
 import { 信号塔平台列表, 尝试执行 } from "#ctx/beacon/utils";
 import type { 信号塔发送参数, 信号塔发送结果 } from "#ctx/beacon/联军/types";
+import { 联军解析 } from "#ctx/coalition/domain/查询";
+import { 地区解析 } from "#ctx/region/domain/查询";
 
 function 构建信号塔通报文本(参数: {
     标题: string;

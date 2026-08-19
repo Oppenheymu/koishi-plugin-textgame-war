@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
-import { 地区解析, 当前地区解析 } from "#ctx/region/domain/查询";
+import { 地区编号转经纬度, 地区解析, 当前地区解析, 格式化经纬度 } from "#ctx/region";
 import { 格式化 } from "#shared/format";
-import { 地区编号转经纬度, 格式化经纬度 } from "#ctx/region/domain/geography/坐标解析";
 
 const 去尾零 = (value: string) => value.replace(/\.0$/, "");
 

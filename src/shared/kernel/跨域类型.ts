@@ -1,8 +1,5 @@
-import type { CoalitionPermissionLevel } from "#ctx/coalition/domain/types/联军权限类型";
-import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import type { PlayerConfig } from "#ctx/player/domain/types/配置类型";
-import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
+import type { CoalitionArmy, CoalitionPermissionLevel } from "#ctx/coalition";
+import type { Player, PlayerConfig, PlayerWarData } from "#ctx/player";
 
 export type 联军权限等级 = CoalitionPermissionLevel;
 

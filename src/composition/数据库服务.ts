@@ -1,24 +1,23 @@
 import type { Context } from "koishi";
 import { 批量加载插件 } from "#/infrastructure";
-import type { CoalitionPermission } from "#ctx/coalition/domain/types/联军权限类型";
-import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
-import type { Army, Battle, CoalitionRank } from "#ctx/military/domain/types/数据类型";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import type { PlayerConfig } from "#ctx/player/domain/types/配置类型";
-import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
-import type { RegionTerra } from "#ctx/region/domain/types/地貌类型";
-import type { RegionConfig } from "#ctx/region/domain/types/配置类型";
-import type { Region } from "#ctx/region/domain/types/数据类型";
-import type { RegionStrategy } from "#ctx/region/domain/types/战略类型";
-import type { RegionShufflePool, RegionState } from "#ctx/region/domain/types/状态类型";
-import type { GlobalData } from "#ctx/world/domain/types/全球数据";
+import type { CoalitionArmy, CoalitionPermission } from "#ctx/coalition";
+import { 加载联军相关表 } from "#ctx/coalition";
+import type { Army, Battle, CoalitionRank } from "#ctx/military";
+import { 加载军事相关表 } from "#ctx/military";
+import type { Player, PlayerConfig, PlayerWarData } from "#ctx/player";
+import { 加载玩家相关表 } from "#ctx/player";
+import type {
+    Region,
+    RegionConfig,
+    RegionShufflePool,
+    RegionState,
+    RegionStrategy,
+    RegionTerra,
+} from "#ctx/region";
+import { 加载地形相关表 } from "#ctx/region";
+import type { GlobalData } from "#ctx/world";
+import { 加载全球数据表, 加载服务表 } from "#ctx/world";
 import type { Service } from "#shared/kernel/服务类型";
-import { 加载全球数据表 } from "#ctx/world/infrastructure/全球数据表";
-import { 加载军事相关表 } from "#ctx/military/infrastructure";
-import { 加载地形相关表 } from "#ctx/region/infrastructure";
-import { 加载服务表 } from "#ctx/world/infrastructure/服务表";
-import { 加载玩家相关表 } from "#ctx/player/infrastructure";
-import { 加载联军相关表 } from "#ctx/coalition/infrastructure";
 
 // 扩展 Koishi 数据表类型定义
 

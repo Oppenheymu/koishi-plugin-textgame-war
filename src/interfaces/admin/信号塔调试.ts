@@ -1,9 +1,7 @@
 import type { Context } from "koishi";
-import { 尝试发送后台信号塔日志 } from "#ctx/beacon/后台";
-import { 尝试发送新闻信号塔通报 } from "#ctx/beacon/新闻";
-import { 推送联军生产总值排行新闻 } from "#ctx/coalition/application/生产总值统计/排行榜";
-import { 执行联军资本增量日结 } from "#ctx/coalition/application/生产总值统计/资本日结";
-import { 执行每日全服统计 } from "#ctx/world/application/stats/全服统计";
+import { 尝试发送后台信号塔日志, 尝试发送新闻信号塔通报 } from "#ctx/beacon";
+import { 执行联军资本增量日结, 推送联军生产总值排行新闻 } from "#ctx/coalition";
+import { 执行每日全服统计 } from "#ctx/world";
 import { 格式化 } from "#shared/format";
 
 function 构建排行文本(

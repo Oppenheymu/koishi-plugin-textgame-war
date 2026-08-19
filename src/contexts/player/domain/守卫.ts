@@ -1,8 +1,10 @@
 import type { Context, Session } from "koishi";
+import { 获取玩家展示名称 } from "#ctx/player/domain/名称";
+
+import { 合并玩家资料 } from "#ctx/player/domain/查询";
+
 import type { 玩家解析结果 } from "#shared/kernel/跨域类型";
 import { 会话检查, 发送并抛出错误 } from "#shared/session";
-import { 获取玩家展示名称 } from "#ctx/player/domain/名称";
-import { 合并玩家资料 } from "#ctx/player/domain/查询";
 
 export async function 玩家检查(ctx: Context, session: Session | undefined): Promise<玩家解析结果> {
     会话检查(session);

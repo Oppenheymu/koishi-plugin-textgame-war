@@ -1,9 +1,7 @@
 import dayjs from "dayjs";
 import type { Context } from "koishi";
-import { 下达命令工作流, 进军工作流 } from "#ctx/military/domain/军队工作流";
-import { 军队命令 } from "#ctx/military/domain/types/枚举";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 军队解析 } from "#ctx/military/domain/军队解析";
+import { 玩家联军检查 } from "#ctx/coalition";
+import { 下达命令工作流, 军队命令, 军队解析, 进军工作流 } from "#ctx/military";
 
 export function 进军(ctx: Context) {
     ctx.command("进军 <编号:number> <地区编号:string>")

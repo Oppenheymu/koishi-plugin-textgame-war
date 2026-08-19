@@ -1,4 +1,5 @@
 import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
+
 import type { 联军权限等级 } from "#shared/kernel/跨域类型";
 
 export function 获取联军权限等级(联军资料: CoalitionArmy, uid: string): 联军权限等级 {

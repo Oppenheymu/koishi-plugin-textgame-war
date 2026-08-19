@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import type { Context } from "koishi";
+import { 审核群号 } from "#ctx/naming/state";
 
 import { 检查违禁词 } from "#shared/profanity";
-import { 审核群号 } from "#ctx/naming/state";
 
 type 改名类型 = "玩家" | "联军" | "地区" | "军队";
 

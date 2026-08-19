@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
 import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
+
 import { 获取联军展示名称 } from "#ctx/coalition/domain/名称";
 
 export async function 联军解析(

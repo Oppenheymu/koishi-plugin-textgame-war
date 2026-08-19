@@ -1,2 +1,3 @@
-export * from "#ctx/player/domain/types/基本类型";
-export * from "#ctx/player/domain/types/战争类型";
+export * from "./基本类型.js";
+export * from "./战争类型.js";
+export * from "./配置类型.js";

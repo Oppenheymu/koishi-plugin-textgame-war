@@ -2,14 +2,11 @@
 
 import dayjs from "dayjs";
 import type { Context } from "koishi";
-import { 地区查询权限检查 } from "#ctx/region/domain/权限检查";
-import { 更新玩家资料 } from "#ctx/player/domain/更新";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 更新地区战略资料 } from "#ctx/region/domain/更新";
-import { 驻扎检查 } from "#ctx/region/domain/守卫";
 import { 特殊建筑库 } from "#/interfaces/commands/region/建筑/config";
 import 制取配置 from "#/interfaces/commands/region/战略/特殊/config";
 import { 制取物设施映射, 格式化 } from "#/interfaces/commands/region/战略/特殊/共享";
+import { 更新玩家资料, 玩家检查 } from "#ctx/player";
+import { 地区查询权限检查, 更新地区战略资料, 驻扎检查 } from "#ctx/region";
 
 /** 校验玩家资源是否满足消耗，不足时返回错误文本 */
 function 校验资源充足(用户资料: any, 资源消耗: Record<string, number>): string | null {

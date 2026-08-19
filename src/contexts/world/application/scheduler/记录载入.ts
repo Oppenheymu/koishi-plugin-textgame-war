@@ -1,7 +1,8 @@
 import type { Context } from "koishi";
 import { 确保服务记录 } from "#/infrastructure";
-import { 获取今天日期 } from "#shared/events";
 import type { 服务记录初始化结果 } from "#ctx/world/application/scheduler/types";
+
+import { 获取今天日期 } from "#shared/events";
 
 export async function 初始化服务记录(ctx: Context): Promise<服务记录初始化结果> {
     const 今天 = 获取今天日期();

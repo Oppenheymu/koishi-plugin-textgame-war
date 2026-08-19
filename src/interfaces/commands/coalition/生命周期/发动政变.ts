@@ -1,11 +1,15 @@
 import type { Context } from "koishi";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 设置联军权限配置 } from "#ctx/coalition/domain/设置权限";
-import { 政变后权限重置, 获取政体默认权限配置 } from "#ctx/coalition/domain/政体策略";
-import { 同步元首政体军衔 } from "#ctx/military/domain/军衔工作流";
-import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
-import { 获取成员联军贡献, 获取排除成员后前N贡献总和 } from "#ctx/coalition/domain/贡献";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
+import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import {
+    政变后权限重置,
+    玩家联军检查,
+    联军政体,
+    获取成员联军贡献,
+    获取排除成员后前N贡献总和,
+    获取政体默认权限配置,
+    设置联军权限配置,
+} from "#ctx/coalition";
+import { 同步元首政体军衔 } from "#ctx/military";
 
 const 格式化 = (n: number) =>
     n.toLocaleString("zh-CN", {

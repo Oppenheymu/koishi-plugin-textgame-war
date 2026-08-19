@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
 
 export function 我的地下弹药库(ctx: Context) {
     ctx.command("我的地下弹药库")

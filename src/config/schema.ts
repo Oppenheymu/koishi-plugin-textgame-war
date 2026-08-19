@@ -1,5 +1,4 @@
 import { Schema } from "koishi";
-import type { TerrainType } from "#ctx/region/domain/types/数据类型";
 import {
     默认Sqids配置,
     默认信号塔配置,
@@ -8,6 +7,7 @@ import {
     默认联军权限配置,
 } from "#/config/defaults";
 import type { PluginConfig, Sqids单项配置, 信号塔频道配置 } from "#/config/types";
+import type { TerrainType } from "#ctx/region";
 
 const 权限等级Schema = Schema.union([
     Schema.const(1),

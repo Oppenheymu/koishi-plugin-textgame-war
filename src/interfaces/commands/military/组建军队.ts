@@ -1,8 +1,6 @@
 import type { Context } from "koishi";
-import { 获取联军操作权限 } from "#ctx/coalition/domain/设置权限";
-import { 组建军队工作流, 解散军队工作流 } from "#ctx/military/domain/军队工作流";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 军队解析 } from "#ctx/military/domain/军队解析";
+import { 玩家联军检查, 获取联军操作权限 } from "#ctx/coalition";
+import { 军队解析, 组建军队工作流, 解散军队工作流 } from "#ctx/military";
 
 export function 组建军队(ctx: Context) {
     ctx.command("组建军队 [名称:text]")

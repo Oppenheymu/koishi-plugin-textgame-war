@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 目标解析 } from "#shared/target/玩家";
+import { 目标解析 } from "#shared/target";
 
 export function 联军生活资料查询(ctx: Context) {
     ctx.command("查看联军生活资料 [目标:string]")

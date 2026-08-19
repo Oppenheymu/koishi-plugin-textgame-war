@@ -1,8 +1,8 @@
 import type { Context } from "koishi";
-import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import type { CoalitionArmy } from "#ctx/coalition";
+import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
-import { 目标解析 } from "#shared/target/玩家";
+import { 目标解析 } from "#shared/target";
 
 type 增量区间 = "当天" | "三天" | "七天";
 type 联军增量字段 = Pick<CoalitionArmy, "当天内资本增量" | "三天内资本增量" | "七天内资本增量">;

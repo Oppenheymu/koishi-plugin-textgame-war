@@ -1,4 +1,4 @@
-import type { 新闻信号塔发送结果 } from "#ctx/beacon/新闻";
+import type { 新闻信号塔发送结果 } from "#ctx/beacon/新闻/types";
 
 /**
  * 地区刷新事件参数

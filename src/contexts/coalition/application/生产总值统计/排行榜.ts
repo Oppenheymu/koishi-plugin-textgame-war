@@ -1,9 +1,15 @@
 import type { Context } from "koishi";
-import { 尝试发送新闻信号塔通报 } from "#ctx/beacon/新闻";
+import { 尝试发送新闻信号塔通报 } from "#ctx/beacon";
+import type {
+    联军生产总值排行推送结果,
+    联军生产总值排行项,
+} from "#ctx/coalition/application/生产总值统计/types";
+
 import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
+
 import { 获取联军展示名称 } from "#ctx/coalition/domain/名称";
+
 import { 格式化数值 } from "#shared/events";
-import type { 联军生产总值排行推送结果, 联军生产总值排行项 } from "#ctx/coalition/application/生产总值统计/types";
 
 export function 生成联军生产总值排行榜(联军列表: CoalitionArmy[]): 联军生产总值排行项[] {
     return [...联军列表]

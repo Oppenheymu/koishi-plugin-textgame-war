@@ -1,4 +1,11 @@
-import type { 军衔, 军衔来源, 军队命令, 军队状态, 战斗状态, 战斗阵营 } from "#ctx/military/domain/types/枚举";
+import type {
+    军衔,
+    军衔来源,
+    军队命令,
+    军队状态,
+    战斗状态,
+    战斗阵营,
+} from "#ctx/military/domain/types/枚举";
 
 /**
  * 军衔表记录（马列联军军衔表）

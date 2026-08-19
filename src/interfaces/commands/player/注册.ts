@@ -1,9 +1,7 @@
 import type { Context } from "koishi";
 import { TRandom, 获取注册Sqids } from "#/infrastructure";
-import { 检查名称是否重复 } from "#ctx/naming/工单服务";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import type { PlayerConfig } from "#ctx/player/domain/types/配置类型";
-import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
+import { 检查名称是否重复 } from "#ctx/naming";
+import type { Player, PlayerConfig, PlayerWarData } from "#ctx/player";
 import { 格式化 } from "#shared/format";
 import { 会话检查, 用户检查 } from "#shared/session";
 

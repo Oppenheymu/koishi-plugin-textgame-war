@@ -1,6 +1,7 @@
 import type { Context, Session } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 地区解析, type 地区解析结果, 当前地区解析 } from "#ctx/region/domain/查询";
+import { 玩家检查 } from "#ctx/player";
+import type { 地区解析结果 } from "#ctx/region/domain/查询";
+import { 地区解析, 当前地区解析 } from "#ctx/region/domain/查询";
 
 export interface 驻扎检查结果 extends 地区解析结果 {
     id: number;

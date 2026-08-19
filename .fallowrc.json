@@ -24,5 +24,366 @@
     ],
     "ignoreUnresolvedImports": [
         "../../assets/版本日志.json"
-    ]
+    ],
+    "boundaries": {
+        "zones": [
+            {
+                "name": "entrypoint",
+                "patterns": [
+                    "src/index.ts"
+                ]
+            },
+            {
+                "name": "composition",
+                "patterns": [
+                    "src/composition/**"
+                ]
+            },
+            {
+                "name": "config",
+                "patterns": [
+                    "src/config/**",
+                    "src/infrastructure/**"
+                ]
+            },
+            {
+                "name": "shared",
+                "patterns": [
+                    "src/shared/**"
+                ]
+            },
+            {
+                "name": "interfaces",
+                "patterns": [
+                    "src/interfaces/**"
+                ]
+            },
+            {
+                "name": "ctxroot-military",
+                "patterns": [
+                    "src/contexts/military/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-military",
+                "patterns": [
+                    "src/contexts/military/**"
+                ]
+            },
+            {
+                "name": "ctxroot-region",
+                "patterns": [
+                    "src/contexts/region/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-region",
+                "patterns": [
+                    "src/contexts/region/**"
+                ]
+            },
+            {
+                "name": "ctxroot-coalition",
+                "patterns": [
+                    "src/contexts/coalition/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-coalition",
+                "patterns": [
+                    "src/contexts/coalition/**"
+                ]
+            },
+            {
+                "name": "ctxroot-player",
+                "patterns": [
+                    "src/contexts/player/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-player",
+                "patterns": [
+                    "src/contexts/player/**"
+                ]
+            },
+            {
+                "name": "ctxroot-beacon",
+                "patterns": [
+                    "src/contexts/beacon/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-beacon",
+                "patterns": [
+                    "src/contexts/beacon/**"
+                ]
+            },
+            {
+                "name": "ctxroot-naming",
+                "patterns": [
+                    "src/contexts/naming/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-naming",
+                "patterns": [
+                    "src/contexts/naming/**"
+                ]
+            },
+            {
+                "name": "ctxroot-world",
+                "patterns": [
+                    "src/contexts/world/index.ts"
+                ]
+            },
+            {
+                "name": "ctx-world",
+                "patterns": [
+                    "src/contexts/world/**"
+                ]
+            }
+        ],
+        "rules": [
+            {
+                "from": "entrypoint",
+                "allow": [
+                    "composition",
+                    "config",
+                    "shared",
+                    "interfaces",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "composition",
+                "allow": [
+                    "config",
+                    "shared",
+                    "interfaces",
+                    "ctx-military",
+                    "ctx-region",
+                    "ctx-coalition",
+                    "ctx-player",
+                    "ctx-beacon",
+                    "ctx-naming",
+                    "ctx-world",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "interfaces",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "shared",
+                "allow": [
+                    "config"
+                ],
+                "allowTypeOnly": [
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "config",
+                "allow": [],
+                "allowTypeOnly": [
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctx-military",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctx-region",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctx-coalition",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctx-player",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctx-beacon",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world",
+                    "ctx-coalition",
+                    "ctx-region",
+                    "ctx-player",
+                    "ctx-military",
+                    "ctx-world"
+                ]
+            },
+            {
+                "from": "ctx-naming",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctx-world",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctxroot-military",
+                    "ctxroot-region",
+                    "ctxroot-coalition",
+                    "ctxroot-player",
+                    "ctxroot-beacon",
+                    "ctxroot-naming",
+                    "ctxroot-world"
+                ]
+            },
+            {
+                "from": "ctxroot-military",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-military"
+                ]
+            },
+            {
+                "from": "ctxroot-region",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-region"
+                ]
+            },
+            {
+                "from": "ctxroot-coalition",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-coalition"
+                ]
+            },
+            {
+                "from": "ctxroot-player",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-player"
+                ]
+            },
+            {
+                "from": "ctxroot-beacon",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-beacon"
+                ]
+            },
+            {
+                "from": "ctxroot-naming",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-naming"
+                ]
+            },
+            {
+                "from": "ctxroot-world",
+                "allow": [
+                    "config",
+                    "shared",
+                    "ctx-world"
+                ]
+            }
+        ]
+    }
 }

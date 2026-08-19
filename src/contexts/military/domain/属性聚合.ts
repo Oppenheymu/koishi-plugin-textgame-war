@@ -1,9 +1,13 @@
 // 军队属性聚合（纯函数，不落库，详见 军事系统.prompt.md 第 4 章）
 // 输入：军队装备数量 + 士兵数量；输出：军队面板
 import type { 军队面板 } from "#ctx/military/domain/types/军队面板";
-import type { Army } from "#ctx/military/domain/types/数据类型";
-import type { 装备属性, 陆军装备名 } from "#ctx/military/domain/types/装备属性表";
+
 import { 摩托化卡车比例, 摩托化速度, 营折算人数 } from "#ctx/military/domain/types/常量";
+
+import type { Army } from "#ctx/military/domain/types/数据类型";
+
+import type { 装备属性, 陆军装备名 } from "#ctx/military/domain/types/装备属性表";
+
 import { 乘员结算顺序, 民兵属性, 陆军装备属性表 } from "#ctx/military/domain/types/装备属性表";
 
 /** 聚合所需的军队字段（装备数量列 + 士兵数量） */

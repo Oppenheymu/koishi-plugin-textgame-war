@@ -1,14 +1,15 @@
 // 行军计算（详见 军事系统.prompt.md 第 5 章）
 
-import type { Army } from "#ctx/military/domain/types/数据类型";
-import type { RegionTerra } from "#ctx/region/domain/types/地貌类型";
-import type { Region } from "#ctx/region/domain/types/数据类型";
 import { 两栖乘员占比要求, 时间倍率, 水域进入占比阈值 } from "#ctx/military/domain/types/常量";
+
+import type { Army } from "#ctx/military/domain/types/数据类型";
+
 import { 陆军装备属性表 } from "#ctx/military/domain/types/装备属性表";
-import { TerrainType } from "#ctx/region/domain/types/数据类型";
-import { 切比雪夫网格距离, 计算真实距离 } from "#ctx/region/domain/geography/距离计算";
-import { 解析地区编号 } from "#ctx/region/domain/geography/坐标解析";
+
 import { 计算地貌速度修正, 计算行军地形修正 } from "#ctx/military/domain/战场宽度";
+
+import type { Region, RegionTerra } from "#ctx/region";
+import { TerrainType, 切比雪夫网格距离, 解析地区编号, 计算真实距离 } from "#ctx/region";
 
 const 海洋地形列表: TerrainType[] = [
     TerrainType.浅海,

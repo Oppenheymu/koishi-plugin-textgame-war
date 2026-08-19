@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
 import type { Player } from "#ctx/player/domain/types/基本类型";
+
 import type { PlayerWarData } from "#ctx/player/domain/types/战争类型";
 
 const 玩家档案字段集合 = new Set<keyof Player>([

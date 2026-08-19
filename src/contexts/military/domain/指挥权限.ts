@@ -1,6 +1,8 @@
 import type { Context } from "koishi";
 import type { Army } from "#ctx/military/domain/types/数据类型";
+
 import { 军衔, 军衔名称映射 } from "#ctx/military/domain/types/枚举";
+
 import { 获取玩家军衔等级 } from "#ctx/military/domain/军队解析";
 
 /**

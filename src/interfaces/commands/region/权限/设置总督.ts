@@ -1,8 +1,6 @@
 import type { Context, Session } from "koishi";
-import { 尝试发送地区信号塔通报 } from "#ctx/beacon/地区/发送";
-import { 尝试发送联军信号塔通报 } from "#ctx/beacon/联军";
-import { 地区总督设置检查 } from "#ctx/region/domain/权限检查";
-import { 更新地区资料 } from "#ctx/region/domain/更新";
+import { 尝试发送地区信号塔通报, 尝试发送联军信号塔通报 } from "#ctx/beacon";
+import { 地区总督设置检查, 更新地区资料 } from "#ctx/region";
 
 async function 执行设置总督(
     ctx: Context,

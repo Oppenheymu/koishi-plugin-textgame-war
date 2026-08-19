@@ -1,12 +1,11 @@
 import dayjs from "dayjs";
 import type { Context, Session } from "koishi";
 import { Logger } from "koishi";
-import type { Player } from "#ctx/player/domain/types/基本类型";
-import type { RegionStrategy } from "#ctx/region/domain/types/战略类型";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 更新地区战略资料 } from "#ctx/region/domain/更新";
-import { 驻扎检查 } from "#ctx/region/domain/守卫";
-import type { 特殊建筑属性, 特殊设施类型, 设施建造对象 } from "#/interfaces/commands/region/建筑/config";
+import type {
+    特殊建筑属性,
+    特殊设施类型,
+    设施建造对象,
+} from "#/interfaces/commands/region/建筑/config";
 import { 特殊建筑库 } from "#/interfaces/commands/region/建筑/config";
 import {
     创建默认设施对象,
@@ -16,6 +15,10 @@ import {
     解析轮次,
     计算最大可执行轮次,
 } from "#/interfaces/commands/region/建筑/utils";
+import type { Player } from "#ctx/player";
+import { 玩家检查 } from "#ctx/player";
+import type { RegionStrategy } from "#ctx/region";
+import { 更新地区战略资料, 驻扎检查 } from "#ctx/region";
 
 const logger = new Logger("特殊设施建造");
 

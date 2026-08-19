@@ -1,9 +1,9 @@
 import type { Context } from "koishi";
 import { h } from "koishi";
-import { GenerateMap } from "#ctx/world/application/mapgen";
-import type { Region } from "#ctx/region/domain/types/数据类型";
-import { 玩家联军检查 } from "#ctx/coalition/domain/守卫";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 玩家联军检查 } from "#ctx/coalition";
+import { 玩家检查 } from "#ctx/player";
+import type { Region } from "#ctx/region";
+import { GenerateMap } from "#ctx/world";
 
 export function ViewMap(ctx: Context) {
     ctx.command("查看地图", "查看完整的世界地图")

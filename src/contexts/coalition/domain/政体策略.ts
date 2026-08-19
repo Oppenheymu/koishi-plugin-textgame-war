@@ -1,8 +1,16 @@
-import type { CoalitionPermission, CoalitionPermissionAction, CoalitionPermissionLevel } from "#ctx/coalition/domain/types/联军权限类型";
 import type { CoalitionArmy } from "#ctx/coalition/domain/types/联军数据类型";
+
 import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
-import { 获取成员联军贡献 } from "#ctx/coalition/domain/贡献";
+
+import type {
+    CoalitionPermission,
+    CoalitionPermissionAction,
+    CoalitionPermissionLevel,
+} from "#ctx/coalition/domain/types/联军权限类型";
+
 import { 获取联军权限等级 } from "#ctx/coalition/domain/权限";
+
+import { 获取成员联军贡献 } from "#ctx/coalition/domain/贡献";
 
 type 联军权限配置 = Omit<CoalitionPermission, "联军编号">;
 

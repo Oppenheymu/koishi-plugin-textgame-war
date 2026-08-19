@@ -1,11 +1,17 @@
 import type { Context, Session } from "koishi";
 import type { RegionTerra } from "#ctx/region/domain/types/地貌类型";
-import type { RegionConfig } from "#ctx/region/domain/types/配置类型";
-import type { Region } from "#ctx/region/domain/types/数据类型";
+
 import type { RegionStrategy } from "#ctx/region/domain/types/战略类型";
+
+import type { Region } from "#ctx/region/domain/types/数据类型";
+
 import type { RegionState } from "#ctx/region/domain/types/状态类型";
-import { 会话检查, 用户检查 } from "#shared/session";
+
+import type { RegionConfig } from "#ctx/region/domain/types/配置类型";
+
 import { 获取地区展示名称 } from "#ctx/region/domain/名称";
+
+import { 会话检查, 用户检查 } from "#shared/session";
 
 export interface 地区解析结果 {
     地区编号: string;

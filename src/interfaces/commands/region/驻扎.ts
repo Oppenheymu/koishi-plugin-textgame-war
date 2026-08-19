@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import type { Context } from "koishi";
-import { 更新玩家资料 } from "#ctx/player/domain/更新";
-import { 驻扎检查 } from "#ctx/region/domain/守卫";
+import { 更新玩家资料 } from "#ctx/player";
+import { 驻扎检查 } from "#ctx/region";
 
 export function 驻扎(ctx: Context) {
     ctx.command("驻扎 [地区编号:string]")

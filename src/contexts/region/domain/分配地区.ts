@@ -1,6 +1,12 @@
 import type { Context } from "koishi";
 import type { 栅格坐标 } from "#ctx/region/domain/geography/坐标解析";
-import { GRID_HEIGHT, GRID_WIDTH, 栅格坐标转地区编号, 解析地区编号 } from "#ctx/region/domain/geography/坐标解析";
+
+import {
+    GRID_HEIGHT,
+    GRID_WIDTH,
+    栅格坐标转地区编号,
+    解析地区编号,
+} from "#ctx/region/domain/geography/坐标解析";
 
 const CLUSTER_RADIUS = 5;
 

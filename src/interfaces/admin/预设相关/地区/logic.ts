@@ -1,10 +1,10 @@
-import { 赤道格子面积 } from "#ctx/region/domain/geography/坐标解析";
 import {
     type CapacityBase,
     type CapacityLimit,
     type RegionBasicDataItem,
     TerrainType,
 } from "#/interfaces/admin/预设相关/地区/types";
+import { 赤道格子面积 } from "#ctx/region";
 
 function clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));

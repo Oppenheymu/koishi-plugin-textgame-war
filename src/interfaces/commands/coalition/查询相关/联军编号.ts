@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "#ctx/player/domain/守卫";
-import { 目标解析 } from "#shared/target/玩家";
+import { 玩家检查 } from "#ctx/player";
+import { 目标解析 } from "#shared/target";
 
 export function 联军编号(ctx: Context) {
     ctx.command("联军编号 [目标:string]")
