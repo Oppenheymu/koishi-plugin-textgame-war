@@ -44,6 +44,14 @@
                 "./src/*.ts",
                 "./src/*/index.ts"
             ],
+            "#ctx/*": [
+                "./src/contexts/*.ts",
+                "./src/contexts/*/index.ts"
+            ],
+            "#shared/*": [
+                "./src/shared/*.ts",
+                "./src/shared/*/index.ts"
+            ],
             "#utils/*": [
                 "./src/utils/*.ts",
                 "./src/utils/*/index.ts"

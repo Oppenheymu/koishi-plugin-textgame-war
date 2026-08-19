@@ -1,0 +1,5 @@
+import { 加载玩家战争表 } from "#ctx/player/infrastructure/玩家战争表";
+import { 加载玩家表 } from "#ctx/player/infrastructure/玩家数据表";
+import { 加载玩家配置表 } from "#ctx/player/infrastructure/玩家配置表";
+
+export const 加载玩家相关表 = [加载玩家表, 加载玩家战争表, 加载玩家配置表];

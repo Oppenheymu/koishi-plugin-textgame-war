@@ -1,2 +1,2 @@
-export * from "./目录查找.js";
-export * from "./随机图片.js";
+export * from "#/infrastructure/游戏资源/目录查找";
+export * from "#/infrastructure/游戏资源/随机图片";

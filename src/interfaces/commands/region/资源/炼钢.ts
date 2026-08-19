@@ -1,0 +1,86 @@
+import type { Context } from "koishi";
+import { TRandom } from "#/infrastructure";
+import { 更新玩家资料 } from "#ctx/player/domain/更新";
+import { 玩家检查 } from "#ctx/player/domain/守卫";
+import { 更新地区资料 } from "#ctx/region/domain/更新";
+import { 驻扎检查 } from "#ctx/region/domain/守卫";
+import { 格式化 } from "#shared/format";
+
+export function 地区炼钢(ctx: Context) {
+    ctx.command("地区炼钢 <数量:number>")
+        .alias("地区钢铁生产")
+        .action(async ({ session }, 数量) => {
+            try {
+                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区资料 } =
+                    await 驻扎检查(ctx, session);
+                const { 用户资料 } = await 玩家检查(ctx, session);
+
+                if (!数量) {
+                    return [
+                        "=====[地区工业]=====",
+                        "格式：地区炼钢 <数量>",
+                        "说明：消耗铁矿石，经地区炼钢厂转化为钢铁（单厂单次上限200）",
+                        `■ 当前地区：${展示地区名称}（${地区编号}）`,
+                        `■ 空闲炼钢厂：${格式化(地区资料.空闲的炼钢厂)}`,
+                    ].join("\n");
+                }
+
+                if (当前驻扎地区 !== 地区编号) {
+                    return `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可使用地区炼钢`;
+                }
+
+                if (数量 <= 0 || !Number.isInteger(数量)) {
+                    return "请输入有效的炼钢数量（正整数）";
+                }
+
+                if (地区资料.空闲的炼钢厂 <= 0) {
+                    return `当前地区无空闲炼钢厂（地区：${展示地区名称}）`;
+                }
+
+                if (用户资料.铁矿石 < 数量) {
+                    return `铁矿石不足，当前铁矿石：${格式化(用户资料.铁矿石)}`;
+                }
+
+                if (用户资料.生产次数 <= 0) {
+                    return "生产次数不足";
+                }
+
+                if (用户资料.工人 < 400) {
+                    return "工人不足，地区炼钢需要至少400工人";
+                }
+
+                if (用户资料.生活资料 < 2000) {
+                    return "生活资料不足，地区炼钢需要至少2000生活资料";
+                }
+
+                const 增加的钢铁 = Math.max(1, Math.floor(数量 * TRandom(0.8, 1, 1, false)));
+                const 更新后钢铁 = 用户资料.钢铁 + 增加的钢铁;
+                const 更新后铁矿石 = 用户资料.铁矿石 - 数量;
+                const 更新后空闲炼钢厂 = Math.max(0, (地区资料.空闲的炼钢厂 ?? 0) - 1);
+
+                await Promise.all([
+                    更新玩家资料(ctx, id, {
+                        钢铁: 更新后钢铁,
+                        铁矿石: 更新后铁矿石,
+                        生活资料: 用户资料.生活资料 - 2000,
+                        生产次数: 用户资料.生产次数 - 1,
+                    }),
+                    更新地区资料(ctx, 地区编号, {
+                        空闲的炼钢厂: 更新后空闲炼钢厂,
+                    }),
+                ]);
+
+                return [
+                    "====[征战文游]====",
+                    `${username} 同志：`,
+                    `■ 地区：${展示地区名称}（${地区编号}）`,
+                    `■ 钢铁：${格式化(用户资料.钢铁)} → ${格式化(更新后钢铁)}`,
+                    `■ 铁矿石：${格式化(用户资料.铁矿石)} → ${格式化(更新后铁矿石)}`,
+                    `■ 空闲炼钢厂：${格式化(地区资料.空闲的炼钢厂)} → ${格式化(更新后空闲炼钢厂)}`,
+                    "■ 发出工资：2000",
+                ].join("\n");
+            } catch (error) {
+                return (error as Error).message;
+            }
+        });
+}

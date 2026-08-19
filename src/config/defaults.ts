@@ -5,7 +5,7 @@ import type {
     土木工程配置,
     地理配置,
     联军默认权限配置,
-} from "./types.js";
+} from "#/config/types";
 
 export const 默认联军权限配置: 联军默认权限配置 = {
     成员列表: 4,

@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { h, Logger } from "koishi";
-import { 查找项目根目录 } from "./目录查找.js";
+import { 查找项目根目录 } from "#/infrastructure/游戏资源/目录查找";
 
 const logger = new Logger("malie-random-image");
 

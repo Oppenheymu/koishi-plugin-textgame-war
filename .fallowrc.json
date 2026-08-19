@@ -1,24 +1,28 @@
 {
     "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
-    "entry": ["src/index.ts"],
-    "dynamicallyLoaded": [
-        "src/logic/土木工程/types.ts",
-        "src/logic/联军相关/扩军计划策略.ts",
-        "src/types/联军相关/index.ts",
-        "src/指令集/地区/仓储/index.ts",
-        "src/指令集/地区/战斗/index.ts",
-        "src/指令集/地区/战斗/列车炮炮击.ts",
-        "src/指令集/地区/战斗/部署列车炮.ts",
-        "src/指令集/地区/查询/地区军事.ts",
-        "src/指令集/地区/查询/战略/地区仓库.ts",
-        "src/指令集/战争/index.ts",
-        "src/指令集/战争/军队/index.ts",
-        "src/指令集/战争/查询/index.ts",
-        "src/指令集/战争/查询/我的军队.ts",
-        "src/指令集/玩家核心/查询/资源/我的资源.ts",
-        "src/指令集/联军/分配相关/分配军队.ts",
-        "src/指令集/联军/权限相关/扩军计划.ts",
-        "src/管理集/预设相关/初始化地区表.ts"
+    "entry": [
+        "src/index.ts"
     ],
-    "ignoreUnresolvedImports": ["../../assets/版本日志.json"]
+    "dynamicallyLoaded": [
+        "src/contexts/region/domain/construction/types.ts",
+        "src/contexts/coalition/domain/扩军计划策略.ts",
+        "src/contexts/coalition/domain/types/index.ts",
+        "src/interfaces/commands/region/仓储/index.ts",
+        "src/interfaces/commands/region/战斗/index.ts",
+        "src/interfaces/commands/region/战斗/列车炮炮击.ts",
+        "src/interfaces/commands/region/战斗/部署列车炮.ts",
+        "src/interfaces/commands/region/查询/地区军事.ts",
+        "src/interfaces/commands/region/查询/战略/地区仓库.ts",
+        "src/interfaces/commands/war/index.ts",
+        "src/interfaces/commands/war/军队/index.ts",
+        "src/interfaces/commands/war/查询/index.ts",
+        "src/interfaces/commands/war/查询/我的军队.ts",
+        "src/interfaces/commands/player/查询/资源/我的资源.ts",
+        "src/interfaces/commands/coalition/分配相关/分配军队.ts",
+        "src/interfaces/commands/coalition/权限相关/扩军计划.ts",
+        "src/interfaces/admin/预设相关/初始化地区表.ts"
+    ],
+    "ignoreUnresolvedImports": [
+        "../../assets/版本日志.json"
+    ]
 }

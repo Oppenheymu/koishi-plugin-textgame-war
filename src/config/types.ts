@@ -1,4 +1,5 @@
-import type { CoalitionPermissionLevel, TerrainType } from "../types/index.js";
+import type { CoalitionPermissionLevel } from "#ctx/coalition/domain/types/联军权限类型";
+import type { TerrainType } from "#ctx/region/domain/types/数据类型";
 
 export interface 联军默认权限配置 {
     成员列表: CoalitionPermissionLevel;
