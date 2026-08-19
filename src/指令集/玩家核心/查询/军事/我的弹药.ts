@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
+import { 格式化 } from "#/utils";
 import type { PlayerWarData } from "../../../../types/index.js";
 import { 玩家检查 } from "../../../../utils/index.js";
-import { 格式化 } from "#/utils";
 
 export function 我的弹药(ctx: Context) {
     ctx.command("我的弹药").action(async ({ session }) => {

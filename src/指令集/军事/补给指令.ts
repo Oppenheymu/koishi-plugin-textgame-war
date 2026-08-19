@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
 import { 分配装备工作流, 扩军工作流, 裁军工作流 } from "#/logic";
-import { 格式化, 军队解析, 玩家联军检查  } from "#/utils";
-
+import { 军队解析, 格式化, 玩家联军检查 } from "#/utils";
 
 export function 分配装备(ctx: Context) {
     ctx.command("分配装备 <编号:number> <装备:string> <数量:number>").action(

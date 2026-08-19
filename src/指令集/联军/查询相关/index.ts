@@ -5,7 +5,6 @@ import { 联军生产总值查询 } from "./生产总值.js";
 import { 联军生活资料查询 } from "./生活资料.js";
 import { 联军编号 } from "./联军编号.js";
 
-
 export const 查询相关指令 = [
     他的联军,
     联军编号,

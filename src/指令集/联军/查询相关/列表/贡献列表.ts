@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
 import { 玩家联军权限设置 } from "#/logic";
-import { 格式化, 玩家联军检查, 获取联军贡献排行数据  } from "#/utils";
-
+import { 格式化, 玩家联军检查, 获取联军贡献排行数据 } from "#/utils";
 
 export function 贡献排行(ctx: Context) {
     ctx.command("贡献排行")

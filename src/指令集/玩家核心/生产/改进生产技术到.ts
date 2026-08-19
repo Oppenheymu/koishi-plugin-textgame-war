@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index.js";
 import { 格式化 } from "#/utils";
+import { 玩家检查 } from "../../../utils/index.js";
 
 // 定义确认请求的数据结构
 interface UpgradeRequest {

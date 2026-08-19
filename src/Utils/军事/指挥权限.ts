@@ -10,11 +10,7 @@ import { 获取玩家军衔等级 } from "./军队解析.js";
  * - 本国将官（少将）→ 可指挥本国任何军队
  * 返回 null 表示可指挥，否则返回拒绝原因
  */
-async function 校验指挥权(
-    ctx: Context,
-    军队: Army,
-    操作者UID: string,
-): Promise<string | null> {
+async function 校验指挥权(ctx: Context, 军队: Army, 操作者UID: string): Promise<string | null> {
     if (!军队.指挥官UID) {
         return "该军队处于无主状态，请先通过【任命指挥官】指派指挥官";
     }

@@ -1,4 +1,5 @@
 export { 格式化 } from "#/utils";
+
 /** 制取/提取指令共享逻辑 */
 import type { 特殊设施类型 } from "../../建筑/config.js";
 
@@ -26,4 +27,3 @@ export const 制取物设施映射: Record<string, 制取物信息> = {
         权限动作: "查看地区核反应堆",
     },
 };
-

@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index.js";
 import { 格式化 } from "#/utils";
+import { 玩家检查 } from "../../../utils/index.js";
 
 export function 工人休假(ctx: Context) {
     ctx.command("工人休假 <数量:number>").action(async ({ session }, 数量) => {

@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
+import { 格式化 } from "#/utils";
 import type { Player, PlayerWarData } from "../../../types/index.js";
 import { 更新玩家资料, 玩家检查 } from "../../../utils/index.js";
-import { 格式化 } from "#/utils";
 
 interface 地堡配置 {
     name: string;

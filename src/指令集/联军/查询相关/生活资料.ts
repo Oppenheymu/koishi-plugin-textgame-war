@@ -1,6 +1,5 @@
 import type { Context } from "koishi";
-import { 格式化, 玩家检查, 目标解析  } from "#/utils";
-
+import { 格式化, 玩家检查, 目标解析 } from "#/utils";
 
 export function 联军生活资料查询(ctx: Context) {
     ctx.command("查看联军生活资料 [目标:string]")

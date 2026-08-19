@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 尝试发送地区信号塔通报 } from "./发送.js";
 import type { 地区信号塔通报结果, 地区刷新事件参数 } from "./types.js";
+import { 尝试发送地区信号塔通报 } from "./发送.js";
 
 /**
  * 地区刷新信号塔参数（向后兼容）

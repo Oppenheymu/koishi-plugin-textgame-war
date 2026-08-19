@@ -1,12 +1,11 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index.js";
 import { 格式化 } from "#/utils";
+import { 玩家检查 } from "../../../utils/index.js";
 
 export function 我的资料(ctx: Context) {
     ctx.command("我的资料").action(async ({ session }) => {
         try {
             const { username, 用户资料 } = await 玩家检查(ctx, session);
-
 
             return `
 ===[征战文游]===

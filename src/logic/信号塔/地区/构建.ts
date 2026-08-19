@@ -1,6 +1,5 @@
-import type { 地区信号塔事件参数, 地区刷新事件参数, 地区权限变更事件参数 } from "./types.js";
 import { 格式化 } from "#/utils";
-
+import type { 地区信号塔事件参数, 地区刷新事件参数, 地区权限变更事件参数 } from "./types.js";
 
 function 构建地区刷新事件内容(参数: 地区刷新事件参数): {
     标题: string;

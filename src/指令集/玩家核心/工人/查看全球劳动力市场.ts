@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index.js";
 import { 格式化 } from "#/utils";
+import { 玩家检查 } from "../../../utils/index.js";
 
 export function 查看全球劳动力市场(ctx: Context) {
     ctx.command("查看全球劳动力市场")

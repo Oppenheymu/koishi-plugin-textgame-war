@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 格式化, 目标解析  } from "../utils/index.js";
+import { 格式化, 目标解析 } from "../utils/index.js";
 
 export function 设置资源(ctx: Context) {
     ctx.command("设置资源 <目标> <资源类型> <数量>", {

@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
 import { TRandom } from "#/infrastructure";
-import { 格式化, 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查  } from "#/utils";
-
+import { 更新地区资料, 更新玩家资料, 格式化, 玩家检查, 驻扎检查 } from "#/utils";
 
 export function 地区电解铝(ctx: Context) {
     ctx.command("地区电解铝 <数量:number>")

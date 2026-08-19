@@ -1,7 +1,6 @@
 import type { Context } from "koishi";
 import type { CoalitionArmy } from "#/types";
-import { 格式化, 玩家检查, 目标解析  } from "#/utils";
-
+import { 格式化, 玩家检查, 目标解析 } from "#/utils";
 
 type 增量区间 = "当天" | "三天" | "七天";
 type 联军增量字段 = Pick<CoalitionArmy, "当天内资本增量" | "三天内资本增量" | "七天内资本增量">;

@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import type { PlayerWarData } from "#/types";
-import { 格式化, 更新玩家资料, 玩家检查  } from "#/utils";
+import { 更新玩家资料, 格式化, 玩家检查 } from "#/utils";
 import type { 玩家完整资料 } from "#/utils/types";
 
 interface 物资配置 {

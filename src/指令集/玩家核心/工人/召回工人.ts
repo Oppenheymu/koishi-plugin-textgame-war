@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index.js";
 import { 格式化 } from "#/utils";
+import { 玩家检查 } from "../../../utils/index.js";
 
 export function 召回工人(ctx: Context) {
     ctx.command("召回工人 <数量:number> ")

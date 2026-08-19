@@ -44,4 +44,3 @@ export async function 驻扎检查(
         当前驻扎地区: 用户资料.驻扎地区 ?? null,
     };
 }
-

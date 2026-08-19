@@ -5,7 +5,6 @@ import { 查看地区 } from "./查看地区.js";
 import { 查看距离 } from "./查看距离.js";
 import { 查看附近地区 } from "./附近地区.js";
 
-
 export const 查询相关指令 = [
     查看地区,
     查看地区工业,

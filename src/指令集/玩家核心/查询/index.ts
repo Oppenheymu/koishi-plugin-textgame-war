@@ -6,7 +6,6 @@ import { 我的资料 } from "./我的资料.js";
 import { 我的生产次数 } from "./生产次数.js";
 import { 资源相关指令 } from "./资源/index.js";
 
-
 export const 查询相关指令 = [
     我的资料,
     我的全部资料,
