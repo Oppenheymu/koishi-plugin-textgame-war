@@ -18,7 +18,6 @@
     "linter": {
         "enabled": true,
         "rules": {
-            "preset": "recommended",
             "correctness": {
                 "noUnresolvedImports": "off"
             },
@@ -26,10 +25,12 @@
                 "useLiteralKeys": "off"
             },
             "style": {
+                "noNonNullAssertion": "off",
                 "useNamingConvention": {
                     "level": "error",
                     "options": {
                         "strictCase": false,
+                        "requireAscii": false,
                         "conventions": [
                             {
                                 "selector": {
@@ -41,21 +42,13 @@
                                 "selector": {
                                     "kind": "typeMember"
                                 },
-                                "formats": [
-                                    "camelCase",
-                                    "snake_case",
-                                    "PascalCase"
-                                ]
+                                "formats": ["camelCase", "snake_case", "PascalCase"]
                             },
                             {
                                 "selector": {
                                     "kind": "objectLiteralMember"
                                 },
-                                "formats": [
-                                    "camelCase",
-                                    "snake_case",
-                                    "CONSTANT_CASE"
-                                ]
+                                "formats": ["camelCase", "snake_case", "CONSTANT_CASE"]
                             }
                         ]
                     }

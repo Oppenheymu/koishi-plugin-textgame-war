@@ -102,11 +102,7 @@ function 解析建筑类型(输入?: string): 建筑属性 | null {
     const 标准输入 = 输入?.trim();
     if (!标准输入) return null;
 
-    return (
-        所有建筑.find(
-            (配置) => 配置.name === 标准输入 || 配置.别名.includes(标准输入),
-        ) ?? null
-    );
+    return 所有建筑.find((配置) => 配置.name === 标准输入 || 配置.别名.includes(标准输入)) ?? null;
 }
 
 export function 修建地区建筑(ctx: Context) {
@@ -117,14 +113,8 @@ export function 修建地区建筑(ctx: Context) {
         .alias("修建")
         .action(async ({ session }, 建筑类型输入, 轮次输入) => {
             try {
-                const {
-                    id,
-                    username,
-                    当前驻扎地区,
-                    地区编号,
-                    展示地区名称,
-                    地区资料,
-                } = await 驻扎检查(ctx, session);
+                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区资料 } =
+                    await 驻扎检查(ctx, session);
                 const { 用户资料 } = await 玩家检查(ctx, session);
 
                 if (当前驻扎地区 !== 地区编号) {
@@ -141,9 +131,7 @@ export function 修建地区建筑(ctx: Context) {
                     ].join("\n");
                 }
 
-                const 轮次 = Number.isFinite(轮次输入)
-                    ? Math.floor(轮次输入 as number)
-                    : 1;
+                const 轮次 = Number.isFinite(轮次输入) ? Math.floor(轮次输入 as number) : 1;
                 if (轮次 <= 0) {
                     return "请输入有效轮次（正整数）";
                 }
@@ -157,13 +145,9 @@ export function 修建地区建筑(ctx: Context) {
                 }
 
                 const 当前值 =
-                    (地区资料[
-                        建筑属性.当前字段 as keyof typeof 地区资料
-                    ] as number) ?? 0;
+                    (地区资料[建筑属性.当前字段 as keyof typeof 地区资料] as number) ?? 0;
                 const 上限值 =
-                    (地区资料[
-                        建筑属性.上限字段 as keyof typeof 地区资料
-                    ] as number) ?? 0;
+                    (地区资料[建筑属性.上限字段 as keyof typeof 地区资料] as number) ?? 0;
 
                 if (当前值 >= 上限值) {
                     return `${建筑属性.显示名}已达上限（${格式化(当前值)} / ${格式化(上限值)}）`;
@@ -179,11 +163,7 @@ export function 修建地区建筑(ctx: Context) {
                 }
 
                 // 使用通用的最大轮次计算
-                const 最大可执行轮次 = 计算最大可执行轮次(
-                    用户资料,
-                    建筑属性.资源需求,
-                    轮次,
-                );
+                const 最大可执行轮次 = 计算最大可执行轮次(用户资料, 建筑属性.资源需求, 轮次);
 
                 if (最大可执行轮次 <= 0) {
                     return "资源或生活资料不足，无法完成任意一轮修建";
@@ -200,10 +180,7 @@ export function 修建地区建筑(ctx: Context) {
                 }
 
                 const 工资消耗 = 单轮工资 * 实际轮次;
-                const 资源消耗 = 资源总消耗(
-                    建筑属性.资源需求 as Record<string, number>,
-                    实际轮次,
-                );
+                const 资源消耗 = 资源总消耗(建筑属性.资源需求 as Record<string, number>, 实际轮次);
                 const 更新后当前值 = 当前值 + 增量;
 
                 await Promise.all([
@@ -211,23 +188,19 @@ export function 修建地区建筑(ctx: Context) {
                         [建筑属性.当前字段]: 更新后当前值,
                     }),
                     更新玩家资料(ctx, id, {
-                        钢铁: 用户资料.钢铁 - (资源消耗.钢铁 ?? 0),
-                        金属铝: 用户资料.金属铝 - (资源消耗.金属铝 ?? 0),
+                        钢铁: 用户资料.钢铁 - (资源消耗["钢铁"] ?? 0),
+                        金属铝: 用户资料.金属铝 - (资源消耗["金属铝"] ?? 0),
                         生活资料: 用户资料.生活资料 - 工资消耗,
                         生产次数: 用户资料.生产次数 - 实际轮次,
                     }),
                 ]);
 
                 const 资源消耗文本: string[] = [];
-                if ((资源消耗.钢铁 ?? 0) > 0) {
-                    资源消耗文本.push(
-                        `■ 钢铁消耗：${格式化(资源消耗.钢铁 ?? 0)}`,
-                    );
+                if ((资源消耗["钢铁"] ?? 0) > 0) {
+                    资源消耗文本.push(`■ 钢铁消耗：${格式化(资源消耗["钢铁"] ?? 0)}`);
                 }
-                if ((资源消耗.金属铝 ?? 0) > 0) {
-                    资源消耗文本.push(
-                        `■ 金属铝消耗：${格式化(资源消耗.金属铝 ?? 0)}`,
-                    );
+                if ((资源消耗["金属铝"] ?? 0) > 0) {
+                    资源消耗文本.push(`■ 金属铝消耗：${格式化(资源消耗["金属铝"] ?? 0)}`);
                 }
 
                 return [

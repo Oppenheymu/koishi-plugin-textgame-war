@@ -141,8 +141,8 @@ function 执行一方输出(参数: {
         const 攻击点数 = Math.round((有效软攻 + 有效硬攻) / 攻击点数除数);
         if (攻击点数 <= 0) continue;
 
-        // 随机选取一支目标军队为主目标
-        const 主目标 = 目标方[Math.floor(Math.random() * 目标方.length)];
+        // 随机选取一支目标军队为主目标（目标方非空已在上文保证）
+        const 主目标 = 目标方[Math.floor(Math.random() * 目标方.length)]!;
         const 目标面板 = 主目标.面板;
 
         // 防守方用防御，进攻方用突破，不互通；格挡点数同样受 HP 衰减

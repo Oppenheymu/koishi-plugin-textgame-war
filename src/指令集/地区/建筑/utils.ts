@@ -1,7 +1,7 @@
 import type { Context, Session } from "koishi";
 import {
-    计算最大可执行轮次 as 计算最大可执行轮次_工具,
-    计算资源可执行轮次 as 计算资源可执行轮次_工具,
+    计算最大可执行轮次 as 计算最大可执行轮次工具,
+    计算资源可执行轮次 as 计算资源可执行轮次工具,
     计算资源总消耗,
 } from "#/logic";
 import type { Player } from "#/types";
@@ -22,12 +22,9 @@ export function 解析轮次(轮次输入: number | undefined): number {
  * 计算资源可执行轮次
  * 复用 @/logic 中的通用工具
  */
-export function 计算资源可执行轮次(
-    用户资料: Player,
-    资源需求: 资源需求配置,
-): number {
+export function 计算资源可执行轮次(用户资料: Player, 资源需求: 资源需求配置): number {
     // 转换为通用格式调用
-    return 计算资源可执行轮次_工具(
+    return 计算资源可执行轮次工具(
         {
             钢铁: 用户资料.钢铁,
             金属铝: 用户资料.金属铝,
@@ -52,7 +49,7 @@ export function 计算最大可执行轮次(
 ): number {
     const 单轮工资 = 用户资料.工人 * 用户资料.工人工资;
 
-    return 计算最大可执行轮次_工具({
+    return 计算最大可执行轮次工具({
         请求轮次,
         玩家生产次数: 用户资料.生产次数,
         单轮工资,
@@ -66,7 +63,7 @@ export function 计算最大可执行轮次(
 }
 
 // ==================== 设施对象创建 ====================
-export function 创建默认设施对象(类型: 特殊设施类型): 设施建造对象 {
+export function 创建默认设施对象(_类型: 特殊设施类型): 设施建造对象 {
     return {
         是否制备中: false,
         建造进度: 0,
@@ -78,7 +75,7 @@ export function 创建默认设施对象(类型: 特殊设施类型): 设施建�
 // ==================== 资源与工资结算 ====================
 export async function 执行资源与工资结算(
     ctx: Context,
-    玩家ID: number,
+    玩家id: number,
     用户资料: Player,
     轮次: number,
     资源需求: 资源需求配置,
@@ -87,9 +84,9 @@ export async function 执行资源与工资结算(
     const 工资消耗 = 单轮工资 * 轮次;
     const 资源消耗 = 计算资源总消耗(资源需求, 轮次);
 
-    await 更新玩家资料(ctx, 玩家ID, {
-        钢铁: 用户资料.钢铁 - (资源消耗.钢铁 ?? 0),
-        金属铝: 用户资料.金属铝 - (资源消耗.金属铝 ?? 0),
+    await 更新玩家资料(ctx, 玩家id, {
+        钢铁: 用户资料.钢铁 - (资源消耗["钢铁"] ?? 0),
+        金属铝: 用户资料.金属铝 - (资源消耗["金属铝"] ?? 0),
         生活资料: 用户资料.生活资料 - 工资消耗,
         生产次数: 用户资料.生产次数 - 轮次,
     });
@@ -103,23 +100,21 @@ export async function 执行资源与工资结算(
 // ==================== 文本组装 ====================
 export function 组装消耗文本(资源消耗: 资源需求配置): string[] {
     const 文本: string[] = [];
-    if ((资源消耗.钢铁 ?? 0) > 0) {
-        文本.push(`■ 钢铁消耗：${格式化(资源消耗.钢铁 ?? 0)}`);
+    if ((资源消耗["钢铁"] ?? 0) > 0) {
+        文本.push(`■ 钢铁消耗：${格式化(资源消耗["钢铁"] ?? 0)}`);
     }
-    if ((资源消耗.金属铝 ?? 0) > 0) {
-        文本.push(`■ 金属铝消耗：${格式化(资源消耗.金属铝 ?? 0)}`);
+    if ((资源消耗["金属铝"] ?? 0) > 0) {
+        文本.push(`■ 金属铝消耗：${格式化(资源消耗["金属铝"] ?? 0)}`);
     }
     return 文本;
 }
 
 // ==================== 预检查验证 ====================
-export async function 执行预检查(
-    ctx: Context,
-    session: Session | undefined,
-    操作名: string,
-) {
-    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
-        await 驻扎检查(ctx, session);
+export async function 执行预检查(ctx: Context, session: Session | undefined, 操作名: string) {
+    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } = await 驻扎检查(
+        ctx,
+        session,
+    );
     const { 用户资料 } = await 玩家检查(ctx, session);
 
     if (当前驻扎地区 !== 地区编号) {

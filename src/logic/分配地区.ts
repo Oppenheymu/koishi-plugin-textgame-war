@@ -100,7 +100,7 @@ export async function 分配坐标逻辑(ctx: Context, id: number, 联军编号:
 
         if (候选列表.length > 0) {
             const 目标编号 =
-                候选列表[Math.floor(Math.random() * 候选列表.length)];
+                候选列表[Math.floor(Math.random() * 候选列表.length)]!;
             await 盖章(ctx, id, 联军编号, 目标编号);
             return 目标编号;
         }

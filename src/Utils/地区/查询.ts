@@ -1,11 +1,5 @@
 import type { Context, Session } from "koishi";
-import type {
-    Region,
-    RegionConfig,
-    RegionState,
-    RegionStrategy,
-    RegionTerra,
-} from "#/types";
+import type { Region, RegionConfig, RegionState, RegionStrategy, RegionTerra } from "#/types";
 import { 会话检查, 用户检查 } from "../会话";
 import { 获取地区展示名称 } from "./名称";
 
@@ -53,35 +47,22 @@ export async function 地区解析(
 
     const 已知地区资料 = 地区编号 === 输入值 ? 按编号地区资料 : undefined;
 
-    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] =
-        await Promise.all([
-            已知地区资料
-                ? Promise.resolve(已知地区资料)
-                : ctx.database
-                      .get("马列地区表", { 地区编号 })
-                      .then(([data]) => data),
-            ctx.database
-                .get("马列地区地形表", { 地区编号 })
-                .then(([data]) => data),
-            ctx.database
-                .get("马列地区状态机", { 地区编号 })
-                .then(([data]) => data),
-            ctx.database
-                .get("马列地区配置表", { 地区编号 })
-                .then(([data]) => data),
-            ctx.database
-                .get("马列地区战略表", { 地区编号 })
-                .then(([data]) => data),
-        ]);
+    const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] = await Promise.all([
+        已知地区资料
+            ? Promise.resolve(已知地区资料)
+            : ctx.database.get("马列地区表", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("马列地区地形表", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("马列地区状态机", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("马列地区配置表", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("马列地区战略表", { 地区编号 }).then(([data]) => data),
+    ]);
 
     if (!地区资料) {
         throw new Error(`未找到地区：${输入值}`);
     }
 
     if (!地区地形资料 || !地区状态资料 || !地区配置资料 || !地区战略资料) {
-        throw new Error(
-            `数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`,
-        );
+        throw new Error(`数据异常：地区 ${地区编号} 的地形/状态/配置/战略数据缺失，请联系管理员`);
     }
 
     return {
@@ -154,14 +135,14 @@ export async function 当前地区解析(
     会话检查(session);
     用户检查(session);
     const platform = session.platform;
-    const 群聊ID = session?.guildId?.trim();
+    const 群聊id = session?.guildId?.trim();
 
-    if (!群聊ID) {
+    if (!群聊id) {
         throw new Error("请在群聊中使用该指令");
     }
 
     const 地区配置列表 = await ctx.database.get("马列地区配置表", {
-        [platform]: 群聊ID,
+        [platform]: 群聊id,
     });
 
     const 绑定地区编号列表 = Array.from(
@@ -181,8 +162,8 @@ export async function 当前地区解析(
     }
 
     if (轻量模式) {
-        return 地区基础解析(ctx, 绑定地区编号列表[0]);
+        return 地区基础解析(ctx, 绑定地区编号列表[0]!);
     }
 
-    return 地区解析(ctx, 绑定地区编号列表[0]);
+    return 地区解析(ctx, 绑定地区编号列表[0]!);
 }

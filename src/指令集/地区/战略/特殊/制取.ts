@@ -24,14 +24,8 @@ export function 制取地区资源(ctx: Context) {
         .alias("制备")
         .action(async ({ session }, 制取物输入, 建筑编号) => {
             try {
-                const {
-                    id,
-                    username,
-                    当前驻扎地区,
-                    地区编号,
-                    展示地区名称,
-                    地区战略资料,
-                } = await 驻扎检查(ctx, session);
+                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
+                    await 驻扎检查(ctx, session);
 
                 const { 用户资料 } = await 玩家检查(ctx, session);
 
@@ -47,10 +41,7 @@ export function 制取地区资源(ctx: Context) {
                 const 权限动作 = 获取权限动作(制取物);
                 await 地区查询权限检查(ctx, session, 权限动作 as any, 地区编号);
 
-                const 制取物设施信息: Record<
-                    string,
-                    { 设施类型: 特殊设施类型; 显示名: string }
-                > = {
+                const 制取物设施信息: Record<string, { 设施类型: 特殊设施类型; 显示名: string }> = {
                     生物武器: {
                         设施类型: "生物实验室",
                         显示名: "生物实验室",
@@ -66,20 +57,20 @@ export function 制取地区资源(ctx: Context) {
                 };
 
                 const 设施信息 = 制取物设施信息[制取物];
+                if (!设施信息) {
+                    return `未知的制取物：${制取物}`;
+                }
                 const 生产力需求 = 特殊建筑库[设施信息.设施类型].生产力需求;
 
-                const 原始映射 = (地区战略资料[设施信息.设施类型] ??
-                    {}) as Record<number, any>;
+                const 原始映射 = (地区战略资料[设施信息.设施类型] ?? {}) as Record<number, any>;
                 if (Object.keys(原始映射).length === 0) {
                     return `该地区暂无${设施信息.显示名}，请先修建`;
                 }
 
-                const 同类设施 = Object.entries(原始映射).map(
-                    ([编号, 数据]) => ({
-                        建筑编号: Number(编号),
-                        ...(数据 as any),
-                    }),
-                );
+                const 同类设施 = Object.entries(原始映射).map(([编号, 数据]) => ({
+                    建筑编号: Number(编号),
+                    ...(数据 as any),
+                }));
 
                 const 玩家制取中的 = 同类设施.find((设施) => {
                     const 最近日志 = (设施.日志 ?? []).slice(-1)[0];

@@ -1,0 +1,18 @@
+The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+node:path:804
+    validateString(path, 'path');
+    ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at dirname (node:path:804:5)
+    at dumble (file:///C:/Dev/koishi-app/node_modules/dumble/lib/index.js:119:53)
+    at file:///C:/Dev/koishi-app/node_modules/yakumo-esbuild/lib/index.js:19:13
+    at async Promise.all (index 0)
+    at async ctx.register.boolean (file:///C:/Dev/koishi-app/node_modules/yakumo-esbuild/lib/index.js:15:5)
+    at async Yakumo.execute (file:///C:/Dev/koishi-app/node_modules/yakumo/lib/index.js:171:5)
+    at async file:///C:/Dev/koishi-app/node_modules/yakumo/lib/index.js:49:11
+    at async Yakumo.execute (file:///C:/Dev/koishi-app/node_modules/yakumo/lib/index.js:171:5) {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v24.16.0

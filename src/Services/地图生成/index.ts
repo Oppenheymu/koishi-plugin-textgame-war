@@ -1,5 +1,6 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 import { createCanvas } from "canvas";
 import type { Context } from "koishi";
 import type { Region, RegionTerra } from "#/types";
@@ -9,7 +10,7 @@ const CELL_SIZE = 62;
 const MAP_WIDTH = GRID_WIDTH * CELL_SIZE;
 const MAP_HEIGHT = GRID_HEIGHT * CELL_SIZE;
 
-const CACHE_DIR = path.resolve(__dirname, "../../../cache");
+const CACHE_DIR = fileURLToPath(new URL("../../../cache", import.meta.url));
 const FULL_MAP_CACHE = path.join(CACHE_DIR, "full.png");
 const LOCAL_MAP_TTL = 30 * 60 * 1000;
 
@@ -27,7 +28,7 @@ const TERRAIN_COLORS: Record<string, string> = {
     高山: "#6e6e6e",
 };
 
-const PHYSIO_COLORS: Record<string, string> = {
+const PHYSIO_COLORS: Record<"森林" | "草地" | "荒地" | "雪地" | "城镇" | "水域", string> = {
     水域: "#2e6eb5",
     雪地: "#e8eaf0",
     草地: "#8bc34a",
@@ -94,18 +95,12 @@ function 计算格子底色(地形: string, 地貌: RegionTerra): string {
     }
 
     const entries: { color: string; weight: number }[] = [];
-    if (地貌.森林 > 0)
-        entries.push({ color: PHYSIO_COLORS.森林, weight: 地貌.森林 });
-    if (地貌.草地 > 0)
-        entries.push({ color: PHYSIO_COLORS.草地, weight: 地貌.草地 });
-    if (地貌.荒地 > 0)
-        entries.push({ color: PHYSIO_COLORS.荒地, weight: 地貌.荒地 });
-    if (地貌.雪地 > 0)
-        entries.push({ color: PHYSIO_COLORS.雪地, weight: 地貌.雪地 });
-    if (地貌.城镇 > 0)
-        entries.push({ color: PHYSIO_COLORS.城镇, weight: 地貌.城镇 });
-    if (地貌.水域 > 0)
-        entries.push({ color: PHYSIO_COLORS.水域, weight: 地貌.水域 });
+    if (地貌.森林 > 0) entries.push({ color: PHYSIO_COLORS.森林, weight: 地貌.森林 });
+    if (地貌.草地 > 0) entries.push({ color: PHYSIO_COLORS.草地, weight: 地貌.草地 });
+    if (地貌.荒地 > 0) entries.push({ color: PHYSIO_COLORS.荒地, weight: 地貌.荒地 });
+    if (地貌.雪地 > 0) entries.push({ color: PHYSIO_COLORS.雪地, weight: 地貌.雪地 });
+    if (地貌.城镇 > 0) entries.push({ color: PHYSIO_COLORS.城镇, weight: 地貌.城镇 });
+    if (地貌.水域 > 0) entries.push({ color: PHYSIO_COLORS.水域, weight: 地貌.水域 });
 
     if (entries.length === 0) {
         return TERRAIN_COLORS[地形] ?? "#7cb342";
@@ -148,10 +143,7 @@ export async function GenerateMap(
     return buffer;
 }
 
-async function readCache(
-    filePath: string,
-    ttl?: number,
-): Promise<Buffer | null> {
+async function readCache(filePath: string, ttl?: number): Promise<Buffer | null> {
     try {
         const stat = await fs.stat(filePath);
         if (ttl && Date.now() - stat.mtimeMs > ttl) return null;
@@ -200,7 +192,7 @@ async function renderMap(
             if (!ownerColorMap.has(owner)) {
                 ownerColorMap.set(
                     owner,
-                    COALITION_PALETTE[colorIndex % COALITION_PALETTE.length],
+                    COALITION_PALETTE[colorIndex % COALITION_PALETTE.length] ?? "#666666",
                 );
                 colorIndex++;
             }

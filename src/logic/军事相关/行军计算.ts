@@ -110,12 +110,14 @@ export function 选择撤退目的地(参数: {
 
     const 本国控制 = 陆地相邻.filter((地区) => 地区.控制国家 === 所属联军编号);
     if (本国控制.length > 0) {
-        return 本国控制[Math.floor(Math.random() * 本国控制.length)].地区编号;
+        return 本国控制[Math.floor(Math.random() * 本国控制.length)]!
+            .地区编号;
     }
 
     const 无主地区 = 陆地相邻.filter((地区) => !地区.控制国家);
     if (无主地区.length > 0) {
-        return 无主地区[Math.floor(Math.random() * 无主地区.length)].地区编号;
+        return 无主地区[Math.floor(Math.random() * 无主地区.length)]!
+            .地区编号;
     }
 
     return null; // 无路可退 → 歼灭

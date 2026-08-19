@@ -17,14 +17,11 @@ export function 组建联军(ctx: Context) {
         .alias("创建国家")
         .alias("建国")
         .action(async ({ session }, 联军名称) => {
-            let 新联军ID: number | null = null;
+            let 新联军id: number | null = null;
             let 新地区: string | null = null;
 
             try {
-                const { id, uid, username, 用户资料 } = await 玩家检查(
-                    ctx,
-                    session,
-                );
+                const { id, uid, username, 用户资料 } = await 玩家检查(ctx, session);
 
                 const amIAlt服务 = (
                     ctx as Context & {
@@ -103,18 +100,14 @@ ${username} 同志！
                 }
 
                 const 新联军配置 = await ctx.database.create("马列联军表", {});
-                新联军ID = 新联军配置.id;
+                新联军id = 新联军配置.id;
 
-                const 新联军编号 = `A${获取联军Sqids().encode([新联军ID])}`;
-                const 地区分配结果 = await 分配坐标逻辑(
-                    ctx,
-                    新联军ID,
-                    新联军编号,
-                );
+                const 新联军编号 = `A${获取联军Sqids().encode([新联军id])}`;
+                const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军id, 新联军编号);
 
-                if (地区分配结果 === "所有地区已领完！") {
+                if (!地区分配结果 || 地区分配结果 === "所有地区已领完！") {
                     await ctx.database.remove("马列联军表", {
-                        id: 新联军ID,
+                        id: 新联军id,
                     });
                     return "地区已全部分配完毕，暂时无法组建联军。";
                 }
@@ -165,7 +158,7 @@ ${username} 同志！
                     ctx.database.set(
                         "马列联军表",
                         {
-                            id: 新联军ID,
+                            id: 新联军id,
                         },
                         新联军数据,
                     ),
@@ -177,10 +170,7 @@ ${username} 同志！
                         {
                             所在联军: 新联军编号,
                             曾加入联军列表: [
-                                ...new Set([
-                                    ...(用户资料.曾加入联军列表 ?? []),
-                                    新联军编号,
-                                ]),
+                                ...new Set([...(用户资料.曾加入联军列表 ?? []), 新联军编号]),
                             ],
                         },
                     ),
@@ -213,9 +203,9 @@ ${username} 同志！
             } catch (error) {
                 try {
                     await Promise.all([
-                        新联军ID !== null
+                        新联军id !== null
                             ? ctx.database.remove("马列联军表", {
-                                  id: 新联军ID,
+                                  id: 新联军id,
                               })
                             : Promise.resolve(),
                         新地区

@@ -37,7 +37,7 @@ export const build = (words: readonly string[]): Node => {
     }
 
     while (head < q.length) {
-        const cur = q[head++];
+        const cur = q[head++]!;
         for (const [ch, nx] of cur.next) {
             let f = cur.fail;
             while (f && !f.next.has(ch)) {
