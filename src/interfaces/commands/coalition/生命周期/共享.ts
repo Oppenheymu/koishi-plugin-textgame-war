@@ -1,4 +1,4 @@
-type 联军邀请记录 = {
+export type 联军邀请记录 = {
     联军编号: string;
     联军名称: string;
     目标用户ID: number;

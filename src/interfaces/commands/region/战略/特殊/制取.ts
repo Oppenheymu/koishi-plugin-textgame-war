@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import type { Context } from "koishi";
 import { 特殊建筑库 } from "#/interfaces/commands/region/建筑/config";
 import 制取配置 from "#/interfaces/commands/region/战略/特殊/config";
-import { 解析制取上下文, 格式化 } from "#/interfaces/commands/region/战略/特殊/共享";
+import { 格式化, 解析制取上下文 } from "#/interfaces/commands/region/战略/特殊/共享";
 import { 更新玩家资料 } from "#ctx/player";
 import { 更新地区战略资料 } from "#ctx/region";
 
@@ -75,7 +75,8 @@ export function 制取地区资源(ctx: Context) {
 
                 const 上下文 = await 解析制取上下文(ctx, session, 制取物, "发起制取");
                 if ("错误" in 上下文) return 上下文.错误;
-                const { id, username, 地区编号, 展示地区名称, 用户资料, 设施信息, 原始映射 } = 上下文;
+                const { id, username, 地区编号, 展示地区名称, 用户资料, 设施信息, 原始映射 } =
+                    上下文;
 
                 const 生产力需求 = 特殊建筑库[设施信息.设施类型].生产力需求;
                 if (Object.keys(原始映射).length === 0) {
