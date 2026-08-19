@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 import type { Army } from "#/types";
 import { 军衔, 军衔名称映射 } from "#/types";
-import { 获取玩家军衔等级 } from "./军队解析";
+import { 获取玩家军衔等级 } from "./军队解析.js";
 
 /**
  * 校验指挥权（设计文档 2.5）：
@@ -10,7 +10,7 @@ import { 获取玩家军衔等级 } from "./军队解析";
  * - 本国将官（少将）→ 可指挥本国任何军队
  * 返回 null 表示可指挥，否则返回拒绝原因
  */
-export async function 校验指挥权(
+async function 校验指挥权(
     ctx: Context,
     军队: Army,
     操作者UID: string,
@@ -33,7 +33,7 @@ export async function 校验指挥权(
  * 新命令需 下达者军衔 ≥ 军队.命令下达者军衔 才能覆盖
  * 返回 null 表示可覆盖，否则返回拒绝原因
  */
-export function 校验命令覆盖(
+function 校验命令覆盖(
     军队: Pick<Army, "当前命令" | "命令下达者军衔">,
     下达者军衔: number,
 ): string | null {

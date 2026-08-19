@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { build } from "./构建匹配树";
+import { build } from "./构建匹配树.js";
 
 const IGNORE_CHARS_RE = /[\u200B-\u200D\uFEFF\p{White_Space}\p{P}\p{S}_]+/gu;
 

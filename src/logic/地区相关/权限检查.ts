@@ -1,9 +1,9 @@
 import type { Context, Session } from "koishi";
 import type { CoalitionPermissionAction, CoalitionPermissionLevel } from "#/types";
 import { 地区解析, type 地区解析结果, 当前地区解析, 玩家检查, 玩家联军检查 } from "#/utils";
-import { 玩家联军权限设置 } from "../联军相关/设置权限";
+import { 玩家联军权限设置 } from "../联军相关/设置权限.js";
 
-export type 地区权限检查动作 = Extract<
+type 地区权限检查动作 = Extract<
     CoalitionPermissionAction,
     | "查看地区军事"
     | "查看地区生物实验室"

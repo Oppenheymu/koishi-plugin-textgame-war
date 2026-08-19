@@ -1,3 +1,4 @@
+import { 格式化 } from "#/utils";
 export function 构建全服统计新闻内容(参数: {
     今天: string;
     玩家数量: number;
@@ -7,7 +8,6 @@ export function 构建全服统计新闻内容(参数: {
     近三天全球生产总值: number;
     近七天全球生产总值: number;
 }): string {
-    const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
     return [
         `日期：${参数.今天}`,

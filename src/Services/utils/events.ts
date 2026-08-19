@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events";
 
-export interface 服务事件映射 {
+interface 服务事件映射 {
     "重置与调度:每日签到重置完成": {
         日期: string;
         重置玩家数量: number;

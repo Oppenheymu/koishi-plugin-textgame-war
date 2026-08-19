@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import type { Context } from "koishi";
 
-import { 检查违禁词 } from "../违禁检查";
-import { 审核群号 } from "./state";
+import { 检查违禁词 } from "../违禁检查/index.js";
+import { 审核群号 } from "./state.js";
 
 type 改名类型 = "玩家" | "联军" | "地区" | "军队";
 
@@ -24,7 +24,7 @@ interface 改名审核工单 {
     驳回原因?: string;
 }
 
-export const 改名工单池 = new Map<number, 改名审核工单>();
+const 改名工单池 = new Map<number, 改名审核工单>();
 let 工单自增ID = 1;
 
 function 获取待审核工单(工单编号: number): 改名审核工单 {
@@ -74,7 +74,7 @@ async function 推送改名审核工单(ctx: Context, 工单: 改名审核工单
     } catch {}
 }
 
-export function 解析改名时间戳(上次改名日期: string | null | undefined): number | null {
+function 解析改名时间戳(上次改名日期: string | null | undefined): number | null {
     const 文本 = 上次改名日期?.trim();
     if (!文本) return null;
 

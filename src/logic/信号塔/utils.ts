@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import type { 信号塔平台 } from "./联军/types";
+import type { 信号塔平台 } from "./联军/types.js";
 
 /**
  * 信号塔支持的平台列表

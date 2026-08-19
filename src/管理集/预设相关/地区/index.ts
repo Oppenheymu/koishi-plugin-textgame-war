@@ -1,8 +1,8 @@
 import { type Context, Logger } from "koishi";
 import { 计算栅格边长 } from "#/地理集";
-import { 获取容量上限 } from "./logic";
-import { 判定地区地形, 构建进度条, 读取地区基础数据 } from "./utils";
-import { 写入批次 } from "./write";
+import { 获取容量上限 } from "./logic.js";
+import { 判定地区地形, 构建进度条, 读取地区基础数据 } from "./utils.js";
+import { 写入批次 } from "./write.js";
 
 const logger = new Logger("初始化地区表");
 

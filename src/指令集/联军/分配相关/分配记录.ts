@@ -1,8 +1,7 @@
 import type { Context } from "koishi";
 import { 玩家联军权限设置 } from "#/logic";
-import { 玩家联军检查 } from "#/utils";
+import { 格式化, 玩家联军检查  } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 分配历史记录(ctx: Context) {
     ctx.command("分配历史记录")

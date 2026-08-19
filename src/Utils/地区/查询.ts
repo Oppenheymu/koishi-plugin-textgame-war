@@ -1,7 +1,7 @@
 import type { Context, Session } from "koishi";
 import type { Region, RegionConfig, RegionState, RegionStrategy, RegionTerra } from "#/types";
-import { 会话检查, 用户检查 } from "../会话";
-import { 获取地区展示名称 } from "./名称";
+import { 会话检查, 用户检查 } from "../会话/index.js";
+import { 获取地区展示名称 } from "./名称.js";
 
 export interface 地区解析结果 {
     地区编号: string;
@@ -76,7 +76,7 @@ export async function 地区解析(
     };
 }
 
-export async function 地区基础解析(
+async function 地区基础解析(
     ctx: Context,
     目标地区编号: string,
     session?: Session,

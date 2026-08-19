@@ -1,7 +1,7 @@
 import type { Context, Session } from "koishi";
 import type { Player, PlayerWarData } from "#/types";
-import { 会话检查 } from "../会话";
-import { 合并玩家资料 } from "../玩家/查询";
+import { 会话检查 } from "../会话/index.js";
+import { 合并玩家资料 } from "../玩家/查询.js";
 
 export async function 目标解析(
     ctx: Context,

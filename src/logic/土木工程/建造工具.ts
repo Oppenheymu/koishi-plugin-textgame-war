@@ -1,93 +1,9 @@
-import { 获取运行时配置 } from "#/config";
-import type { TerrainType } from "#/types";
-
-// ==================== 类型定义 ====================
-
-/**
- * 建筑/设施配置接口（通用）
- */
-export interface 建筑配置 {
-    id: string; // 配置ID
-    名称: string; // 显示名称
-    科技需求: number;
-    基础生产力需求: number;
-    资源需求?: Record<string, number>; // 单轮消耗
-}
-
-/**
- * 建筑成本计算结果
- */
-export interface 建筑成本结果 {
-    id: string;
-    名称: string;
-    基础生产力: number;
-    地形惩罚系数: number;
-    最终生产力需求: number;
-    // 兼容旧命名：部分模块使用 `最终需求生产力`
-    最终需求生产力?: number;
-    资源需求?: Record<string, number>;
-}
-
-// ==================== 地形惩罚系统 ====================
-
-export function 获取地形惩罚系数(地形?: TerrainType): number {
-    if (!地形) return 1;
-
-    const 系数映射 = 获取运行时配置().土木工程.地形惩罚系数;
-    return 系数映射[地形] ?? 1;
-}
-
-// ==================== 通用成本计算 ====================
-
-/**
- * 计算建筑建造成本（支持地形惩罚）
- */
-export function 计算建筑成本(参数: { 配置: 建筑配置; 地形?: TerrainType }): 建筑成本结果 {
-    const { 配置, 地形 } = 参数;
-    const 地形惩罚系数 = 获取地形惩罚系数(地形);
-    const 最终生产力需求 = Math.ceil(配置.基础生产力需求 * 地形惩罚系数);
-
-    const result: 建筑成本结果 = {
-        id: 配置.id,
-        名称: 配置.名称,
-        基础生产力: 配置.基础生产力需求,
-        地形惩罚系数,
-        最终生产力需求,
-        最终需求生产力: 最终生产力需求,
-    };
-
-    if (配置.资源需求) {
-        result.资源需求 = 配置.资源需求;
-    }
-
-    return result;
-}
-
-// ==================== 进度计算 ====================
-
-/**
- * 计算建造进度百分比
- */
-export function 计算建造进度百分比(已投入生产力: number, 需求生产力: number): number {
-    if (需求生产力 <= 0) return 100;
-    if (已投入生产力 <= 0) return 0;
-
-    return Math.max(0, Math.min(100, (已投入生产力 / 需求生产力) * 100));
-}
-
-/**
- * 判断是否完工
- */
-export function 判断是否完工(当前进度: number, 所需生产力: number): boolean {
-    return 当前进度 >= 所需生产力;
-}
-
 // ==================== 资源计算 ====================
 
 /**
  * 计算资源可执行轮次
  */
-export function 计算资源可执行轮次(
+function 计算资源可执行轮次(
     玩家资源: Record<string, number>,
     资源需求: Record<string, number> | undefined,
 ): number {

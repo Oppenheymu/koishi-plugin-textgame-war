@@ -9,7 +9,7 @@ export interface 版本日志条目 {
 
 let 版本日志缓存: 版本日志条目[] | null = null;
 
-export function 获取所有版本日志(): 版本日志条目[] {
+function 获取所有版本日志(): 版本日志条目[] {
     if (!版本日志缓存) {
         try {
             const 文件路径 = fileURLToPath(new URL("../../assets/版本日志.json", import.meta.url));
@@ -31,10 +31,6 @@ export function 获取版本日志(版本号?: string): 版本日志条目 | und
     }
 
     return 所有日志.find((日志) => 日志.版本 === 版本号);
-}
-
-export function 列出所有版本(): string[] {
-    return 获取所有版本日志().map((日志) => 日志.版本);
 }
 
 export function 格式化版本日志(日志: 版本日志条目): string {

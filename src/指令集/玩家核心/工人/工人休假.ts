@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import { 玩家检查 } from "../../../utils/index.js";
+import { 格式化 } from "#/utils";
 
 export function 工人休假(ctx: Context) {
     ctx.command("工人休假 <数量:number>").action(async ({ session }, 数量) => {
@@ -7,7 +8,6 @@ export function 工人休假(ctx: Context) {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 输入验证
             if (!数量 || 数量 <= 0 || !Number.isInteger(数量)) {

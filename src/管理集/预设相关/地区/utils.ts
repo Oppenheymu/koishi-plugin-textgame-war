@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { type RegionBasicDataItem, TerrainType } from "./types";
+import { type RegionBasicDataItem, TerrainType } from "./types.js";
 
 export function 构建进度条(当前: number, 总数: number): string {
     const 长度 = 20;

@@ -1,6 +1,7 @@
 import type { Context } from "koishi";
-import type { Player, PlayerWarData } from "../../../types";
-import { 更新玩家资料, 玩家检查 } from "../../../utils";
+import type { Player, PlayerWarData } from "../../../types/index.js";
+import { 更新玩家资料, 玩家检查 } from "../../../utils/index.js";
+import { 格式化 } from "#/utils";
 
 interface 地堡配置 {
     name: string;
@@ -36,7 +37,6 @@ export function 修建地堡(ctx: Context) {
         .action(async ({ session }, 地堡类型) => {
             try {
                 const { id, username, 用户资料 } = await 玩家检查(ctx, session);
-                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 if (!地堡类型) {
                     return `

@@ -1,8 +1,8 @@
-import type { 地区信号塔事件参数, 地区刷新事件参数, 地区权限变更事件参数 } from "./types";
+import type { 地区信号塔事件参数, 地区刷新事件参数, 地区权限变更事件参数 } from "./types.js";
+import { 格式化 } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
-export function 构建地区刷新事件内容(参数: 地区刷新事件参数): {
+function 构建地区刷新事件内容(参数: 地区刷新事件参数): {
     标题: string;
     内容: string;
 } {
@@ -17,7 +17,7 @@ export function 构建地区刷新事件内容(参数: 地区刷新事件参数)
     };
 }
 
-export function 构建地区权限变更事件内容(参数: 地区权限变更事件参数): {
+function 构建地区权限变更事件内容(参数: 地区权限变更事件参数): {
     标题: string;
     内容: string;
 } {

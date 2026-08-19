@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import { 地区查询权限检查 } from "#/logic";
-import { 特殊建筑库 } from "../../建筑/config";
+import { 特殊建筑库 } from "../../建筑/config.js";
 
 export function 查看地区离心机组(ctx: Context) {
     ctx.command("查看地区离心机组 [地区编号:string]")

@@ -1,9 +1,9 @@
 import type { Context } from "koishi";
 import { 按政体动态分配权限 } from "#/logic";
 import { 联军政体 } from "#/types";
-import type { 联军权力检测结果 } from "./types";
+import type { 联军权力检测结果 } from "./types.js";
 
-export async function 执行联军权力动态检测(ctx: Context): Promise<联军权力检测结果> {
+async function 执行联军权力动态检测(ctx: Context): Promise<联军权力检测结果> {
     const 联军列表 = await ctx.database.get("马列联军表", {});
     let 更新联军数量 = 0;
 

@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import { TRandom } from "#/infrastructure";
-import { 玩家检查 } from "#/utils";
+import { 格式化, 玩家检查  } from "#/utils";
 
 export function 土法炼钢(ctx: Context) {
     ctx.command("土法炼钢 <数量:number>").action(async ({ session }, 数量) => {
@@ -8,7 +8,6 @@ export function 土法炼钢(ctx: Context) {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (!数量) {
                 return `

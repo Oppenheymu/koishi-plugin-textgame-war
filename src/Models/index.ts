@@ -18,12 +18,12 @@ import type {
     RegionTerra,
     Service,
 } from "#/types";
-import { 加载全球数据表 } from "./全球数据表";
-import { 加载军事相关表 } from "./军事相关";
-import { 加载地形相关表 } from "./地区相关";
-import { 加载服务表 } from "./服务表";
-import { 加载玩家相关表 } from "./玩家相关";
-import { 加载联军相关表 } from "./联军相关";
+import { 加载全球数据表 } from "./全球数据表.js";
+import { 加载军事相关表 } from "./军事相关/index.js";
+import { 加载地形相关表 } from "./地区相关/index.js";
+import { 加载服务表 } from "./服务表.js";
+import { 加载玩家相关表 } from "./玩家相关/index.js";
+import { 加载联军相关表 } from "./联军相关/index.js";
 
 // 扩展 Koishi 数据表类型定义
 

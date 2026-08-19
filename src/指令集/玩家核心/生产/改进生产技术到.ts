@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import { 玩家检查 } from "../../../utils/index.js";
+import { 格式化 } from "#/utils";
 
 // 定义确认请求的数据结构
 interface UpgradeRequest {
@@ -17,7 +18,6 @@ export function 改进生产技术到(ctx: Context) {
             const { id, uid, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 验证输入
             if (!目标等级 || 目标等级 <= 0) {

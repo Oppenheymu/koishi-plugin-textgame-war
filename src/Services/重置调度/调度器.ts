@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
-import { 执行每小时地区刷新 } from "./刷新地区";
-import { 执行每日签到重置 } from "./每日签到";
-import { 执行每时生产重置 } from "./每时生产";
+import { 执行每小时地区刷新 } from "./刷新地区.js";
+import { 执行每日签到重置 } from "./每日签到.js";
+import { 执行每时生产重置 } from "./每时生产.js";
 
 export function 每日重置签到检查(ctx: Context) {
     ctx.cron("*/5 * * * *", () => {

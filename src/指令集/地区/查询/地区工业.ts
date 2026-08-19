@@ -1,8 +1,7 @@
 import type { Context } from "koishi";
-import { 地区解析, 当前地区解析 } from "#/utils";
+import { 格式化, 地区解析, 当前地区解析  } from "#/utils";
 import { 地区编号转经纬度, 格式化经纬度 } from "#/地理集";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 查看地区工业(ctx: Context) {
     ctx.command("地区工业 [地区编号:string]")

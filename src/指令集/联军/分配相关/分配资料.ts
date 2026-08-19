@@ -1,8 +1,7 @@
 import type { Context } from "koishi";
 import { 尝试发送联军信号塔通报, 玩家联军权限设置 } from "#/logic";
-import { 更新玩家资料, 玩家联军检查, 目标解析 } from "#/utils";
+import { 格式化, 更新玩家资料, 玩家联军检查, 目标解析  } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 分配生活资料(ctx: Context) {
     ctx.command("分配生活资料 <数量:number> [目标:string]")

@@ -1,8 +1,8 @@
 import type { Context } from "koishi";
 import { 尝试发送后台信号塔日志, 尝试发送新闻信号塔通报 } from "#/logic";
 import { 执行每日全服统计, 执行联军资本增量日结, 推送联军生产总值排行新闻 } from "#/services";
+import { 格式化 } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 function 构建排行文本(
     排行: {

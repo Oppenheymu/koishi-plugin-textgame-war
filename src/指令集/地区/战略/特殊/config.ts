@@ -1,4 +1,4 @@
-export const 制取配置 = {
+const 制取配置 = {
     浓缩铀: {
         资源消耗: { 铀矿: 100 },
         所需小时: 60,
@@ -15,7 +15,5 @@ export const 制取配置 = {
         产出数量: 1,
     },
 } as const;
-
-export type PreparationKey = keyof typeof 制取配置;
 
 export default 制取配置;

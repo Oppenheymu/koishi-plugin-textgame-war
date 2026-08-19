@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
-import { 服务事件中心 } from "../utils";
-import type { 每日签到重置结果 } from "./types";
-import { 初始化服务记录 } from "./记录载入";
+import { 服务事件中心 } from "../utils/index.js";
+import type { 每日签到重置结果 } from "./types.js";
+import { 初始化服务记录 } from "./记录载入.js";
 
 let 正在执行每日重置 = false;
 

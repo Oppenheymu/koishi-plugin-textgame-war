@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 目标联军解析 } from "#/utils";
+import { 格式化, 目标联军解析  } from "#/utils";
 
 export function 他的联军(ctx: Context) {
     ctx.command("他的联军 <目标:string>")
@@ -12,7 +12,6 @@ export function 他的联军(ctx: Context) {
                     session,
                     目标,
                 );
-                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 return `
 ====[征战文游]====

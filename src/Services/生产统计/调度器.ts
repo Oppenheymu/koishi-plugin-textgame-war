@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 执行每日全服统计 } from "./全服统计";
+import { 执行每日全服统计 } from "./全服统计.js";
 
 export function 每日全服数据统计(ctx: Context) {
     ctx.cron("*/5 * * * *", () => {

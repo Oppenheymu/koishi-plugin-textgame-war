@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 import type { Fortress } from "#/types";
 import { 更新地区战略资料 } from "#/utils";
-import { 堡垒升级库 } from "./config";
+import { 堡垒升级库 } from "./config.js";
 import {
     执行资源与工资结算,
     执行预检查,
@@ -9,7 +9,7 @@ import {
     组装消耗文本,
     解析轮次,
     计算最大可执行轮次,
-} from "./utils";
+} from "./utils.js";
 
 export function 修建地区堡垒(ctx: Context) {
     ctx.command("修建地区堡垒 [轮次:number]")

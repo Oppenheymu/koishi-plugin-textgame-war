@@ -370,7 +370,7 @@ function generateLocalMap(
     return canvas.toBuffer("image/png");
 }
 
-export function 地图生成调度(ctx: Context) {
+function 地图生成调度(ctx: Context) {
     ctx.cron("0 * * * *", async () => {
         console.info("[MapGenerator] 定时任务：生成全尺寸世界地图...");
         const buffer = await GenerateMap(ctx);

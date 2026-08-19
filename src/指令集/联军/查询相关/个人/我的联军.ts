@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 玩家联军检查, 获取联军展示名称 } from "#/utils";
+import { 格式化, 玩家联军检查, 获取联军展示名称  } from "#/utils";
 
 export function 我的联军(ctx: Context) {
     ctx.command("我的联军")
@@ -7,7 +7,6 @@ export function 我的联军(ctx: Context) {
         .action(async ({ session }) => {
             try {
                 const { username, 联军资料 } = await 玩家联军检查(ctx, session);
-                const 格式化 = (n: number) => n.toLocaleString("zh-CN");
                 const 展示联军名称 = 获取联军展示名称(联军资料);
 
                 return `

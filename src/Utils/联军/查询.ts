@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import type { CoalitionArmy } from "#/types";
-import { 获取联军展示名称 } from "./名称";
+import { 获取联军展示名称 } from "./名称.js";
 
 export async function 联军解析(
     ctx: Context,

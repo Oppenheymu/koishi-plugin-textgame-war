@@ -1,4 +1,4 @@
-import type { CoalitionPermissionLevel, TerrainType } from "../types";
+import type { CoalitionPermissionLevel, TerrainType } from "../types/index.js";
 
 export interface 联军默认权限配置 {
     成员列表: CoalitionPermissionLevel;

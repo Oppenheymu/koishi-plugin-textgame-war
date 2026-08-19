@@ -9,9 +9,9 @@ import {
     获取玩家军队列表,
     获取联军军衔记录,
 } from "#/utils";
-import { 创建改名审核工单, 校验名称文本 } from "../改名审核";
-import { 聚合军队面板 } from "./属性聚合";
-import { 校验进军目标, 计算行军毫秒数 } from "./行军计算";
+import { 创建改名审核工单, 校验名称文本 } from "../改名审核/index.js";
+import { 聚合军队面板 } from "./属性聚合.js";
+import { 校验进军目标, 计算行军毫秒数 } from "./行军计算.js";
 
 type 玩家完整资料 = Player & PlayerWarData;
 

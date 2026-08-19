@@ -3,7 +3,7 @@
 import type { Context } from "koishi";
 import type { Army, Battle } from "#/types";
 import { 军队命令, 军队状态, 战斗状态, 战斗阵营 } from "#/types";
-import { 加载联军名称缓存, 向地区绑定群推送 } from "./战报推送";
+import { 加载联军名称缓存, 向地区绑定群推送 } from "./战报推送.js";
 
 /** 军队到达目标地区后的入场处理（触发战斗或驻扎） */
 async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区编号: string): Promise<void> {

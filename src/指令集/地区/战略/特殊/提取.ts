@@ -4,19 +4,16 @@ import dayjs from "dayjs";
 import type { Context } from "koishi";
 import { 地区查询权限检查 } from "#/logic";
 import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
-import 制取配置 from "./config";
+import 制取配置 from "./config.js";
+import { 制取物设施映射, 格式化 } from "./共享.js";
 
-// dayjs already imported above
-
-function 格式化(n: number) {
-    return n.toLocaleString("zh-CN");
-}
-
-function 获取权限动作(物: string) {
-    if (物 === "生物武器") return "查看地区生物实验室";
-    if (物 === "浓缩铀") return "查看地区离心机组";
-    if (物 === "钚") return "查看地区核反应堆";
-    return "查看地区生物实验室";
+/** 定位提取目标建筑：指定编号时直接采用，否则自动挑选制备中的建筑 */
+function 定位提取建筑(映射: Record<number, any>, 建筑编号: number | undefined): number | null {
+    if (Number.isFinite(Number(建筑编号))) {
+        return Math.max(1, Math.floor(Number(建筑编号) || 1));
+    }
+    const 找到 = Object.entries(映射).find(([, v]) => v?.是否制备中);
+    return 找到 ? Number(找到[0]) : null;
 }
 
 export function 提取地区制取产物(ctx: Context) {
@@ -33,27 +30,16 @@ export function 提取地区制取产物(ctx: Context) {
                     return `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可提取制取产物`;
                 }
 
-                const 权限动作 = 获取权限动作(制取物);
-                await 地区查询权限检查(ctx, session, 权限动作 as any, 地区编号);
+                const 设施信息 = 制取物设施映射[制取物];
+                if (!设施信息) {
+                    return `未知制取物：${制取物}`;
+                }
+                await 地区查询权限检查(ctx, session, 设施信息.权限动作 as any, 地区编号);
 
-                const 建筑集合映射: Record<string, Record<number, any>> = {
-                    生物武器: (地区战略资料.生物实验室 ?? {}) as Record<number, any>,
-                    浓缩铀: (地区战略资料.高速离心级联 ?? {}) as Record<number, any>,
-                    钚: (地区战略资料?.核反应堆 ?? {}) as Record<number, any>,
-                };
-
-                const 集合键 = 制取物 as keyof typeof 建筑集合映射;
-                const 原始映射 = 建筑集合映射[集合键] ?? {};
+                const 原始映射 = (地区战略资料[设施信息.设施类型] ?? {}) as Record<number, any>;
                 const 映射: Record<number, any> = { ...原始映射 };
 
-                let 目标编号: number | null = null;
-                if (Number.isFinite(Number(建筑编号))) {
-                    目标编号 = Math.max(1, Math.floor(Number(建筑编号) || 1));
-                } else {
-                    const 找到 = Object.entries(映射).find(([, v]) => v?.是否制备中);
-                    if (找到) 目标编号 = Number(找到[0]);
-                }
-
+                const 目标编号 = 定位提取建筑(映射, 建筑编号);
                 if (!目标编号)
                     return "未找到正在制备的目标建筑，请指定建筑编号或等待制备完成后再提取";
 
@@ -97,9 +83,7 @@ export function 提取地区制取产物(ctx: Context) {
                 await Promise.all([
                     更新玩家资料(ctx, id, 玩家更新 as any),
                     更新地区战略资料(ctx, 地区编号, {
-                        ...(集合键 === "生物武器" ? { 生物实验室: 映射 } : {}),
-                        ...(集合键 === "浓缩铀" ? { 高速离心级联: 映射 } : {}),
-                        ...(集合键 === "钚" ? { 核反应堆: 映射 } : {}),
+                        [设施信息.设施类型]: 映射,
                     } as any),
                 ]);
 

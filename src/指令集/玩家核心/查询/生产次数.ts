@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import { 玩家检查 } from "../../../utils/index.js";
 
 export function 我的生产次数(ctx: Context) {
     ctx.command("我的生产次数")

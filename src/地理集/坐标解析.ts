@@ -10,7 +10,6 @@ export interface 栅格坐标 {
 
 export const GRID_WIDTH = 160;
 export const GRID_HEIGHT = 80;
-export const TOTAL_REGIONS = GRID_WIDTH * GRID_HEIGHT;
 
 const DEG_PER_CELL_X = 360 / GRID_WIDTH;
 const DEG_PER_CELL_Y = 180 / GRID_HEIGHT;
@@ -52,19 +51,6 @@ export function 栅格转经纬度(坐标: 栅格坐标): 经纬度 {
     };
 }
 
-export function 经纬度转栅格(位置: 经纬度): 栅格坐标 {
-    let { longitude, latitude } = 位置;
-    if (longitude > 180) longitude -= 360;
-    if (longitude < -180) longitude += 360;
-    latitude = Math.max(-90, Math.min(90, latitude));
-    const gridX = Math.floor((longitude + 180) / DEG_PER_CELL_X);
-    const gridY = Math.floor((90 - latitude) / DEG_PER_CELL_Y);
-    return {
-        gridX: Math.max(0, Math.min(GRID_WIDTH - 1, gridX)),
-        gridY: Math.max(0, Math.min(GRID_HEIGHT - 1, gridY)),
-    };
-}
-
 export function 地区编号转经纬度(地区编号: string): 经纬度 {
     return 栅格转经纬度(解析地区编号(地区编号));
 }
@@ -88,10 +74,6 @@ export function 计算栅格边长(坐标: 栅格坐标): 栅格边长 {
         南北高度公里,
         面积平方公里: 东西宽度公里 * 南北高度公里,
     };
-}
-
-export function 计算地区编号边长(地区编号: string): 栅格边长 {
-    return 计算栅格边长(解析地区编号(地区编号));
 }
 
 export function 格式化经纬度(位置: 经纬度): string {

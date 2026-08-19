@@ -4,18 +4,62 @@ import dayjs from "dayjs";
 import type { Context } from "koishi";
 import { 地区查询权限检查 } from "#/logic";
 import { 更新地区战略资料, 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
-import { 特殊建筑库, type 特殊设施类型 } from "../../建筑/config";
-import 制取配置 from "./config";
+import { 特殊建筑库 } from "../../建筑/config.js";
+import 制取配置 from "./config.js";
+import { 制取物设施映射, 格式化 } from "./共享.js";
 
-function 格式化(n: number) {
-    return n.toLocaleString("zh-CN");
+/** 校验玩家资源是否满足消耗，不足时返回错误文本 */
+function 校验资源充足(用户资料: any, 资源消耗: Record<string, number>): string | null {
+    for (const [key, need] of Object.entries(资源消耗)) {
+        const have = 用户资料[key] ?? 0;
+        if (have < need) {
+            return `资源不足：需要 ${key}${格式化(need)}，你拥有 ${格式化(have)}`;
+        }
+    }
+    return null;
 }
 
-function 获取权限动作(物: string) {
-    if (物 === "生物武器") return "查看地区生物实验室";
-    if (物 === "浓缩铀") return "查看地区离心机组";
-    if (物 === "钚") return "查看地区核反应堆";
-    return "查看地区生物实验室";
+/** 构建扣除消耗后的玩家更新载荷 */
+function 构建玩家更新(用户资料: any, 资源消耗: Record<string, number>): Record<string, number> {
+    const 玩家更新: Record<string, number> = {};
+    for (const [key, need] of Object.entries(资源消耗)) {
+        玩家更新[key] = 用户资料[key] - need;
+    }
+    return 玩家更新;
+}
+
+/** 选择制取目标建筑：指定编号时校验存在/完工/空闲，否则自动挑选空闲已建成建筑 */
+function 选择制取建筑(
+    映射: Record<number, any>,
+    建筑编号: number | undefined,
+    生产力需求: number,
+    显示名: string,
+): { 编号: number } | { 错误: string } {
+    if (Number.isFinite(Number(建筑编号))) {
+        const 编号 = Math.max(1, Math.floor(Number(建筑编号) || 1));
+        if (!映射[编号]) {
+            return {
+                错误: `建筑#${编号} 不存在，该地区${显示名}编号为：${Object.keys(映射)
+                    .sort((a, b) => Number(a) - Number(b))
+                    .join("、")}`,
+            };
+        }
+        if (映射[编号].建造进度 < 生产力需求) {
+            return { 错误: `建筑#${编号} 尚未建造完成，无法制取` };
+        }
+        if (映射[编号].是否制备中) {
+            return { 错误: `建筑#${编号} 正在制取中，请选择空闲建筑` };
+        }
+        return { 编号 };
+    }
+
+    const 空闲已建成 = Object.entries(映射).find(
+        ([, v]) => !v?.是否制备中 && v?.建造进度 >= 生产力需求,
+    );
+    if (!空闲已建成) {
+        return { 错误: `该地区没有已建成且空闲的${显示名}，无法制取` };
+    }
+    return { 编号: Number(空闲已建成[0]) };
 }
 
 export function 制取地区资源(ctx: Context) {
@@ -38,28 +82,12 @@ export function 制取地区资源(ctx: Context) {
                     return `未知制取物，请选择：${Object.keys(制取配置).join("、")}`;
                 }
 
-                const 权限动作 = 获取权限动作(制取物);
-                await 地区查询权限检查(ctx, session, 权限动作 as any, 地区编号);
-
-                const 制取物设施信息: Record<string, { 设施类型: 特殊设施类型; 显示名: string }> = {
-                    生物武器: {
-                        设施类型: "生物实验室",
-                        显示名: "生物实验室",
-                    },
-                    浓缩铀: {
-                        设施类型: "高速离心级联",
-                        显示名: "高速离心级联",
-                    },
-                    钚: {
-                        设施类型: "核反应堆",
-                        显示名: "核反应堆",
-                    },
-                };
-
-                const 设施信息 = 制取物设施信息[制取物];
+                const 设施信息 = 制取物设施映射[制取物];
                 if (!设施信息) {
-                    return `未知的制取物：${制取物}`;
+                    return `未知制取物：${制取物}`;
                 }
+                await 地区查询权限检查(ctx, session, 设施信息.权限动作 as any, 地区编号);
+
                 const 生产力需求 = 特殊建筑库[设施信息.设施类型].生产力需求;
 
                 const 原始映射 = (地区战略资料[设施信息.设施类型] ?? {}) as Record<number, any>;
@@ -82,52 +110,21 @@ export function 制取地区资源(ctx: Context) {
                 }
 
                 const 映射: Record<number, any> = { ...原始映射 };
-
-                let 目标编号: number;
-
-                if (Number.isFinite(Number(建筑编号))) {
-                    目标编号 = Math.max(1, Math.floor(Number(建筑编号) || 1));
-                    if (!映射[目标编号]) {
-                        return `建筑#${目标编号} 不存在，该地区${设施信息.显示名}编号为：${Object.keys(
-                            映射,
-                        )
-                            .sort((a, b) => Number(a) - Number(b))
-                            .join("、")}`;
-                    }
-                    if (映射[目标编号].建造进度 < 生产力需求) {
-                        return `建筑#${目标编号} 尚未建造完成，无法制取`;
-                    }
-                    if (映射[目标编号].是否制备中) {
-                        return `建筑#${目标编号} 正在制取中，请选择空闲建筑`;
-                    }
-                } else {
-                    const 空闲已建成 = Object.entries(映射).find(
-                        ([, v]) => !v?.是否制备中 && v?.建造进度 >= 生产力需求,
-                    );
-                    if (!空闲已建成) {
-                        return `该地区没有已建成且空闲的${设施信息.显示名}，无法制取`;
-                    }
-                    目标编号 = Number(空闲已建成[0]);
+                const 选择结果 = 选择制取建筑(映射, 建筑编号, 生产力需求, 设施信息.显示名);
+                if ("错误" in 选择结果) {
+                    return 选择结果.错误;
                 }
+                const 目标编号 = 选择结果.编号;
 
                 const 设施 = 映射[目标编号];
 
                 const cfg = (制取配置 as any)[制取物];
                 const 资源消耗: Record<string, number> = cfg.资源消耗 ?? {};
 
-                // 检查玩家资源
-                for (const [key, need] of Object.entries(资源消耗)) {
-                    const have = (用户资料 as any)[key] ?? 0;
-                    if ((have ?? 0) < need) {
-                        return `资源不足：需要 ${key}${格式化(need)}，你拥有 ${格式化(have)}`;
-                    }
-                }
+                const 资源错误 = 校验资源充足(用户资料, 资源消耗);
+                if (资源错误) return 资源错误;
 
-                // 扣除资源
-                const 玩家更新: Record<string, number> = {};
-                for (const [key, need] of Object.entries(资源消耗)) {
-                    (玩家更新 as any)[key] = (用户资料 as any)[key] - need;
-                }
+                const 玩家更新 = 构建玩家更新(用户资料, 资源消耗);
 
                 // 标记制备中并写入日志
                 const 时间 = dayjs().format("YYYY-MM-DD HH:mm");

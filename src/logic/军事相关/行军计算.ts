@@ -4,7 +4,7 @@ import type { Army, Region, RegionTerra } from "#/types";
 import { TerrainType, 两栖乘员占比要求, 时间倍率, 水域进入占比阈值, 陆军装备属性表 } from "#/types";
 import { 切比雪夫网格距离, 计算真实距离 } from "#/地理集";
 import { 解析地区编号 } from "#/地理集/坐标解析";
-import { 计算地貌速度修正, 计算行军地形修正 } from "./战场宽度";
+import { 计算地貌速度修正, 计算行军地形修正 } from "./战场宽度.js";
 
 const 海洋地形列表: TerrainType[] = [
     TerrainType.浅海,

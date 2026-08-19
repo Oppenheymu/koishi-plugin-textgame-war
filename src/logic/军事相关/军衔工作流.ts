@@ -1,9 +1,9 @@
 // 军衔工作流（详见 军事系统.prompt.md 第 2 章：双轨授衔 / 政体联动 / 褫夺）
 import type { Context } from "koishi";
 import type { CoalitionArmy } from "#/types";
-import { 军衔, 军衔名称映射, 尉官军衔列表, 政体元首自动军衔 } from "#/types";
+import { 军衔, 尉官军衔列表, 政体元首自动军衔 } from "#/types";
 import { 获取联军军衔记录 } from "#/utils";
-import { 获取联军操作权限 } from "../联军相关/设置权限";
+import { 获取联军操作权限 } from "../联军相关/设置权限.js";
 
 export interface 授衔操作者信息 {
     uid: string;
@@ -176,9 +176,4 @@ export async function 同步元首政体军衔(ctx: Context, 联军编号: strin
         );
     }
     // 手动授予的军衔不受政体变更影响（2.3）
-}
-
-/** 获取军衔展示文本（含权益说明） */
-export function 格式化军衔名称(等级: number): string {
-    return 军衔名称映射[等级 as 军衔] ?? "无军衔";
 }

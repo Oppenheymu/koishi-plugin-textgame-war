@@ -1,5 +1,5 @@
 import type { CoalitionArmy } from "#/types";
-import type { 联军权限等级 } from "../types";
+import type { 联军权限等级 } from "../types.js";
 
 export function 获取联军权限等级(联军资料: CoalitionArmy, uid: string): 联军权限等级 {
     if (联军资料.联军元首 === uid || 联军资料.联军总理 === uid) {

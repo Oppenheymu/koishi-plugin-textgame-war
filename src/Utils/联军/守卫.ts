@@ -1,8 +1,8 @@
 import type { Context, Session } from "koishi";
-import type { 玩家联军检查选项, 玩家联军解析结果 } from "../types";
-import { 会话检查, 发送并抛出错误 } from "../会话";
-import { 玩家检查 } from "../玩家/守卫";
-import { 获取联军权限等级 } from "./权限";
+import type { 玩家联军检查选项, 玩家联军解析结果 } from "../types.js";
+import { 会话检查, 发送并抛出错误 } from "../会话/index.js";
+import { 玩家检查 } from "../玩家/守卫.js";
+import { 获取联军权限等级 } from "./权限.js";
 
 export async function 玩家联军检查(
     ctx: Context,

@@ -1,36 +1,41 @@
 import type { Context } from "koishi";
+import type { 栅格坐标 } from "#/地理集";
 import { GRID_HEIGHT, GRID_WIDTH, 栅格坐标转地区编号, 解析地区编号 } from "#/地理集";
 
 const CLUSTER_RADIUS = 5;
 
-async function 查找聚类候选(ctx: Context, 已有地区编号列表: string[]): Promise<string[]> {
+function 规范化环绕坐标(nx: number, ny: number): 栅格坐标 | null {
+    if (ny < 0 || ny >= GRID_HEIGHT) return null;
+
+    if (nx < 0) nx += GRID_WIDTH;
+    if (nx >= GRID_WIDTH) nx -= GRID_WIDTH;
+
+    return { gridX: nx, gridY: ny };
+}
+
+function 收集单格邻近编号(gridX: number, gridY: number, 候选编号集合: Set<string>): void {
+    for (let dx = -CLUSTER_RADIUS; dx <= CLUSTER_RADIUS; dx++) {
+        for (let dy = -CLUSTER_RADIUS; dy <= CLUSTER_RADIUS; dy++) {
+            if (dx === 0 && dy === 0) continue;
+
+            const 邻近坐标 = 规范化环绕坐标(gridX + dx, gridY + dy);
+            if (邻近坐标) 候选编号集合.add(栅格坐标转地区编号(邻近坐标));
+        }
+    }
+}
+
+function 收集邻近候选编号(已有地区编号列表: string[]): Set<string> {
     const 候选编号集合 = new Set<string>();
 
     for (const 编号 of 已有地区编号列表) {
         const { gridX, gridY } = 解析地区编号(编号);
-
-        for (let dx = -CLUSTER_RADIUS; dx <= CLUSTER_RADIUS; dx++) {
-            for (let dy = -CLUSTER_RADIUS; dy <= CLUSTER_RADIUS; dy++) {
-                if (dx === 0 && dy === 0) continue;
-
-                let nx = gridX + dx;
-                const ny = gridY + dy;
-
-                if (ny < 0 || ny >= GRID_HEIGHT) continue;
-
-                if (nx < 0) nx += GRID_WIDTH;
-                if (nx >= GRID_WIDTH) nx -= GRID_WIDTH;
-
-                候选编号集合.add(栅格坐标转地区编号({ gridX: nx, gridY: ny }));
-            }
-        }
+        收集单格邻近编号(gridX, gridY, 候选编号集合);
     }
 
-    for (const 编号 of 已有地区编号列表) {
-        候选编号集合.delete(编号);
-    }
+    return 候选编号集合;
+}
 
-    const 候选编号列表 = Array.from(候选编号集合);
+async function 过滤未分配陆地编号(ctx: Context, 候选编号列表: string[]): Promise<string[]> {
     if (候选编号列表.length === 0) return [];
 
     const 陆地候选 = await ctx.database.get(
@@ -55,6 +60,16 @@ async function 查找聚类候选(ctx: Context, 已有地区编号列表: string
     );
 
     return 未分配记录.map((r) => r.地区编号);
+}
+
+async function 查找聚类候选(ctx: Context, 已有地区编号列表: string[]): Promise<string[]> {
+    const 候选编号集合 = 收集邻近候选编号(已有地区编号列表);
+
+    for (const 编号 of 已有地区编号列表) {
+        候选编号集合.delete(编号);
+    }
+
+    return 过滤未分配陆地编号(ctx, Array.from(候选编号集合));
 }
 
 async function 盖章(ctx: Context, id: number, 联军编号: string, 目标编号: string) {

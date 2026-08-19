@@ -7,17 +7,17 @@
 
 import type { Context } from "koishi";
 import { 获取运行时配置 } from "#/config";
-import type { 发送失败记录, 发送记录 } from "../utils";
-import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from "../utils";
-import type { 新闻信号塔发送参数, 新闻信号塔发送结果 } from "./types";
+import type { 发送失败记录, 发送记录 } from "../utils.js";
+import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from "../utils.js";
+import type { 新闻信号塔发送参数, 新闻信号塔发送结果 } from "./types.js";
 
-export * from "./types";
+export * from "./types.js";
 
 function 构建新闻通报文本(参数: { 标题: string; 内容: string; 前缀: string }): string {
     return [`【${参数.前缀}】${参数.标题}`, 参数.内容].join("\n");
 }
 
-export async function 发送新闻信号塔通报(
+async function 发送新闻信号塔通报(
     ctx: Context,
     参数: 新闻信号塔发送参数,
 ): Promise<新闻信号塔发送结果> {

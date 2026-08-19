@@ -1,13 +1,13 @@
 import { Schema } from "koishi";
-import type { TerrainType } from "../types";
+import type { TerrainType } from "../types/index.js";
 import {
     默认Sqids配置,
     默认信号塔配置,
     默认土木工程配置,
     默认地理配置,
     默认联军权限配置,
-} from "./defaults";
-import type { PluginConfig, Sqids单项配置, 信号塔频道配置 } from "./types";
+} from "./defaults.js";
+import type { PluginConfig, Sqids单项配置, 信号塔频道配置 } from "./types.js";
 
 const 权限等级Schema = Schema.union([
     Schema.const(1),

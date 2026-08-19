@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
 import type { Context, Session } from "koishi";
 import { Logger } from "koishi";
-import type { RegionStrategy } from "#/types";
+import type { Player, RegionStrategy } from "#/types";
 import { 更新地区战略资料, 玩家检查, 驻扎检查 } from "#/utils";
-import type { 特殊设施类型, 设施建造对象 } from "./config";
-import { 特殊建筑库 } from "./config";
+import type { 特殊设施类型, 特殊建筑属性, 设施建造对象 } from "./config.js";
+import { 特殊建筑库 } from "./config.js";
 import {
     创建默认设施对象,
     执行资源与工资结算,
@@ -12,9 +12,100 @@ import {
     组装消耗文本,
     解析轮次,
     计算最大可执行轮次,
-} from "./utils";
+} from "./utils.js";
 
 const logger = new Logger("特殊设施建造");
+
+function 校验特殊设施资格(用户资料: Player, 建筑属性: 特殊建筑属性): string | null {
+    if (用户资料.生产次数 <= 0) {
+        return "生产次数不足";
+    }
+
+    if (用户资料.科技等级 < 建筑属性.科技需求) {
+        return `科技等级不足，修建${建筑属性.显示名}需要科技等级 ${格式化(建筑属性.科技需求)}`;
+    }
+
+    if (用户资料.工人 * 用户资料.生产技术 <= 0) {
+        return "当前生产力为零，无法修建";
+    }
+
+    return null;
+}
+
+function 解析目标编号(编号输入: number, 设施映射: Record<number, 设施建造对象>): number {
+    return Number.isFinite(编号输入)
+        ? Math.max(1, Math.floor(编号输入 ?? 1))
+        : Math.max(1, ...Object.keys(设施映射).map((编号) => Number(编号) || 0)) +
+              (Object.keys(设施映射).length ? 1 : 0);
+}
+
+async function 保存地区设施(
+    ctx: Context,
+    地区编号: string,
+    类型: 特殊设施类型,
+    设施映射: Record<number, 设施建造对象>,
+): Promise<void> {
+    const 更新对象 = {
+        [类型]: 设施映射,
+    } as Partial<RegionStrategy>;
+
+    logger.info(
+        `[保存前] 类型字段: ${类型}, 设施映射数量: ${Object.keys(设施映射).length}, 更新对象:`,
+        更新对象,
+    );
+
+    try {
+        await 更新地区战略资料(ctx, 地区编号, 更新对象);
+        logger.info(`[保存成功] 地区: ${地区编号}, 类型: ${类型}`);
+    } catch (error) {
+        logger.error(`[保存失败] 地区: ${地区编号}, 类型: ${类型}, 错误:`, error);
+        throw error;
+    }
+}
+
+function 构建特殊设施回报(参数: {
+    username: string;
+    展示地区名称: string;
+    地区编号: string;
+    建筑属性: 特殊建筑属性;
+    目标编号: number;
+    现有设施: 设施建造对象;
+    更新后进度: number;
+    是否完工: boolean;
+    实际投入: number;
+    工资消耗: number;
+    资源消耗: Record<string, number>;
+}): string {
+    const {
+        username,
+        展示地区名称,
+        地区编号,
+        建筑属性,
+        目标编号,
+        现有设施,
+        更新后进度,
+        是否完工,
+        实际投入,
+        工资消耗,
+        资源消耗,
+    } = 参数;
+
+    return [
+        "====[征战文游]====",
+        `${username} 同志：`,
+        `■ 地区：${展示地区名称}（${地区编号}）`,
+        `■ 修建目标：${建筑属性.显示名}#${目标编号}`,
+        `■ 科技需求：${格式化(建筑属性.科技需求)}`,
+        `■ 总需求生产力：${格式化(建筑属性.生产力需求)}`,
+        `■ 本次投入生产力：${格式化(实际投入)}`,
+        `■ 建造进度：${格式化(现有设施.建造进度)} → ${格式化(
+            是否完工 ? 建筑属性.生产力需求 : 更新后进度,
+        )} / ${格式化(建筑属性.生产力需求)}`,
+        `■ 工资消耗：${格式化(工资消耗)}`,
+        ...组装消耗文本(资源消耗),
+        `■ 状态：${是否完工 ? "建造完成" : "建设中"}`,
+    ].join("\n");
+}
 
 async function 执行特殊设施修建(
     ctx: Context,

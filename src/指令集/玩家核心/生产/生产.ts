@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 import { 生成随机图片片段 } from "#/infrastructure";
 import { 记录联军资本增量 } from "#/services/联军相关";
-import { 玩家检查 } from "#/utils";
+import { 格式化, 玩家检查  } from "#/utils";
 
 const 图片概率 = 0.01;
 const 图片池 = ["工厂.jpg", "工厂2.jpg", "工厂3.jpg", "工厂5.jpg"];
@@ -12,7 +12,6 @@ export function 生产(ctx: Context) {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 检查生产次数
             if (用户资料.生产次数 <= 0) {

@@ -1,6 +1,8 @@
 // 军事系统可调参数常量区（详见 军事系统.prompt.md，所有数值均可调）
-import { TerrainType, 联军政体 } from "#/types";
-import { 军衔 } from "./枚举";
+// 直接从具体模块导入，避免经 #/types barrel 造成循环依赖
+import { TerrainType } from "../地区相关/数据类型.js";
+import { 联军政体 } from "../联军相关/联军数据类型.js";
+import { 军衔 } from "./枚举.js";
 
 // ---- 军衔体系（第 2 章）----
 

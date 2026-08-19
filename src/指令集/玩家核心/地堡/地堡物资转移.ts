@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import type { PlayerWarData } from "#/types";
-import { 更新玩家资料, 玩家检查 } from "#/utils";
+import { 格式化, 更新玩家资料, 玩家检查  } from "#/utils";
 import type { 玩家完整资料 } from "#/utils/types";
 
 interface 物资配置 {
@@ -77,7 +77,6 @@ export function 转移地堡物资(ctx: Context) {
     ctx.command("转入地面 <物资> <数量:number>").action(async ({ session }, 物资, 数量) => {
         try {
             const { id, 用户资料 } = await 玩家检查(ctx, session);
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (!物资 || !数量) {
                 return `
@@ -120,7 +119,6 @@ export function 转移地堡物资(ctx: Context) {
     ctx.command("转入地下 <物资> <数量:number>").action(async ({ session }, 物资, 数量) => {
         try {
             const { id, 用户资料 } = await 玩家检查(ctx, session);
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (!物资 || !数量) {
                 return `

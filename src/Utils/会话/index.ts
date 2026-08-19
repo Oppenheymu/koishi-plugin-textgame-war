@@ -1,5 +1,5 @@
 import type { Session } from "koishi";
-import type { 支持平台 } from "../types";
+import type { 支持平台 } from "../types.js";
 
 const 支持平台列表: 支持平台[] = ["onebot", "discord", "telegram"];
 

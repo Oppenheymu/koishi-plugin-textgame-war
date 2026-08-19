@@ -1,8 +1,7 @@
 import type { Context } from "koishi";
 import { TRandom } from "#/infrastructure";
-import { 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
+import { 格式化, 更新地区资料, 更新玩家资料, 玩家检查, 驻扎检查  } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 地区电解铝(ctx: Context) {
     ctx.command("地区电解铝 <数量:number>")

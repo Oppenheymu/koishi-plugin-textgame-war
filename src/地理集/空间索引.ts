@@ -1,9 +1,10 @@
 import type { Context, Tables } from "koishi";
-import type { 栅格坐标 } from "./坐标解析";
-import { GRID_HEIGHT, GRID_WIDTH, 解析地区编号 } from "./坐标解析";
-import { 计算栅格经纬度距离 } from "./距离计算";
+import type { 栅格坐标 } from "./坐标解析.js";
+import { GRID_HEIGHT, GRID_WIDTH, 解析地区编号 } from "./坐标解析.js";
+import { 计算栅格经纬度距离 } from "./距离计算.js";
 
 type 地区地形记录 = Tables["马列地区地形表"];
+type 半径内地区项 = { 地区编号: string; 距离: number };
 
 const SPATIAL_KEY_SEP = ",";
 
@@ -11,7 +12,16 @@ function 栅格坐标转键(坐标: 栅格坐标): string {
     return `${坐标.gridX}${SPATIAL_KEY_SEP}${坐标.gridY}`;
 }
 
-export class 地区空间索引 {
+function 规范化环绕坐标(nx: number, ny: number): 栅格坐标 | undefined {
+    if (ny < 0 || ny >= GRID_HEIGHT) return undefined;
+
+    if (nx < 0) nx += GRID_WIDTH;
+    if (nx >= GRID_WIDTH) nx -= GRID_WIDTH;
+
+    return { gridX: nx, gridY: ny };
+}
+
+class 地区空间索引 {
     private 编号到坐标 = new Map<string, 栅格坐标>();
     private 坐标到编号 = new Map<string, string>();
     private 坐标到地形 = new Map<string, 地区地形记录>();
@@ -76,39 +86,41 @@ export class 地区空间索引 {
         return 结果;
     }
 
-    获取半径内地区(
-        中心编号: string,
-        最大公里数: number,
-    ): Array<{ 地区编号: string; 距离: number }> {
+    获取半径内地区(中心编号: string, 最大公里数: number): 半径内地区项[] {
         const 中心坐标 = this.编号到坐标.get(中心编号);
         if (!中心坐标) return [];
 
         const 格子跨度 = Math.ceil(最大公里数 / 50) + 1;
-        const 结果: Array<{ 地区编号: string; 距离: number }> = [];
+        const 结果: 半径内地区项[] = [];
 
         for (let dx = -格子跨度; dx <= 格子跨度; dx++) {
             for (let dy = -格子跨度; dy <= 格子跨度; dy++) {
                 if (dx === 0 && dy === 0) continue;
-                let nx = 中心坐标.gridX + dx;
-                const ny = 中心坐标.gridY + dy;
-
-                if (ny < 0 || ny >= GRID_HEIGHT) continue;
-                if (nx < 0) nx += GRID_WIDTH;
-                if (nx >= GRID_WIDTH) nx -= GRID_WIDTH;
-
-                const 目标坐标: 栅格坐标 = { gridX: nx, gridY: ny };
-                const 距离 = 计算栅格经纬度距离(中心坐标, 目标坐标);
-                if (距离 > 最大公里数) continue;
-
-                const 目标编号 = this.坐标到编号.get(栅格坐标转键(目标坐标));
-                if (目标编号) {
-                    结果.push({ 地区编号: 目标编号, 距离 });
-                }
+                this.收集半径内地块(中心坐标, dx, dy, 最大公里数, 结果);
             }
         }
 
         结果.sort((a, b) => a.距离 - b.距离);
         return 结果;
+    }
+
+    private 收集半径内地块(
+        中心坐标: 栅格坐标,
+        dx: number,
+        dy: number,
+        最大公里数: number,
+        结果: 半径内地区项[],
+    ): void {
+        const 目标坐标 = 规范化环绕坐标(中心坐标.gridX + dx, 中心坐标.gridY + dy);
+        if (!目标坐标) return;
+
+        const 距离 = 计算栅格经纬度距离(中心坐标, 目标坐标);
+        if (距离 > 最大公里数) return;
+
+        const 目标编号 = this.坐标到编号.get(栅格坐标转键(目标坐标));
+        if (目标编号) {
+            结果.push({ 地区编号: 目标编号, 距离 });
+        }
     }
 
     遍历所有坐标(): IterableIterator<[string, 栅格坐标]> {
@@ -118,7 +130,7 @@ export class 地区空间索引 {
 
 let 全局索引: 地区空间索引 | null = null;
 
-export function 获取空间索引(): 地区空间索引 {
+function 获取空间索引(): 地区空间索引 {
     if (!全局索引) {
         全局索引 = new 地区空间索引();
     }

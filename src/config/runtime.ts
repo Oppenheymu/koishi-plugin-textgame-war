@@ -4,8 +4,8 @@ import {
     默认土木工程配置,
     默认地理配置,
     默认联军权限配置,
-} from "./defaults";
-import type { PluginConfig, 联军默认权限配置 } from "./types";
+} from "./defaults.js";
+import type { PluginConfig, 联军默认权限配置 } from "./types.js";
 
 let 当前运行时配置: PluginConfig = {
     coalitionPermissionDefault: {

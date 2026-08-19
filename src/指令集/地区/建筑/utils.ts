@@ -1,15 +1,11 @@
 import type { Context, Session } from "koishi";
-import {
-    计算最大可执行轮次 as 计算最大可执行轮次工具,
-    计算资源可执行轮次 as 计算资源可执行轮次工具,
-    计算资源总消耗,
-} from "#/logic";
+import { 计算最大可执行轮次 as 计算最大可执行轮次工具, 计算资源总消耗 } from "#/logic";
 import type { Player } from "#/types";
-import { 更新玩家资料, 玩家检查, 驻扎检查 } from "#/utils";
-import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from "./config";
+import { 更新玩家资料, 格式化, 玩家检查, 驻扎检查 } from "#/utils";
+import type { 特殊设施类型, 设施建造对象, 资源需求配置 } from "./config.js";
 
-// ==================== 格式化工具 ====================
-export const 格式化 = (n: number) => n.toLocaleString("zh-CN");
+// 格式化工具统一由 #/utils 提供，此处 re-export 保持下游引用不变
+export { 格式化 } from "#/utils";
 
 // ==================== 轮次处理 ====================
 export function 解析轮次(轮次输入: number | undefined): number {
@@ -18,21 +14,6 @@ export function 解析轮次(轮次输入: number | undefined): number {
 }
 
 // ==================== 资源计算 ====================
-/**
- * 计算资源可执行轮次
- * 复用 @/logic 中的通用工具
- */
-export function 计算资源可执行轮次(用户资料: Player, 资源需求: 资源需求配置): number {
-    // 转换为通用格式调用
-    return 计算资源可执行轮次工具(
-        {
-            钢铁: 用户资料.钢铁,
-            金属铝: 用户资料.金属铝,
-        },
-        资源需求 as Record<string, number>,
-    );
-}
-
 /**
  * 资源总消耗
  * 直接使用建造工具中的函数

@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 执行联军资本增量日结 } from "./资本日结";
+import { 执行联军资本增量日结 } from "./资本日结.js";
 
 export function 每日联军资本增量统计(ctx: Context) {
     ctx.cron("*/5 * * * *", () => {

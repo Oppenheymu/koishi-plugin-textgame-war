@@ -1,7 +1,7 @@
 import type { Context } from "koishi";
 import { 获取运行时配置 } from "#/config";
-import type { 发送失败记录, 发送记录 } from "../utils";
-import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from "../utils";
+import type { 发送失败记录, 发送记录 } from "../utils.js";
+import { 信号塔平台列表, 尝试执行, 标准化频道列表 } from "../utils.js";
 
 export interface 后台信号塔发送参数 {
     内容: string;
@@ -25,7 +25,7 @@ function 构建后台日志文本(参数: {
     return [`【后台日志:${参数.级别}】${参数.标题}`, 参数.内容].join("\n");
 }
 
-export async function 发送后台信号塔日志(
+async function 发送后台信号塔日志(
     ctx: Context,
     参数: 后台信号塔发送参数,
 ): Promise<后台信号塔发送结果> {

@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
 import { TRandom } from "#/infrastructure";
-import { 玩家检查 } from "#/utils";
+import { 格式化, 玩家检查  } from "#/utils";
 
 export function 开采铁矿石(ctx: Context) {
     ctx.command("开采铁矿石").action(async ({ session }) => {
@@ -8,7 +8,6 @@ export function 开采铁矿石(ctx: Context) {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (用户资料.生产次数 <= 0) {
                 return "生产次数不足";

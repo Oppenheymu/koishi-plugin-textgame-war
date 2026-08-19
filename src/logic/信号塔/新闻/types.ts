@@ -1,4 +1,4 @@
-import type { 信号塔平台 } from "../联军/types";
+import type { 信号塔平台 } from "../联军/types.js";
 
 export interface 新闻信号塔发送参数 {
     标题: string;

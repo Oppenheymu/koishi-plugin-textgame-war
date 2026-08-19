@@ -1,5 +1,5 @@
 import type { Context } from "koishi";
-import { 目标解析 } from "../utils";
+import { 格式化, 目标解析  } from "../utils/index.js";
 
 export function 设置资源(ctx: Context) {
     ctx.command("设置资源 <目标> <资源类型> <数量>", {
@@ -7,7 +7,6 @@ export function 设置资源(ctx: Context) {
     }).action(async ({ session }, 目标, 资源类型, 数量) => {
         try {
             const { 目标用户ID } = await 目标解析(ctx, session, 目标);
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 类型转换：支持 true/false/1/0/字符串
             let value: number | boolean;

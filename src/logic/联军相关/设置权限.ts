@@ -36,7 +36,7 @@ export const 联军权限动作列表: 联军权限动作[] = [
     "任命指挥官",
 ];
 
-export const 默认联军权限配置: Omit<CoalitionPermission, "联军编号"> = {
+const 默认联军权限配置: Omit<CoalitionPermission, "联军编号"> = {
     成员列表: 4,
     地区列表: 4,
     贡献排行: 4,

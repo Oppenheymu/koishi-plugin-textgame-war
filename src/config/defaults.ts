@@ -1,12 +1,11 @@
 import type {
-    PluginConfig,
     Sqids配置,
     信号塔配置,
     信号塔频道配置,
     土木工程配置,
     地理配置,
     联军默认权限配置,
-} from "./types";
+} from "./types.js";
 
 export const 默认联军权限配置: 联军默认权限配置 = {
     成员列表: 4,
@@ -42,7 +41,7 @@ export const 默认Sqids配置: Sqids配置 = {
     },
 };
 
-export const 默认信号塔频道配置: 信号塔频道配置 = {
+const 默认信号塔频道配置: 信号塔频道配置 = {
     onebot: [],
     discord: [],
     telegram: [],
@@ -83,12 +82,4 @@ export const 默认地理配置: 地理配置 = {
     列车炮最大射程公里: 100,
     默认行军速度公里每天: 40,
     默认空运速度公里每天: 2000,
-};
-
-export const 默认插件配置: PluginConfig = {
-    coalitionPermissionDefault: 默认联军权限配置,
-    sqids: 默认Sqids配置,
-    信号塔: 默认信号塔配置,
-    土木工程: 默认土木工程配置,
-    地理: 默认地理配置,
 };

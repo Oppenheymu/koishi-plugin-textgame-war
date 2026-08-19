@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils/index";
+import { 玩家检查 } from "../../../utils/index.js";
+import { 格式化 } from "#/utils";
 
 export function 提升科技到(ctx: Context) {
     ctx.command("提升科技到 <目标等级:number>").action(async ({ session }, 目标等级) => {
@@ -7,7 +8,6 @@ export function 提升科技到(ctx: Context) {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             // 验证输入
             if (!目标等级 || 目标等级 <= 0 || !Number.isInteger(目标等级)) {

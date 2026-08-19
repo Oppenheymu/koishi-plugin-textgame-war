@@ -1,5 +1,6 @@
 import type { Context } from "koishi";
-import { 玩家检查 } from "../../../utils";
+import { 玩家检查 } from "../../../utils/index.js";
+import { 格式化 } from "#/utils";
 
 export function 招募工人(ctx: Context) {
     ctx.command("招募工人 <数量:number>").action(async ({ session }, 数量) => {
@@ -13,7 +14,6 @@ export function 招募工人(ctx: Context) {
             }
 
             // 格式化数字显示
-            const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
             if (!数量) {
                 return `

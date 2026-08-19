@@ -13,7 +13,7 @@ export interface 每小时地区刷新结果 {
     地区报告发送失败数量: number;
 }
 
-export async function 执行每小时地区工业刷新(ctx: Context): Promise<地区工业刷新结果> {
+async function 执行每小时地区工业刷新(ctx: Context): Promise<地区工业刷新结果> {
     const 地区列表 = await ctx.database.get("马列地区表", {});
 
     if (!地区列表.length) {

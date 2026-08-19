@@ -1,8 +1,7 @@
 import type { Context } from "koishi";
 import { 分配装备工作流, 扩军工作流, 裁军工作流 } from "#/logic";
-import { 军队解析, 玩家联军检查 } from "#/utils";
+import { 格式化, 军队解析, 玩家联军检查  } from "#/utils";
 
-const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
 export function 分配装备(ctx: Context) {
     ctx.command("分配装备 <编号:number> <装备:string> <数量:number>").action(
