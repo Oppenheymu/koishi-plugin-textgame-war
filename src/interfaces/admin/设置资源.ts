@@ -1,6 +1,6 @@
 import type { Context } from "koishi";
+import { 目标解析 } from "#/interfaces/commands/common/target";
 import { 格式化 } from "#shared/format";
-import { 目标解析 } from "#shared/target";
 
 export function 设置资源(ctx: Context) {
     ctx.command("设置资源 <目标> <资源类型> <数量>", {

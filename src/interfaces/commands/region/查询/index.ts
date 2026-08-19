@@ -5,7 +5,7 @@ import { 查看地区 } from "#/interfaces/commands/region/查询/查看地区";
 import { 查看距离 } from "#/interfaces/commands/region/查询/查看距离";
 import { 查看附近地区 } from "#/interfaces/commands/region/查询/附近地区";
 
-export const 查询相关指令 = [
+export const 查询指令 = [
     查看地区,
     查看地区工业,
     查看地区地形,

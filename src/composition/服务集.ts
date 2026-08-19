@@ -7,6 +7,8 @@ import { 地图生成服务列表, 生产统计服务列表, 重置调度服务�
 export * from "#ctx/coalition";
 export * from "#ctx/military";
 export * from "#ctx/world";
+export * from "#ctx/world";
+export * from "#ctx/world";
 
 const 服务插件列表 = [
     ...重置调度服务列表,

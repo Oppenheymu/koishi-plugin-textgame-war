@@ -3,9 +3,9 @@
 import dayjs from "dayjs";
 import type { Context } from "koishi";
 import 制取配置 from "#/interfaces/commands/region/战略/特殊/config";
-import { 制取物设施映射, 格式化 } from "#/interfaces/commands/region/战略/特殊/共享";
-import { 更新玩家资料, 玩家检查 } from "#ctx/player";
-import { 地区查询权限检查, 更新地区战略资料, 驻扎检查 } from "#ctx/region";
+import { 格式化, 解析制取上下文 } from "#/interfaces/commands/region/战略/特殊/共享";
+import { 更新玩家资料 } from "#ctx/player";
+import { 更新地区战略资料 } from "#ctx/region";
 
 /** 定位提取目标建筑：指定编号时直接采用，否则自动挑选制备中的建筑 */
 function 定位提取建筑(映射: Record<number, any>, 建筑编号: number | undefined): number | null {
@@ -21,22 +21,11 @@ export function 提取地区制取产物(ctx: Context) {
         .alias("提取产物")
         .action(async ({ session }, 制取物, 建筑编号) => {
             try {
-                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
-                    await 驻扎检查(ctx, session);
+                const 上下文 = await 解析制取上下文(ctx, session, 制取物 ?? "", "提取制取产物");
+                if ("错误" in 上下文) return 上下文.错误;
+                const { id, username, 地区编号, 展示地区名称, 用户资料, 设施信息, 原始映射 } =
+                    上下文;
 
-                const { 用户资料 } = await 玩家检查(ctx, session);
-
-                if (当前驻扎地区 !== 地区编号) {
-                    return `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可提取制取产物`;
-                }
-
-                const 设施信息 = 制取物设施映射[制取物];
-                if (!设施信息) {
-                    return `未知制取物：${制取物}`;
-                }
-                await 地区查询权限检查(ctx, session, 设施信息.权限动作 as any, 地区编号);
-
-                const 原始映射 = (地区战略资料[设施信息.设施类型] ?? {}) as Record<number, any>;
                 const 映射: Record<number, any> = { ...原始映射 };
 
                 const 目标编号 = 定位提取建筑(映射, 建筑编号);

@@ -4,9 +4,9 @@ import dayjs from "dayjs";
 import type { Context } from "koishi";
 import { 特殊建筑库 } from "#/interfaces/commands/region/建筑/config";
 import 制取配置 from "#/interfaces/commands/region/战略/特殊/config";
-import { 制取物设施映射, 格式化 } from "#/interfaces/commands/region/战略/特殊/共享";
-import { 更新玩家资料, 玩家检查 } from "#ctx/player";
-import { 地区查询权限检查, 更新地区战略资料, 驻扎检查 } from "#ctx/region";
+import { 解析制取上下文, 格式化 } from "#/interfaces/commands/region/战略/特殊/共享";
+import { 更新玩家资料 } from "#ctx/player";
+import { 更新地区战略资料 } from "#ctx/region";
 
 /** 校验玩家资源是否满足消耗，不足时返回错误文本 */
 function 校验资源充足(用户资料: any, 资源消耗: Record<string, number>): string | null {
@@ -68,29 +68,16 @@ export function 制取地区资源(ctx: Context) {
         .alias("制备")
         .action(async ({ session }, 制取物输入, 建筑编号) => {
             try {
-                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
-                    await 驻扎检查(ctx, session);
-
-                const { 用户资料 } = await 玩家检查(ctx, session);
-
-                if (当前驻扎地区 !== 地区编号) {
-                    return `你当前驻扎在 ${当前驻扎地区 || "未驻扎地区"}，仅驻扎在本地区的玩家可发起制取`;
-                }
-
                 const 制取物 = 制取物输入?.trim();
                 if (!制取物 || !(制取物 in 制取配置)) {
                     return `未知制取物，请选择：${Object.keys(制取配置).join("、")}`;
                 }
 
-                const 设施信息 = 制取物设施映射[制取物];
-                if (!设施信息) {
-                    return `未知制取物：${制取物}`;
-                }
-                await 地区查询权限检查(ctx, session, 设施信息.权限动作 as any, 地区编号);
+                const 上下文 = await 解析制取上下文(ctx, session, 制取物, "发起制取");
+                if ("错误" in 上下文) return 上下文.错误;
+                const { id, username, 地区编号, 展示地区名称, 用户资料, 设施信息, 原始映射 } = 上下文;
 
                 const 生产力需求 = 特殊建筑库[设施信息.设施类型].生产力需求;
-
-                const 原始映射 = (地区战略资料[设施信息.设施类型] ?? {}) as Record<number, any>;
                 if (Object.keys(原始映射).length === 0) {
                     return `该地区暂无${设施信息.显示名}，请先修建`;
                 }

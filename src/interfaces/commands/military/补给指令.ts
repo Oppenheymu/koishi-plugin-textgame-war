@@ -3,15 +3,28 @@ import { 玩家联军检查 } from "#ctx/coalition";
 import { 军队解析, 分配装备工作流, 扩军工作流, 裁军工作流 } from "#ctx/military";
 import { 格式化 } from "#shared/format";
 
+/** 解析军队并校验归属：军队必须属于玩家所在联军，否则抛错 */
+async function 解析本联军军队(
+    ctx: Context,
+    session: Parameters<typeof 玩家联军检查>[1],
+    编号: number,
+): Promise<{
+    结果: Awaited<ReturnType<typeof 玩家联军检查>>;
+    军队: Awaited<ReturnType<typeof 军队解析>>;
+}> {
+    const 结果 = await 玩家联军检查(ctx, session);
+    const 军队 = await 军队解析(ctx, 编号);
+    if (军队.所属联军编号 !== 结果.联军编号) {
+        throw new Error("只能操作本联军的军队");
+    }
+    return { 结果, 军队 };
+}
+
 export function 分配装备(ctx: Context) {
     ctx.command("分配装备 <编号:number> <装备:string> <数量:number>").action(
         async ({ session }, 编号, 装备, 数量) => {
             try {
-                const 结果 = await 玩家联军检查(ctx, session);
-                const 军队 = await 军队解析(ctx, 编号);
-                if (军队.所属联军编号 !== 结果.联军编号) {
-                    return "只能操作本联军的军队";
-                }
+                const { 结果, 军队 } = await 解析本联军军队(ctx, session, 编号);
 
                 const { 实际数量 } = await 分配装备工作流(ctx, 军队, 结果, 装备 ?? "", 数量);
 
@@ -33,11 +46,7 @@ export function 发枪(ctx: Context) {
                 if (!数量 || 数量 <= 0) {
                     return "发枪数量必须为正整数（回收请用：分配装备 编号 步兵装备 负数）";
                 }
-                const 结果 = await 玩家联军检查(ctx, session);
-                const 军队 = await 军队解析(ctx, 编号);
-                if (军队.所属联军编号 !== 结果.联军编号) {
-                    return "只能操作本联军的军队";
-                }
+                const { 结果, 军队 } = await 解析本联军军队(ctx, session, 编号);
 
                 const { 实际数量 } = await 分配装备工作流(ctx, 军队, 结果, "步兵装备", 数量);
 
@@ -53,11 +62,7 @@ export function 扩军(ctx: Context) {
         .alias("分配人力")
         .action(async ({ session }, 编号, 人力) => {
             try {
-                const 结果 = await 玩家联军检查(ctx, session);
-                const 军队 = await 军队解析(ctx, 编号);
-                if (军队.所属联军编号 !== 结果.联军编号) {
-                    return "只能操作本联军的军队";
-                }
+                const { 结果, 军队 } = await 解析本联军军队(ctx, session, 编号);
 
                 await 扩军工作流(ctx, 军队, 结果, 人力);
                 return [
@@ -75,11 +80,7 @@ export function 扩军(ctx: Context) {
 export function 裁军(ctx: Context) {
     ctx.command("裁军 <编号:number> <人力:number>").action(async ({ session }, 编号, 人力) => {
         try {
-            const 结果 = await 玩家联军检查(ctx, session);
-            const 军队 = await 军队解析(ctx, 编号);
-            if (军队.所属联军编号 !== 结果.联军编号) {
-                return "只能操作本联军的军队";
-            }
+            const { 结果, 军队 } = await 解析本联军军队(ctx, session, 编号);
 
             const { 实际裁减 } = await 裁军工作流(ctx, 军队, 结果, 人力);
             return [

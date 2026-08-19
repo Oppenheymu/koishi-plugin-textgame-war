@@ -1,8 +1,12 @@
 import type { Context } from "koishi";
-import { 构造邀请键, 联军邀请缓存 } from "#/interfaces/commands/coalition/生命周期/共享";
+import {
+    构造邀请键,
+    联军邀请缓存,
+    type 联军邀请记录,
+} from "#/interfaces/commands/coalition/生命周期/共享";
+import { 目标解析 } from "#/interfaces/commands/common/target";
 import { 尝试发送联军信号塔通报 } from "#ctx/beacon";
 import { 玩家联军权限设置, 玩家联军检查 } from "#ctx/coalition";
-import { 目标解析 } from "#shared/target";
 
 const 邀请有效期毫秒 = 3 * 60 * 1000;
 
@@ -49,7 +53,7 @@ export function 邀请加入联军(ctx: Context) {
                 }
 
                 const 过期时间戳 = 当前时间戳 + 邀请有效期毫秒;
-                联军邀请缓存.set(邀请键, {
+                const 新邀请: 联军邀请记录 = {
                     联军编号,
                     联军名称: 联军资料.联军名称,
                     目标用户ID,
@@ -57,7 +61,8 @@ export function 邀请加入联军(ctx: Context) {
                     目标用户名,
                     邀请人用户名: username,
                     过期时间戳,
-                });
+                };
+                联军邀请缓存.set(邀请键, 新邀请);
 
                 const 有效分钟 = Math.floor(邀请有效期毫秒 / 60000);
 

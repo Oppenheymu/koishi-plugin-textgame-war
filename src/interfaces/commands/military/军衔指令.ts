@@ -1,4 +1,5 @@
 import type { Context } from "koishi";
+import { 目标解析 } from "#/interfaces/commands/common/target";
 import { 玩家联军检查, 获取联军操作权限 } from "#ctx/coalition";
 import {
     任命指挥官工作流,
@@ -12,7 +13,6 @@ import {
     褫夺军衔工作流,
     解析军衔名称,
 } from "#ctx/military";
-import { 目标解析 } from "#shared/target";
 
 export function 授衔(ctx: Context) {
     ctx.command("授衔 <目标:string> <军衔名:string>")
