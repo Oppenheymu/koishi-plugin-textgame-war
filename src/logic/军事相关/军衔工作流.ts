@@ -38,8 +38,7 @@ export async function 授衔工作流(
 
     // 军事路校验：少将仅可授尉官
     const 操作者军衔记录 = await 获取联军军衔记录(ctx, 联军编号, 操作者.uid);
-    const 军事路可行 =
-        操作者军衔记录?.军衔 === 军衔.少将 && 尉官军衔列表.includes(目标军衔);
+    const 军事路可行 = 操作者军衔记录?.军衔 === 军衔.少将 && 尉官军衔列表.includes(目标军衔);
 
     if (!政治路可行 && !军事路可行) {
         throw new Error(
@@ -92,8 +91,7 @@ export async function 褫夺军衔工作流(
     // 军事路校验：少将仅可褫尉官
     const 操作者军衔记录 = await 获取联军军衔记录(ctx, 联军编号, 操作者.uid);
     const 军事路可行 =
-        操作者军衔记录?.军衔 === 军衔.少将 &&
-        尉官军衔列表.includes(目标军衔记录.军衔);
+        操作者军衔记录?.军衔 === 军衔.少将 && 尉官军衔列表.includes(目标军衔记录.军衔);
 
     if (!政治路可行 && !军事路可行) {
         throw new Error(
@@ -135,10 +133,7 @@ export async function 褫夺军衔工作流(
  * - 旧元首的"政体自动"军衔移除
  * - 新元首按政体获得自动军衔（民主制无军衔）；已有手动军衔则保留不动
  */
-export async function 同步元首政体军衔(
-    ctx: Context,
-    联军编号: string,
-): Promise<void> {
+export async function 同步元首政体军衔(ctx: Context, 联军编号: string): Promise<void> {
     const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
     if (!联军资料) return;
 
@@ -153,9 +148,7 @@ export async function 同步元首政体军衔(
     await Promise.all(
         自动军衔记录
             .filter((记录) => 记录.玩家UID !== 元首UID || !目标军衔)
-            .map((记录) =>
-                ctx.database.remove("马列联军军衔表", { id: 记录.id }),
-            ),
+            .map((记录) => ctx.database.remove("马列联军军衔表", { id: 记录.id })),
     );
 
     if (!目标军衔 || !元首UID) return;

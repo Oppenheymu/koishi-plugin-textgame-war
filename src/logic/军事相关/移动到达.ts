@@ -6,11 +6,7 @@ import { 军队命令, 军队状态, 战斗状态, 战斗阵营 } from "#/types"
 import { 加载联军名称缓存, 向地区绑定群推送 } from "./战报推送";
 
 /** 军队到达目标地区后的入场处理（触发战斗或驻扎） */
-async function 处理单支军队到达(
-    ctx: Context,
-    军队: Army,
-    目标地区编号: string,
-): Promise<void> {
+async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区编号: string): Promise<void> {
     const 基础更新 = {
         所在地区编号: 目标地区编号,
         目标地区编号: null,
@@ -57,11 +53,7 @@ async function 处理单支军队到达(
         const [目标地区] = await ctx.database.get("马列地区表", {
             地区编号: 目标地区编号,
         });
-        if (
-            目标地区 &&
-            目标地区.控制国家 &&
-            目标地区.控制国家 !== 军队.所属联军编号
-        ) {
+        if (目标地区?.控制国家 && 目标地区.控制国家 !== 军队.所属联军编号) {
             await ctx.database.set(
                 "马列地区表",
                 { 地区编号: 目标地区编号 },
@@ -113,10 +105,7 @@ async function 处理单支军队到达(
                 ),
         );
 
-        const 名称缓存 = await 加载联军名称缓存(ctx, [
-            军队.所属联军编号,
-            防守方联军编号,
-        ]);
+        const 名称缓存 = await 加载联军名称缓存(ctx, [军队.所属联军编号, 防守方联军编号]);
         await 向地区绑定群推送(
             ctx,
             目标地区编号,
@@ -130,10 +119,7 @@ async function 处理单支军队到达(
 
     // 到达军队加入战斗
     // TODO(第二阶段): 多方混战拆分——第三国军队目前一律按进攻方入场
-    const 阵营 =
-        军队.所属联军编号 === 战斗.防守方联军编号
-            ? 战斗阵营.防守
-            : 战斗阵营.进攻;
+    const 阵营 = 军队.所属联军编号 === 战斗.防守方联军编号 ? 战斗阵营.防守 : 战斗阵营.进攻;
 
     await ctx.database.set(
         "马列军队表",
@@ -156,9 +142,7 @@ export async function 处理移动到达(ctx: Context): Promise<void> {
     ]);
     const 候选军队 = [...移动中军队, ...撤退中军队];
 
-    const 到达军队 = 候选军队.filter(
-        (军队) => 军队.预计到达时间 && 军队.预计到达时间 <= 现在,
-    );
+    const 到达军队 = 候选军队.filter((军队) => 军队.预计到达时间 && 军队.预计到达时间 <= 现在);
 
     for (const 军队 of 到达军队) {
         if (!军队.目标地区编号) continue;

@@ -70,9 +70,7 @@ function 读取默认联军权限配置(): Omit<CoalitionPermission, "联军编�
     };
 }
 
-export function 校验联军权限等级(
-    value: number,
-): value is CoalitionPermissionLevel {
+export function 校验联军权限等级(value: number): value is CoalitionPermissionLevel {
     return Number.isInteger(value) && value >= 1 && value <= 4;
 }
 
@@ -114,8 +112,7 @@ export async function 获取联军权限配置(
     const [数据库配置] = await ctx.database.get("马列联军权限表", {
         联军编号,
     });
-    const 权限配置: Omit<CoalitionPermission, "联军编号"> =
-        读取默认联军权限配置();
+    const 权限配置: Omit<CoalitionPermission, "联军编号"> = 读取默认联军权限配置();
 
     if (!数据库配置) {
         return 权限配置;

@@ -40,9 +40,7 @@ export async function 向地区绑定群推送(
             const 群聊ID = 地区配置[平台]?.trim();
             if (!群聊ID) return;
 
-            const 平台机器人 = Object.values(ctx.bots).find(
-                (bot) => bot.platform === 平台,
-            );
+            const 平台机器人 = Object.values(ctx.bots).find((bot) => bot.platform === 平台);
             if (!平台机器人) return;
 
             try {

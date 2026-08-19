@@ -14,17 +14,14 @@ export function 查看地区生物实验室(ctx: Context) {
         .alias("城市生物实验室")
         .action(async ({ session }, 地区编号参数) => {
             try {
-                const { 地区编号, 地区战略资料, 展示地区名称 } =
-                    await 地区查询权限检查(
-                        ctx,
-                        session,
-                        "查看地区生物实验室",
-                        地区编号参数,
-                    );
-
-                const 实验室列表 = Object.entries(
-                    地区战略资料.生物实验室 ?? {},
+                const { 地区编号, 地区战略资料, 展示地区名称 } = await 地区查询权限检查(
+                    ctx,
+                    session,
+                    "查看地区生物实验室",
+                    地区编号参数,
                 );
+
+                const 实验室列表 = Object.entries(地区战略资料.生物实验室 ?? {});
 
                 logger.debug(
                     `[查询数据] 地区: ${地区编号}, 原始数据:`,
@@ -47,10 +44,7 @@ export function 查看地区生物实验室(ctx: Context) {
                                       )
                                       .join("\n") || "      · 暂无制备记录";
 
-                              const 百分比 = (
-                                  (实验室信息.建造进度 / 建造需求) *
-                                  100
-                              ).toFixed(1);
+                              const 百分比 = ((实验室信息.建造进度 / 建造需求) * 100).toFixed(1);
                               return [
                                   `  - 实验室#${编号}`,
                                   `    · 状态：${实验室信息.是否制备中 ? "制备中" : "空闲"}`,

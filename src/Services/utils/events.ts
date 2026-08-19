@@ -21,9 +21,7 @@ export interface 服务事件映射 {
 
 type 事件名 = keyof 服务事件映射;
 
-type 事件处理器<K extends 事件名> = (
-    payload: 服务事件映射[K],
-) => void | Promise<void>;
+type 事件处理器<K extends 事件名> = (payload: 服务事件映射[K]) => void | Promise<void>;
 
 class 服务事件总线 {
     private readonly emitter = new EventEmitter();

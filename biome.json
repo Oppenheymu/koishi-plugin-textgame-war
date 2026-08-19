@@ -26,33 +26,7 @@
             },
             "style": {
                 "noNonNullAssertion": "off",
-                "useNamingConvention": {
-                    "level": "error",
-                    "options": {
-                        "strictCase": false,
-                        "requireAscii": false,
-                        "conventions": [
-                            {
-                                "selector": {
-                                    "kind": "typeParameter"
-                                },
-                                "formats": ["PascalCase"]
-                            },
-                            {
-                                "selector": {
-                                    "kind": "typeMember"
-                                },
-                                "formats": ["camelCase", "snake_case", "PascalCase"]
-                            },
-                            {
-                                "selector": {
-                                    "kind": "objectLiteralMember"
-                                },
-                                "formats": ["camelCase", "snake_case", "CONSTANT_CASE"]
-                            }
-                        ]
-                    }
-                }
+                "useNamingConvention": "off"
             },
             "nursery": {
                 "noFloatingPromises": "error"

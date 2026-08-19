@@ -74,18 +74,10 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         移出联军: 权限等级Schema.default(默认联军权限配置.移出联军),
         我的联军权限: 权限等级Schema.default(默认联军权限配置.我的联军权限),
         查看地区军事: 权限等级Schema.default(默认联军权限配置.查看地区军事),
-        查看地区生物实验室: 权限等级Schema.default(
-            默认联军权限配置.查看地区生物实验室,
-        ),
-        查看地区核反应堆: 权限等级Schema.default(
-            默认联军权限配置.查看地区核反应堆,
-        ),
-        查看地区离心机组: 权限等级Schema.default(
-            默认联军权限配置.查看地区离心机组,
-        ),
-        设置地区驻扎权限: 权限等级Schema.default(
-            默认联军权限配置.设置地区驻扎权限,
-        ),
+        查看地区生物实验室: 权限等级Schema.default(默认联军权限配置.查看地区生物实验室),
+        查看地区核反应堆: 权限等级Schema.default(默认联军权限配置.查看地区核反应堆),
+        查看地区离心机组: 权限等级Schema.default(默认联军权限配置.查看地区离心机组),
+        设置地区驻扎权限: 权限等级Schema.default(默认联军权限配置.设置地区驻扎权限),
         分配生活资料: 权限等级Schema.default(默认联军权限配置.分配生活资料),
         分配历史记录: 权限等级Schema.default(默认联军权限配置.分配历史记录),
         设置税率: 权限等级Schema.default(默认联军权限配置.设置税率),
@@ -94,25 +86,17 @@ export const 插件配置Schema: Schema<PluginConfig> = Schema.object({
         分配军队: 权限等级Schema.default(默认联军权限配置.分配军队),
     }).description("联军默认权限配置"),
     sqids: Schema.object({
-        register: 创建Sqids单项Schema(默认Sqids配置.register).description(
-            "玩家 UID 生成参数",
-        ),
-        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description(
-            "联军编号生成参数",
-        ),
+        register: 创建Sqids单项Schema(默认Sqids配置.register).description("玩家 UID 生成参数"),
+        coalition: 创建Sqids单项Schema(默认Sqids配置.coalition).description("联军编号生成参数"),
     }).description("Sqids 配置"),
     信号塔: Schema.object({
-        新闻群: 创建信号塔频道Schema(默认信号塔配置.新闻群).description(
-            "新闻广播群配置",
-        ),
-        后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description(
-            "后台日志群配置",
-        ),
+        新闻群: 创建信号塔频道Schema(默认信号塔配置.新闻群).description("新闻广播群配置"),
+        后台群: 创建信号塔频道Schema(默认信号塔配置.后台群).description("后台日志群配置"),
     }).description("信号塔配置"),
     土木工程: Schema.object({
-        地形惩罚系数: 创建地形惩罚系数Schema(
-            默认土木工程配置.地形惩罚系数,
-        ).description("地形导致的建造成本倍率"),
+        地形惩罚系数: 创建地形惩罚系数Schema(默认土木工程配置.地形惩罚系数).description(
+            "地形导致的建造成本倍率",
+        ),
     }).description("土木工程配置"),
     地理: Schema.object({
         列车炮最大射程公里: Schema.number()

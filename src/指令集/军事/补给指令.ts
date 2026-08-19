@@ -14,13 +14,7 @@ export function 分配装备(ctx: Context) {
                     return "只能操作本联军的军队";
                 }
 
-                const { 实际数量 } = await 分配装备工作流(
-                    ctx,
-                    军队,
-                    结果,
-                    装备 ?? "",
-                    数量,
-                );
+                const { 实际数量 } = await 分配装备工作流(ctx, 军队, 结果, 装备 ?? "", 数量);
 
                 return 实际数量 > 0
                     ? `已向军队 #${军队.id} 拨出【${装备}】×${格式化(实际数量)}`
@@ -46,13 +40,7 @@ export function 发枪(ctx: Context) {
                     return "只能操作本联军的军队";
                 }
 
-                const { 实际数量 } = await 分配装备工作流(
-                    ctx,
-                    军队,
-                    结果,
-                    "步兵装备",
-                    数量,
-                );
+                const { 实际数量 } = await 分配装备工作流(ctx, 军队, 结果, "步兵装备", 数量);
 
                 return `已向军队 #${军队.id} 发放步兵装备 ×${格式化(实际数量)}`;
             } catch (error) {
@@ -86,25 +74,23 @@ export function 扩军(ctx: Context) {
 }
 
 export function 裁军(ctx: Context) {
-    ctx.command("裁军 <编号:number> <人力:number>").action(
-        async ({ session }, 编号, 人力) => {
-            try {
-                const 结果 = await 玩家联军检查(ctx, session);
-                const 军队 = await 军队解析(ctx, 编号);
-                if (军队.所属联军编号 !== 结果.联军编号) {
-                    return "只能操作本联军的军队";
-                }
-
-                const { 实际裁减 } = await 裁军工作流(ctx, 军队, 结果, 人力);
-                return [
-                    "====[裁军]====",
-                    `军队 #${军队.id}（${军队.名称}）裁减 ${格式化(实际裁减)} 人`,
-                    `■ 现有兵力：${格式化(军队.士兵数量 - 实际裁减)}`,
-                    `■ 士兵已转为你的工人`,
-                ].join("\n");
-            } catch (error) {
-                return (error as Error).message;
+    ctx.command("裁军 <编号:number> <人力:number>").action(async ({ session }, 编号, 人力) => {
+        try {
+            const 结果 = await 玩家联军检查(ctx, session);
+            const 军队 = await 军队解析(ctx, 编号);
+            if (军队.所属联军编号 !== 结果.联军编号) {
+                return "只能操作本联军的军队";
             }
-        },
-    );
+
+            const { 实际裁减 } = await 裁军工作流(ctx, 军队, 结果, 人力);
+            return [
+                "====[裁军]====",
+                `军队 #${军队.id}（${军队.名称}）裁减 ${格式化(实际裁减)} 人`,
+                `■ 现有兵力：${格式化(军队.士兵数量 - 实际裁减)}`,
+                `■ 士兵已转为你的工人`,
+            ].join("\n");
+        } catch (error) {
+            return (error as Error).message;
+        }
+    });
 }

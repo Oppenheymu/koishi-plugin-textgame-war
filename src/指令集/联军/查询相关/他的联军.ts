@@ -7,8 +7,11 @@ export function 他的联军(ctx: Context) {
         .alias("他的国家")
         .action(async ({ session }, 目标) => {
             try {
-                const { 目标用户名, 联军资料, 展示联军名称 } =
-                    await 目标联军解析(ctx, session, 目标);
+                const { 目标用户名, 联军资料, 展示联军名称 } = await 目标联军解析(
+                    ctx,
+                    session,
+                    目标,
+                );
                 const 格式化 = (n: number) => n.toLocaleString("zh-CN");
 
                 return `

@@ -68,20 +68,12 @@ export function 查看地区(ctx: Context) {
                     ? await 地区解析(ctx, 规范地区编号)
                     : await 当前地区解析(ctx, session);
 
-                const 容量行 = 容量配置.map(
-                    ({ 标签, 当前字段, 已用字段, 上限字段 }) => {
-                        const 当前 = 地区资料[
-                            当前字段 as keyof typeof 地区资料
-                        ] as number;
-                        const 已用 = 地区资料[
-                            已用字段 as keyof typeof 地区资料
-                        ] as number;
-                        const 上限 = 地区资料[
-                            上限字段 as keyof typeof 地区资料
-                        ] as number;
-                        return `· ${标签}: ${格式化容量(当前, 已用, 上限)}`;
-                    },
-                );
+                const 容量行 = 容量配置.map(({ 标签, 当前字段, 已用字段, 上限字段 }) => {
+                    const 当前 = 地区资料[当前字段 as keyof typeof 地区资料] as number;
+                    const 已用 = 地区资料[已用字段 as keyof typeof 地区资料] as number;
+                    const 上限 = 地区资料[上限字段 as keyof typeof 地区资料] as number;
+                    return `· ${标签}: ${格式化容量(当前, 已用, 上限)}`;
+                });
 
                 const 经纬度 = 地区编号转经纬度(地区编号);
 

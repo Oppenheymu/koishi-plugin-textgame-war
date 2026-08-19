@@ -1,12 +1,6 @@
 // 军队工作流（详见 军事系统.prompt.md 第 7 章指令的业务部分）
 import type { Context } from "koishi";
-import type {
-    Army,
-    CoalitionArmy,
-    Player,
-    PlayerWarData,
-    装备名,
-} from "#/types";
+import type { Army, CoalitionArmy, Player, PlayerWarData, 装备名 } from "#/types";
 import { 军衔, 军衔权益表, 军队命令, 军队状态, 是否有效装备名 } from "#/types";
 import {
     地区解析,
@@ -62,9 +56,7 @@ export async function 组建军队工作流(
     // 初始驻地：玩家驻扎地区 → 联军首都
     const 所在地区编号 = 操作者.用户资料.驻扎地区 || 联军资料.联军首都;
     if (!所在地区编号) {
-        throw new Error(
-            "无法确定军队驻地：你尚未驻扎任何地区，且联军未设置首都",
-        );
+        throw new Error("无法确定军队驻地：你尚未驻扎任何地区，且联军未设置首都");
     }
     const [驻地] = await ctx.database.get("马列地区表", {
         地区编号: 所在地区编号,
@@ -77,8 +69,7 @@ export async function 组建军队工作流(
     const 联军军队 = await ctx.database.get("马列军队表", {
         所属联军编号: 联军编号,
     });
-    const 番号 =
-        联军军队.reduce((最大, 军队) => Math.max(最大, 军队.番号), 0) + 1;
+    const 番号 = 联军军队.reduce((最大, 军队) => Math.max(最大, 军队.番号), 0) + 1;
 
     const 联军名 = 联军资料.联军名称 || 联军编号;
     const 默认名称 = `${联军名}第${番号}军`;
@@ -110,9 +101,7 @@ export async function 组建军队工作流(
     if (名称部分) {
         const 校验错误 = 校验名称文本(名称部分, "军队");
         if (校验错误) {
-            throw new Error(
-                `军队已按默认名称组建，但自定义名称无效：${校验错误}`,
-            );
+            throw new Error(`军队已按默认名称组建，但自定义名称无效：${校验错误}`);
         }
         const 工单 = await 创建改名审核工单(ctx, {
             类型: "军队",
@@ -130,11 +119,7 @@ export async function 组建军队工作流(
 
 // ---- 解散军队 ----
 
-export async function 解散军队工作流(
-    ctx: Context,
-    军队: Army,
-    操作者: 军队操作者,
-): Promise<void> {
+export async function 解散军队工作流(ctx: Context, 军队: Army, 操作者: 军队操作者): Promise<void> {
     if (军队.状态 !== 军队状态.驻扎) {
         throw new Error("只有驻扎状态的军队才能解散");
     }
@@ -157,19 +142,14 @@ export async function 解散军队工作流(
     for (const 键 of 军队装备列名单) {
         const 数量 = 军队[键] as number;
         if (数量 > 0) {
-            回收更新[键] =
-                (Number(战争档案?.[键 as keyof PlayerWarData]) || 0) + 数量;
+            回收更新[键] = (Number(战争档案?.[键 as keyof PlayerWarData]) || 0) + 数量;
         }
     }
     if (军队.士兵数量 > 0) {
         回收更新["工人"] = (玩家档案?.工人 ?? 0) + 军队.士兵数量;
     }
 
-    await 更新玩家资料(
-        ctx,
-        回收者配置.id,
-        回收更新 as Partial<Player & PlayerWarData>,
-    );
+    await 更新玩家资料(ctx, 回收者配置.id, 回收更新 as Partial<Player & PlayerWarData>);
     await ctx.database.remove("马列军队表", { id: 军队.id });
 }
 
@@ -456,9 +436,7 @@ export async function 任命指挥官工作流(
     const 权益 = 军衔权益表[军衔记录.军衔];
     const 已有军队 = await 获取玩家军队列表(ctx, 军队.所属联军编号, 目标UID);
     if (已有军队.length >= 权益.可建军数量) {
-        throw new Error(
-            `${目标名称} 的军队数量已达其军衔上限（${权益.可建军数量} 支）`,
-        );
+        throw new Error(`${目标名称} 的军队数量已达其军衔上限（${权益.可建军数量} 支）`);
     }
 
     await ctx.database.set(

@@ -1,12 +1,8 @@
 import type { Context } from "koishi";
 
 function 计算区间资本增量(历史记录: number[], 当天内资本增量: number) {
-    const 近三天 =
-        历史记录.slice(-2).reduce((总和, 数值) => 总和 + 数值, 0) +
-        当天内资本增量;
-    const 近七天 =
-        历史记录.slice(-6).reduce((总和, 数值) => 总和 + 数值, 0) +
-        当天内资本增量;
+    const 近三天 = 历史记录.slice(-2).reduce((总和, 数值) => 总和 + 数值, 0) + 当天内资本增量;
+    const 近七天 = 历史记录.slice(-6).reduce((总和, 数值) => 总和 + 数值, 0) + 当天内资本增量;
 
     return {
         近三天,

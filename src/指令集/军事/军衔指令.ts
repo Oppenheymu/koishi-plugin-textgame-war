@@ -1,18 +1,7 @@
 import type { Context } from "koishi";
-import {
-    任命指挥官工作流,
-    授衔工作流,
-    获取联军操作权限,
-    褫夺军衔工作流,
-} from "#/logic";
+import { 任命指挥官工作流, 授衔工作流, 获取联军操作权限, 褫夺军衔工作流 } from "#/logic";
 import { 军衔, 军衔名称映射, 军衔权益表, 解析军衔名称 } from "#/types";
-import {
-    军队解析,
-    玩家联军检查,
-    目标解析,
-    获取玩家军队列表,
-    获取联军军衔记录,
-} from "#/utils";
+import { 军队解析, 玩家联军检查, 目标解析, 获取玩家军队列表, 获取联军军衔记录 } from "#/utils";
 
 export function 授衔(ctx: Context) {
     ctx.command("授衔 <目标:string> <军衔名:string>")
@@ -92,13 +81,8 @@ export function 我的军衔(ctx: Context) {
             }
 
             const 权益 = 军衔权益表[记录.军衔];
-            const 已有军队 = await 获取玩家军队列表(
-                ctx,
-                结果.联军编号,
-                结果.uid,
-            );
-            const 格式化上限 = (n: number) =>
-                n === Infinity ? "不限" : n.toLocaleString("zh-CN");
+            const 已有军队 = await 获取玩家军队列表(ctx, 结果.联军编号, 结果.uid);
+            const 格式化上限 = (n: number) => (n === Infinity ? "不限" : n.toLocaleString("zh-CN"));
 
             return [
                 "====[我的军衔]====",
@@ -106,9 +90,7 @@ export function 我的军衔(ctx: Context) {
                 `■ 来源：${记录.来源}`,
                 `■ 可建军数量：${已有军队.length} / ${格式化上限(权益.可建军数量)}`,
                 `■ 单军兵力上限：${格式化上限(权益.单军兵力上限)}`,
-                记录.军衔 >= 军衔.少将
-                    ? "■ 将官特权：可指挥本国任何军队、可任免尉官"
-                    : "",
+                记录.军衔 >= 军衔.少将 ? "■ 将官特权：可指挥本国任何军队、可任免尉官" : "",
             ]
                 .filter(Boolean)
                 .join("\n");
@@ -125,11 +107,7 @@ export function 任命指挥官(ctx: Context) {
                 const 结果 = await 玩家联军检查(ctx, session);
 
                 // 政治权限校验
-                const 所需等级 = await 获取联军操作权限(
-                    ctx,
-                    结果.联军编号,
-                    "任命指挥官",
-                );
+                const 所需等级 = await 获取联军操作权限(ctx, 结果.联军编号, "任命指挥官");
                 if (结果.权限等级 < 所需等级) {
                     return `权限不足：任命指挥官需要联军 ${所需等级} 级及以上权限`;
                 }
@@ -140,12 +118,7 @@ export function 任命指挥官(ctx: Context) {
                 }
 
                 const 目标玩家 = await 目标解析(ctx, session, 目标);
-                await 任命指挥官工作流(
-                    ctx,
-                    军队,
-                    目标玩家.目标用户资料.uid,
-                    目标玩家.目标用户名,
-                );
+                await 任命指挥官工作流(ctx, 军队, 目标玩家.目标用户资料.uid, 目标玩家.目标用户名);
 
                 return [
                     "====[任命指挥官]====",

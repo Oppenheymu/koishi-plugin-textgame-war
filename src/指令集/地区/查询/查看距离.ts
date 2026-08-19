@@ -18,14 +18,8 @@ export function 查看距离(ctx: Context) {
                     return "请提供起点和终点地区编号，例如：距离 00000 15979";
                 }
 
-                const { 地区资料: 起点资料 } = await 地区解析(
-                    ctx,
-                    起点编号.trim(),
-                );
-                const { 地区资料: 终点资料 } = await 地区解析(
-                    ctx,
-                    终点编号.trim(),
-                );
+                const { 地区资料: 起点资料 } = await 地区解析(ctx, 起点编号.trim());
+                const { 地区资料: 终点资料 } = await 地区解析(ctx, 终点编号.trim());
 
                 const 起点 = 起点编号.trim();
                 const 终点 = 终点编号.trim();

@@ -54,10 +54,7 @@ function 获取工单目标标识(工单: 改名审核工单): string {
     return `玩家ID：${工单.玩家ID}`;
 }
 
-async function 推送改名审核工单(
-    ctx: Context,
-    工单: 改名审核工单,
-): Promise<void> {
+async function 推送改名审核工单(ctx: Context, 工单: 改名审核工单): Promise<void> {
     const 推送文本 = [
         `【改名工单 #${工单.工单编号}】`,
         `类型：${工单.类型}`,
@@ -68,9 +65,7 @@ async function 推送改名审核工单(
         "管理员回复本条消息并发送【审核通过】或【审核驳回】",
     ].join("\n");
 
-    const onebotBot = Object.values(ctx.bots).find(
-        (bot) => bot.platform === "onebot",
-    );
+    const onebotBot = Object.values(ctx.bots).find((bot) => bot.platform === "onebot");
 
     if (!onebotBot) return;
 
@@ -79,21 +74,14 @@ async function 推送改名审核工单(
     } catch {}
 }
 
-export function 解析改名时间戳(
-    上次改名日期: string | null | undefined,
-): number | null {
+export function 解析改名时间戳(上次改名日期: string | null | undefined): number | null {
     const 文本 = 上次改名日期?.trim();
     if (!文本) return null;
 
     const 格式匹配 = 文本.match(/^(\d{4})-(\d{1,2})-(\d{1,2})-(\d{1,2})$/);
     if (格式匹配) {
         const [, 年, 月, 日, 时] = 格式匹配;
-        const 时间戳 = new Date(
-            Number(年),
-            Number(月) - 1,
-            Number(日),
-            Number(时),
-        ).getTime();
+        const 时间戳 = new Date(Number(年), Number(月) - 1, Number(日), Number(时)).getTime();
         return Number.isNaN(时间戳) ? null : 时间戳;
     }
 
@@ -167,10 +155,7 @@ export function 解析引用工单编号(引用文本: string | undefined): numb
     return 编号;
 }
 
-export function 校验名称文本(
-    新名称: string,
-    名称类型: 改名类型,
-): string | null {
+export function 校验名称文本(新名称: string, 名称类型: 改名类型): string | null {
     const 规范名称 = 新名称.trim();
 
     if (!规范名称) return `请提供${名称类型}名称`;
@@ -217,10 +202,7 @@ export async function 检查名称是否重复(
     return null;
 }
 
-export async function 审核通过改名工单(
-    ctx: Context,
-    工单编号: number,
-): Promise<string> {
+export async function 审核通过改名工单(ctx: Context, 工单编号: number): Promise<string> {
     const 工单 = 获取待审核工单(工单编号);
 
     if (工单.类型 !== "地区") {

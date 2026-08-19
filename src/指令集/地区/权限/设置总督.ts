@@ -1,9 +1,5 @@
 import type { Context, Session } from "koishi";
-import {
-    地区总督设置检查,
-    尝试发送地区信号塔通报,
-    尝试发送联军信号塔通报,
-} from "#/logic";
+import { 地区总督设置检查, 尝试发送地区信号塔通报, 尝试发送联军信号塔通报 } from "#/logic";
 import { 更新地区资料 } from "#/utils";
 
 async function 执行设置总督(
@@ -17,8 +13,11 @@ async function 执行设置总督(
         return "请指定目标玩家名称";
     }
 
-    const { username, 地区编号, 展示地区名称, 地区资料 } =
-        await 地区总督设置检查(ctx, session, 地区编号参数);
+    const { username, 地区编号, 展示地区名称, 地区资料 } = await 地区总督设置检查(
+        ctx,
+        session,
+        地区编号参数,
+    );
 
     const 原总督 = (地区资料.地区总督 ?? "").trim();
     if (原总督 === 目标玩家名称) {
@@ -64,12 +63,7 @@ export function 设置总督(ctx: Context) {
         .alias("地区总督")
         .action(async ({ session }, 目标玩家参数, 地区编号参数) => {
             try {
-                return await 执行设置总督(
-                    ctx,
-                    session,
-                    目标玩家参数,
-                    地区编号参数,
-                );
+                return await 执行设置总督(ctx, session, 目标玩家参数, 地区编号参数);
             } catch (error) {
                 return (error as Error).message;
             }

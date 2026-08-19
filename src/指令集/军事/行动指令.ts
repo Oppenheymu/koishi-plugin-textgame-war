@@ -41,12 +41,7 @@ export function 进军(ctx: Context) {
         });
 }
 
-function 注册战斗命令(
-    ctx: Context,
-    指令名: string,
-    命令: 军队命令,
-    提示: string,
-) {
+function 注册战斗命令(ctx: Context, 指令名: string, 命令: 军队命令, 提示: string) {
     ctx.command(`${指令名} <编号:number>`).action(async ({ session }, 编号) => {
         try {
             const 结果 = await 玩家联军检查(ctx, session);
@@ -64,12 +59,7 @@ function 注册战斗命令(
 }
 
 export function 撤退(ctx: Context) {
-    注册战斗命令(
-        ctx,
-        "撤退",
-        军队命令.撤退,
-        "已接到撤退命令，将在下一轮结算时撤离战斗",
-    );
+    注册战斗命令(ctx, "撤退", 军队命令.撤退, "已接到撤退命令，将在下一轮结算时撤离战斗");
 }
 
 export function 死守(ctx: Context) {
@@ -82,10 +72,5 @@ export function 死守(ctx: Context) {
 }
 
 export function 取消死守(ctx: Context) {
-    注册战斗命令(
-        ctx,
-        "取消死守",
-        军队命令.正常,
-        "死守命令已取消，恢复正常作战",
-    );
+    注册战斗命令(ctx, "取消死守", 军队命令.正常, "死守命令已取消，恢复正常作战");
 }

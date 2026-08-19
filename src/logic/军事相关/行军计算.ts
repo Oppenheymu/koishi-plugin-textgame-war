@@ -1,13 +1,7 @@
 // 行军计算（详见 军事系统.prompt.md 第 5 章）
 
 import type { Army, Region, RegionTerra } from "#/types";
-import {
-    TerrainType,
-    两栖乘员占比要求,
-    时间倍率,
-    水域进入占比阈值,
-    陆军装备属性表,
-} from "#/types";
+import { TerrainType, 两栖乘员占比要求, 时间倍率, 水域进入占比阈值, 陆军装备属性表 } from "#/types";
 import { 切比雪夫网格距离, 计算真实距离 } from "#/地理集";
 import { 解析地区编号 } from "#/地理集/坐标解析";
 import { 计算地貌速度修正, 计算行军地形修正 } from "./战场宽度";
@@ -69,19 +63,9 @@ export function 计算行军毫秒数(参数: {
     目标地区编号: string;
     出发地形: TerrainType;
     目标地形: TerrainType;
-    目标地貌: Pick<
-        RegionTerra,
-        "水域" | "雪地" | "草地" | "荒地" | "森林" | "城镇"
-    >;
+    目标地貌: Pick<RegionTerra, "水域" | "雪地" | "草地" | "荒地" | "森林" | "城镇">;
 }): number {
-    const {
-        基础速度,
-        出发地区编号,
-        目标地区编号,
-        出发地形,
-        目标地形,
-        目标地貌,
-    } = 参数;
+    const { 基础速度, 出发地区编号, 目标地区编号, 出发地形, 目标地形, 目标地貌 } = 参数;
 
     const 路程 = 计算真实距离(出发地区编号, 目标地区编号); // km
     const 地形修正 = 计算行军地形修正(出发地形, 目标地形);
@@ -104,20 +88,16 @@ export function 选择撤退目的地(参数: {
     相邻地区列表: Pick<Region, "地区编号" | "地区地形" | "控制国家">[];
 }): string | null {
     const { 所属联军编号, 相邻地区列表 } = 参数;
-    const 陆地相邻 = 相邻地区列表.filter(
-        (地区) => !海洋地形列表.includes(地区.地区地形),
-    );
+    const 陆地相邻 = 相邻地区列表.filter((地区) => !海洋地形列表.includes(地区.地区地形));
 
     const 本国控制 = 陆地相邻.filter((地区) => 地区.控制国家 === 所属联军编号);
     if (本国控制.length > 0) {
-        return 本国控制[Math.floor(Math.random() * 本国控制.length)]!
-            .地区编号;
+        return 本国控制[Math.floor(Math.random() * 本国控制.length)]!.地区编号;
     }
 
     const 无主地区 = 陆地相邻.filter((地区) => !地区.控制国家);
     if (无主地区.length > 0) {
-        return 无主地区[Math.floor(Math.random() * 无主地区.length)]!
-            .地区编号;
+        return 无主地区[Math.floor(Math.random() * 无主地区.length)]!.地区编号;
     }
 
     return null; // 无路可退 → 歼灭

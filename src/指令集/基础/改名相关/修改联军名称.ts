@@ -1,10 +1,5 @@
 import type { Context } from "koishi";
-import {
-    创建改名审核工单,
-    校验名称文本,
-    检查名称是否重复,
-    检查改名冷却,
-} from "#/logic";
+import { 创建改名审核工单, 校验名称文本, 检查名称是否重复, 检查改名冷却 } from "#/logic";
 import { 玩家联军检查 } from "#/utils";
 
 export function 修改联军名称(ctx: Context) {
@@ -12,16 +7,12 @@ export function 修改联军名称(ctx: Context) {
         .alias("联军改名")
         .action(async ({ session }, 新名称) => {
             try {
-                const { id, uid, username, 联军编号, 联军资料 } =
-                    await 玩家联军检查(ctx, session, {
-                        最低权限等级: 4,
-                        是否必须在成员列表: true,
-                    });
+                const { id, uid, username, 联军编号, 联军资料 } = await 玩家联军检查(ctx, session, {
+                    最低权限等级: 4,
+                    是否必须在成员列表: true,
+                });
 
-                const 改名冷却提示 = 检查改名冷却(
-                    联军资料.上次改名日期,
-                    "联军",
-                );
+                const 改名冷却提示 = 检查改名冷却(联军资料.上次改名日期, "联军");
                 if (改名冷却提示) {
                     return 改名冷却提示;
                 }

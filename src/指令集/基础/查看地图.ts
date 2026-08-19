@@ -38,11 +38,7 @@ export function ViewMap(ctx: Context) {
                 const 目标地区 = (
                     await ctx.database.get("马列地区表", { 地区编号: regionId })
                 )[0] as Region | undefined;
-                if (
-                    !目标地区 ||
-                    目标地区.栅格X == null ||
-                    目标地区.栅格Y == null
-                ) {
+                if (!目标地区 || 目标地区.栅格X == null || 目标地区.栅格Y == null) {
                     return `地区编号 ${regionId} 的数据不完整。`;
                 }
                 centerName = `地区 ${regionId}`;
@@ -57,11 +53,7 @@ export function ViewMap(ctx: Context) {
                 const 首都地区 = (
                     await ctx.database.get("马列地区表", { 地区编号: 首都编号 })
                 )[0] as Region | undefined;
-                if (
-                    !首都地区 ||
-                    首都地区.栅格X == null ||
-                    首都地区.栅格Y == null
-                ) {
+                if (!首都地区 || 首都地区.栅格X == null || 首都地区.栅格Y == null) {
                     return "错误：联军首都地区数据不完整，请联系管理员。";
                 }
                 centerName = "联军首都";
@@ -69,9 +61,7 @@ export function ViewMap(ctx: Context) {
                 centerGridY = 首都地区.栅格Y;
             }
 
-            await session?.send(
-                `正在为您生成以${centerName}为中心的局部地图，请稍候...`,
-            );
+            await session?.send(`正在为您生成以${centerName}为中心的局部地图，请稍候...`);
             try {
                 const buffer = await GenerateMap(ctx, {
                     centerGridX,

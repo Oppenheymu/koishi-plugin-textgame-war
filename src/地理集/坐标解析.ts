@@ -81,8 +81,7 @@ export function 计算栅格边长(坐标: 栅格坐标): 栅格边长 {
     const latRad = centerLat * (Math.PI / 180);
 
     const 南北高度公里 = DEG_PER_CELL_Y * (Math.PI / 180) * EARTH_RADIUS_KM;
-    const 东西宽度公里 =
-        DEG_PER_CELL_X * (Math.PI / 180) * EARTH_RADIUS_KM * Math.cos(latRad);
+    const 东西宽度公里 = DEG_PER_CELL_X * (Math.PI / 180) * EARTH_RADIUS_KM * Math.cos(latRad);
 
     return {
         东西宽度公里,

@@ -13,9 +13,7 @@ export interface 每小时地区刷新结果 {
     地区报告发送失败数量: number;
 }
 
-export async function 执行每小时地区工业刷新(
-    ctx: Context,
-): Promise<地区工业刷新结果> {
+export async function 执行每小时地区工业刷新(ctx: Context): Promise<地区工业刷新结果> {
     const 地区列表 = await ctx.database.get("马列地区表", {});
 
     if (!地区列表.length) {
@@ -38,19 +36,13 @@ export async function 执行每小时地区工业刷新(
             const 原空闲炼钢厂 = 地区.空闲的炼钢厂 ?? 0;
             const 原空闲电解铝厂 = 地区.空闲的电解铝厂 ?? 0;
 
-            if (
-                原空闲炼钢厂 === 目标空闲炼钢厂 &&
-                原空闲电解铝厂 === 目标空闲电解铝厂
-            ) {
+            if (原空闲炼钢厂 === 目标空闲炼钢厂 && 原空闲电解铝厂 === 目标空闲电解铝厂) {
                 return null;
             }
 
             刷新工业地区数量 += 1;
             刷新炼钢空闲数量 += Math.max(0, 目标空闲炼钢厂 - 原空闲炼钢厂);
-            刷新电解铝空闲数量 += Math.max(
-                0,
-                目标空闲电解铝厂 - 原空闲电解铝厂,
-            );
+            刷新电解铝空闲数量 += Math.max(0, 目标空闲电解铝厂 - 原空闲电解铝厂);
 
             return {
                 地区编号: 地区.地区编号,
@@ -75,9 +67,7 @@ export async function 执行每小时地区工业刷新(
     };
 }
 
-export async function 执行每小时地区刷新(
-    ctx: Context,
-): Promise<每小时地区刷新结果> {
+export async function 执行每小时地区刷新(ctx: Context): Promise<每小时地区刷新结果> {
     const [工业结果] = await Promise.all([执行每小时地区工业刷新(ctx)]);
 
     const 地区报告结果 = await 尝试发送地区刷新信号塔通报(ctx, {

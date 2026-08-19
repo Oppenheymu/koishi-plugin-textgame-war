@@ -30,13 +30,8 @@ export function 获取排除成员后前N贡献总和(
     return 排行数据.reduce((总和, 成员) => 总和 + 成员.联军贡献, 0);
 }
 
-export function 获取排除成员后平均贡献(
-    联军资料: CoalitionArmy,
-    排除UID: string,
-): number {
-    const 其他成员 = 获取联军贡献排行数据(联军资料).filter(
-        (成员) => 成员.成员UID !== 排除UID,
-    );
+export function 获取排除成员后平均贡献(联军资料: CoalitionArmy, 排除UID: string): number {
+    const 其他成员 = 获取联军贡献排行数据(联军资料).filter((成员) => 成员.成员UID !== 排除UID);
 
     if (其他成员.length === 0) {
         return 0;

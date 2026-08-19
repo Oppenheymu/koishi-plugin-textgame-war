@@ -21,11 +21,7 @@ export async function 校验指挥权(
     if (军队.指挥官UID === 操作者UID) {
         return null;
     }
-    const 操作者军衔 = await 获取玩家军衔等级(
-        ctx,
-        军队.所属联军编号,
-        操作者UID,
-    );
+    const 操作者军衔 = await 获取玩家军衔等级(ctx, 军队.所属联军编号, 操作者UID);
     if (操作者军衔 >= 军衔.少将) {
         return null;
     }
@@ -44,8 +40,7 @@ export function 校验命令覆盖(
     if (下达者军衔 >= 军队.命令下达者军衔) {
         return null;
     }
-    const 军衔名称 =
-        军衔名称映射[军队.命令下达者军衔 as 军衔] ?? `${军队.命令下达者军衔}级`;
+    const 军衔名称 = 军衔名称映射[军队.命令下达者军衔 as 军衔] ?? `${军队.命令下达者军衔}级`;
     return `上级（${军衔名称}）已下达【${军队.当前命令}】命令，你的军衔不足，无法覆盖`;
 }
 
@@ -63,11 +58,7 @@ export async function 校验指挥与命令覆盖(
         throw new Error(指挥权拒绝);
     }
 
-    const 操作者军衔 = await 获取玩家军衔等级(
-        ctx,
-        军队.所属联军编号,
-        操作者UID,
-    );
+    const 操作者军衔 = await 获取玩家军衔等级(ctx, 军队.所属联军编号, 操作者UID);
 
     const 覆盖拒绝 = 校验命令覆盖(军队, 操作者军衔);
     if (覆盖拒绝) {

@@ -8,10 +8,9 @@ export function 退出联军(ctx: Context) {
         .alias("退军")
         .action(async ({ session }) => {
             try {
-                const { id, uid, username, 联军资料, 联军编号 } =
-                    await 玩家联军检查(ctx, session, {
-                        是否必须在成员列表: true,
-                    });
+                const { id, uid, username, 联军资料, 联军编号 } = await 玩家联军检查(ctx, session, {
+                    是否必须在成员列表: true,
+                });
 
                 if (联军资料.联军元首 === uid) {
                     return "你是联军元首，无法直接退出联军，请先移交元首身份";

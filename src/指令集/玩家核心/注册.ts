@@ -17,23 +17,19 @@ export function 注册(ctx: Context) {
                 const platform = session.platform;
                 const userId = session.userId;
 
-                const [已有玩家配置] = await ctx.database.get(
-                    "马列玩家配置表",
-                    {
-                        [platform]: userId,
-                    },
-                );
+                const [已有玩家配置] = await ctx.database.get("马列玩家配置表", {
+                    [platform]: userId,
+                });
 
                 if (已有玩家配置) {
-                    const [已有玩家档案列表, 已有玩家战争档案列表] =
-                        await Promise.all([
-                            ctx.database.get("马列玩家表", {
-                                id: 已有玩家配置.id,
-                            }),
-                            ctx.database.get("马列玩家战争表", {
-                                id: 已有玩家配置.id,
-                            }),
-                        ]);
+                    const [已有玩家档案列表, 已有玩家战争档案列表] = await Promise.all([
+                        ctx.database.get("马列玩家表", {
+                            id: 已有玩家配置.id,
+                        }),
+                        ctx.database.get("马列玩家战争表", {
+                            id: 已有玩家配置.id,
+                        }),
+                    ]);
 
                     const [已有玩家档案] = 已有玩家档案列表;
                     const [已有玩家战争档案] = 已有玩家战争档案列表;
@@ -65,12 +61,14 @@ export function 注册(ctx: Context) {
                 const 初始钢铁 = TRandom(100, 200, 500);
 
                 try {
-                    const newPlayerConfig: PlayerConfig =
-                        await ctx.database.create("马列玩家配置表", {
+                    const newPlayerConfig: PlayerConfig = await ctx.database.create(
+                        "马列玩家配置表",
+                        {
                             [platform]: userId,
                             username: "",
                             名称是否审核: true,
-                        });
+                        },
+                    );
 
                     newID = newPlayerConfig.id;
                     newUID = 获取注册Sqids().encode([newID]);

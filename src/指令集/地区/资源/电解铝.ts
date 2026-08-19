@@ -9,14 +9,8 @@ export function 地区电解铝(ctx: Context) {
         .alias("地区炼铝")
         .action(async ({ session }, 数量) => {
             try {
-                const {
-                    id,
-                    username,
-                    当前驻扎地区,
-                    地区编号,
-                    展示地区名称,
-                    地区资料,
-                } = await 驻扎检查(ctx, session);
+                const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区资料 } =
+                    await 驻扎检查(ctx, session);
                 const { 用户资料 } = await 玩家检查(ctx, session);
 
                 if (!数量) {
@@ -57,16 +51,10 @@ export function 地区电解铝(ctx: Context) {
                     return "生活资料不足，地区电解铝需要至少2000生活资料";
                 }
 
-                const 增加的金属铝 = Math.max(
-                    1,
-                    Math.floor(数量 * TRandom(0.75, 0.9, 1, false)),
-                );
+                const 增加的金属铝 = Math.max(1, Math.floor(数量 * TRandom(0.75, 0.9, 1, false)));
                 const 更新后金属铝 = 用户资料.金属铝 + 增加的金属铝;
                 const 更新后铝土矿 = 用户资料.铝土矿 - 数量;
-                const 更新后空闲电解铝厂 = Math.max(
-                    0,
-                    (地区资料.空闲的电解铝厂 ?? 0) - 1,
-                );
+                const 更新后空闲电解铝厂 = Math.max(0, (地区资料.空闲的电解铝厂 ?? 0) - 1);
 
                 await Promise.all([
                     更新玩家资料(ctx, id, {

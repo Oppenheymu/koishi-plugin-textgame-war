@@ -4,10 +4,7 @@ import { 会话检查, 发送并抛出错误 } from "../会话";
 import { 获取玩家展示名称 } from "./名称";
 import { 合并玩家资料 } from "./查询";
 
-export async function 玩家检查(
-    ctx: Context,
-    session: Session | undefined,
-): Promise<玩家解析结果> {
+export async function 玩家检查(ctx: Context, session: Session | undefined): Promise<玩家解析结果> {
     会话检查(session);
 
     const platform = session.platform;

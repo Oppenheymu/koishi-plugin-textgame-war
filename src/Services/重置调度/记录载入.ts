@@ -3,9 +3,7 @@ import { 确保服务记录 } from "#/infrastructure";
 import { 获取今天日期 } from "../utils";
 import type { 服务记录初始化结果 } from "./types";
 
-export async function 初始化服务记录(
-    ctx: Context,
-): Promise<服务记录初始化结果> {
+export async function 初始化服务记录(ctx: Context): Promise<服务记录初始化结果> {
     const 今天 = 获取今天日期();
     const [服务记录] = await ctx.database.get("马列服务表", { id: "service" });
 

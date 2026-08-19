@@ -28,8 +28,10 @@ async function 执行特殊设施修建(
     const { session, 类型, 编号输入, 轮次输入 } = 参数;
     const 建筑属性 = 特殊建筑库[类型];
 
-    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } =
-        await 驻扎检查(ctx, session);
+    const { id, username, 当前驻扎地区, 地区编号, 展示地区名称, 地区战略资料 } = await 驻扎检查(
+        ctx,
+        session,
+    );
     const { 用户资料 } = await 玩家检查(ctx, session);
 
     if (当前驻扎地区 !== 地区编号) {
@@ -55,30 +57,21 @@ async function 执行特殊设施修建(
     }
 
     // 使用通用的最大轮次计算
-    const 最大可执行轮次 = 计算最大可执行轮次(
-        用户资料,
-        建筑属性.资源需求,
-        轮次,
-    );
+    const 最大可执行轮次 = 计算最大可执行轮次(用户资料, 建筑属性.资源需求, 轮次);
 
     if (最大可执行轮次 <= 0) {
         return "资源或生活资料不足，无法完成任意一轮修建";
     }
 
-    const 原始设施映射 = (地区战略资料[类型] ?? {}) as Record<
-        number,
-        设施建造对象
-    >;
+    const 原始设施映射 = (地区战略资料[类型] ?? {}) as Record<number, 设施建造对象>;
     const 设施映射: Record<number, 设施建造对象> = {
         ...原始设施映射,
     };
 
     const 目标编号 = Number.isFinite(编号输入)
         ? Math.max(1, Math.floor(编号输入 ?? 1))
-        : Math.max(
-              1,
-              ...Object.keys(设施映射).map((编号) => Number(编号) || 0),
-          ) + (Object.keys(设施映射).length ? 1 : 0);
+        : Math.max(1, ...Object.keys(设施映射).map((编号) => Number(编号) || 0)) +
+          (Object.keys(设施映射).length ? 1 : 0);
 
     const 现有设施 = 设施映射[目标编号] ?? 创建默认设施对象(类型);
 
@@ -115,10 +108,7 @@ async function 执行特殊设施修建(
                 : (现有设施.建造时间 ?? ""),
     };
 
-    logger.debug(
-        `[建筑完成] 类型: ${类型}, 编号: ${目标编号}, 设施数据:`,
-        设施映射,
-    );
+    logger.debug(`[建筑完成] 类型: ${类型}, 编号: ${目标编号}, 设施数据:`, 设施映射);
 
     const 更新对象 = {
         [类型]: 设施映射,
@@ -133,10 +123,7 @@ async function 执行特殊设施修建(
         await 更新地区战略资料(ctx, 地区编号, 更新对象);
         logger.info(`[保存成功] 地区: ${地区编号}, 类型: ${类型}`);
     } catch (error) {
-        logger.error(
-            `[保存失败] 地区: ${地区编号}, 类型: ${类型}, 错误:`,
-            error,
-        );
+        logger.error(`[保存失败] 地区: ${地区编号}, 类型: ${类型}, 错误:`, error);
         throw error;
     }
 

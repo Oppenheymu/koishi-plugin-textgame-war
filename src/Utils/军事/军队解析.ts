@@ -2,10 +2,7 @@ import type { Context } from "koishi";
 import type { Army, CoalitionRank } from "#/types";
 
 /** 军队解析：全局编号（纯数字）→ 军队记录 */
-export async function 军队解析(
-    ctx: Context,
-    编号输入: string | number | undefined,
-): Promise<Army> {
+export async function 军队解析(ctx: Context, 编号输入: string | number | undefined): Promise<Army> {
     const 编号 = Number(编号输入);
     if (!Number.isInteger(编号) || 编号 <= 0) {
         throw new Error("请指定有效的军队编号（纯数字）");

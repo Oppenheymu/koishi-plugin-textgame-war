@@ -15,11 +15,7 @@ export function 联军生活资料查询(ctx: Context) {
                 let 联军编号: string | null;
 
                 if (输入目标) {
-                    const { 目标用户名, 目标用户资料 } = await 目标解析(
-                        ctx,
-                        session,
-                        输入目标,
-                    );
+                    const { 目标用户名, 目标用户资料 } = await 目标解析(ctx, session, 输入目标);
                     查询用户名 = 目标用户名;
                     联军编号 = 目标用户资料.所在联军;
                 } else {
@@ -36,9 +32,7 @@ export function 联军生活资料查询(ctx: Context) {
                     联军编号,
                 });
                 if (!联军资料) {
-                    throw new Error(
-                        "数据异常：已记录所在联军但未找到联军档案，请联系管理员",
-                    );
+                    throw new Error("数据异常：已记录所在联军但未找到联军档案，请联系管理员");
                 }
 
                 return `

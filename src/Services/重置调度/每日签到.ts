@@ -5,9 +5,7 @@ import { 初始化服务记录 } from "./记录载入";
 
 let 正在执行每日重置 = false;
 
-export async function 执行每日签到重置(
-    ctx: Context,
-): Promise<每日签到重置结果> {
+export async function 执行每日签到重置(ctx: Context): Promise<每日签到重置结果> {
     if (正在执行每日重置) {
         return {
             是否执行: false,
@@ -47,20 +45,12 @@ export async function 执行每日签到重置(
         }
 
         if (!created) {
-            await ctx.database.set(
-                "马列服务表",
-                { id: "service" },
-                { 上次重置签到日期: 今天 },
-            );
+            await ctx.database.set("马列服务表", { id: "service" }, { 上次重置签到日期: 今天 });
         }
 
         const 玩家列表 = await ctx.database.get("马列玩家表", {});
         await Promise.all([
-            ctx.database.set(
-                "马列玩家表",
-                {},
-                { 今日是否签到: false, 工人招募限额: 1000 },
-            ),
+            ctx.database.set("马列玩家表", {}, { 今日是否签到: false, 工人招募限额: 1000 }),
             ctx.database.set("马列联军表", {}, { 当天扩军累计: 0 }),
         ]);
 

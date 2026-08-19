@@ -95,9 +95,7 @@ export async function 更新玩家资料(
     const 玩家更新: Record<string, unknown> = {};
     const 战争更新: Record<string, unknown> = {};
 
-    for (const [键, 值] of Object.entries(
-        更新数据 as Record<string, unknown>,
-    )) {
+    for (const [键, 值] of Object.entries(更新数据 as Record<string, unknown>)) {
         if (键 === "id" || 键 === "uid") continue;
 
         if (玩家档案字段集合.has(键 as keyof Player)) {

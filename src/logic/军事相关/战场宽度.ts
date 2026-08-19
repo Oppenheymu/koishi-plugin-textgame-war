@@ -11,10 +11,7 @@ import {
     超宽惩罚上限,
 } from "#/types";
 
-type 地貌占比 = Pick<
-    RegionTerra,
-    "水域" | "雪地" | "草地" | "荒地" | "森林" | "城镇"
->;
+type 地貌占比 = Pick<RegionTerra, "水域" | "雪地" | "草地" | "荒地" | "森林" | "城镇">;
 
 /** 战场宽度 = 基础宽度 × (1 + 0.3×城镇 - 0.2×森林 - 0.3×水域)，clamp(30, 120)
  *  地貌值以百分比(0-100)存入数据库，此处归一化为(0-1) */
@@ -24,10 +21,7 @@ export function 计算战场宽度(地形: TerrainType, 地貌: 地貌占比): n
     const 基础宽度 = 地形基础宽度[地形] ?? 80;
     const 宽度 =
         基础宽度 *
-        (1 +
-            0.3 * 归一化(地貌.城镇) -
-            0.2 * 归一化(地貌.森林) -
-            0.3 * 归一化(地貌.水域));
+        (1 + 0.3 * 归一化(地貌.城镇) - 0.2 * 归一化(地貌.森林) - 0.3 * 归一化(地貌.水域));
     return Math.min(战场宽度上限, Math.max(战场宽度下限, 宽度));
 }
 
@@ -59,20 +53,14 @@ export function 计算地貌速度修正(地貌: 地貌占比): number {
 }
 
 /** 行军地形修正：出发与目标地区地形修正的平均值 */
-export function 计算行军地形修正(
-    出发地形: TerrainType,
-    目标地形: TerrainType,
-): number {
+export function 计算行军地形修正(出发地形: TerrainType, 目标地形: TerrainType): number {
     const 出发 = 地形速度修正[出发地形] ?? 1;
     const 目标 = 地形速度修正[目标地形] ?? 1;
     return (出发 + 目标) / 2;
 }
 
 /** 战斗攻击修正（进攻方惩罚）：地形修正 × 地貌加权修正 */
-export function 计算攻击地形地貌修正(
-    地形: TerrainType,
-    地貌: 地貌占比,
-): number {
+export function 计算攻击地形地貌修正(地形: TerrainType, 地貌: 地貌占比): number {
     const 地形修正 = 地形攻击修正[地形] ?? 1;
     return 地形修正 * 地貌加权修正(地貌, 地貌攻击修正);
 }
