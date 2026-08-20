@@ -1,48 +1,12 @@
-export interface PlayerWarData {
+import type { 装备数量列 } from "#ctx/military";
+
+export interface PlayerWarData extends 装备数量列 {
     id: number;
     uid: string;
 
-    // 陆军
-    步兵装备: number;
-    卡车: number;
-    //装甲单位
-    两栖坦克: number;
-    轻型坦克: number;
-    中型坦克: number;
-    重型坦克: number;
-    现代坦克: number;
-
-    装甲运兵车: number;
-    两栖装甲运兵车: number;
-
-    //自行式支援
-    坦克歼击车: number;
-    自行防空车: number;
-
-    //炮兵
-    野战炮: number;
-    火炮: number;
-    火箭炮: number;
-    列车炮: number;
-
-    // 空军
-    侦察机: number;
-    战斗机: number;
-    预警机: number;
-    战术轰炸机: number;
-    战略轰炸机: number;
-    隐形轰炸机: number;
-    大型运输机: number;
-    小型运输机: number;
     // 空军状态机
     巡航中的预警机: number;
     巡航中的战斗机: number;
-
-    // 弹药相关
-    火箭弹: number;
-    防空弹药: number;
-    轻型航弹: number;
-    重型航弹: number;
 
     // 地堡相关
     地下工厂投入: number;

@@ -7,6 +7,8 @@ import type {
     战斗阵营,
 } from "#ctx/military/domain/types/枚举";
 
+import type { 装备数量列 } from "#ctx/military/domain/types/装备属性表";
+
 /**
  * 军衔表记录（征战联军军衔表）
  * 唯一约束：[联军编号, 玩家UID]（联军内一人一衔）
@@ -25,7 +27,7 @@ export interface CoalitionRank {
  * 军队表记录（征战军队表）
  * id 即全局编号（自增纯数字，指令指定用）；番号为联军内递增（显示用）
  */
-export interface Army {
+export interface Army extends 装备数量列 {
     id: number;
     番号: number;
     名称: string; // 完整名称 = 联军名 + 自定义部分
@@ -53,38 +55,6 @@ export interface Army {
     // 参战指针（配合 战斗阵营 反查参战双方，不落参与表）
     当前战斗编号: number | null;
     战斗阵营: 战斗阵营 | null;
-
-    // 27 种装备数量列（镜像 玩家战争表 风格逐列声明）
-    // 陆军
-    步兵装备: number;
-    卡车: number;
-    两栖坦克: number;
-    轻型坦克: number;
-    中型坦克: number;
-    重型坦克: number;
-    现代坦克: number;
-    装甲运兵车: number;
-    两栖装甲运兵车: number;
-    坦克歼击车: number;
-    自行防空车: number;
-    野战炮: number;
-    火炮: number;
-    火箭炮: number;
-    列车炮: number;
-    // 空军（第一阶段预留，不参与结算）
-    侦察机: number;
-    战斗机: number;
-    预警机: number;
-    战术轰炸机: number;
-    战略轰炸机: number;
-    隐形轰炸机: number;
-    大型运输机: number;
-    小型运输机: number;
-    // 弹药（第一阶段预留，不参与结算）
-    火箭弹: number;
-    防空弹药: number;
-    轻型航弹: number;
-    重型航弹: number;
 
     建立日期: string;
 }
