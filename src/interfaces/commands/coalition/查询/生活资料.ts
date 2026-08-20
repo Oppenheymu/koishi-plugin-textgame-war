@@ -2,8 +2,18 @@ import type { Context } from "koishi";
 import { 目标解析 } from "#/interfaces/commands/common/target";
 import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
+import { 带横幅回复, 指令错误转文本, 文案错误 } from "#shared/i18n";
+
+const 文案 = {
+    reply: `{user} 同志！
+联军资本储备如下：
+联军编号：{id}
+生活资料：{supplies}`,
+};
 
 export function 联军生活资料查询(ctx: Context) {
+    ctx.i18n.define("zh-CN", "textwar.coalition.supplies", 文案);
+
     ctx.command("查看联军生活资料 [目标:string]")
         .alias("联军生活资料")
         .alias("查看生活资料")
@@ -25,25 +35,25 @@ export function 联军生活资料查询(ctx: Context) {
                 }
 
                 if (!联军编号) {
-                    throw new Error(`${查询用户名} 同志目前不在任何联军中`);
+                    throw new 文案错误("textwar.coalition.not-in-coalition", {
+                        user: 查询用户名,
+                    });
                 }
 
                 const [联军资料] = await ctx.database.get("马列联军表", {
                     联军编号,
                 });
                 if (!联军资料) {
-                    throw new Error("数据异常：已记录所在联军但未找到联军档案，请联系管理员");
+                    throw new 文案错误("textwar.coalition.data-missing");
                 }
 
-                return `
-====[征战文游]====
-${查询用户名} 同志！
-联军资本储备如下：
-联军编号：${联军资料.联军编号}
-生活资料：${格式化(联军资料.联军生活资料 ?? 0)}
-`.trim();
+                return 带横幅回复(session, "textwar.coalition.supplies.reply", {
+                    user: 查询用户名,
+                    id: 联军资料.联军编号,
+                    supplies: 格式化(联军资料.联军生活资料 ?? 0),
+                });
             } catch (error) {
-                return (error as Error).message;
+                return 指令错误转文本(session, error);
             }
         });
 }

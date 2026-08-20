@@ -5,9 +5,11 @@ import { 基础指令 } from "#/interfaces/commands/common";
 import { 军事指令 } from "#/interfaces/commands/military";
 import { 生产指令 } from "#/interfaces/commands/player";
 import { 地区指令 } from "#/interfaces/commands/region";
+import { 注册共用文案 } from "#shared/i18n";
 
 const 生产插件列表 = [基础指令, 联军指令, 生产指令, 地区指令, 军事指令];
 
 export function 文游指令集(ctx: Context) {
+    注册共用文案(ctx);
     批量加载插件(ctx, 生产插件列表, "文游指令集模块");
 }

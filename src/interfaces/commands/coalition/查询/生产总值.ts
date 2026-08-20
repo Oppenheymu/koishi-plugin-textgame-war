@@ -1,11 +1,19 @@
-import type { Context } from "koishi";
+import type { Context, Session } from "koishi";
 import { 目标解析 } from "#/interfaces/commands/common/target";
 import type { CoalitionArmy } from "#ctx/coalition";
 import { 玩家检查 } from "#ctx/player";
 import { 格式化 } from "#shared/format";
+import { 带横幅回复, 指令错误转文本, 文案错误 } from "#shared/i18n";
 
 type 增量区间 = "当天" | "三天" | "七天";
 type 联军增量字段 = Pick<CoalitionArmy, "当天内资本增量" | "三天内资本增量" | "七天内资本增量">;
+
+const 文案 = {
+    "range-invalid": "仅支持：当天 / 三天 / 七天",
+    reply: `{user} 同志：
+联军编号：{id}
+{range}资本增量：{value}`,
+};
 
 function 解析增量区间(输入?: string): 增量区间 {
     const 文本 = 输入?.trim().toLowerCase() ?? "";
@@ -22,7 +30,7 @@ function 解析增量区间(输入?: string): 增量区间 {
         return "七天";
     }
 
-    throw new Error("仅支持：当天 / 三天 / 七天");
+    throw new 文案错误("textwar.coalition.gdp.range-invalid");
 }
 
 function 读取资本增量(联军资料: 联军增量字段, 区间: 增量区间): number {
@@ -33,8 +41,7 @@ function 读取资本增量(联军资料: 联军增量字段, 区间: 增量区�
 
 async function 查询对象联军资本增量(
     ctx: Context,
-    // biome-ignore lint/suspicious/noExplicitAny: koishi的问题
-    session: any,
+    session: Session | undefined,
     区间: 增量区间,
     目标?: string,
 ): Promise<{ 查询用户名: string; 联军编号: string; 资本增量: number }> {
@@ -54,12 +61,12 @@ async function 查询对象联军资本增量(
     }
 
     if (!联军编号) {
-        throw new Error(`${查询用户名} 同志目前不在任何联军中`);
+        throw new 文案错误("textwar.coalition.not-in-coalition", { user: 查询用户名 });
     }
 
     const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
     if (!联军资料) {
-        throw new Error("数据异常：已记录所在联军但未找到联军档案，请联系管理员");
+        throw new 文案错误("textwar.coalition.data-missing");
     }
 
     return {
@@ -69,16 +76,9 @@ async function 查询对象联军资本增量(
     };
 }
 
-function 构建查询返回文本(查询用户名: string, 联军编号: string, 区间: 增量区间, 数值: number) {
-    return `
-====[征战文游]====
-${查询用户名} 同志：
-联军编号：${联军编号}
-${区间}资本增量：${格式化(数值)}
-`.trim();
-}
-
 export function 联军生产总值查询(ctx: Context) {
+    ctx.i18n.define("zh-CN", "textwar.coalition.gdp", 文案);
+
     ctx.command("查看生产总值 <几天内:string> [目标:string]")
         .alias("生产总值")
         .alias("查看资本增量")
@@ -95,9 +95,14 @@ export function 联军生产总值查询(ctx: Context) {
                     目标,
                 );
 
-                return 构建查询返回文本(查询用户名, 联军编号, 区间, 资本增量);
+                return 带横幅回复(session, "textwar.coalition.gdp.reply", {
+                    user: 查询用户名,
+                    id: 联军编号,
+                    range: 区间,
+                    value: 格式化(资本增量),
+                });
             } catch (error) {
-                return (error as Error).message;
+                return 指令错误转文本(session, error);
             }
         });
 
@@ -113,9 +118,14 @@ export function 联军生产总值查询(ctx: Context) {
                     目标,
                 );
 
-                return 构建查询返回文本(查询用户名, 联军编号, "当天", 资本增量);
+                return 带横幅回复(session, "textwar.coalition.gdp.reply", {
+                    user: 查询用户名,
+                    id: 联军编号,
+                    range: "当天",
+                    value: 格式化(资本增量),
+                });
             } catch (error) {
-                return (error as Error).message;
+                return 指令错误转文本(session, error);
             }
         });
 
@@ -131,9 +141,14 @@ export function 联军生产总值查询(ctx: Context) {
                     目标,
                 );
 
-                return 构建查询返回文本(查询用户名, 联军编号, "三天", 资本增量);
+                return 带横幅回复(session, "textwar.coalition.gdp.reply", {
+                    user: 查询用户名,
+                    id: 联军编号,
+                    range: "三天",
+                    value: 格式化(资本增量),
+                });
             } catch (error) {
-                return (error as Error).message;
+                return 指令错误转文本(session, error);
             }
         });
 
@@ -149,9 +164,14 @@ export function 联军生产总值查询(ctx: Context) {
                     目标,
                 );
 
-                return 构建查询返回文本(查询用户名, 联军编号, "七天", 资本增量);
+                return 带横幅回复(session, "textwar.coalition.gdp.reply", {
+                    user: 查询用户名,
+                    id: 联军编号,
+                    range: "七天",
+                    value: 格式化(资本增量),
+                });
             } catch (error) {
-                return (error as Error).message;
+                return 指令错误转文本(session, error);
             }
         });
 }

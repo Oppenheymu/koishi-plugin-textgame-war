@@ -3,9 +3,30 @@ import { TRandom, 获取注册Sqids } from "#/infrastructure";
 import { 检查名称是否重复 } from "#ctx/naming";
 import type { Player, PlayerConfig, PlayerWarData } from "#ctx/player";
 import { 格式化 } from "#shared/format";
+import { 带横幅回复, 指令错误转文本 } from "#shared/i18n";
 import { 会话检查, 用户检查 } from "#shared/session";
 
+const 文案 = {
+    "already-registered": "同志，你已经注册过了（UID: {uid}）",
+    reply: `{user} 同志 注册成功
+□ 新玩家注册奖励:
+■ 工人：{workers}
+■ 钢铁：{steel}
+■ 石油：{oil}
+■ 生活资料：{supplies}
+
+发送[帮助]查看指令表
+发送[词典]查看设定`,
+};
+
+// 注册引导语：此时玩家语言未知，只能双语并列
+const 语言引导 = "请选择你的语言 / Please choose your language:\n1. 中文\n2. English";
+const 未选择语言 =
+    "注册已取消（未选择语言），重新发送[注册]即可 / Registration cancelled, resend [注册] to retry";
+
 export function 注册(ctx: Context) {
+    ctx.i18n.define("zh-CN", "textwar.register", 文案);
+
     ctx.command("注册")
         .alias("首次阅读报告")
         .action(async ({ session }) => {
@@ -34,7 +55,9 @@ export function 注册(ctx: Context) {
                     const [已有玩家战争档案] = 已有玩家战争档案列表;
 
                     if (已有玩家档案 && 已有玩家战争档案) {
-                        return `同志，你已经注册过了（UID: ${已有玩家配置.uid}）`;
+                        return session.text("textwar.register.already-registered", {
+                            uid: 已有玩家配置.uid,
+                        });
                     }
 
                     await Promise.all([
@@ -49,6 +72,17 @@ export function 注册(ctx: Context) {
                         }),
                     ]);
                 }
+
+                // 注册时选定语言，写入 Koishi 用户档案后所有回复自动跟随
+                await session.send(语言引导);
+                const 语言选择 = await session.prompt();
+                if (!语言选择) {
+                    return 未选择语言;
+                }
+                const 语言列表 = /en|english|^2$/i.test(语言选择) ? ["en-US"] : ["zh-CN"];
+                const koishi用户 = await session.observeUser(["locales"]);
+                koishi用户.locales = 语言列表;
+                await koishi用户.$update();
 
                 let newID = 0;
                 let newUID = "";
@@ -198,20 +232,15 @@ export function 注册(ctx: Context) {
                     throw error;
                 }
 
-                return `
-====[征战文游]====
-${username} 同志 注册成功
-□ 新玩家注册奖励:
-■ 工人：${格式化(初始工人)}
-■ 钢铁：${格式化(初始钢铁)}
-■ 石油：${格式化(初始石油)}
-■ 生活资料：${格式化(初始生活资料)}
-
-发送[帮助]查看指令表
-发送[词典]查看设定
-`.trim();
+                return 带横幅回复(session, "textwar.register.reply", {
+                    user: username,
+                    workers: 格式化(初始工人),
+                    steel: 格式化(初始钢铁),
+                    oil: 格式化(初始石油),
+                    supplies: 格式化(初始生活资料),
+                });
             } catch (error) {
-                return (error as Error).message;
+                return 指令错误转文本(session, error);
             }
         });
 }
