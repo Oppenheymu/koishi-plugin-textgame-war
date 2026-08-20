@@ -36,7 +36,7 @@ export async function 移除联军成员(
 
     await Promise.all([
         ctx.database.set(
-            "马列联军表",
+            "征战联军表",
             {
                 联军编号,
             },

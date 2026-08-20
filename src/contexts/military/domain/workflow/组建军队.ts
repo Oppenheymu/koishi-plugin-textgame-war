@@ -43,7 +43,7 @@ export async function 组建军队工作流(
     if (!所在地区编号) {
         throw new Error("无法确定军队驻地：你尚未驻扎任何地区，且联军未设置首都");
     }
-    const [驻地] = await ctx.database.get("马列地区表", {
+    const [驻地] = await ctx.database.get("征战地区表", {
         地区编号: 所在地区编号,
     });
     if (!驻地) {
@@ -51,7 +51,7 @@ export async function 组建军队工作流(
     }
 
     // 番号 = 联军内 max(番号) + 1
-    const 联军军队 = await ctx.database.get("马列军队表", {
+    const 联军军队 = await ctx.database.get("征战军队表", {
         所属联军编号: 联军编号,
     });
     const 番号 = 联军军队.reduce((最大, 军队) => Math.max(最大, 军队.番号), 0) + 1;
@@ -59,7 +59,7 @@ export async function 组建军队工作流(
     const 联军名 = 联军资料.联军名称 || 联军编号;
     const 默认名称 = `${联军名}第${番号}军`;
 
-    const 新军队 = await ctx.database.create("马列军队表", {
+    const 新军队 = await ctx.database.create("征战军队表", {
         番号,
         名称: 默认名称,
         名称是否审核: 联军资料.名称是否审核,

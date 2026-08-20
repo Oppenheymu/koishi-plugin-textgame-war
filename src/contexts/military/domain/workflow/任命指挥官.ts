@@ -29,7 +29,7 @@ export async function 任命指挥官工作流(
     }
 
     await ctx.database.set(
-        "马列军队表",
+        "征战军队表",
         { id: 军队.id },
         {
             指挥官UID: 目标UID,

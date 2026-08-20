@@ -12,7 +12,7 @@ export function 初始化服务表(ctx: Context) {
                 return `服务表初始化成功：已创建 service 记录，日期 ${今天}`;
             }
 
-            const 全局状态机 = await ctx.database.get("马列服务表", {
+            const 全局状态机 = await ctx.database.get("征战服务表", {
                 id: "service",
             });
             const 服务记录 = 全局状态机[0];
@@ -36,7 +36,7 @@ export function 初始化服务表(ctx: Context) {
 
             if (Object.keys(修复字段).length > 0) {
                 await ctx.database.set(
-                    "马列服务表",
+                    "征战服务表",
                     {
                         id: "service",
                     },

@@ -13,7 +13,7 @@ export async function 加载联军名称缓存(
     const 缓存 = new Map<string, string>();
     await Promise.all(
         Array.from(new Set(联军编号列表)).map(async (编号) => {
-            const [联军] = await ctx.database.get("马列联军表", {
+            const [联军] = await ctx.database.get("征战联军表", {
                 联军编号: 编号,
             });
             缓存.set(编号, 联军 ? 获取联军展示名称(联军) : 编号);
@@ -32,7 +32,7 @@ export async function 向地区绑定群推送(
     文本: string,
 ): Promise<void> {
     const logger = ctx.logger("战报推送");
-    const [地区配置] = await ctx.database.get("马列地区配置表", { 地区编号 });
+    const [地区配置] = await ctx.database.get("征战地区配置表", { 地区编号 });
     if (!地区配置) return;
 
     await Promise.all(

@@ -18,7 +18,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
     // 撤退中到达友方地区 → 转驻扎
     if (军队.状态 === 军队状态.撤退中) {
         await ctx.database.set(
-            "马列军队表",
+            "征战军队表",
             { id: 军队.id },
             {
                 ...基础更新,
@@ -31,7 +31,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
     }
 
     // 移动中到达：检查目标地区是否有他国军队（驻扎/战斗中均视为在场）
-    const 在场军队 = await ctx.database.get("马列军队表", {
+    const 在场军队 = await ctx.database.get("征战军队表", {
         所在地区编号: 目标地区编号,
     });
     const 敌军 = 在场军队.filter(
@@ -44,7 +44,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
     // 无敌军 → 驻扎；无人防守的他国地区直接占领（可调，第一阶段简化）
     if (敌军.length === 0) {
         await ctx.database.set(
-            "马列军队表",
+            "征战军队表",
             { id: 军队.id },
             {
                 ...基础更新,
@@ -52,12 +52,12 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
             },
         );
 
-        const [目标地区] = await ctx.database.get("马列地区表", {
+        const [目标地区] = await ctx.database.get("征战地区表", {
             地区编号: 目标地区编号,
         });
         if (目标地区?.控制国家 && 目标地区.控制国家 !== 军队.所属联军编号) {
             await ctx.database.set(
-                "马列地区表",
+                "征战地区表",
                 { 地区编号: 目标地区编号 },
                 { 控制国家: 军队.所属联军编号 },
             );
@@ -67,7 +67,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
     }
 
     // 有敌军 → 触发战斗：查找该地区是否已有进行中战斗
-    const [现存战斗] = await ctx.database.get("马列战斗表", {
+    const [现存战斗] = await ctx.database.get("征战战斗表", {
         地区编号: 目标地区编号,
         状态: 战斗状态.进行中,
     });
@@ -78,7 +78,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
     } else {
         // 创建新战斗：到达军队为进攻方，驻扎军队为防守方
         const 防守方联军编号 = 敌军[0]!.所属联军编号;
-        const 创建结果 = await ctx.database.create("马列战斗表", {
+        const 创建结果 = await ctx.database.create("征战战斗表", {
             地区编号: 目标地区编号,
             进攻方联军编号: 军队.所属联军编号,
             防守方联军编号,
@@ -96,7 +96,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
                 .filter((item) => item.状态 === 军队状态.驻扎)
                 .map((item) =>
                     ctx.database.set(
-                        "马列军队表",
+                        "征战军队表",
                         { id: item.id },
                         {
                             状态: 军队状态.战斗中,
@@ -124,7 +124,7 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
     const 阵营 = 军队.所属联军编号 === 战斗.防守方联军编号 ? 战斗阵营.防守 : 战斗阵营.进攻;
 
     await ctx.database.set(
-        "马列军队表",
+        "征战军队表",
         { id: 军队.id },
         {
             ...基础更新,
@@ -139,8 +139,8 @@ async function 处理单支军队到达(ctx: Context, 军队: Army, 目标地区
 export async function 处理移动到达(ctx: Context): Promise<void> {
     const 现在 = new Date().toISOString();
     const [移动中军队, 撤退中军队] = await Promise.all([
-        ctx.database.get("马列军队表", { 状态: 军队状态.移动中 }),
-        ctx.database.get("马列军队表", { 状态: 军队状态.撤退中 }),
+        ctx.database.get("征战军队表", { 状态: 军队状态.移动中 }),
+        ctx.database.get("征战军队表", { 状态: 军队状态.撤退中 }),
     ]);
     const 候选军队 = [...移动中军队, ...撤退中军队];
 

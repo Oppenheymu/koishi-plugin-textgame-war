@@ -2,7 +2,7 @@ import type { Context } from "koishi";
 
 export function 加载联军权限表(ctx: Context) {
     ctx.model.extend(
-        "马列联军权限表",
+        "征战联军权限表",
         {
             联军编号: {
                 type: "string",

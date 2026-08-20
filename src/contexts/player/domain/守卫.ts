@@ -12,7 +12,7 @@ export async function 玩家检查(ctx: Context, session: Session | undefined): 
     const platform = session.platform;
     const userId = session.userId;
 
-    const [玩家配置记录] = await ctx.database.get("马列玩家配置表", {
+    const [玩家配置记录] = await ctx.database.get("征战玩家配置表", {
         [platform]: userId,
     });
 
@@ -21,8 +21,8 @@ export async function 玩家检查(ctx: Context, session: Session | undefined): 
     }
 
     const [[玩家档案记录], [玩家战争记录]] = await Promise.all([
-        ctx.database.get("马列玩家表", { id: 玩家配置记录.id }),
-        ctx.database.get("马列玩家战争表", { id: 玩家配置记录.id }),
+        ctx.database.get("征战玩家表", { id: 玩家配置记录.id }),
+        ctx.database.get("征战玩家战争表", { id: 玩家配置记录.id }),
     ]);
 
     if (!玩家档案记录) {

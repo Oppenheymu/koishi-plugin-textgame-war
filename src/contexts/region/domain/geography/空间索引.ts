@@ -5,7 +5,7 @@ import { GRID_HEIGHT, GRID_WIDTH, 解析地区编号 } from "#ctx/region/domain/
 
 import { 计算栅格经纬度距离 } from "#ctx/region/domain/geography/距离计算";
 
-type 地区地形记录 = Tables["马列地区地形表"];
+type 地区地形记录 = Tables["征战地区地形表"];
 type 半径内地区项 = { 地区编号: string; 距离: number };
 
 const SPATIAL_KEY_SEP = ",";
@@ -40,7 +40,7 @@ class 地区空间索引 {
     async 初始化(ctx: Context): Promise<void> {
         if (this.已初始化) return;
 
-        const 所有地形 = await ctx.database.get("马列地区地形表", {});
+        const 所有地形 = await ctx.database.get("征战地区地形表", {});
 
         for (const 地形 of 所有地形) {
             const 坐标 = 解析地区编号(地形.地区编号);

@@ -24,7 +24,7 @@ export async function 更新地区资料(
     }
 
     await ctx.database.set(
-        "马列地区表",
+        "征战地区表",
         { 地区编号 },
         // biome-ignore lint/suspicious/noExplicitAny: 不好做静态类型
         地区更新 as any,
@@ -54,7 +54,7 @@ export async function 更新地区战略资料(
     }
 
     await ctx.database.set(
-        "马列地区战略表",
+        "征战地区战略表",
         { 地区编号 },
         // biome-ignore lint/suspicious/noExplicitAny: 不好做静态类型
         战略更新 as any,

@@ -49,7 +49,7 @@ export function 组建联军(ctx: Context) {
                     return 名称提示;
                 }
 
-                const 新联军配置 = await ctx.database.create("马列联军表", {});
+                const 新联军配置 = await ctx.database.create("征战联军表", {});
                 新联军id = 新联军配置.id;
 
                 const 新联军编号 = `A${获取联军Sqids().encode([新联军id])}`;

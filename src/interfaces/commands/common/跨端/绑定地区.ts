@@ -29,7 +29,7 @@ export function 绑定地区(ctx: Context) {
                 return "只能绑定本联军控制地区";
             }
 
-            const 当前群绑定列表 = await ctx.database.get("马列地区配置表", {
+            const 当前群绑定列表 = await ctx.database.get("征战地区配置表", {
                 [platform]: 群聊ID,
             });
             const 当前群其他绑定 = 当前群绑定列表.find((记录) => 记录.地区编号 !== 目标地区编号);
@@ -43,7 +43,7 @@ export function 绑定地区(ctx: Context) {
             }
 
             await ctx.database.set(
-                "马列地区配置表",
+                "征战地区配置表",
                 {
                     地区编号: 目标地区编号,
                 },

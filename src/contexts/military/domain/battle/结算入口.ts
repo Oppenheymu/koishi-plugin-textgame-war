@@ -6,7 +6,7 @@ import { 结算单场战斗 } from "./单场结算.js";
 
 /** 结算所有进行中战斗的一轮 */
 export async function 结算所有战斗(ctx: Context): Promise<void> {
-    const 进行中战斗 = await ctx.database.get("马列战斗表", {
+    const 进行中战斗 = await ctx.database.get("征战战斗表", {
         状态: 战斗状态.进行中,
     });
     for (const 战斗 of 进行中战斗) {

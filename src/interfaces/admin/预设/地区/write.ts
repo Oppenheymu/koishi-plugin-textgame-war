@@ -4,20 +4,20 @@ const logger = new Logger("初始化地区表");
 
 export async function 写入批次(
     ctx: Context,
-    地形批次: Tables["马列地区地形表"][],
-    地区批次: Tables["马列地区表"][],
-    状态机批次: Tables["马列地区状态机"][],
-    配置批次: Tables["马列地区配置表"][],
-    战略批次: Tables["马列地区战略表"][],
+    地形批次: Tables["征战地区地形表"][],
+    地区批次: Tables["征战地区表"][],
+    状态机批次: Tables["征战地区状态机"][],
+    配置批次: Tables["征战地区配置表"][],
+    战略批次: Tables["征战地区战略表"][],
 ) {
     try {
         await Promise.all([
-            ctx.database.upsert("马列地区地形表", 地形批次, ["地区编号"]),
-            ctx.database.upsert("马列地区表", 地区批次, ["地区编号"]),
-            ctx.database.upsert("马列地区状态机", 状态机批次, ["地区编号"]),
-            ctx.database.upsert("马列地区配置表", 配置批次, ["地区编号"]),
+            ctx.database.upsert("征战地区地形表", 地形批次, ["地区编号"]),
+            ctx.database.upsert("征战地区表", 地区批次, ["地区编号"]),
+            ctx.database.upsert("征战地区状态机", 状态机批次, ["地区编号"]),
+            ctx.database.upsert("征战地区配置表", 配置批次, ["地区编号"]),
             // biome-ignore lint/suspicious/noExplicitAny: 没静态类型
-            ctx.database.upsert("马列地区战略表", 战略批次 as any, ["地区编号"]),
+            ctx.database.upsert("征战地区战略表", 战略批次 as any, ["地区编号"]),
         ]);
         return;
     } catch (error) {
@@ -35,11 +35,11 @@ export async function 写入批次(
         const 地区编号 = String(地区记录.地区编号);
 
         try {
-            await ctx.database.create("马列地区地形表", 地形记录);
+            await ctx.database.create("征战地区地形表", 地形记录);
         } catch {
             const { 地区编号: _, ...updateData } = 地形记录;
             await ctx.database.set(
-                "马列地区地形表",
+                "征战地区地形表",
                 {
                     地区编号,
                 },
@@ -48,11 +48,11 @@ export async function 写入批次(
         }
 
         try {
-            await ctx.database.create("马列地区表", 地区记录);
+            await ctx.database.create("征战地区表", 地区记录);
         } catch {
             const { 地区编号: _, ...updateData } = 地区记录;
             await ctx.database.set(
-                "马列地区表",
+                "征战地区表",
                 {
                     地区编号,
                 },
@@ -61,11 +61,11 @@ export async function 写入批次(
         }
 
         try {
-            await ctx.database.create("马列地区状态机", 状态机记录);
+            await ctx.database.create("征战地区状态机", 状态机记录);
         } catch {
             const { 地区编号: _, ...updateData } = 状态机记录;
             await ctx.database.set(
-                "马列地区状态机",
+                "征战地区状态机",
                 {
                     地区编号,
                 },
@@ -74,11 +74,11 @@ export async function 写入批次(
         }
 
         try {
-            await ctx.database.create("马列地区配置表", 配置记录);
+            await ctx.database.create("征战地区配置表", 配置记录);
         } catch {
             const { 地区编号: _, ...updateData } = 配置记录;
             await ctx.database.set(
-                "马列地区配置表",
+                "征战地区配置表",
                 {
                     地区编号,
                 },
@@ -88,11 +88,11 @@ export async function 写入批次(
 
         try {
             // biome-ignore lint/suspicious/noExplicitAny: 没静态类型
-            await ctx.database.create("马列地区战略表", 战略记录 as any);
+            await ctx.database.create("征战地区战略表", 战略记录 as any);
         } catch {
             const { 地区编号: _, ...updateData } = 战略记录;
             await ctx.database.set(
-                "马列地区战略表",
+                "征战地区战略表",
                 {
                     地区编号,
                 },

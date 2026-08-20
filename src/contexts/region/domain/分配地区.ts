@@ -45,7 +45,7 @@ async function 过滤未分配陆地编号(ctx: Context, 候选编号列表: str
     if (候选编号列表.length === 0) return [];
 
     const 陆地候选 = await ctx.database.get(
-        "马列地区地形表",
+        "征战地区地形表",
         {
             地区编号: { $in: 候选编号列表 },
             是否为海洋: false,
@@ -57,7 +57,7 @@ async function 过滤未分配陆地编号(ctx: Context, 候选编号列表: str
     if (陆地候选编号.length === 0) return [];
 
     const 未分配记录 = await ctx.database.get(
-        "马列地区状态机",
+        "征战地区状态机",
         {
             地区编号: { $in: 陆地候选编号 },
             是否已分配: false,
@@ -81,16 +81,16 @@ async function 查找聚类候选(ctx: Context, 已有地区编号列表: string
 async function 盖章(ctx: Context, id: number, 联军编号: string, 目标编号: string) {
     await Promise.all([
         ctx.database.set(
-            "马列地区状态机",
+            "征战地区状态机",
             { 地区编号: 目标编号 },
             { 地区归属国: id, 是否已分配: true },
         ),
-        ctx.database.set("马列地区表", { 地区编号: 目标编号 }, { 控制国家: 联军编号 }),
+        ctx.database.set("征战地区表", { 地区编号: 目标编号 }, { 控制国家: 联军编号 }),
     ]);
 }
 
 export async function 分配坐标逻辑(ctx: Context, id: number, 联军编号: string) {
-    const 已有地区列表 = await ctx.database.get("马列地区表", { 控制国家: 联军编号 }, ["地区编号"]);
+    const 已有地区列表 = await ctx.database.get("征战地区表", { 控制国家: 联军编号 }, ["地区编号"]);
 
     if (已有地区列表.length > 0) {
         const 候选列表 = await 查找聚类候选(
@@ -105,21 +105,21 @@ export async function 分配坐标逻辑(ctx: Context, id: number, 联军编号:
         }
     }
 
-    const [全局配置] = await ctx.database.get("马列服务表", {
+    const [全局配置] = await ctx.database.get("征战服务表", {
         id: "GLOBAL",
     });
     const 当前指针 = 全局配置?.当前地区洗牌指针 ?? 0;
 
     let 目标编号: string | undefined;
 
-    const 已遍历池 = await ctx.database.get("马列地区洗牌池", { id: { $lt: 当前指针 } }, [
+    const 已遍历池 = await ctx.database.get("征战地区洗牌池", { id: { $lt: 当前指针 } }, [
         "地区编号",
     ]);
     const 已遍历编号 = 已遍历池.map((记录) => 记录.地区编号);
 
     if (已遍历编号.length > 0) {
         const [回收地] = await ctx.database.get(
-            "马列地区状态机",
+            "征战地区状态机",
             {
                 地区编号: { $in: 已遍历编号 },
                 是否已分配: false,
@@ -131,14 +131,14 @@ export async function 分配坐标逻辑(ctx: Context, id: number, 联军编号:
     }
 
     if (!目标编号) {
-        const [新地区] = await ctx.database.get("马列地区洗牌池", {
+        const [新地区] = await ctx.database.get("征战地区洗牌池", {
             id: 当前指针,
         });
         if (!新地区) return "所有地区已领完！";
 
         目标编号 = 新地区.地区编号;
 
-        await ctx.database.set("马列服务表", { id: "GLOBAL" }, { 当前地区洗牌指针: 当前指针 + 1 });
+        await ctx.database.set("征战服务表", { id: "GLOBAL" }, { 当前地区洗牌指针: 当前指针 + 1 });
     }
 
     await 盖章(ctx, id, 联军编号, 目标编号);

@@ -51,7 +51,7 @@ ${username} 同志！
     }
 
     const [已创建联军] = await ctx.database.get(
-        "马列联军表",
+        "征战联军表",
         {
             联军元首: uid,
         },

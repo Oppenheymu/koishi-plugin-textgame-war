@@ -70,14 +70,14 @@ export async function 检查名称是否重复(
         排除联军编号?: string;
     },
 ): Promise<"玩家" | "联军" | null> {
-    const [重名玩家] = await ctx.database.get("马列玩家配置表", {
+    const [重名玩家] = await ctx.database.get("征战玩家配置表", {
         username: 名称,
     });
     if (重名玩家 && 重名玩家.id !== options?.排除玩家ID) {
         return "玩家";
     }
 
-    const [重名联军] = await ctx.database.get("马列联军表", {
+    const [重名联军] = await ctx.database.get("征战联军表", {
         联军名称: 名称,
     });
     if (重名联军 && 重名联军.联军编号 !== options?.排除联军编号) {
@@ -114,7 +114,7 @@ export async function 审核通过改名工单(ctx: Context, 工单编号: numbe
         }
 
         await ctx.database.set(
-            "马列玩家配置表",
+            "征战玩家配置表",
             {
                 id: 工单.玩家ID,
             },
@@ -130,7 +130,7 @@ export async function 审核通过改名工单(ctx: Context, 工单编号: numbe
         }
 
         await ctx.database.set(
-            "马列联军表",
+            "征战联军表",
             {
                 联军编号: 工单.联军编号,
             },
@@ -146,7 +146,7 @@ export async function 审核通过改名工单(ctx: Context, 工单编号: numbe
         }
 
         await ctx.database.set(
-            "马列军队表",
+            "征战军队表",
             {
                 id: 工单.军队编号,
             },
@@ -161,7 +161,7 @@ export async function 审核通过改名工单(ctx: Context, 工单编号: numbe
         }
 
         await ctx.database.set(
-            "马列地区配置表",
+            "征战地区配置表",
             {
                 地区编号: 工单.地区编号,
             },

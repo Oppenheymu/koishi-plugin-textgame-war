@@ -8,7 +8,7 @@ import type {
 } from "#ctx/military/domain/types/枚举";
 
 /**
- * 军衔表记录（马列联军军衔表）
+ * 军衔表记录（征战联军军衔表）
  * 唯一约束：[联军编号, 玩家UID]（联军内一人一衔）
  */
 export interface CoalitionRank {
@@ -22,7 +22,7 @@ export interface CoalitionRank {
 }
 
 /**
- * 军队表记录（马列军队表）
+ * 军队表记录（征战军队表）
  * id 即全局编号（自增纯数字，指令指定用）；番号为联军内递增（显示用）
  */
 export interface Army {
@@ -90,7 +90,7 @@ export interface Army {
 }
 
 /**
- * 战斗表记录（马列战斗表）
+ * 战斗表记录（征战战斗表）
  * 参与关系由 Army.当前战斗编号 + Army.战斗阵营 反查
  */
 export interface Battle {

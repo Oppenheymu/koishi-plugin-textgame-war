@@ -58,7 +58,7 @@ export function 设置职务(ctx: Context) {
             }
 
             await ctx.database.set(
-                "马列联军表",
+                "征战联军表",
                 {
                     联军编号,
                 },
@@ -134,7 +134,7 @@ ${username} 同志！
             }
 
             await ctx.database.set(
-                "马列联军表",
+                "征战联军表",
                 {
                     联军编号,
                 },

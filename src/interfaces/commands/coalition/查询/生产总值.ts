@@ -64,7 +64,7 @@ async function 查询对象联军资本增量(
         throw new 文案错误("textwar.coalition.not-in-coalition", { user: 查询用户名 });
     }
 
-    const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
+    const [联军资料] = await ctx.database.get("征战联军表", { 联军编号 });
     if (!联军资料) {
         throw new 文案错误("textwar.coalition.data-missing");
     }

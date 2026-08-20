@@ -5,7 +5,7 @@ import type { Context } from "koishi";
  */
 export function 加载全球数据表(ctx: Context) {
     ctx.model.extend(
-        "马列全球数据表",
+        "征战全球数据表",
         {
             id: {
                 type: "string",

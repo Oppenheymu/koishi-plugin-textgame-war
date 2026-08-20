@@ -8,7 +8,7 @@ import { 军队命令, 军队状态 } from "#ctx/military/domain/types/枚举";
  */
 export function 加载军队表(ctx: Context) {
     ctx.model.extend(
-        "马列军队表",
+        "征战军队表",
         {
             id: {
                 type: "unsigned",

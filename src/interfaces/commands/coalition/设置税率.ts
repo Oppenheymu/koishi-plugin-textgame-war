@@ -34,7 +34,7 @@ export function 设置税率(ctx: Context) {
                 const 旧税率百分比 = (联军资料.联军税率 ?? 0) * 100;
 
                 await ctx.database.set(
-                    "马列联军表",
+                    "征战联军表",
                     { 联军编号 },
                     {
                         联军税率: 新税率,

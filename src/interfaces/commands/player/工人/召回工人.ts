@@ -30,7 +30,7 @@ export function 召回工人(ctx: Context) {
                 const 新休假工人数 = 用户资料.休假工人 - 数量;
 
                 await ctx.database.set(
-                    "马列玩家表",
+                    "征战玩家表",
                     {
                         id: id,
                     },

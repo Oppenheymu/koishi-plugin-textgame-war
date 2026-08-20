@@ -32,7 +32,7 @@ export async function 执行联军资本增量日结(
 
     try {
         const 今天 = 格式化日期(new Date());
-        const [服务记录] = await ctx.database.get("马列服务表", {
+        const [服务记录] = await ctx.database.get("征战服务表", {
             id: "service",
         });
 
@@ -63,7 +63,7 @@ export async function 执行联军资本增量日结(
             }
         }
 
-        const 联军列表 = await ctx.database.get("马列联军表", {});
+        const 联军列表 = await ctx.database.get("征战联军表", {});
         const 排行榜 = 生成联军生产总值排行榜(联军列表);
 
         let 新闻已发送数量 = 0;
@@ -90,7 +90,7 @@ export async function 执行联军资本增量日结(
             const 七天合计 = 历史记录.slice(-7).reduce((总和, 数值) => 总和 + 数值, 0);
 
             await ctx.database.set(
-                "马列联军表",
+                "征战联军表",
                 { 联军编号: 联军资料.联军编号 },
                 {
                     当天内资本增量: 0,
@@ -101,7 +101,7 @@ export async function 执行联军资本增量日结(
             );
         }
 
-        await ctx.database.set("马列服务表", { id: "service" }, { 上次联军资本统计日期: 今天 });
+        await ctx.database.set("征战服务表", { id: "service" }, { 上次联军资本统计日期: 今天 });
 
         服务事件中心.emit("联军相关:资本日结完成", {
             日期: 今天,

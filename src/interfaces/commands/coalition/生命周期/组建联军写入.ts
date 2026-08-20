@@ -14,7 +14,7 @@ export async function 分配建国地区(
     const 地区分配结果 = await 分配坐标逻辑(ctx, 新联军id, 新联军编号);
 
     if (!地区分配结果 || 地区分配结果 === "所有地区已领完！") {
-        await ctx.database.remove("马列联军表", {
+        await ctx.database.remove("征战联军表", {
             id: 新联军id,
         });
         return null;
@@ -88,14 +88,14 @@ export async function 写入联军创建数据(
 ): Promise<void> {
     await Promise.all([
         ctx.database.set(
-            "马列联军表",
+            "征战联军表",
             {
                 id: 新联军id,
             },
             新联军数据,
         ),
         ctx.database.set(
-            "马列玩家表",
+            "征战玩家表",
             {
                 id: 玩家ID,
             },
@@ -115,14 +115,14 @@ export async function 回滚联军组建(
     try {
         await Promise.all([
             新联军id !== null
-                ? ctx.database.remove("马列联军表", {
+                ? ctx.database.remove("征战联军表", {
                       id: 新联军id,
                   })
                 : Promise.resolve(),
             新地区
                 ? Promise.all([
                       ctx.database.set(
-                          "马列地区状态机",
+                          "征战地区状态机",
                           {
                               地区编号: 新地区,
                           },
@@ -132,7 +132,7 @@ export async function 回滚联军组建(
                           },
                       ),
                       ctx.database.set(
-                          "马列地区表",
+                          "征战地区表",
                           {
                               地区编号: 新地区,
                           },

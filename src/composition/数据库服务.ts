@@ -23,27 +23,27 @@ import type { Service } from "#shared/kernel/服务类型";
 
 declare module "koishi" {
     interface Tables {
-        马列联军表: CoalitionArmy;
-        马列联军权限表: CoalitionPermission;
+        征战联军表: CoalitionArmy;
+        征战联军权限表: CoalitionPermission;
 
-        马列全球数据表: GlobalData;
+        征战全球数据表: GlobalData;
 
-        马列玩家表: Player;
-        马列玩家战争表: PlayerWarData;
-        马列玩家配置表: PlayerConfig;
+        征战玩家表: Player;
+        征战玩家战争表: PlayerWarData;
+        征战玩家配置表: PlayerConfig;
 
-        马列地区表: Region;
-        马列地区配置表: RegionConfig;
-        马列地区地形表: RegionTerra;
-        马列地区状态机: RegionState;
-        马列地区战略表: RegionStrategy;
-        马列地区洗牌池: RegionShufflePool;
+        征战地区表: Region;
+        征战地区配置表: RegionConfig;
+        征战地区地形表: RegionTerra;
+        征战地区状态机: RegionState;
+        征战地区战略表: RegionStrategy;
+        征战地区洗牌池: RegionShufflePool;
 
-        马列联军军衔表: CoalitionRank;
-        马列军队表: Army;
-        马列战斗表: Battle;
+        征战联军军衔表: CoalitionRank;
+        征战军队表: Army;
+        征战战斗表: Battle;
 
-        马列服务表: Service;
+        征战服务表: Service;
     }
 }
 

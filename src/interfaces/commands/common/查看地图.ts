@@ -37,7 +37,7 @@ export function ViewMap(ctx: Context) {
 
             if (regionId) {
                 const 目标地区 = (
-                    await ctx.database.get("马列地区表", { 地区编号: regionId })
+                    await ctx.database.get("征战地区表", { 地区编号: regionId })
                 )[0] as Region | undefined;
                 if (!目标地区 || 目标地区.栅格X == null || 目标地区.栅格Y == null) {
                     return `地区编号 ${regionId} 的数据不完整。`;
@@ -52,7 +52,7 @@ export function ViewMap(ctx: Context) {
                     return "您的联军尚未指定首都，无法生成局部地图。请指定地区编号，或联系管理员设置首都。";
                 }
                 const 首都地区 = (
-                    await ctx.database.get("马列地区表", { 地区编号: 首都编号 })
+                    await ctx.database.get("征战地区表", { 地区编号: 首都编号 })
                 )[0] as Region | undefined;
                 if (!首都地区 || 首都地区.栅格X == null || 首都地区.栅格Y == null) {
                     return "错误：联军首都地区数据不完整，请联系管理员。";

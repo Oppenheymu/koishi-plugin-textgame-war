@@ -19,7 +19,7 @@ export async function 玩家联军检查(
         return 发送并抛出错误(session, "你不在任何联军中", "玩家不在联军中");
     }
 
-    const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
+    const [联军资料] = await ctx.database.get("征战联军表", { 联军编号 });
     if (!联军资料) {
         return 发送并抛出错误(
             session,

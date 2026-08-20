@@ -2,7 +2,7 @@ import type { Context } from "koishi";
 
 export function 加载玩家配置表(ctx: Context) {
     ctx.model.extend(
-        "马列玩家配置表",
+        "征战玩家配置表",
         {
             id: {
                 type: "unsigned",

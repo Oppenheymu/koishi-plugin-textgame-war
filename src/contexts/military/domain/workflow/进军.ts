@@ -54,7 +54,7 @@ export async function 进军工作流(
 
     const 预计到达时间 = new Date(Date.now() + 行军毫秒).toISOString();
     await ctx.database.set(
-        "马列军队表",
+        "征战军队表",
         { id: 军队.id },
         {
             状态: 军队状态.移动中,

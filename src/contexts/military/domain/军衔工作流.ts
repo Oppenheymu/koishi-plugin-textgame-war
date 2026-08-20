@@ -52,7 +52,7 @@ export async function 授衔工作流(
     const 途径 = 政治路可行 ? ("政治授予" as const) : ("军事授予" as const);
 
     await ctx.database.upsert(
-        "马列联军军衔表",
+        "征战联军军衔表",
         [
             {
                 联军编号,
@@ -102,20 +102,20 @@ export async function 褫夺军衔工作流(
         );
     }
 
-    await ctx.database.remove("马列联军军衔表", {
+    await ctx.database.remove("征战联军军衔表", {
         联军编号,
         玩家UID: 目标UID,
     });
 
     // 其指挥的所有军队转无主（原地驻扎保留编制）
-    const 目标军队 = await ctx.database.get("马列军队表", {
+    const 目标军队 = await ctx.database.get("征战军队表", {
         所属联军编号: 联军编号,
         指挥官UID: 目标UID,
     });
     await Promise.all(
         目标军队.map((军队) =>
             ctx.database.set(
-                "马列军队表",
+                "征战军队表",
                 { id: 军队.id },
                 {
                     指挥官UID: null,
@@ -137,21 +137,21 @@ export async function 褫夺军衔工作流(
  * - 新元首按政体获得自动军衔（民主制无军衔）；已有手动军衔则保留不动
  */
 export async function 同步元首政体军衔(ctx: Context, 联军编号: string): Promise<void> {
-    const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
+    const [联军资料] = await ctx.database.get("征战联军表", { 联军编号 });
     if (!联军资料) return;
 
     const 元首UID = 联军资料.联军元首;
     const 目标军衔 = 政体元首自动军衔[联军资料.联军政治体制];
 
     // 移除所有过期的"政体自动"军衔（非现任元首 或 政体已无自动军衔）
-    const 自动军衔记录 = await ctx.database.get("马列联军军衔表", {
+    const 自动军衔记录 = await ctx.database.get("征战联军军衔表", {
         联军编号,
         来源: "政体自动",
     });
     await Promise.all(
         自动军衔记录
             .filter((记录) => 记录.玩家UID !== 元首UID || !目标军衔)
-            .map((记录) => ctx.database.remove("马列联军军衔表", { id: 记录.id })),
+            .map((记录) => ctx.database.remove("征战联军军衔表", { id: 记录.id })),
     );
 
     if (!目标军衔 || !元首UID) return;
@@ -159,7 +159,7 @@ export async function 同步元首政体军衔(ctx: Context, 联军编号: strin
     const 元首军衔记录 = await 获取联军军衔记录(ctx, 联军编号, 元首UID);
     if (!元首军衔记录) {
         // 无军衔 → 授予政体自动军衔
-        await ctx.database.create("马列联军军衔表", {
+        await ctx.database.create("征战联军军衔表", {
             联军编号,
             玩家UID: 元首UID,
             军衔: 目标军衔,
@@ -173,7 +173,7 @@ export async function 同步元首政体军衔(ctx: Context, 联军编号: strin
     if (元首军衔记录.来源 === "政体自动" && 元首军衔记录.军衔 !== 目标军衔) {
         // 政体变更 → 自动军衔跟着变
         await ctx.database.set(
-            "马列联军军衔表",
+            "征战联军军衔表",
             { id: 元首军衔记录.id },
             { 军衔: 目标军衔, 授予时间: new Date().toISOString() },
         );

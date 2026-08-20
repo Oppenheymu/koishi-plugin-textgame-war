@@ -21,7 +21,7 @@ export async function 记录联军资本增量(
 
     if (安全增量 <= 0 && 安全上缴 <= 0) return;
 
-    const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
+    const [联军资料] = await ctx.database.get("征战联军表", { 联军编号 });
     if (!联军资料) return;
 
     const 当前当天增量 = (联军资料.当天内资本增量 ?? 0) + 安全增量;
@@ -29,7 +29,7 @@ export async function 记录联军资本增量(
     const { 近三天, 近七天 } = 计算区间资本增量(历史记录, 当前当天增量);
 
     await ctx.database.set(
-        "马列联军表",
+        "征战联军表",
         { 联军编号 },
         {
             联军生活资料: (联军资料.联军生活资料 ?? 0) + 安全上缴,

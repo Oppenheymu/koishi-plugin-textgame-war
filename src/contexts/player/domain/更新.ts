@@ -112,11 +112,11 @@ export async function 更新玩家资料(
     const 任务: Promise<unknown>[] = [];
 
     if (Object.keys(玩家更新).length > 0) {
-        任务.push(ctx.database.set("马列玩家表", { id }, 玩家更新));
+        任务.push(ctx.database.set("征战玩家表", { id }, 玩家更新));
     }
 
     if (Object.keys(战争更新).length > 0) {
-        任务.push(ctx.database.set("马列玩家战争表", { id }, 战争更新));
+        任务.push(ctx.database.set("征战玩家战争表", { id }, 战争更新));
     }
 
     if (任务.length > 0) {

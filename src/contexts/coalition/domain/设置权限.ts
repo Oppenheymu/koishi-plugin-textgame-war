@@ -110,7 +110,7 @@ export async function 获取联军权限配置(
     ctx: Context,
     联军编号: string,
 ): Promise<Omit<CoalitionPermission, "联军编号">> {
-    const [数据库配置] = await ctx.database.get("马列联军权限表", {
+    const [数据库配置] = await ctx.database.get("征战联军权限表", {
         联军编号,
     });
     const 权限配置: Omit<CoalitionPermission, "联军编号"> = 读取默认联军权限配置();
@@ -142,7 +142,7 @@ export async function 设置联军权限配置(
     更新配置: Partial<Omit<CoalitionPermission, "联军编号">>,
 ): Promise<void> {
     await ctx.database.upsert(
-        "马列联军权限表",
+        "征战联军权限表",
         [
             {
                 联军编号,

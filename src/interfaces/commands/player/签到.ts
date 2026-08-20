@@ -29,7 +29,7 @@ ${username} 同志！
                     const 增加后的生活资料 = 用户资料.生活资料 + 增加的生活资料;
 
                     await ctx.database.set(
-                        "马列玩家表",
+                        "征战玩家表",
                         {
                             id: id,
                         },
@@ -44,7 +44,7 @@ ${username} 同志！
 
                     if (用户资料.厂房 < 10000) {
                         await ctx.database.set(
-                            "马列玩家表",
+                            "征战玩家表",
                             {
                                 id: id,
                             },

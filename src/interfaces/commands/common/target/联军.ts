@@ -23,7 +23,7 @@ export async function 目标联军解析(
         throw new Error(`${目标结果.目标用户名} 同志目前不在任何联军中`);
     }
 
-    const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
+    const [联军资料] = await ctx.database.get("征战联军表", { 联军编号 });
     if (!联军资料) {
         throw new Error("数据异常：已记录所在联军但未找到联军档案，请联系管理员");
     }

@@ -42,7 +42,7 @@ function 构造无新闻执行结果(输入: {
 }
 
 async function 记录统计日期(ctx: Context, 今天: string): Promise<void> {
-    await ctx.database.set("马列服务表", { id: "service" }, { 上次全服统计日期: 今天 });
+    await ctx.database.set("征战服务表", { id: "service" }, { 上次全服统计日期: 今天 });
 }
 
 async function 校验是否需要统计(
@@ -50,7 +50,7 @@ async function 校验是否需要统计(
     今天: string,
     options?: { 忽略日期检查?: boolean },
 ): Promise<string | null> {
-    const [服务记录] = await ctx.database.get("马列服务表", {
+    const [服务记录] = await ctx.database.get("征战服务表", {
         id: "service",
     });
 
@@ -98,12 +98,12 @@ async function 读取或初始化全局数据(
     平均工资: number,
     平均科技等级: number,
 ): Promise<全局数据快照> {
-    const [全局数据] = await ctx.database.get("马列全球数据表", {
+    const [全局数据] = await ctx.database.get("征战全球数据表", {
         id: "global",
     });
 
     if (!全局数据) {
-        await ctx.database.create("马列全球数据表", {
+        await ctx.database.create("征战全球数据表", {
             id: "global",
             全球平均工资: 平均工资,
             全球平均科技等级: 平均科技等级,
@@ -140,7 +140,7 @@ async function 更新全局数据并通报(
     const 近七天全球生产总值 = 统计输入.历史生产记录.slice(-7).reduce((a, b) => a + b, 0);
 
     await ctx.database.set(
-        "马列全球数据表",
+        "征战全球数据表",
         { id: "global" },
         {
             全球平均工资: 统计输入.平均工资,
@@ -165,7 +165,7 @@ async function 更新全局数据并通报(
         }),
     });
 
-    await ctx.database.set("马列服务表", { id: "service" }, { 上次全服统计日期: 统计输入.今天 });
+    await ctx.database.set("征战服务表", { id: "service" }, { 上次全服统计日期: 统计输入.今天 });
 
     服务事件中心.emit("生产与统计:全服统计完成", {
         日期: 统计输入.今天,
@@ -206,7 +206,7 @@ export async function 执行每日全服统计(
             return 构造未执行结果(今天, 未执行原因);
         }
 
-        const 玩家列表 = await ctx.database.get("马列玩家表", {});
+        const 玩家列表 = await ctx.database.get("征战玩家表", {});
 
         if (玩家列表.length === 0) {
             await 记录统计日期(ctx, 今天);

@@ -59,7 +59,7 @@ ${username} 同志!
             const userId = session.userId;
 
             // 检查这个 Discord 号是不是已经绑了别人
-            const [existing] = await ctx.database.get("马列玩家表", {
+            const [existing] = await ctx.database.get("征战玩家表", {
                 [platform]: userId,
             });
             if (existing) return "此社交账号已有关联角色，无法重复绑定";
@@ -92,7 +92,7 @@ ${username} 同志!
 
         try {
             // 写入数据库对应的平台字段
-            await ctx.database.set("马列玩家配置表", task.ownerId, {
+            await ctx.database.set("征战玩家配置表", task.ownerId, {
                 [task.targetPlatform]: task.targetUserId,
             });
 

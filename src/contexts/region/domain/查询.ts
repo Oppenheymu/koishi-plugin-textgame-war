@@ -40,14 +40,14 @@ export async function 地区解析(
     }
 
     let 地区编号 = 输入值;
-    const [按编号地区资料] = await ctx.database.get("马列地区表", {
+    const [按编号地区资料] = await ctx.database.get("征战地区表", {
         地区编号: 输入值,
     });
 
     if (!按编号地区资料 && session) {
         用户检查(session);
         const platform = session.platform;
-        const [绑定配置] = await ctx.database.get("马列地区配置表", {
+        const [绑定配置] = await ctx.database.get("征战地区配置表", {
             [platform]: 输入值,
         });
         if (绑定配置?.地区编号) {
@@ -60,11 +60,11 @@ export async function 地区解析(
     const [地区资料, 地区地形资料, 地区状态资料, 地区配置资料, 地区战略资料] = await Promise.all([
         已知地区资料
             ? Promise.resolve(已知地区资料)
-            : ctx.database.get("马列地区表", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区地形表", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区状态机", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区配置表", { 地区编号 }).then(([data]) => data),
-        ctx.database.get("马列地区战略表", { 地区编号 }).then(([data]) => data),
+            : ctx.database.get("征战地区表", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("征战地区地形表", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("征战地区状态机", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("征战地区配置表", { 地区编号 }).then(([data]) => data),
+        ctx.database.get("征战地区战略表", { 地区编号 }).then(([data]) => data),
     ]);
 
     if (!地区资料) {
@@ -97,14 +97,14 @@ async function 地区基础解析(
     }
 
     let 地区编号 = 输入值;
-    const [按编号地区资料] = await ctx.database.get("马列地区表", {
+    const [按编号地区资料] = await ctx.database.get("征战地区表", {
         地区编号: 输入值,
     });
 
     if (!按编号地区资料 && session) {
         用户检查(session);
         const platform = session.platform;
-        const [绑定配置] = await ctx.database.get("马列地区配置表", {
+        const [绑定配置] = await ctx.database.get("征战地区配置表", {
             [platform]: 输入值,
         });
         if (绑定配置?.地区编号) {
@@ -114,7 +114,7 @@ async function 地区基础解析(
 
     const 地区资料 = 按编号地区资料
         ? 按编号地区资料
-        : (await ctx.database.get("马列地区表", { 地区编号 }))[0];
+        : (await ctx.database.get("征战地区表", { 地区编号 }))[0];
 
     if (!地区资料) {
         throw new Error(`未找到地区：${输入值}`);
@@ -151,7 +151,7 @@ export async function 当前地区解析(
         throw new Error("请在群聊中使用该指令");
     }
 
-    const 地区配置列表 = await ctx.database.get("马列地区配置表", {
+    const 地区配置列表 = await ctx.database.get("征战地区配置表", {
         [platform]: 群聊id,
     });
 

@@ -28,14 +28,14 @@ export function 军队详情(ctx: Context) {
                     : "无主";
 
                 // 获取地区地形数据
-                const [地区详情] = await ctx.database.get("马列地区表", {
+                const [地区详情] = await ctx.database.get("征战地区表", {
                     地区编号: 军队.所在地区编号,
                 });
                 let 地形类型: TerrainType = TerrainType.平原;
                 if (地区详情?.地区地形) {
                     地形类型 = 地区详情.地区地形 as TerrainType;
                 }
-                const [地区地形] = await ctx.database.get("马列地区地形表", {
+                const [地区地形] = await ctx.database.get("征战地区地形表", {
                     地区编号: 军队.所在地区编号,
                 });
 

@@ -13,7 +13,7 @@ export function 查看全球劳动力市场(ctx: Context) {
 
                 // 格式化数字显示
 
-                const [全球数据] = await ctx.database.get("马列全球数据表", {
+                const [全球数据] = await ctx.database.get("征战全球数据表", {
                     id: "service",
                 });
                 const 全球劳动力 = 全球数据?.全球劳动力市场 ?? 0;

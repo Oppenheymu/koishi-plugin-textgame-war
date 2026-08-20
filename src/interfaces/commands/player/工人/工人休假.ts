@@ -39,7 +39,7 @@ export function 工人休假(ctx: Context) {
 
             // 更新数据库
             await ctx.database.set(
-                "马列玩家表",
+                "征战玩家表",
                 {
                     id: id,
                 },

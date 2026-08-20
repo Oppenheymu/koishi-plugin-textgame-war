@@ -16,7 +16,7 @@ export function 推送版本日志(ctx: Context) {
         // biome-ignore lint/suspicious/noImplicitAnyLet: 数据库查询结果类型不明确，使用 let 定义
         let 全部联军;
         try {
-            全部联军 = await ctx.database.get("马列联军表", {});
+            全部联军 = await ctx.database.get("征战联军表", {});
         } catch (error) {
             return `查询联军列表失败: ${error}`;
         }

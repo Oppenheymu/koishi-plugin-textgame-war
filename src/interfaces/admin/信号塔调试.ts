@@ -119,7 +119,7 @@ export function 信号塔调试(ctx: Context) {
         authority: 3,
     }).action(async () => {
         try {
-            const 联军列表 = await ctx.database.get("马列联军表", {});
+            const 联军列表 = await ctx.database.get("征战联军表", {});
             const 今天 = new Date();
             const 日期标题 = `${今天.getFullYear()}-${String(今天.getMonth() + 1).padStart(2, "0")}-${String(
                 今天.getDate(),

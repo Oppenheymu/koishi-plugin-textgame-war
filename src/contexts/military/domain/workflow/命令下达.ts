@@ -20,7 +20,7 @@ export async function 下达命令工作流(
     const { 操作者军衔 } = await 校验指挥与命令覆盖(ctx, 军队, 操作者UID);
 
     await ctx.database.set(
-        "马列军队表",
+        "征战军队表",
         { id: 军队.id },
         {
             当前命令: 命令,

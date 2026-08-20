@@ -2,7 +2,7 @@ import type { Context } from "koishi";
 
 export function 加载地区配置表(ctx: Context) {
     ctx.model.extend(
-        "马列地区配置表",
+        "征战地区配置表",
         {
             地区编号: {
                 type: "string",

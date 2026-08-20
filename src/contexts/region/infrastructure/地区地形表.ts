@@ -5,7 +5,7 @@ import type { Context } from "koishi";
  */
 export function 加载地区地形表(ctx: Context) {
     ctx.model.extend(
-        "马列地区地形表",
+        "征战地区地形表",
         {
             地区编号: {
                 type: "string",

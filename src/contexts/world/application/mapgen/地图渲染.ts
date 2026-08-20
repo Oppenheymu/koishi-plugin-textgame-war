@@ -12,8 +12,8 @@ export async function 渲染地图(
 ): Promise<Buffer | null> {
     try {
         const [地区列表, 地形列表] = await Promise.all([
-            ctx.database.get("马列地区表", {}) as Promise<Region[]>,
-            ctx.database.get("马列地区地形表", {}) as Promise<RegionTerra[]>,
+            ctx.database.get("征战地区表", {}) as Promise<Region[]>,
+            ctx.database.get("征战地区地形表", {}) as Promise<RegionTerra[]>,
         ]);
 
         if (地区列表.length === 0) {

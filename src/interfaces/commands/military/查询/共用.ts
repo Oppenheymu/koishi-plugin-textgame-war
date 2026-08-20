@@ -18,7 +18,7 @@ export async function 校验查看他国军队权限(
     if (!用户资料.所在联军) {
         return "你不在任何联军中，无法查看他国军队";
     }
-    const [联军资料] = await ctx.database.get("马列联军表", {
+    const [联军资料] = await ctx.database.get("征战联军表", {
         联军编号: 用户资料.所在联军,
     });
     if (!联军资料) {
@@ -39,7 +39,7 @@ export async function 获取用户名缓存(
     const 缓存 = new Map<string, string>();
     await Promise.all(
         Array.from(new Set(uid列表.filter(Boolean) as string[])).map(async (uid) => {
-            const [配置] = await ctx.database.get("马列玩家配置表", {
+            const [配置] = await ctx.database.get("征战玩家配置表", {
                 uid,
             });
             缓存.set(uid, 配置?.username ?? uid);

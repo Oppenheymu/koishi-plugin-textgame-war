@@ -68,7 +68,7 @@ async function 查询联军并校验成员身份(
     联军编号: string,
     uid: string,
 ): Promise<CoalitionArmy | string> {
-    const [联军资料] = await ctx.database.get("马列联军表", {
+    const [联军资料] = await ctx.database.get("征战联军表", {
         联军编号,
     });
 
@@ -154,7 +154,7 @@ async function 写入加入联军数据(
 ): Promise<void> {
     await Promise.all([
         ctx.database.set(
-            "马列联军表",
+            "征战联军表",
             {
                 联军编号,
             },
@@ -166,7 +166,7 @@ async function 写入加入联军数据(
             },
         ),
         ctx.database.set(
-            "马列玩家表",
+            "征战玩家表",
             {
                 id: 玩家ID,
             },
@@ -188,7 +188,7 @@ async function 回滚新分配地区(ctx: Context, 新分配地区: string): Pro
     try {
         await Promise.all([
             ctx.database.set(
-                "马列地区状态机",
+                "征战地区状态机",
                 {
                     地区编号: 新分配地区,
                 },
@@ -198,7 +198,7 @@ async function 回滚新分配地区(ctx: Context, 新分配地区: string): Pro
                 },
             ),
             ctx.database.set(
-                "马列地区表",
+                "征战地区表",
                 {
                     地区编号: 新分配地区,
                 },

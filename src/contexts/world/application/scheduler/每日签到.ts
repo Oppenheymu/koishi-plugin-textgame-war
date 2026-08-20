@@ -21,7 +21,7 @@ export async function 执行每日签到重置(ctx: Context): Promise<每日签�
 
     try {
         const { created, 今天 } = await 初始化服务记录(ctx);
-        const [服务记录] = await ctx.database.get("马列服务表", {
+        const [服务记录] = await ctx.database.get("征战服务表", {
             id: "service",
         });
 
@@ -47,13 +47,13 @@ export async function 执行每日签到重置(ctx: Context): Promise<每日签�
         }
 
         if (!created) {
-            await ctx.database.set("马列服务表", { id: "service" }, { 上次重置签到日期: 今天 });
+            await ctx.database.set("征战服务表", { id: "service" }, { 上次重置签到日期: 今天 });
         }
 
-        const 玩家列表 = await ctx.database.get("马列玩家表", {});
+        const 玩家列表 = await ctx.database.get("征战玩家表", {});
         await Promise.all([
-            ctx.database.set("马列玩家表", {}, { 今日是否签到: false, 工人招募限额: 1000 }),
-            ctx.database.set("马列联军表", {}, { 当天扩军累计: 0 }),
+            ctx.database.set("征战玩家表", {}, { 今日是否签到: false, 工人招募限额: 1000 }),
+            ctx.database.set("征战联军表", {}, { 当天扩军累计: 0 }),
         ]);
 
         服务事件中心.emit("重置与调度:每日签到重置完成", {

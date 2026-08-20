@@ -2,7 +2,7 @@ import type { Context } from "koishi";
 
 export function 加载地区战略表(ctx: Context) {
     ctx.model.extend(
-        "马列地区战略表",
+        "征战地区战略表",
         {
             地区编号: {
                 type: "string",

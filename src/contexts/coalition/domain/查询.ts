@@ -16,7 +16,7 @@ export async function 联军解析(
         throw new Error("请指定联军编号，例如：A12345");
     }
 
-    const [联军资料] = await ctx.database.get("马列联军表", { 联军编号 });
+    const [联军资料] = await ctx.database.get("征战联军表", { 联军编号 });
     if (!联军资料) {
         throw new Error(`未找到联军：${联军编号}`);
     }

@@ -29,7 +29,7 @@ ${username} 同志：
             const 新钢铁 = 用户资料.钢铁 - 扩建成本;
 
             await ctx.database.set(
-                "马列玩家表",
+                "征战玩家表",
                 {
                     id: id,
                 },

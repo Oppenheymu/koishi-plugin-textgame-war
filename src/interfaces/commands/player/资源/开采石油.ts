@@ -29,7 +29,7 @@ export function 开采石油(ctx: Context) {
                 const 增加后的石油 = 用户资料.石油 + 增加的石油;
 
                 await ctx.database.set(
-                    "马列玩家表",
+                    "征战玩家表",
                     {
                         id: id,
                     },

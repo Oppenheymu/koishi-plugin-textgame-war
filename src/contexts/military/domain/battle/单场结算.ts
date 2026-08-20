@@ -54,7 +54,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
     const 事件列表: string[] = [];
     战斗.回合数 += 1;
 
-    const 参战军队 = await ctx.database.get("马列军队表", {
+    const 参战军队 = await ctx.database.get("征战军队表", {
         当前战斗编号: 战斗.id,
     });
     const 攻方军队 = 参战军队.filter((a) => a.战斗阵营 === 战斗阵营.进攻);
@@ -66,10 +66,10 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
         return;
     }
 
-    const [地区] = await ctx.database.get("马列地区表", {
+    const [地区] = await ctx.database.get("征战地区表", {
         地区编号: 战斗.地区编号,
     });
-    const [地貌] = await ctx.database.get("马列地区地形表", {
+    const [地貌] = await ctx.database.get("征战地区地形表", {
         地区编号: 战斗.地区编号,
     });
     if (!地区 || !地貌) {
@@ -156,7 +156,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
         const 存活: 军队本轮统计[] = [];
         for (const 统计 of 统计列表) {
             if (统计.军队.当前HP比例 <= 0 || 统计.军队.士兵数量 <= 0) {
-                await ctx.database.remove("马列军队表", { id: 统计.军队.id });
+                await ctx.database.remove("征战军队表", { id: 统计.军队.id });
                 事件列表.push(`💥 ${统计.军队.名称}（${阵营名称}）被歼灭`);
             } else {
                 存活.push(统计);
@@ -211,7 +211,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
                     更新[键] = Math.floor(((统计.军队[键] as number) ?? 0) * (1 - 损失率));
                 }
             }
-            await ctx.database.set("马列军队表", { id: 统计.军队.id }, 更新);
+            await ctx.database.set("征战军队表", { id: 统计.军队.id }, 更新);
         }
     };
     await 结算实际损失(攻方存活);
@@ -223,7 +223,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
     await Promise.all(
         预备队.map((军队) =>
             ctx.database.set(
-                "马列军队表",
+                "征战军队表",
                 { id: 军队.id },
                 {
                     当前组织度比例: 军队.当前组织度比例,
@@ -241,7 +241,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
 
     // ---- 未结束：写回回合数并推送战报 ----
     await ctx.database.set(
-        "马列战斗表",
+        "征战战斗表",
         { id: 战斗.id },
         {
             回合数: 战斗.回合数,

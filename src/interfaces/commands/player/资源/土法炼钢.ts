@@ -47,7 +47,7 @@ export function 土法炼钢(ctx: Context) {
             const 减少后的铁矿石 = 用户资料.铁矿石 - 数量;
 
             await ctx.database.set(
-                "马列玩家表",
+                "征战玩家表",
                 {
                     id: id,
                 },

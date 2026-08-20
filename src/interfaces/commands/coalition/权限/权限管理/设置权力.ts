@@ -67,7 +67,7 @@ export function 提权(ctx: Context) {
                 const 权限列表更新 = 设置成员权限等级(联军资料, 目标UID, 输入等级);
 
                 await ctx.database.set(
-                    "马列联军表",
+                    "征战联军表",
                     {
                         联军编号,
                     },

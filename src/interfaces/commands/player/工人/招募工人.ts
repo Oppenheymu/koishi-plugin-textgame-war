@@ -6,7 +6,7 @@ export function 招募工人(ctx: Context) {
     ctx.command("招募工人 <数量:number>").action(async ({ session }, 数量) => {
         try {
             const { id, username, 用户资料 } = await 玩家检查(ctx, session);
-            const [全球数据] = await ctx.database.get("马列全球数据表", {
+            const [全球数据] = await ctx.database.get("征战全球数据表", {
                 id: "service",
             });
             if (!全球数据) {
@@ -47,7 +47,7 @@ ${username} 同志：
             const 新全球劳动力市场 = 全球数据.全球劳动力市场 - 数量;
 
             await ctx.database.set(
-                "马列玩家表",
+                "征战玩家表",
                 {
                     id: id,
                 },
@@ -58,7 +58,7 @@ ${username} 同志：
                 },
             );
             await ctx.database.set(
-                "马列全球数据表",
+                "征战全球数据表",
                 {
                     id: "service",
                 },

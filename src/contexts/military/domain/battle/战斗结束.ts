@@ -29,7 +29,7 @@ export async function 结束战斗(
     }
 
     await ctx.database.set(
-        "马列战斗表",
+        "征战战斗表",
         { id: 战斗.id },
         {
             回合数: 战斗.回合数,
@@ -41,13 +41,13 @@ export async function 结束战斗(
 
     // 双方所有剩余参战军队（含预备队）统一脱战转驻扎、恢复满 HP（残余兵力重整，可调）
     // 败方残余如滞留敌区，可由指挥官下轮自行撤离（第一阶段简化处理）
-    const 剩余参战军队 = await ctx.database.get("马列军队表", {
+    const 剩余参战军队 = await ctx.database.get("征战军队表", {
         当前战斗编号: 战斗.id,
     });
     await Promise.all(
         剩余参战军队.map((军队) =>
             ctx.database.set(
-                "马列军队表",
+                "征战军队表",
                 { id: 军队.id },
                 {
                     状态: 军队状态.驻扎,
@@ -67,7 +67,7 @@ export async function 结束战斗(
     // 进攻方胜 → 地区易主
     if (结果 === "进攻方胜") {
         await ctx.database.set(
-            "马列地区表",
+            "征战地区表",
             { 地区编号: 战斗.地区编号 },
             { 控制国家: 战斗.进攻方联军编号 },
         );

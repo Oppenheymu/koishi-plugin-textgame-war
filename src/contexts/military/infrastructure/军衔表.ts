@@ -6,7 +6,7 @@ import type { Context } from "koishi";
  */
 export function 加载联军军衔表(ctx: Context) {
     ctx.model.extend(
-        "马列联军军衔表",
+        "征战联军军衔表",
         {
             id: {
                 type: "unsigned",

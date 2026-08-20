@@ -48,7 +48,7 @@ export async function 推送战报(
     await 向地区绑定群推送(ctx, 战斗.地区编号, 文本);
 
     // 双方联军首都绑定群聊（大战报）
-    const 联军列表 = await ctx.database.get("马列联军表", {
+    const 联军列表 = await ctx.database.get("征战联军表", {
         联军编号: { $in: [战斗.进攻方联军编号, 战斗.防守方联军编号] },
     });
     for (const 联军 of 联军列表) {

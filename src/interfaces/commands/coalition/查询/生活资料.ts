@@ -40,7 +40,7 @@ export function 联军生活资料查询(ctx: Context) {
                     });
                 }
 
-                const [联军资料] = await ctx.database.get("马列联军表", {
+                const [联军资料] = await ctx.database.get("征战联军表", {
                     联军编号,
                 });
                 if (!联军资料) {

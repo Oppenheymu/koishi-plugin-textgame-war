@@ -46,7 +46,7 @@ export async function 分配装备工作流(
                 [键]: 玩家持有 - 实际数量,
             } as Partial<Player & PlayerWarData>),
             ctx.database.set(
-                "马列军队表",
+                "征战军队表",
                 { id: 军队.id },
                 {
                     [键]: 军队持有 + 实际数量,
@@ -65,7 +65,7 @@ export async function 分配装备工作流(
             [键]: 玩家持有 + 回收数量,
         } as Partial<Player & PlayerWarData>),
         ctx.database.set(
-            "马列军队表",
+            "征战军队表",
             { id: 军队.id },
             {
                 [键]: 军队持有 - 回收数量,

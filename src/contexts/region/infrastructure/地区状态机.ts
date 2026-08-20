@@ -2,7 +2,7 @@ import type { Context } from "koishi";
 
 export function 加载地区状态表(ctx: Context) {
     ctx.model.extend(
-        "马列地区状态机",
+        "征战地区状态机",
         {
             地区编号: {
                 type: "string",
@@ -23,7 +23,7 @@ export function 加载地区状态表(ctx: Context) {
     );
 
     ctx.model.extend(
-        "马列地区洗牌池",
+        "征战地区洗牌池",
         {
             id: {
                 type: "unsigned",

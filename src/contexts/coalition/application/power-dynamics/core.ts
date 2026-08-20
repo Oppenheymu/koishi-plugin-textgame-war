@@ -6,7 +6,7 @@ import { 联军政体 } from "#ctx/coalition/domain/types/联军数据类型";
 import { 按政体动态分配权限 } from "#ctx/coalition/domain/政体策略";
 
 async function 执行联军权力动态检测(ctx: Context): Promise<联军权力检测结果> {
-    const 联军列表 = await ctx.database.get("马列联军表", {});
+    const 联军列表 = await ctx.database.get("征战联军表", {});
     let 更新联军数量 = 0;
 
     for (const 联军资料 of 联军列表) {
@@ -18,7 +18,7 @@ async function 执行联军权力动态检测(ctx: Context): Promise<联军权�
         }
 
         const 权限列表更新 = 按政体动态分配权限(联军资料);
-        await ctx.database.set("马列联军表", { 联军编号: 联军资料.联军编号 }, 权限列表更新);
+        await ctx.database.set("征战联军表", { 联军编号: 联军资料.联军编号 }, 权限列表更新);
         更新联军数量 += 1;
     }
 

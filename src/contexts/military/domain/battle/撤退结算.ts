@@ -21,7 +21,7 @@ export async function 执行撤退(
     const 邻居编号列表 = await 获取相邻地区(ctx, 战斗地区编号);
     const 相邻地区列表: Region[] = [];
     for (const { 地区编号 } of 邻居编号列表) {
-        const [地区] = await ctx.database.get("马列地区表", { 地区编号 });
+        const [地区] = await ctx.database.get("征战地区表", { 地区编号 });
         if (地区) 相邻地区列表.push(地区);
     }
 
@@ -33,17 +33,17 @@ export async function 执行撤退(
 
     // 无路可退（四邻皆敌/海洋）→ 歼灭，装备与士兵全损
     if (!目的地) {
-        await ctx.database.remove("马列军队表", { id: 军队.id });
+        await ctx.database.remove("征战军队表", { id: 军队.id });
         return { 结果: "歼灭" };
     }
 
-    const [目的地区] = await ctx.database.get("马列地区表", {
+    const [目的地区] = await ctx.database.get("征战地区表", {
         地区编号: 目的地,
     });
-    const [战斗地区] = await ctx.database.get("马列地区表", {
+    const [战斗地区] = await ctx.database.get("征战地区表", {
         地区编号: 战斗地区编号,
     });
-    const [目的地貌] = await ctx.database.get("马列地区地形表", {
+    const [目的地貌] = await ctx.database.get("征战地区地形表", {
         地区编号: 目的地,
     });
 
@@ -60,7 +60,7 @@ export async function 执行撤退(
             : 5 * 60 * 1000;
 
     await ctx.database.set(
-        "马列军队表",
+        "征战军队表",
         { id: 军队.id },
         {
             状态: 军队状态.撤退中,

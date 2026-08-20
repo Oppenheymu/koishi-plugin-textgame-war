@@ -12,7 +12,7 @@ export function 地区洗牌(ctx: Context) {
         try {
             // 1. 获取数据
             const 所有陆地 = await ctx.database.get(
-                "马列地区地形表",
+                "征战地区地形表",
                 {
                     是否为海洋: false,
                 },
@@ -37,8 +37,8 @@ export function 地区洗牌(ctx: Context) {
             }
 
             // 3. 重置数据库状态
-            await ctx.database.remove("马列地区洗牌池", {});
-            await ctx.database.upsert("马列服务表", [
+            await ctx.database.remove("征战地区洗牌池", {});
+            await ctx.database.upsert("征战服务表", [
                 {
                     id: "GLOBAL",
                     当前地区洗牌指针: 0,
@@ -62,8 +62,8 @@ export function 地区洗牌(ctx: Context) {
                 }));
 
                 await Promise.all([
-                    ctx.database.upsert("马列地区洗牌池", 洗牌池数据块),
-                    ctx.database.upsert("马列地区状态机", 状态机数据块, ["地区编号"]),
+                    ctx.database.upsert("征战地区洗牌池", 洗牌池数据块),
+                    ctx.database.upsert("征战地区状态机", 状态机数据块, ["地区编号"]),
                 ]);
 
                 // 计算并发送进度

@@ -39,7 +39,7 @@ export function 政变(ctx: Context) {
 
                 await Promise.all([
                     ctx.database.set(
-                        "马列联军表",
+                        "征战联军表",
                         {
                             联军编号,
                         },

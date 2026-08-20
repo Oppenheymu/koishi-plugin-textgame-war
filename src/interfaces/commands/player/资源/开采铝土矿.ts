@@ -27,7 +27,7 @@ export function 开采铝土矿(ctx: Context) {
             const 增加后的铝土矿 = 用户资料.铝土矿 + 增加的铝土矿;
 
             await ctx.database.set(
-                "马列玩家表",
+                "征战玩家表",
                 {
                     id: id,
                 },

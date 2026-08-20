@@ -37,16 +37,16 @@ export function 注册(ctx: Context) {
                 const platform = session.platform;
                 const userId = session.userId;
 
-                const [已有玩家配置] = await ctx.database.get("马列玩家配置表", {
+                const [已有玩家配置] = await ctx.database.get("征战玩家配置表", {
                     [platform]: userId,
                 });
 
                 if (已有玩家配置) {
                     const [已有玩家档案列表, 已有玩家战争档案列表] = await Promise.all([
-                        ctx.database.get("马列玩家表", {
+                        ctx.database.get("征战玩家表", {
                             id: 已有玩家配置.id,
                         }),
-                        ctx.database.get("马列玩家战争表", {
+                        ctx.database.get("征战玩家战争表", {
                             id: 已有玩家配置.id,
                         }),
                     ]);
@@ -61,13 +61,13 @@ export function 注册(ctx: Context) {
                     }
 
                     await Promise.all([
-                        ctx.database.remove("马列玩家表", {
+                        ctx.database.remove("征战玩家表", {
                             id: 已有玩家配置.id,
                         }),
-                        ctx.database.remove("马列玩家战争表", {
+                        ctx.database.remove("征战玩家战争表", {
                             id: 已有玩家配置.id,
                         }),
-                        ctx.database.remove("马列玩家配置表", {
+                        ctx.database.remove("征战玩家配置表", {
                             id: 已有玩家配置.id,
                         }),
                     ]);
@@ -95,7 +95,7 @@ export function 注册(ctx: Context) {
 
                 try {
                     const newPlayerConfig: PlayerConfig = await ctx.database.create(
-                        "马列玩家配置表",
+                        "征战玩家配置表",
                         {
                             [platform]: userId,
                             username: "",
@@ -120,7 +120,7 @@ export function 注册(ctx: Context) {
                         username = `默认名称${newUID}`;
                     }
 
-                    await ctx.database.set("马列玩家配置表", newID, {
+                    await ctx.database.set("征战玩家配置表", newID, {
                         uid: newUID,
                         username,
                     });
@@ -212,19 +212,19 @@ export function 注册(ctx: Context) {
                     };
 
                     await Promise.all([
-                        ctx.database.create("马列玩家表", newPlayerData),
-                        ctx.database.create("马列玩家战争表", newPlayerWarData),
+                        ctx.database.create("征战玩家表", newPlayerData),
+                        ctx.database.create("征战玩家战争表", newPlayerWarData),
                     ]);
                 } catch (error) {
                     if (newID) {
                         await Promise.allSettled([
-                            ctx.database.remove("马列玩家表", {
+                            ctx.database.remove("征战玩家表", {
                                 id: newID,
                             }),
-                            ctx.database.remove("马列玩家战争表", {
+                            ctx.database.remove("征战玩家战争表", {
                                 id: newID,
                             }),
-                            ctx.database.remove("马列玩家配置表", {
+                            ctx.database.remove("征战玩家配置表", {
                                 id: newID,
                             }),
                         ]);

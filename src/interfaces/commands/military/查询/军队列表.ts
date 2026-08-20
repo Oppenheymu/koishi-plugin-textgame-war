@@ -16,14 +16,14 @@ export function 军队列表(ctx: Context) {
                 }
             }
 
-            const [联军资料] = await ctx.database.get("马列联军表", {
+            const [联军资料] = await ctx.database.get("征战联军表", {
                 联军编号: 目标联军编号,
             });
             if (!联军资料) {
                 return `未找到联军：${目标联军编号}`;
             }
 
-            const 军队列表 = await ctx.database.get("马列军队表", {
+            const 军队列表 = await ctx.database.get("征战军队表", {
                 所属联军编号: 目标联军编号,
             });
             if (军队列表.length === 0) {

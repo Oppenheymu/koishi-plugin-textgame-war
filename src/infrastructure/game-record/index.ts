@@ -10,7 +10,7 @@ type 服务记录默认字段 = Partial<
 
 export async function 确保服务记录(ctx: Context, 默认字段: 服务记录默认字段 = {}) {
     await ctx.database.upsert(
-        "马列服务表",
+        "征战服务表",
         [
             {
                 id: "service",

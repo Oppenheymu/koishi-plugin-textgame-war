@@ -44,7 +44,7 @@ export function 分配生活资料(ctx: Context) {
                         throw new Error("目标不在你的联军中，无法分配联军储备");
                     }
 
-                    const [目标配置] = await ctx.database.get("马列玩家配置表", {
+                    const [目标配置] = await ctx.database.get("征战玩家配置表", {
                         id: 目标用户ID,
                     });
 
@@ -78,7 +78,7 @@ export function 分配生活资料(ctx: Context) {
                 ].slice(0, 100);
 
                 await ctx.database.set(
-                    "马列联军表",
+                    "征战联军表",
                     { 联军编号 },
                     {
                         联军生活资料: (联军资料.联军生活资料 ?? 0) - 数量,

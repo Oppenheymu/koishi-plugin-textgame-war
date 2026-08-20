@@ -14,7 +14,7 @@ export interface 每小时地区刷新结果 {
 }
 
 async function 执行每小时地区工业刷新(ctx: Context): Promise<地区工业刷新结果> {
-    const 地区列表 = await ctx.database.get("马列地区表", {});
+    const 地区列表 = await ctx.database.get("征战地区表", {});
 
     if (!地区列表.length) {
         return {
@@ -57,7 +57,7 @@ async function 执行每小时地区工业刷新(ctx: Context): Promise<地区�
     }>;
 
     if (更新批次.length) {
-        await ctx.database.upsert("马列地区表", 更新批次, ["地区编号"]);
+        await ctx.database.upsert("征战地区表", 更新批次, ["地区编号"]);
     }
 
     return {

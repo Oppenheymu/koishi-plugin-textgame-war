@@ -25,7 +25,7 @@ export function 使用科技蓝图(ctx: Context) {
             }
 
             await ctx.database.set(
-                "马列玩家表",
+                "征战玩家表",
                 {
                     id: id,
                 },

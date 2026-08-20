@@ -6,7 +6,7 @@ import { 战斗状态 } from "#ctx/military/domain/types/枚举";
  */
 export function 加载战斗表(ctx: Context) {
     ctx.model.extend(
-        "马列战斗表",
+        "征战战斗表",
         {
             id: {
                 type: "unsigned",

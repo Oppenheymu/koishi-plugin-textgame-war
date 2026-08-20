@@ -8,7 +8,7 @@ import type { Context } from "koishi";
 
 export function 加载服务表(ctx: Context) {
     ctx.model.extend(
-        "马列服务表",
+        "征战服务表",
         {
             id: {
                 type: "string",

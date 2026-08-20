@@ -6,14 +6,14 @@ import { 军队状态 } from "#ctx/military/domain/types/枚举";
 
 /** 组织度恢复（第 8 章：脱战军队每轮 +0.05，本国领土 ×2，可调） */
 export async function 恢复组织度(ctx: Context): Promise<void> {
-    const 驻扎军队 = await ctx.database.get("马列军队表", {
+    const 驻扎军队 = await ctx.database.get("征战军队表", {
         状态: 军队状态.驻扎,
     });
 
     await Promise.all(
         驻扎军队.map(async (军队) => {
             let 恢复速率 = 组织度恢复速率;
-            const [地区] = await ctx.database.get("马列地区表", {
+            const [地区] = await ctx.database.get("征战地区表", {
                 地区编号: 军队.所在地区编号,
             });
             if (地区?.控制国家 === 军队.所属联军编号) {
@@ -29,7 +29,7 @@ export async function 恢复组织度(ctx: Context): Promise<void> {
                 更新["当前HP比例"] = 1;
             }
             if (Object.keys(更新).length > 0) {
-                await ctx.database.set("马列军队表", { id: 军队.id }, 更新);
+                await ctx.database.set("征战军队表", { id: 军队.id }, 更新);
             }
         }),
     );

@@ -8,7 +8,7 @@ export async function 军队解析(ctx: Context, 编号输入: string | number |
         throw new Error("请指定有效的军队编号（纯数字）");
     }
 
-    const [军队] = await ctx.database.get("马列军队表", { id: 编号 });
+    const [军队] = await ctx.database.get("征战军队表", { id: 编号 });
     if (!军队) {
         throw new Error(`未找到军队 #${编号}`);
     }
@@ -21,7 +21,7 @@ export async function 获取联军军衔记录(
     联军编号: string,
     玩家UID: string,
 ): Promise<CoalitionRank | null> {
-    const [记录] = await ctx.database.get("马列联军军衔表", {
+    const [记录] = await ctx.database.get("征战联军军衔表", {
         联军编号,
         玩家UID,
     });
@@ -44,7 +44,7 @@ export async function 获取玩家军队列表(
     联军编号: string,
     指挥官UID: string,
 ): Promise<Army[]> {
-    return ctx.database.get("马列军队表", {
+    return ctx.database.get("征战军队表", {
         所属联军编号: 联军编号,
         指挥官UID,
     });

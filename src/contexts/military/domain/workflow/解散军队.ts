@@ -15,7 +15,7 @@ export async function 解散军队工作流(ctx: Context, 军队: Army, 操作�
 
     // 装备与士兵回收：优先返还指挥官，无主军队由操作者回收（政治接管，可调）
     const 回收者UID = 军队.指挥官UID ?? 操作者.uid;
-    const [回收者配置] = await ctx.database.get("马列玩家配置表", {
+    const [回收者配置] = await ctx.database.get("征战玩家配置表", {
         uid: 回收者UID,
     });
     if (!回收者配置) {
@@ -23,8 +23,8 @@ export async function 解散军队工作流(ctx: Context, 军队: Army, 操作�
     }
 
     const [[战争档案], [玩家档案]] = await Promise.all([
-        ctx.database.get("马列玩家战争表", { id: 回收者配置.id }),
-        ctx.database.get("马列玩家表", { id: 回收者配置.id }),
+        ctx.database.get("征战玩家战争表", { id: 回收者配置.id }),
+        ctx.database.get("征战玩家表", { id: 回收者配置.id }),
     ]);
 
     const 回收更新: Record<string, number> = {};
@@ -39,7 +39,7 @@ export async function 解散军队工作流(ctx: Context, 军队: Army, 操作�
     }
 
     await 更新玩家资料(ctx, 回收者配置.id, 回收更新 as Partial<Player & PlayerWarData>);
-    await ctx.database.remove("马列军队表", { id: 军队.id });
+    await ctx.database.remove("征战军队表", { id: 军队.id });
 }
 
 /** 军队表装备数量列（解散回收用，含空军/弹药占位列） */
