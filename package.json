@@ -1,7 +1,6 @@
 {
     "name": "koishi-plugin-textgame-war",
     "version": "0.65.12",
-    "type": "module",
     "imports": {
         "#/*": [
             "./src/*.ts",

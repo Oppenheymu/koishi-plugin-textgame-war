@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 
 export interface 版本日志条目 {
     版本: string;
@@ -12,9 +12,7 @@ let 版本日志缓存: 版本日志条目[] | null = null;
 function 获取所有版本日志(): 版本日志条目[] {
     if (!版本日志缓存) {
         try {
-            const 文件路径 = fileURLToPath(
-                new URL("../../../assets/版本日志.json", import.meta.url),
-            );
+            const 文件路径 = join(__dirname, "..", "assets", "版本日志.json");
             const 内容 = fs.readFileSync(文件路径, "utf-8");
             版本日志缓存 = JSON.parse(内容);
         } catch (error) {

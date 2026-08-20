@@ -1,8 +1,8 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import { fileURLToPath } from "node:url";
 
-export const CACHE_DIR = fileURLToPath(new URL("../../../cache", import.meta.url));
+// 构建产物为单文件 bundle（<包根>/lib/index.js），__dirname 的上一级即包根
+export const CACHE_DIR = path.join(__dirname, "..", "cache");
 export const FULL_MAP_CACHE = path.join(CACHE_DIR, "full.png");
 export const LOCAL_MAP_TTL = 30 * 60 * 1000;
 

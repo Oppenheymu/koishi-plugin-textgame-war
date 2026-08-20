@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { type RegionBasicDataItem, TerrainType } from "#/interfaces/admin/预设/地区/types";
 
 export function 构建进度条(当前: number, 总数: number): string {
@@ -11,9 +11,7 @@ export function 构建进度条(当前: number, 总数: number): string {
 }
 
 export async function 读取地区基础数据(): Promise<RegionBasicDataItem[]> {
-    const 文件路径 = fileURLToPath(
-        new URL("../../../../../assets/RegionBasicData.json", import.meta.url),
-    );
+    const 文件路径 = join(__dirname, "..", "assets", "RegionBasicData.json");
     const 原始内容 = await readFile(文件路径, "utf-8");
     return JSON.parse(原始内容) as RegionBasicDataItem[];
 }

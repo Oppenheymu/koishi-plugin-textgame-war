@@ -1,8 +1,7 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
 import { h, Logger } from "koishi";
-import { 查找项目根目录 } from "#/infrastructure/game-assets/目录查找";
 
 const logger = new Logger("malie-random-image");
 
@@ -40,8 +39,7 @@ export function 生成随机图片片段(
 
     logger.warn(`命中图片：${随机图片}`);
 
-    const 当前文件目录 = fileURLToPath(new URL(".", import.meta.url));
-    const 项目根目录 = 查找项目根目录(当前文件目录);
+    const 项目根目录 = resolve(__dirname, "..");
 
     const 图片路径候选 = [
         resolve(process.cwd(), ...资源子目录, 随机图片),
