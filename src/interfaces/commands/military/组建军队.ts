@@ -37,6 +37,9 @@ export function 解散军队(ctx: Context) {
         try {
             const 结果 = await 玩家联军检查(ctx, session);
             const 军队 = await 军队解析(ctx, 编号);
+            if (军队.所属联军编号 !== 结果.联军编号) {
+                return "只能解散本联军的军队";
+            }
 
             // 指挥官本人 或 联军政治权限（分配军队）
             if (军队.指挥官UID !== 结果.uid) {
