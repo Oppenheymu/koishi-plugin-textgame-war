@@ -8,6 +8,8 @@ import type { Army, Battle } from "#ctx/military/domain/types/数据类型";
 
 import { 军队命令, 战斗阵营 } from "#ctx/military/domain/types/枚举";
 
+import { 军队装备数量列名单 } from "#ctx/military/domain/types/装备属性表";
+
 import { 聚合军队面板 } from "#ctx/military/domain/属性聚合";
 
 import { 计算战场宽度, 计算攻击地形地貌修正, 计算超宽惩罚 } from "#ctx/military/domain/战场宽度";
@@ -17,37 +19,6 @@ import { 推送战报 } from "./战报生成.js";
 import { 结束战斗 } from "./战斗结束.js";
 import { 执行撤退 } from "./撤退结算.js";
 import type { 军队本轮统计 } from "./本轮统计.js";
-
-/** 军队表 27 个装备数量列（实际损失结算用） */
-const 装备数量列名单 = [
-    "步兵装备",
-    "卡车",
-    "两栖坦克",
-    "轻型坦克",
-    "中型坦克",
-    "重型坦克",
-    "现代坦克",
-    "装甲运兵车",
-    "两栖装甲运兵车",
-    "坦克歼击车",
-    "自行防空车",
-    "野战炮",
-    "火炮",
-    "火箭炮",
-    "列车炮",
-    "侦察机",
-    "战斗机",
-    "预警机",
-    "战术轰炸机",
-    "战略轰炸机",
-    "隐形轰炸机",
-    "大型运输机",
-    "小型运输机",
-    "火箭弹",
-    "防空弹药",
-    "轻型航弹",
-    "重型航弹",
-] as const;
 
 /** 结算单场战斗的一轮（6.2 完整流程） */
 export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<void> {
@@ -192,7 +163,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
                     continue;
                 }
                 const 战损更新: Record<string, unknown> = { 士兵数量: 剩余士兵 };
-                for (const 键 of 装备数量列名单) {
+                for (const 键 of 军队装备数量列名单) {
                     战损更新[键] = Math.floor(((统计.军队[键] as number) ?? 0) * (1 - 损失率));
                 }
                 await ctx.database.set("征战军队表", { id: 统计.军队.id }, 战损更新);
@@ -239,7 +210,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
                 士兵数量: 剩余士兵,
             };
             if (损失率 > 0) {
-                for (const 键 of 装备数量列名单) {
+                for (const 键 of 军队装备数量列名单) {
                     更新[键] = Math.floor(((统计.军队[键] as number) ?? 0) * (1 - 损失率));
                 }
             }

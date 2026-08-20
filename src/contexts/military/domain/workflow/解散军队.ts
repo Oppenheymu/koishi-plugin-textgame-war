@@ -4,6 +4,8 @@ import type { Army } from "#ctx/military/domain/types/数据类型";
 
 import { 军队状态 } from "#ctx/military/domain/types/枚举";
 
+import { 军队装备数量列名单 } from "#ctx/military/domain/types/装备属性表";
+
 import type { Player, PlayerWarData } from "#ctx/player";
 import { 更新玩家资料 } from "#ctx/player";
 import type { 军队操作者 } from "./军队操作者.js";
@@ -28,7 +30,7 @@ export async function 解散军队工作流(ctx: Context, 军队: Army, 操作�
     ]);
 
     const 回收更新: Record<string, number> = {};
-    for (const 键 of 军队装备列名单) {
+    for (const 键 of 军队装备数量列名单) {
         const 数量 = 军队[键] as number;
         if (数量 > 0) {
             回收更新[键] = (Number(战争档案?.[键 as keyof PlayerWarData]) || 0) + 数量;
@@ -41,34 +43,3 @@ export async function 解散军队工作流(ctx: Context, 军队: Army, 操作�
     await 更新玩家资料(ctx, 回收者配置.id, 回收更新 as Partial<Player & PlayerWarData>);
     await ctx.database.remove("征战军队表", { id: 军队.id });
 }
-
-/** 军队表装备数量列（解散回收用，含空军/弹药占位列） */
-const 军队装备列名单 = [
-    "步兵装备",
-    "卡车",
-    "两栖坦克",
-    "轻型坦克",
-    "中型坦克",
-    "重型坦克",
-    "现代坦克",
-    "装甲运兵车",
-    "两栖装甲运兵车",
-    "坦克歼击车",
-    "自行防空车",
-    "野战炮",
-    "火炮",
-    "火箭炮",
-    "列车炮",
-    "侦察机",
-    "战斗机",
-    "预警机",
-    "战术轰炸机",
-    "战略轰炸机",
-    "隐形轰炸机",
-    "大型运输机",
-    "小型运输机",
-    "火箭弹",
-    "防空弹药",
-    "轻型航弹",
-    "重型航弹",
-] as const;
