@@ -1,12 +1,12 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "target": "es2024",
+        "target": "es2025",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "moduleDetection": "force",
         "lib": [
-            "es2024"
+            "es2025"
         ],
         "types": [
             "node"
