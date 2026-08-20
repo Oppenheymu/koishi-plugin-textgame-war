@@ -197,25 +197,41 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
     守方存活 = await 溃退判定(守方存活, "防守方");
 
     // ---- 实际损失结算（6.6：本轮HP损失 × 70% 转为装备与士兵永久损失）----
-    const 结算实际损失 = async (统计列表: 军队本轮统计[]): Promise<void> => {
+    const 结算实际损失 = async (
+        统计列表: 军队本轮统计[],
+        阵营名称: string,
+    ): Promise<军队本轮统计[]> => {
+        const 仍存活: 军队本轮统计[] = [];
         for (const 统计 of 统计列表) {
             const 损失率 = Math.min(1, 统计.本轮HP损失 * HP损失转化率);
+            const 剩余士兵 =
+                损失率 > 0 ? Math.floor(统计.军队.士兵数量 * (1 - 损失率)) : 统计.军队.士兵数量;
+
+            // 战损折算后士兵归零 → 编制打光，就地歼灭（修复 floor 取整后的"僵尸军队"）
+            if (剩余士兵 <= 0) {
+                await ctx.database.remove("征战军队表", { id: 统计.军队.id });
+                事件列表.push(`💥 ${统计.军队.名称}（${阵营名称}）残部打光，编制撤销`);
+                continue;
+            }
+
             const 更新: Record<string, unknown> = {
                 当前组织度比例: 统计.军队.当前组织度比例,
                 当前HP比例: 统计.军队.当前HP比例,
                 经验值: 统计.军队.经验值 + 统计.本轮造成组织度伤害 * 经验累积系数,
+                士兵数量: 剩余士兵,
             };
             if (损失率 > 0) {
-                更新["士兵数量"] = Math.floor(统计.军队.士兵数量 * (1 - 损失率));
                 for (const 键 of 装备数量列名单) {
                     更新[键] = Math.floor(((统计.军队[键] as number) ?? 0) * (1 - 损失率));
                 }
             }
             await ctx.database.set("征战军队表", { id: 统计.军队.id }, 更新);
+            仍存活.push(统计);
         }
+        return 仍存活;
     };
-    await 结算实际损失(攻方存活);
-    await 结算实际损失(守方存活);
+    攻方存活 = await 结算实际损失(攻方存活, "进攻方");
+    守方存活 = await 结算实际损失(守方存活, "防守方");
 
     // 预备队（未上场）同步经验与状态写回
     const 上场编号集合 = new Set([...攻方统计, ...守方统计].map((t) => t.军队.id));
