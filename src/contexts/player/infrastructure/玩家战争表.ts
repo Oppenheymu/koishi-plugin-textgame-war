@@ -1,4 +1,5 @@
 import type { Context } from "koishi";
+import { 装备数量列字段 } from "#/infrastructure";
 
 export function 加载玩家战争表(ctx: Context) {
     ctx.model.extend(
@@ -14,131 +15,15 @@ export function 加载玩家战争表(ctx: Context) {
                 length: 255,
             },
 
-            // 陆军
-            步兵装备: {
-                type: "unsigned",
-                initial: 0,
-            },
-            卡车: {
-                type: "unsigned",
-                initial: 0,
-            },
-            //装甲单位
-            两栖坦克: {
-                type: "unsigned",
-                initial: 0,
-            },
-            轻型坦克: {
-                type: "unsigned",
-                initial: 0,
-            },
-            中型坦克: {
-                type: "unsigned",
-                initial: 0,
-            },
-            重型坦克: {
-                type: "unsigned",
-                initial: 0,
-            },
-            现代坦克: {
-                type: "unsigned",
-                initial: 0,
-            },
+            // 27 种装备数量列（陆军/空军/弹药，与军队表共享字段定义）
+            ...装备数量列字段,
 
-            装甲运兵车: {
-                type: "unsigned",
-                initial: 0,
-            },
-            两栖装甲运兵车: {
-                type: "unsigned",
-                initial: 0,
-            },
-
-            //自行式支援
-            坦克歼击车: {
-                type: "unsigned",
-                initial: 0,
-            },
-            自行防空车: {
-                type: "unsigned",
-                initial: 0,
-            },
-
-            //炮兵
-            野战炮: {
-                type: "unsigned",
-                initial: 0,
-            },
-            火炮: {
-                type: "unsigned",
-                initial: 0,
-            },
-            火箭炮: {
-                type: "unsigned",
-                initial: 0,
-            },
-            列车炮: {
-                type: "unsigned",
-                initial: 0,
-            },
-
-            // 空军
-            侦察机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            战斗机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            预警机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            战术轰炸机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            战略轰炸机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            隐形轰炸机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            大型运输机: {
-                type: "unsigned",
-                initial: 0,
-            },
-            小型运输机: {
-                type: "unsigned",
-                initial: 0,
-            },
             // 空军状态机
             巡航中的预警机: {
                 type: "unsigned",
                 initial: 0,
             },
             巡航中的战斗机: {
-                type: "unsigned",
-                initial: 0,
-            },
-
-            // 弹药相关
-            火箭弹: {
-                type: "unsigned",
-                initial: 0,
-            },
-            防空弹药: {
-                type: "unsigned",
-                initial: 0,
-            },
-            轻型航弹: {
-                type: "unsigned",
-                initial: 0,
-            },
-            重型航弹: {
                 type: "unsigned",
                 initial: 0,
             },

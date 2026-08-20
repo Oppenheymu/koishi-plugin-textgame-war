@@ -1,6 +1,8 @@
 import type { Context } from "koishi";
 import { 军队命令, 军队状态 } from "#ctx/military/domain/types/枚举";
 
+import { 装备数量列字段 } from "#/infrastructure";
+
 /**
  * 军队表：id 即全局编号（自增纯数字，指令指定用）
  * 27 种装备数量列镜像 玩家战争表 风格逐列声明
@@ -101,38 +103,8 @@ export function 加载军队表(ctx: Context) {
                 initial: null,
             },
 
-            // 陆军
-            步兵装备: { type: "unsigned", initial: 0 },
-            卡车: { type: "unsigned", initial: 0 },
-            两栖坦克: { type: "unsigned", initial: 0 },
-            轻型坦克: { type: "unsigned", initial: 0 },
-            中型坦克: { type: "unsigned", initial: 0 },
-            重型坦克: { type: "unsigned", initial: 0 },
-            现代坦克: { type: "unsigned", initial: 0 },
-            装甲运兵车: { type: "unsigned", initial: 0 },
-            两栖装甲运兵车: { type: "unsigned", initial: 0 },
-            坦克歼击车: { type: "unsigned", initial: 0 },
-            自行防空车: { type: "unsigned", initial: 0 },
-            野战炮: { type: "unsigned", initial: 0 },
-            火炮: { type: "unsigned", initial: 0 },
-            火箭炮: { type: "unsigned", initial: 0 },
-            列车炮: { type: "unsigned", initial: 0 },
-
-            // 空军（第一阶段预留，不参与结算）
-            侦察机: { type: "unsigned", initial: 0 },
-            战斗机: { type: "unsigned", initial: 0 },
-            预警机: { type: "unsigned", initial: 0 },
-            战术轰炸机: { type: "unsigned", initial: 0 },
-            战略轰炸机: { type: "unsigned", initial: 0 },
-            隐形轰炸机: { type: "unsigned", initial: 0 },
-            大型运输机: { type: "unsigned", initial: 0 },
-            小型运输机: { type: "unsigned", initial: 0 },
-
-            // 弹药（第一阶段预留，不参与结算）
-            火箭弹: { type: "unsigned", initial: 0 },
-            防空弹药: { type: "unsigned", initial: 0 },
-            轻型航弹: { type: "unsigned", initial: 0 },
-            重型航弹: { type: "unsigned", initial: 0 },
+            // 27 种装备数量列（陆军/空军/弹药，与玩家战争表共享字段定义）
+            ...装备数量列字段,
 
             建立日期: {
                 type: "string",
