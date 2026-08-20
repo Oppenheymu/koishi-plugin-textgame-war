@@ -1,7 +1,7 @@
 // 查看战斗指令
 import dayjs from "dayjs";
 import type { Context } from "koishi";
-import { 战斗状态, 加载联军名称缓存 } from "#ctx/military";
+import { 加载联军名称缓存, 战斗状态 } from "#ctx/military";
 import { 玩家检查 } from "#ctx/player";
 import { 获取用户名缓存 } from "./共用.js";
 

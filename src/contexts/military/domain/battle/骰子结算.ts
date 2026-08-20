@@ -55,9 +55,7 @@ export function 执行交火(参数: {
         组织度伤害系数 *
         穿甲伤害系数;
     const 单次HP伤害 =
-        TRandom(HP伤害骰子最小, HP伤害骰子众数, HP伤害骰子最大, false) *
-        HP伤害系数 *
-        穿甲伤害系数;
+        TRandom(HP伤害骰子最小, HP伤害骰子众数, HP伤害骰子最大, false) * HP伤害系数 * 穿甲伤害系数;
 
     return {
         组织度伤害: 期望命中次数 * 单次组织度伤害,
