@@ -103,7 +103,7 @@ export const 超宽惩罚上限 = 0.33;
 export const 攻击点数除数 = 10;
 
 /** 未破防命中率 / 破防命中率 */
-export const 未破防命中率 = 0.1;
+export const 未破防命中率 = 0.3;
 export const 破防命中率 = 0.4;
 
 /** 穿甲四档伤害系数 */
@@ -122,13 +122,13 @@ export const 组织度伤害骰子最小 = 1;
 export const 组织度伤害骰子众数 = 2;
 export const 组织度伤害骰子最大 = 4;
 export const 装甲优势骰子最大 = 6;
-export const 组织度伤害系数 = 0.053;
+export const 组织度伤害系数 = 0.2;
 
-/** HP 伤害基础骰子与系数 */
+/** HP 伤害基础骰子与系数（系数相对 HP 上限 0.25/士兵 较大，保证死守军可被歼灭、常规战有永久战损） */
 export const HP伤害骰子最小 = 1;
 export const HP伤害骰子众数 = 1.5;
 export const HP伤害骰子最大 = 2;
-export const HP伤害系数 = 0.06;
+export const HP伤害系数 = 3.5;
 
 /** 地形攻击修正（进攻方惩罚，7 种陆地地形） */
 export const 地形攻击修正: Partial<Record<TerrainType, number>> = {
