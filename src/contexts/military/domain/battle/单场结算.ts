@@ -223,10 +223,15 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
     守方存活 = await 结算实际损失(守方存活, "防守方");
 
     // 预备队（未上场）本轮无战损无经验，状态不变，无需写库
+    const 上场编号集合 = new Set([...攻方统计, ...守方统计].map((t) => t.军队.id));
+    const 攻方预备队统计 = 攻方军队.filter((a) => !上场编号集合.has(a.id)).map(建统计);
+    const 守方预备队统计 = 守方军队.filter((a) => !上场编号集合.has(a.id)).map(建统计);
 
-    // ---- 战斗结束判定 ----
-    if (攻方存活.length === 0 || 守方存活.length === 0) {
-        await 结束战斗(ctx, 战斗, 攻方存活, 守方存活, 事件列表);
+    // ---- 战斗结束判定（任一方上场部队与预备队全灭/全撤才算结束，预备队下轮接战）----
+    const 攻方余部 = [...攻方存活, ...攻方预备队统计];
+    const 守方余部 = [...守方存活, ...守方预备队统计];
+    if (攻方余部.length === 0 || 守方余部.length === 0) {
+        await 结束战斗(ctx, 战斗, 攻方余部, 守方余部, 事件列表);
         return;
     }
 
@@ -239,5 +244,5 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
         },
     );
 
-    await 推送战报(ctx, 战斗, 攻方存活, 守方存活, 事件列表, false);
+    await 推送战报(ctx, 战斗, 攻方余部, 守方余部, 事件列表, false);
 }
