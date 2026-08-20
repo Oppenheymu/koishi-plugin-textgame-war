@@ -1,3 +1,4 @@
+import "./infrastructure/runtime-resolver";
 import type { Context } from "koishi";
 import "koishi-plugin-cron-fix";
 import "koishi-plugin-am-i-alt";
