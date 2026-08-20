@@ -181,6 +181,24 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
                 留下.push(统计);
                 continue;
             }
+
+            // 撤离前同样结算本轮战损转化（6.6），堵住"撤退免永久损失"的漏洞
+            const 损失率 = Math.min(1, 统计.本轮HP损失 * HP损失转化率);
+            if (损失率 > 0) {
+                const 剩余士兵 = Math.floor(统计.军队.士兵数量 * (1 - 损失率));
+                if (剩余士兵 <= 0) {
+                    await ctx.database.remove("征战军队表", { id: 统计.军队.id });
+                    事件列表.push(`💥 ${统计.军队.名称}（${阵营名称}）残部打光，编制撤销`);
+                    continue;
+                }
+                const 战损更新: Record<string, unknown> = { 士兵数量: 剩余士兵 };
+                for (const 键 of 装备数量列名单) {
+                    战损更新[键] = Math.floor(((统计.军队[键] as number) ?? 0) * (1 - 损失率));
+                }
+                await ctx.database.set("征战军队表", { id: 统计.军队.id }, 战损更新);
+                统计.军队.士兵数量 = 剩余士兵;
+            }
+
             const { 结果, 目的地 } = await 执行撤退(ctx, 统计.军队, 统计.面板, 战斗.地区编号);
             if (结果 === "歼灭") {
                 事件列表.push(`💥 ${统计.军队.名称}（${阵营名称}）无路可退，被歼灭`);
