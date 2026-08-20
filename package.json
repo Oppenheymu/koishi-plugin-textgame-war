@@ -13,14 +13,6 @@
         "#shared/*": [
             "./src/shared/*.ts",
             "./src/shared/*/index.ts"
-        ],
-        "#utils/*": [
-            "./src/utils/*.ts",
-            "./src/utils/*/index.ts"
-        ],
-        "#logic/*": [
-            "./src/logic/*.ts",
-            "./src/logic/*/index.ts"
         ]
     },
     "contributors": [
