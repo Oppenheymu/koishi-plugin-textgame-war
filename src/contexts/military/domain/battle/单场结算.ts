@@ -233,21 +233,7 @@ export async function 结算单场战斗(ctx: Context, 战斗: Battle): Promise<
     攻方存活 = await 结算实际损失(攻方存活, "进攻方");
     守方存活 = await 结算实际损失(守方存活, "防守方");
 
-    // 预备队（未上场）同步经验与状态写回
-    const 上场编号集合 = new Set([...攻方统计, ...守方统计].map((t) => t.军队.id));
-    const 预备队 = 参战军队.filter((a) => !上场编号集合.has(a.id));
-    await Promise.all(
-        预备队.map((军队) =>
-            ctx.database.set(
-                "征战军队表",
-                { id: 军队.id },
-                {
-                    当前组织度比例: 军队.当前组织度比例,
-                    当前HP比例: 军队.当前HP比例,
-                },
-            ),
-        ),
-    );
+    // 预备队（未上场）本轮无战损无经验，状态不变，无需写库
 
     // ---- 战斗结束判定 ----
     if (攻方存活.length === 0 || 守方存活.length === 0) {
