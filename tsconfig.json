@@ -1,12 +1,12 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "target": "es2022",
+        "target": "ES2025",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "moduleDetection": "force",
         "lib": [
-            "es2024"
+            "ES2025"
         ],
         "types": [
             "node"
@@ -29,6 +29,8 @@
         "noImplicitOverride": true,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
+        "verbatimModuleSyntax": true,
+        "erasableSyntaxOnly": true,
         "isolatedModules": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -36,8 +38,6 @@
         "declaration": true,
         "declarationMap": true,
         "noEmit": true,
-        "rootDir": "src",
-        "outDir": "lib",
         "paths": {
             "#/*": [
                 "./src/*.ts",
